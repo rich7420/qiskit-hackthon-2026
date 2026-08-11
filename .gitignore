@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Secrets / credentials (never commit IBM Quantum tokens)
+.env
+*.env
+.qiskit/
+qiskit-ibm.json
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Large / generated outputs (keep the directories, ignore bulky artifacts)
+results/**/*.csv
+results/**/*.npy
+results/**/*.json
+figures/**/*.png
+figures/**/*.pdf
+!**/.gitkeep

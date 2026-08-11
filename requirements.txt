@@ -1,0 +1,21 @@
+# Core Qiskit stack
+qiskit
+qiskit-ibm-runtime
+qiskit-aer
+
+# Scientific / analysis tooling
+numpy
+scipy
+pandas
+matplotlib
+networkx
+scikit-learn
+
+# Notebook environment
+jupyterlab
+ipykernel
+
+# Optional — install only if the problem needs it:
+# qiskit-optimization        # QUBO / QAOA / combinatorial optimization
+# qiskit-machine-learning    # quantum machine learning
+# qiskit-nature              # chemistry / physics / VQE

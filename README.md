@@ -34,11 +34,35 @@ python -m ipykernel install --user \
 
 # Verify the environment
 python test_qiskit.py
+python -m pytest -q
 ```
 
 `test_qiskit.py` is a preflight check (Qiskit import, simulator, Aer, transpilation,
 IBM Runtime) that prints a PASS / WARN / FAIL summary. IBM stays a WARN until an
 account is configured.
+
+## QNN smoke test
+
+E001 is a reproducible binary MNIST classifier using an EstimatorQNN. Every JSON result
+records the data and source hashes, exact package versions, circuit metrics, optimizer
+history, and initial/final weights. Results receive unique names unless `--output` is
+supplied explicitly.
+
+```bash
+# Canonical MNIST run; fails clearly if OpenML is unavailable
+python experiments/e001_qnn_mnist.py --dataset mnist --seed 42
+
+# Explicit, fully offline alternative (a different dataset)
+python experiments/e001_qnn_mnist.py --dataset digits --seed 42
+```
+
+Use `--dataset auto` only when an explicitly warned MNIST-to-digits fallback is desired.
+The checked-in reference run is `results/e001_qnn_mnist_reference.json`.
+
+E002 is a single-seed, paper-inspired PennyLane amplitude-QNN experiment. Its hyperparameters
+are selected on a validation split and its held-out test split is evaluated once. The checked-in
+reference run is `results/e002_amplitude_qnn_reference.json`; see `EXPERIMENTS.md` for the
+scope and paper-method differences.
 
 ## Repository structure
 
@@ -93,5 +117,4 @@ This only affects macOS/Homebrew setups — Linux and Windows are unaffected.
 Install these only if the chosen problem calls for them:
 
 - `qiskit-optimization` — QUBO / QAOA / combinatorial optimization (Max-Cut, routing, scheduling, portfolio)
-- `qiskit-machine-learning` — quantum machine learning
 - `qiskit-nature` — chemistry / physics / VQE (molecules, ground state, electronic structure)

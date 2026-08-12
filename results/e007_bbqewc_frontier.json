@@ -1,0 +1,168 @@
+{
+  "experiment": "e007_bbqewc_frontier",
+  "seed": 42,
+  "points": [
+    {
+      "method": "sequential",
+      "label": "sequential",
+      "param": null,
+      "retention": 0.495,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.4225
+    },
+    {
+      "method": "l2",
+      "label": "l2 \u03bb=0.2",
+      "param": 0.2,
+      "retention": 0.8375,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.0825
+    },
+    {
+      "method": "l2",
+      "label": "l2 \u03bb=0.5",
+      "param": 0.5,
+      "retention": 0.8225,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.0825
+    },
+    {
+      "method": "l2",
+      "label": "l2 \u03bb=0.72",
+      "param": 0.72,
+      "retention": 0.805,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.09
+    },
+    {
+      "method": "l2",
+      "label": "l2 \u03bb=1.5",
+      "param": 1.5,
+      "retention": 0.7375,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.03
+    },
+    {
+      "method": "qewc",
+      "label": "qewc \u03bb=0.3",
+      "param": 0.3,
+      "retention": 0.8125,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.105
+    },
+    {
+      "method": "qewc",
+      "label": "qewc \u03bb=0.8",
+      "param": 0.8,
+      "retention": 0.8325,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.0675
+    },
+    {
+      "method": "qewc",
+      "label": "qewc \u03bb=2.0",
+      "param": 2.0,
+      "retention": 0.7325,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.0025
+    },
+    {
+      "method": "tr_qfi",
+      "label": "tr_qfi B=0.005",
+      "param": 0.005,
+      "retention": 0.7,
+      "plasticity": 0.115,
+      "intervention": 0.6667,
+      "avg_forgetting": 0.0
+    },
+    {
+      "method": "tr_qfi",
+      "label": "tr_qfi B=0.02",
+      "param": 0.02,
+      "retention": 0.7025,
+      "plasticity": 0.0,
+      "intervention": 0.6667,
+      "avg_forgetting": 0.0
+    },
+    {
+      "method": "tr_qfi",
+      "label": "tr_qfi B=0.05",
+      "param": 0.05,
+      "retention": 0.705,
+      "plasticity": 0.0,
+      "intervention": 0.6667,
+      "avg_forgetting": 0.0025
+    },
+    {
+      "method": "tr_qfi",
+      "label": "tr_qfi B=0.15",
+      "param": 0.15,
+      "retention": 0.81,
+      "plasticity": 0.0,
+      "intervention": 0.65,
+      "avg_forgetting": 0.0025
+    },
+    {
+      "method": "tr_qfi",
+      "label": "tr_qfi B=0.5",
+      "param": 0.5,
+      "retention": 0.865,
+      "plasticity": 0.5,
+      "intervention": 0.6167,
+      "avg_forgetting": 0.0175
+    },
+    {
+      "method": "tr_cfi",
+      "label": "tr_cfi B=0.0002",
+      "param": 0.0002,
+      "retention": 0.705,
+      "plasticity": 0.045,
+      "intervention": 0.6667,
+      "avg_forgetting": -0.0025
+    },
+    {
+      "method": "tr_cfi",
+      "label": "tr_cfi B=0.001",
+      "param": 0.001,
+      "retention": 0.7725,
+      "plasticity": 0.0,
+      "intervention": 0.65,
+      "avg_forgetting": 0.0
+    },
+    {
+      "method": "tr_cfi",
+      "label": "tr_cfi B=0.005",
+      "param": 0.005,
+      "retention": 0.875,
+      "plasticity": 0.5,
+      "intervention": 0.6167,
+      "avg_forgetting": 0.015
+    },
+    {
+      "method": "tr_cfi",
+      "label": "tr_cfi B=0.02",
+      "param": 0.02,
+      "retention": 0.7575,
+      "plasticity": 0.5,
+      "intervention": 0.5167,
+      "avg_forgetting": 0.16
+    },
+    {
+      "method": "tr_cfi",
+      "label": "tr_cfi B=0.1",
+      "param": 0.1,
+      "retention": 0.495,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.4225
+    }
+  ]
+}

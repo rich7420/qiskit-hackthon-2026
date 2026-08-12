@@ -1,0 +1,133 @@
+{
+  "experiment": "e007_h2_frontier",
+  "seed": 42,
+  "points": [
+    {
+      "method": "sequential",
+      "label": "sequential",
+      "param": null,
+      "retention": 0.495,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.4225
+    },
+    {
+      "method": "l2",
+      "label": "l2 \u03bb=0.2",
+      "param": 0.2,
+      "retention": 0.8375,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.0825
+    },
+    {
+      "method": "l2",
+      "label": "l2 \u03bb=0.5",
+      "param": 0.5,
+      "retention": 0.8225,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.0825
+    },
+    {
+      "method": "l2",
+      "label": "l2 \u03bb=0.72",
+      "param": 0.72,
+      "retention": 0.805,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.09
+    },
+    {
+      "method": "l2",
+      "label": "l2 \u03bb=1.5",
+      "param": 1.5,
+      "retention": 0.7375,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.03
+    },
+    {
+      "method": "l2",
+      "label": "l2 \u03bb=3.0",
+      "param": 3.0,
+      "retention": 0.7075,
+      "plasticity": 0.5,
+      "intervention": 0.0,
+      "avg_forgetting": 0.0025
+    },
+    {
+      "method": "qewc",
+      "label": "qewc \u03bb=0.3",
+      "param": 0.3,
+      "retention": 0.8125,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.105
+    },
+    {
+      "method": "qewc",
+      "label": "qewc \u03bb=0.8",
+      "param": 0.8,
+      "retention": 0.8325,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.0675
+    },
+    {
+      "method": "qewc",
+      "label": "qewc \u03bb=2.0",
+      "param": 2.0,
+      "retention": 0.7325,
+      "plasticity": 1.0,
+      "intervention": 0.0,
+      "avg_forgetting": 0.0025
+    },
+    {
+      "method": "adaptive",
+      "label": "adaptive \u03b5\u00d70.25",
+      "param": 0.25,
+      "retention": 0.7,
+      "plasticity": 0.5,
+      "intervention": 0.6667,
+      "avg_forgetting": 0.0025
+    },
+    {
+      "method": "adaptive",
+      "label": "adaptive \u03b5\u00d70.5",
+      "param": 0.5,
+      "retention": 0.7,
+      "plasticity": 0.5,
+      "intervention": 0.6667,
+      "avg_forgetting": 0.0025
+    },
+    {
+      "method": "adaptive",
+      "label": "adaptive \u03b5\u00d71.0",
+      "param": 1.0,
+      "retention": 0.695,
+      "plasticity": 0.775,
+      "intervention": 0.65,
+      "avg_forgetting": 0.0275
+    },
+    {
+      "method": "adaptive",
+      "label": "adaptive \u03b5\u00d72.0",
+      "param": 2.0,
+      "retention": 0.7375,
+      "plasticity": 1.0,
+      "intervention": 0.65,
+      "avg_forgetting": 0.055
+    },
+    {
+      "method": "adaptive",
+      "label": "adaptive \u03b5\u00d74.0",
+      "param": 4.0,
+      "retention": 0.71,
+      "plasticity": 1.0,
+      "intervention": 0.6333,
+      "avg_forgetting": 0.1825
+    }
+  ],
+  "train_time_sec": 388.3
+}

@@ -1,0 +1,2848 @@
+{
+  "experiment": "e007_h2_adaptive",
+  "seed": 42,
+  "tasks": [
+    "MNIST 0/1",
+    "Fashion-MNIST 0/1",
+    "SPT/ATF phases"
+  ],
+  "epochs_per_task": 20,
+  "methods": {
+    "sequential": {
+      "method": "sequential",
+      "retention_earlier_tasks": 0.495,
+      "plasticity_final_task": 1.0,
+      "avg_forgetting": 0.4225,
+      "final_acc": {
+        "task1": 0.505,
+        "task2": 0.485,
+        "task3": 1.0
+      },
+      "forgetting_per_task": {
+        "task1": 0.385,
+        "task2": 0.46
+      },
+      "intervention_fraction": 0.0,
+      "history": [
+        {
+          "epoch": 0,
+          "phase": 0,
+          "test_acc": {
+            "task1": 0.415,
+            "task2": 0.785,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 1,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.435,
+            "task2": 0.835,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 2,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.44,
+            "task2": 0.83,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 3,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.435,
+            "task2": 0.795,
+            "task3": 0.58
+          }
+        },
+        {
+          "epoch": 4,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.465,
+            "task2": 0.775,
+            "task3": 0.68
+          }
+        },
+        {
+          "epoch": 5,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.505,
+            "task2": 0.73,
+            "task3": 0.825
+          }
+        },
+        {
+          "epoch": 6,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.555,
+            "task2": 0.695,
+            "task3": 0.885
+          }
+        },
+        {
+          "epoch": 7,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.59,
+            "task2": 0.68,
+            "task3": 0.945
+          }
+        },
+        {
+          "epoch": 8,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.605,
+            "task2": 0.615,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 9,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.65,
+            "task2": 0.55,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 10,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.72,
+            "task2": 0.52,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 11,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.77,
+            "task2": 0.52,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 12,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.78,
+            "task2": 0.53,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 13,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.8,
+            "task2": 0.53,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 14,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.815,
+            "task2": 0.525,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 15,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.855,
+            "task2": 0.525,
+            "task3": 0.18
+          }
+        },
+        {
+          "epoch": 16,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.86,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 17,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 18,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.515,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 19,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.905,
+            "task2": 0.51,
+            "task3": 0.145
+          }
+        },
+        {
+          "epoch": 20,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.51,
+            "task3": 0.185
+          }
+        },
+        {
+          "epoch": 21,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 22,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.81,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 23,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.865,
+            "task2": 0.865,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 24,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.855,
+            "task2": 0.905,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 25,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.835,
+            "task2": 0.95,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 26,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.785,
+            "task2": 0.96,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 27,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.75,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 28,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.665,
+            "task2": 0.94,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 29,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.6,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 30,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.55,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 31,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.53,
+            "task2": 0.95,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 32,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.53,
+            "task2": 0.95,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 33,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.54,
+            "task2": 0.95,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 34,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.55,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 35,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.55,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 36,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.54,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 37,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.53,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 38,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.535,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 39,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.52,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 40,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.515,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 41,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.52,
+            "task2": 0.94,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 42,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.49,
+            "task2": 0.935,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 43,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.46,
+            "task2": 0.93,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 44,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.445,
+            "task2": 0.935,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 45,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.42,
+            "task2": 0.945,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 46,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.415,
+            "task2": 0.935,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 47,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.425,
+            "task2": 0.905,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 48,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.435,
+            "task2": 0.88,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 49,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.425,
+            "task2": 0.845,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 50,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.43,
+            "task2": 0.785,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 51,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.43,
+            "task2": 0.695,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 52,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.455,
+            "task2": 0.6,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 53,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.465,
+            "task2": 0.51,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 54,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.475,
+            "task2": 0.495,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 55,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.48,
+            "task2": 0.485,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 56,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.49,
+            "task2": 0.485,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 57,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.485,
+            "task2": 0.485,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 58,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.49,
+            "task2": 0.485,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 59,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.51,
+            "task2": 0.485,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 60,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.505,
+            "task2": 0.485,
+            "task3": 1.0
+          }
+        }
+      ]
+    },
+    "qewc": {
+      "method": "qewc",
+      "retention_earlier_tasks": 0.8325,
+      "plasticity_final_task": 1.0,
+      "avg_forgetting": 0.0675,
+      "final_acc": {
+        "task1": 0.895,
+        "task2": 0.77,
+        "task3": 1.0
+      },
+      "forgetting_per_task": {
+        "task1": -0.005,
+        "task2": 0.14
+      },
+      "intervention_fraction": 0.0,
+      "history": [
+        {
+          "epoch": 0,
+          "phase": 0,
+          "test_acc": {
+            "task1": 0.415,
+            "task2": 0.785,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 1,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.435,
+            "task2": 0.835,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 2,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.44,
+            "task2": 0.83,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 3,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.435,
+            "task2": 0.795,
+            "task3": 0.58
+          }
+        },
+        {
+          "epoch": 4,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.465,
+            "task2": 0.775,
+            "task3": 0.68
+          }
+        },
+        {
+          "epoch": 5,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.505,
+            "task2": 0.73,
+            "task3": 0.825
+          }
+        },
+        {
+          "epoch": 6,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.555,
+            "task2": 0.695,
+            "task3": 0.885
+          }
+        },
+        {
+          "epoch": 7,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.59,
+            "task2": 0.68,
+            "task3": 0.945
+          }
+        },
+        {
+          "epoch": 8,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.605,
+            "task2": 0.615,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 9,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.65,
+            "task2": 0.55,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 10,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.72,
+            "task2": 0.52,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 11,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.77,
+            "task2": 0.52,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 12,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.78,
+            "task2": 0.53,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 13,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.8,
+            "task2": 0.53,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 14,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.815,
+            "task2": 0.525,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 15,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.855,
+            "task2": 0.525,
+            "task3": 0.18
+          }
+        },
+        {
+          "epoch": 16,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.86,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 17,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 18,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.515,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 19,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.905,
+            "task2": 0.51,
+            "task3": 0.145
+          }
+        },
+        {
+          "epoch": 20,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.51,
+            "task3": 0.185
+          }
+        },
+        {
+          "epoch": 21,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 22,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.78,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 23,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.88,
+            "task2": 0.865,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 24,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.865,
+            "task2": 0.9,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 25,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.915,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 26,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.88,
+            "task2": 0.935,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 27,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.93,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 28,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.86,
+            "task2": 0.925,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 29,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.85,
+            "task2": 0.925,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 30,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.855,
+            "task2": 0.92,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 31,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.855,
+            "task2": 0.915,
+            "task3": 0.19
+          }
+        },
+        {
+          "epoch": 32,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.855,
+            "task2": 0.895,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 33,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.86,
+            "task2": 0.89,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 34,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.865,
+            "task2": 0.885,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 35,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.885,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 36,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.885,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 37,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.88,
+            "task2": 0.89,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 38,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.88,
+            "task2": 0.9,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 39,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.9,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 40,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.91,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 41,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.88,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 42,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.905,
+            "task2": 0.805,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 43,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.71,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 44,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.7,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 45,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.7,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 46,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.725,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 47,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.75,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 48,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.88,
+            "task2": 0.765,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 49,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.88,
+            "task2": 0.785,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 50,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.88,
+            "task2": 0.805,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 51,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.81,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 52,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.865,
+            "task2": 0.81,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 53,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.865,
+            "task2": 0.815,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 54,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.865,
+            "task2": 0.805,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 55,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.775,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 56,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.785,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 57,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.78,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 58,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.78,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 59,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.77,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 60,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.77,
+            "task3": 1.0
+          }
+        }
+      ]
+    },
+    "l2": {
+      "method": "l2",
+      "retention_earlier_tasks": 0.805,
+      "plasticity_final_task": 1.0,
+      "avg_forgetting": 0.09,
+      "final_acc": {
+        "task1": 0.885,
+        "task2": 0.725,
+        "task3": 1.0
+      },
+      "forgetting_per_task": {
+        "task1": 0.005,
+        "task2": 0.175
+      },
+      "intervention_fraction": 0.0,
+      "history": [
+        {
+          "epoch": 0,
+          "phase": 0,
+          "test_acc": {
+            "task1": 0.415,
+            "task2": 0.785,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 1,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.435,
+            "task2": 0.835,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 2,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.44,
+            "task2": 0.83,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 3,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.435,
+            "task2": 0.795,
+            "task3": 0.58
+          }
+        },
+        {
+          "epoch": 4,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.465,
+            "task2": 0.775,
+            "task3": 0.68
+          }
+        },
+        {
+          "epoch": 5,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.505,
+            "task2": 0.73,
+            "task3": 0.825
+          }
+        },
+        {
+          "epoch": 6,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.555,
+            "task2": 0.695,
+            "task3": 0.885
+          }
+        },
+        {
+          "epoch": 7,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.59,
+            "task2": 0.68,
+            "task3": 0.945
+          }
+        },
+        {
+          "epoch": 8,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.605,
+            "task2": 0.615,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 9,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.65,
+            "task2": 0.55,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 10,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.72,
+            "task2": 0.52,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 11,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.77,
+            "task2": 0.52,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 12,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.78,
+            "task2": 0.53,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 13,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.8,
+            "task2": 0.53,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 14,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.815,
+            "task2": 0.525,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 15,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.855,
+            "task2": 0.525,
+            "task3": 0.18
+          }
+        },
+        {
+          "epoch": 16,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.86,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 17,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 18,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.515,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 19,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.905,
+            "task2": 0.51,
+            "task3": 0.145
+          }
+        },
+        {
+          "epoch": 20,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.51,
+            "task3": 0.185
+          }
+        },
+        {
+          "epoch": 21,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 22,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.78,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 23,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.865,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 24,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.865,
+            "task2": 0.895,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 25,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.88,
+            "task2": 0.905,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 26,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.93,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 27,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.865,
+            "task2": 0.925,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 28,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.86,
+            "task2": 0.92,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 29,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.855,
+            "task2": 0.92,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 30,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.915,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 31,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.86,
+            "task2": 0.905,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 32,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.86,
+            "task2": 0.9,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 33,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.88,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 34,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.875,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 35,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.88,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 36,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.88,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 37,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.89,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 38,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.9,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 39,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.865,
+            "task2": 0.9,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 40,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.865,
+            "task2": 0.9,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 41,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.88,
+            "task2": 0.895,
+            "task3": 0.795
+          }
+        },
+        {
+          "epoch": 42,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.845,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 43,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.745,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 44,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.71,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 45,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.655,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 46,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.655,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 47,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.695,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 48,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.71,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 49,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.725,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 50,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.745,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 51,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.76,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 52,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.88,
+            "task2": 0.76,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 53,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.765,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 54,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.87,
+            "task2": 0.765,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 55,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.755,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 56,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.74,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 57,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.725,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 58,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.715,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 59,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.715,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 60,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.725,
+            "task3": 1.0
+          }
+        }
+      ]
+    },
+    "gradclip": {
+      "method": "gradclip",
+      "retention_earlier_tasks": 0.495,
+      "plasticity_final_task": 1.0,
+      "avg_forgetting": 0.4225,
+      "final_acc": {
+        "task1": 0.505,
+        "task2": 0.485,
+        "task3": 1.0
+      },
+      "forgetting_per_task": {
+        "task1": 0.385,
+        "task2": 0.46
+      },
+      "intervention_fraction": 0.0,
+      "history": [
+        {
+          "epoch": 0,
+          "phase": 0,
+          "test_acc": {
+            "task1": 0.415,
+            "task2": 0.785,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 1,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.435,
+            "task2": 0.835,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 2,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.44,
+            "task2": 0.83,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 3,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.435,
+            "task2": 0.795,
+            "task3": 0.58
+          }
+        },
+        {
+          "epoch": 4,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.465,
+            "task2": 0.775,
+            "task3": 0.68
+          }
+        },
+        {
+          "epoch": 5,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.505,
+            "task2": 0.73,
+            "task3": 0.825
+          }
+        },
+        {
+          "epoch": 6,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.555,
+            "task2": 0.695,
+            "task3": 0.885
+          }
+        },
+        {
+          "epoch": 7,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.59,
+            "task2": 0.68,
+            "task3": 0.945
+          }
+        },
+        {
+          "epoch": 8,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.605,
+            "task2": 0.615,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 9,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.65,
+            "task2": 0.55,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 10,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.72,
+            "task2": 0.52,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 11,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.77,
+            "task2": 0.52,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 12,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.78,
+            "task2": 0.53,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 13,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.8,
+            "task2": 0.53,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 14,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.815,
+            "task2": 0.525,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 15,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.855,
+            "task2": 0.525,
+            "task3": 0.18
+          }
+        },
+        {
+          "epoch": 16,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.86,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 17,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 18,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.515,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 19,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.905,
+            "task2": 0.51,
+            "task3": 0.145
+          }
+        },
+        {
+          "epoch": 20,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.51,
+            "task3": 0.185
+          }
+        },
+        {
+          "epoch": 21,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 22,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.81,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 23,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.865,
+            "task2": 0.865,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 24,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.855,
+            "task2": 0.905,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 25,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.835,
+            "task2": 0.95,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 26,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.785,
+            "task2": 0.96,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 27,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.75,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 28,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.665,
+            "task2": 0.94,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 29,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.6,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 30,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.55,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 31,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.53,
+            "task2": 0.95,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 32,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.53,
+            "task2": 0.95,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 33,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.54,
+            "task2": 0.95,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 34,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.55,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 35,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.55,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 36,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.54,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 37,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.53,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 38,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.535,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 39,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.52,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 40,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.515,
+            "task2": 0.945,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 41,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.52,
+            "task2": 0.94,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 42,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.49,
+            "task2": 0.935,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 43,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.46,
+            "task2": 0.93,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 44,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.445,
+            "task2": 0.935,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 45,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.42,
+            "task2": 0.945,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 46,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.415,
+            "task2": 0.935,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 47,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.425,
+            "task2": 0.905,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 48,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.435,
+            "task2": 0.88,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 49,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.425,
+            "task2": 0.845,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 50,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.43,
+            "task2": 0.785,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 51,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.43,
+            "task2": 0.695,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 52,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.455,
+            "task2": 0.6,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 53,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.465,
+            "task2": 0.51,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 54,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.475,
+            "task2": 0.495,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 55,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.48,
+            "task2": 0.485,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 56,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.49,
+            "task2": 0.485,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 57,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.485,
+            "task2": 0.485,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 58,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.49,
+            "task2": 0.485,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 59,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.51,
+            "task2": 0.485,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 60,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.505,
+            "task2": 0.485,
+            "task3": 1.0
+          }
+        }
+      ]
+    },
+    "adaptive": {
+      "method": "adaptive",
+      "retention_earlier_tasks": 0.695,
+      "plasticity_final_task": 0.775,
+      "avg_forgetting": 0.0275,
+      "final_acc": {
+        "task1": 0.89,
+        "task2": 0.5,
+        "task3": 0.775
+      },
+      "forgetting_per_task": {
+        "task1": 0.0,
+        "task2": 0.055
+      },
+      "intervention_fraction": 0.65,
+      "history": [
+        {
+          "epoch": 0,
+          "phase": 0,
+          "test_acc": {
+            "task1": 0.415,
+            "task2": 0.785,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 1,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.435,
+            "task2": 0.835,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 2,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.44,
+            "task2": 0.83,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 3,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.435,
+            "task2": 0.795,
+            "task3": 0.58
+          }
+        },
+        {
+          "epoch": 4,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.465,
+            "task2": 0.775,
+            "task3": 0.68
+          }
+        },
+        {
+          "epoch": 5,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.505,
+            "task2": 0.73,
+            "task3": 0.825
+          }
+        },
+        {
+          "epoch": 6,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.555,
+            "task2": 0.695,
+            "task3": 0.885
+          }
+        },
+        {
+          "epoch": 7,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.59,
+            "task2": 0.68,
+            "task3": 0.945
+          }
+        },
+        {
+          "epoch": 8,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.605,
+            "task2": 0.615,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 9,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.65,
+            "task2": 0.55,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 10,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.72,
+            "task2": 0.52,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 11,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.77,
+            "task2": 0.52,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 12,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.78,
+            "task2": 0.53,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 13,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.8,
+            "task2": 0.53,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 14,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.815,
+            "task2": 0.525,
+            "task3": 1.0
+          }
+        },
+        {
+          "epoch": 15,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.855,
+            "task2": 0.525,
+            "task3": 0.18
+          }
+        },
+        {
+          "epoch": 16,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.86,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 17,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.875,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 18,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.515,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 19,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.905,
+            "task2": 0.51,
+            "task3": 0.145
+          }
+        },
+        {
+          "epoch": 20,
+          "phase": 1,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.51,
+            "task3": 0.185
+          }
+        },
+        {
+          "epoch": 21,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.885,
+            "task2": 0.525,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 22,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.6,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 23,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.575,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 24,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.57,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 25,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.565,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 26,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.565,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 27,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.555,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 28,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.55,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 29,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.55,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 30,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.555,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 31,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.555,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 32,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.555,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 33,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.555,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 34,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.555,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 35,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.555,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 36,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.555,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 37,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.555,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 38,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.555,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 39,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.555,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 40,
+          "phase": 2,
+          "test_acc": {
+            "task1": 0.905,
+            "task2": 0.555,
+            "task3": 0.0
+          }
+        },
+        {
+          "epoch": 41,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.535,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 42,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.9,
+            "task2": 0.515,
+            "task3": 0.5
+          }
+        },
+        {
+          "epoch": 43,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.895,
+            "task2": 0.51,
+            "task3": 0.57
+          }
+        },
+        {
+          "epoch": 44,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.51,
+            "task3": 0.695
+          }
+        },
+        {
+          "epoch": 45,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.505,
+            "task3": 0.81
+          }
+        },
+        {
+          "epoch": 46,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.86
+          }
+        },
+        {
+          "epoch": 47,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.905
+          }
+        },
+        {
+          "epoch": 48,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.93
+          }
+        },
+        {
+          "epoch": 49,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.95
+          }
+        },
+        {
+          "epoch": 50,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.955
+          }
+        },
+        {
+          "epoch": 51,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.95
+          }
+        },
+        {
+          "epoch": 52,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.94
+          }
+        },
+        {
+          "epoch": 53,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.92
+          }
+        },
+        {
+          "epoch": 54,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.905
+          }
+        },
+        {
+          "epoch": 55,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.88
+          }
+        },
+        {
+          "epoch": 56,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.86
+          }
+        },
+        {
+          "epoch": 57,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.84
+          }
+        },
+        {
+          "epoch": 58,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.815
+          }
+        },
+        {
+          "epoch": 59,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.81
+          }
+        },
+        {
+          "epoch": 60,
+          "phase": 3,
+          "test_acc": {
+            "task1": 0.89,
+            "task2": 0.5,
+            "task3": 0.775
+          }
+        }
+      ]
+    }
+  },
+  "train_time_sec": 133.0
+}

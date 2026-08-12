@@ -1,0 +1,4504 @@
+{
+  "schema_version": 1,
+  "experiment": "e006_advanced_temporal_multiseed",
+  "created_at_utc": "2026-08-12T13:32:04.773284+00:00",
+  "source_code_sha256": "9fdbe691fb18c9894e0940c3ea38f7430be6034556c8edb333ea93bdf1ebfad6",
+  "aggregation_code_sha256": "d4fdb7adef9a66a294a64c1806b4a3663b8a6c9ed870dca8422f2f3e9165a49e",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "n_seeds": 3,
+  "uncertainty": "sample standard deviation across seeds (ddof=1)",
+  "comparison_scope": "same E006 tasks, data, initialization, optimizer, and epoch budget",
+  "baseline_definition": "E004 protocol: naive sequential fine-tuning",
+  "advanced_definition": "balanced episodic replay",
+  "result_files": [
+    "results/e006_advanced_seed42.json",
+    "results/e006_advanced_seed43.json",
+    "results/e006_advanced_seed44.json"
+  ],
+  "data_sha256_by_seed": {
+    "42": "ed2472b7d649d0b02bd97ee3906699673ca91c70baec9bd612add4c0e71487f5",
+    "43": "ed2472b7d649d0b02bd97ee3906699673ca91c70baec9bd612add4c0e71487f5",
+    "44": "ed2472b7d649d0b02bd97ee3906699673ca91c70baec9bd612add4c0e71487f5"
+  },
+  "configuration": {
+    "dataset": {
+      "task_order": [
+        "ECG200 heartbeat",
+        "GunPoint motion",
+        "Coffee spectrum"
+      ],
+      "n_steps": 12,
+      "preprocessing": "per-series z-normalization; equal-width PAA; clip at 3 sigma; scale to [-pi, pi]",
+      "official_train_test_splits": true,
+      "tasks": {
+        "task1": {
+          "archive": "ECG200",
+          "domain": "ECG",
+          "source_url": "https://www.timeseriesclassification.com/aeon-toolkit/ECG200.zip",
+          "archive_sha256": "755937ea37849346ea20033666b19d17345bb039971e8fa33458b16b62c09380",
+          "original_length": 96,
+          "train_size": 100,
+          "test_size": 100,
+          "class_names": [
+            "archive label -1",
+            "archive label 1"
+          ],
+          "train_class_counts": {
+            "-1": 31,
+            "1": 69
+          }
+        },
+        "task2": {
+          "archive": "GunPoint",
+          "domain": "human activity",
+          "source_url": "https://www.timeseriesclassification.com/aeon-toolkit/GunPoint.zip",
+          "archive_sha256": "d7513cfe222418fabfdb5a6434ffb21ac3de4923e637971e9388ebc857816803",
+          "original_length": 150,
+          "train_size": 50,
+          "test_size": 150,
+          "class_names": [
+            "gun draw",
+            "point"
+          ],
+          "train_class_counts": {
+            "-1": 24,
+            "1": 26
+          }
+        },
+        "task3": {
+          "archive": "Coffee",
+          "domain": "spectrograph",
+          "source_url": "https://www.timeseriesclassification.com/aeon-toolkit/Coffee.zip",
+          "archive_sha256": "bfba9d67f4a0f2041cb8ba88b60b11f10dab60b670e40b904ac47bd7dfdf4749",
+          "original_length": 286,
+          "train_size": 28,
+          "test_size": 28,
+          "class_names": [
+            "archive label 0",
+            "archive label 1"
+          ],
+          "train_class_counts": {
+            "-1": 14,
+            "1": 14
+          }
+        }
+      }
+    },
+    "model": {
+      "type": "hybrid recurrent/data-reuploading quantum temporal classifier",
+      "device": "default.qubit",
+      "shots": null,
+      "n_qubits": 4,
+      "n_steps": 12,
+      "shared_variational_layers_per_step": 1,
+      "n_quantum_weights": 8,
+      "n_classical_head_weights": 5,
+      "readouts": [
+        "PauliZ(0)",
+        "PauliZ(1)",
+        "PauliZ(2)",
+        "PauliZ(3)"
+      ],
+      "classical_head": "linear + tanh",
+      "logical_depth": 96,
+      "two_qubit_gates": 48
+    },
+    "comparison": {
+      "baseline": "E004 protocol: naive sequential fine-tuning",
+      "replay": "balanced episodic replay"
+    },
+    "optimizer": "Adam",
+    "loss": "inverse-class-frequency weighted MSE",
+    "optimizer_state_reset_at_boundaries": false,
+    "learning_rate": 0.03,
+    "epochs_per_task": 20,
+    "task_boundaries": [
+      20,
+      40
+    ],
+    "memory_per_previous_task": 16,
+    "memory_selection": "fixed, seeded, class-balanced, without replacement",
+    "replay_weight": 0.5,
+    "record_test_during_training": true,
+    "test_used_for_selection": false
+  },
+  "aggregate_history": {
+    "baseline": [
+      {
+        "epoch": 0,
+        "phase": 0,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.436667,
+            "sample_std": 0.116762
+          },
+          "task2": {
+            "mean": 0.466667,
+            "sample_std": 0.061101
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.535531,
+            "sample_std": 0.048612
+          },
+          "task2": {
+            "mean": 0.474359,
+            "sample_std": 0.080064
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 1,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.53,
+            "sample_std": 0.115326
+          },
+          "task2": {
+            "mean": 0.473333,
+            "sample_std": 0.100664
+          },
+          "task3": {
+            "mean": 0.535714,
+            "sample_std": 0.094491
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.617968,
+            "sample_std": 0.064942
+          },
+          "task2": {
+            "mean": 0.477564,
+            "sample_std": 0.110716
+          },
+          "task3": {
+            "mean": 0.535714,
+            "sample_std": 0.094491
+          }
+        }
+      },
+      {
+        "epoch": 2,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.68,
+            "sample_std": 0.078102
+          },
+          "task2": {
+            "mean": 0.406667,
+            "sample_std": 0.046188
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.670407,
+            "sample_std": 0.049449
+          },
+          "task2": {
+            "mean": 0.39797,
+            "sample_std": 0.052282
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 3,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.703333,
+            "sample_std": 0.056862
+          },
+          "task2": {
+            "mean": 0.48,
+            "sample_std": 0.091652
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.648823,
+            "sample_std": 0.054751
+          },
+          "task2": {
+            "mean": 0.467949,
+            "sample_std": 0.094958
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 4,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.716667,
+            "sample_std": 0.051316
+          },
+          "task2": {
+            "mean": 0.513333,
+            "sample_std": 0.110151
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.655524,
+            "sample_std": 0.050474
+          },
+          "task2": {
+            "mean": 0.502137,
+            "sample_std": 0.112241
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 5,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.743333,
+            "sample_std": 0.040415
+          },
+          "task2": {
+            "mean": 0.533333,
+            "sample_std": 0.090185
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.68077,
+            "sample_std": 0.053782
+          },
+          "task2": {
+            "mean": 0.527244,
+            "sample_std": 0.097203
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 6,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.763333,
+            "sample_std": 0.041633
+          },
+          "task2": {
+            "mean": 0.56,
+            "sample_std": 0.072111
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.710067,
+            "sample_std": 0.062915
+          },
+          "task2": {
+            "mean": 0.556624,
+            "sample_std": 0.080005
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 7,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.78,
+            "sample_std": 0.026458
+          },
+          "task2": {
+            "mean": 0.573333,
+            "sample_std": 0.064291
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.731027,
+            "sample_std": 0.046663
+          },
+          "task2": {
+            "mean": 0.57265,
+            "sample_std": 0.071889
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 8,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.773333,
+            "sample_std": 0.025166
+          },
+          "task2": {
+            "mean": 0.573333,
+            "sample_std": 0.090185
+          },
+          "task3": {
+            "mean": 0.511905,
+            "sample_std": 0.02062
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.73804,
+            "sample_std": 0.053687
+          },
+          "task2": {
+            "mean": 0.574786,
+            "sample_std": 0.096691
+          },
+          "task3": {
+            "mean": 0.511905,
+            "sample_std": 0.02062
+          }
+        }
+      },
+      {
+        "epoch": 9,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.786667,
+            "sample_std": 0.028868
+          },
+          "task2": {
+            "mean": 0.566667,
+            "sample_std": 0.110151
+          },
+          "task3": {
+            "mean": 0.547619,
+            "sample_std": 0.041239
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.765467,
+            "sample_std": 0.054657
+          },
+          "task2": {
+            "mean": 0.569979,
+            "sample_std": 0.115388
+          },
+          "task3": {
+            "mean": 0.547619,
+            "sample_std": 0.041239
+          }
+        }
+      },
+      {
+        "epoch": 10,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.803333,
+            "sample_std": 0.023094
+          },
+          "task2": {
+            "mean": 0.546667,
+            "sample_std": 0.100664
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.035714
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.801231,
+            "sample_std": 0.037155
+          },
+          "task2": {
+            "mean": 0.551282,
+            "sample_std": 0.107072
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.035714
+          }
+        }
+      },
+      {
+        "epoch": 11,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.81,
+            "sample_std": 0.01
+          },
+          "task2": {
+            "mean": 0.526667,
+            "sample_std": 0.090185
+          },
+          "task3": {
+            "mean": 0.630952,
+            "sample_std": 0.054554
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.817906,
+            "sample_std": 0.013992
+          },
+          "task2": {
+            "mean": 0.532051,
+            "sample_std": 0.096154
+          },
+          "task3": {
+            "mean": 0.630952,
+            "sample_std": 0.054554
+          }
+        }
+      },
+      {
+        "epoch": 12,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.8,
+            "sample_std": 0.017321
+          },
+          "task2": {
+            "mean": 0.493333,
+            "sample_std": 0.110151
+          },
+          "task3": {
+            "mean": 0.714286,
+            "sample_std": 0.094491
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.807698,
+            "sample_std": 0.024477
+          },
+          "task2": {
+            "mean": 0.499466,
+            "sample_std": 0.115833
+          },
+          "task3": {
+            "mean": 0.714286,
+            "sample_std": 0.094491
+          }
+        }
+      },
+      {
+        "epoch": 13,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.8,
+            "sample_std": 0.026458
+          },
+          "task2": {
+            "mean": 0.486667,
+            "sample_std": 0.110151
+          },
+          "task3": {
+            "mean": 0.72619,
+            "sample_std": 0.114805
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.810659,
+            "sample_std": 0.034614
+          },
+          "task2": {
+            "mean": 0.49359,
+            "sample_std": 0.116194
+          },
+          "task3": {
+            "mean": 0.72619,
+            "sample_std": 0.114805
+          }
+        }
+      },
+      {
+        "epoch": 14,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.79,
+            "sample_std": 0.017321
+          },
+          "task2": {
+            "mean": 0.486667,
+            "sample_std": 0.090185
+          },
+          "task3": {
+            "mean": 0.607143,
+            "sample_std": 0.035714
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.803413,
+            "sample_std": 0.020725
+          },
+          "task2": {
+            "mean": 0.49359,
+            "sample_std": 0.096194
+          },
+          "task3": {
+            "mean": 0.607143,
+            "sample_std": 0.035714
+          }
+        }
+      },
+      {
+        "epoch": 15,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.796667,
+            "sample_std": 0.020817
+          },
+          "task2": {
+            "mean": 0.473333,
+            "sample_std": 0.120554
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.071429
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.817126,
+            "sample_std": 0.015085
+          },
+          "task2": {
+            "mean": 0.480769,
+            "sample_std": 0.126176
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.071429
+          }
+        }
+      },
+      {
+        "epoch": 16,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.8,
+            "sample_std": 0.026458
+          },
+          "task2": {
+            "mean": 0.466667,
+            "sample_std": 0.098658
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.135212
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.819542,
+            "sample_std": 0.019172
+          },
+          "task2": {
+            "mean": 0.474893,
+            "sample_std": 0.104417
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.135212
+          }
+        }
+      },
+      {
+        "epoch": 17,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.796667,
+            "sample_std": 0.028868
+          },
+          "task2": {
+            "mean": 0.46,
+            "sample_std": 0.091652
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.135212
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.817126,
+            "sample_std": 0.020918
+          },
+          "task2": {
+            "mean": 0.470085,
+            "sample_std": 0.097918
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.135212
+          }
+        }
+      },
+      {
+        "epoch": 18,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.803333,
+            "sample_std": 0.040415
+          },
+          "task2": {
+            "mean": 0.466667,
+            "sample_std": 0.080829
+          },
+          "task3": {
+            "mean": 0.583333,
+            "sample_std": 0.114805
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.824918,
+            "sample_std": 0.034414
+          },
+          "task2": {
+            "mean": 0.477564,
+            "sample_std": 0.087248
+          },
+          "task3": {
+            "mean": 0.583333,
+            "sample_std": 0.114805
+          }
+        }
+      },
+      {
+        "epoch": 19,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.803333,
+            "sample_std": 0.040415
+          },
+          "task2": {
+            "mean": 0.486667,
+            "sample_std": 0.061101
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.109109
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.824918,
+            "sample_std": 0.034414
+          },
+          "task2": {
+            "mean": 0.498397,
+            "sample_std": 0.066637
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.109109
+          }
+        }
+      },
+      {
+        "epoch": 20,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.81,
+            "sample_std": 0.051962
+          },
+          "task2": {
+            "mean": 0.5,
+            "sample_std": 0.04
+          },
+          "task3": {
+            "mean": 0.607143,
+            "sample_std": 0.094491
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.829749,
+            "sample_std": 0.042782
+          },
+          "task2": {
+            "mean": 0.513355,
+            "sample_std": 0.044073
+          },
+          "task3": {
+            "mean": 0.607143,
+            "sample_std": 0.094491
+          }
+        }
+      },
+      {
+        "epoch": 21,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.806667,
+            "sample_std": 0.055076
+          },
+          "task2": {
+            "mean": 0.553333,
+            "sample_std": 0.011547
+          },
+          "task3": {
+            "mean": 0.619048,
+            "sample_std": 0.125424
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.827334,
+            "sample_std": 0.04502
+          },
+          "task2": {
+            "mean": 0.567308,
+            "sample_std": 0.01272
+          },
+          "task3": {
+            "mean": 0.619048,
+            "sample_std": 0.125424
+          }
+        }
+      },
+      {
+        "epoch": 22,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.82,
+            "sample_std": 0.060828
+          },
+          "task2": {
+            "mean": 0.58,
+            "sample_std": 0.0
+          },
+          "task3": {
+            "mean": 0.607143,
+            "sample_std": 0.107143
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.836995,
+            "sample_std": 0.049191
+          },
+          "task2": {
+            "mean": 0.594017,
+            "sample_std": 0.00185
+          },
+          "task3": {
+            "mean": 0.607143,
+            "sample_std": 0.107143
+          }
+        }
+      },
+      {
+        "epoch": 23,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.836667,
+            "sample_std": 0.056862
+          },
+          "task2": {
+            "mean": 0.593333,
+            "sample_std": 0.023094
+          },
+          "task3": {
+            "mean": 0.619048,
+            "sample_std": 0.125424
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.849073,
+            "sample_std": 0.046171
+          },
+          "task2": {
+            "mean": 0.606303,
+            "sample_std": 0.024532
+          },
+          "task3": {
+            "mean": 0.619048,
+            "sample_std": 0.125424
+          }
+        }
+      },
+      {
+        "epoch": 24,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.833333,
+            "sample_std": 0.045092
+          },
+          "task2": {
+            "mean": 0.58,
+            "sample_std": 0.034641
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.082479
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.840736,
+            "sample_std": 0.028171
+          },
+          "task2": {
+            "mean": 0.592949,
+            "sample_std": 0.036084
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.082479
+          }
+        }
+      },
+      {
+        "epoch": 25,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.816667,
+            "sample_std": 0.040415
+          },
+          "task2": {
+            "mean": 0.586667,
+            "sample_std": 0.046188
+          },
+          "task3": {
+            "mean": 0.547619,
+            "sample_std": 0.082479
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.813854,
+            "sample_std": 0.020534
+          },
+          "task2": {
+            "mean": 0.599359,
+            "sample_std": 0.047187
+          },
+          "task3": {
+            "mean": 0.547619,
+            "sample_std": 0.082479
+          }
+        }
+      },
+      {
+        "epoch": 26,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.82,
+            "sample_std": 0.055678
+          },
+          "task2": {
+            "mean": 0.613333,
+            "sample_std": 0.094516
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.094491
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.813308,
+            "sample_std": 0.035608
+          },
+          "task2": {
+            "mean": 0.625,
+            "sample_std": 0.093596
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.094491
+          }
+        }
+      },
+      {
+        "epoch": 27,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.8,
+            "sample_std": 0.036056
+          },
+          "task2": {
+            "mean": 0.64,
+            "sample_std": 0.156205
+          },
+          "task3": {
+            "mean": 0.559524,
+            "sample_std": 0.074345
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.778089,
+            "sample_std": 0.007683
+          },
+          "task2": {
+            "mean": 0.650641,
+            "sample_std": 0.152967
+          },
+          "task3": {
+            "mean": 0.559524,
+            "sample_std": 0.074345
+          }
+        }
+      },
+      {
+        "epoch": 28,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.813333,
+            "sample_std": 0.035119
+          },
+          "task2": {
+            "mean": 0.64,
+            "sample_std": 0.14
+          },
+          "task3": {
+            "mean": 0.52381,
+            "sample_std": 0.041239
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.793673,
+            "sample_std": 0.013277
+          },
+          "task2": {
+            "mean": 0.649038,
+            "sample_std": 0.134615
+          },
+          "task3": {
+            "mean": 0.52381,
+            "sample_std": 0.041239
+          }
+        }
+      },
+      {
+        "epoch": 29,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.783333,
+            "sample_std": 0.025166
+          },
+          "task2": {
+            "mean": 0.666667,
+            "sample_std": 0.150111
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.109109
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.751208,
+            "sample_std": 0.042089
+          },
+          "task2": {
+            "mean": 0.674679,
+            "sample_std": 0.142952
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.109109
+          }
+        }
+      },
+      {
+        "epoch": 30,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.8,
+            "sample_std": 0.026458
+          },
+          "task2": {
+            "mean": 0.686667,
+            "sample_std": 0.133167
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.135212
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.769207,
+            "sample_std": 0.041904
+          },
+          "task2": {
+            "mean": 0.693376,
+            "sample_std": 0.12568
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.135212
+          }
+        }
+      },
+      {
+        "epoch": 31,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.776667,
+            "sample_std": 0.025166
+          },
+          "task2": {
+            "mean": 0.706667,
+            "sample_std": 0.110151
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.168779
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.740455,
+            "sample_std": 0.025048
+          },
+          "task2": {
+            "mean": 0.712607,
+            "sample_std": 0.101789
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.168779
+          }
+        }
+      },
+      {
+        "epoch": 32,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.776667,
+            "sample_std": 0.041633
+          },
+          "task2": {
+            "mean": 0.726667,
+            "sample_std": 0.100664
+          },
+          "task3": {
+            "mean": 0.559524,
+            "sample_std": 0.168779
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.731572,
+            "sample_std": 0.030169
+          },
+          "task2": {
+            "mean": 0.731838,
+            "sample_std": 0.091674
+          },
+          "task3": {
+            "mean": 0.559524,
+            "sample_std": 0.168779
+          }
+        }
+      },
+      {
+        "epoch": 33,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.77,
+            "sample_std": 0.05
+          },
+          "task2": {
+            "mean": 0.766667,
+            "sample_std": 0.061101
+          },
+          "task3": {
+            "mean": 0.559524,
+            "sample_std": 0.168779
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.714898,
+            "sample_std": 0.045405
+          },
+          "task2": {
+            "mean": 0.771368,
+            "sample_std": 0.053376
+          },
+          "task3": {
+            "mean": 0.559524,
+            "sample_std": 0.168779
+          }
+        }
+      },
+      {
+        "epoch": 34,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.763333,
+            "sample_std": 0.058595
+          },
+          "task2": {
+            "mean": 0.8,
+            "sample_std": 0.052915
+          },
+          "task3": {
+            "mean": 0.547619,
+            "sample_std": 0.14869
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.692302,
+            "sample_std": 0.060095
+          },
+          "task2": {
+            "mean": 0.803419,
+            "sample_std": 0.046511
+          },
+          "task3": {
+            "mean": 0.547619,
+            "sample_std": 0.14869
+          }
+        }
+      },
+      {
+        "epoch": 35,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.746667,
+            "sample_std": 0.081445
+          },
+          "task2": {
+            "mean": 0.8,
+            "sample_std": 0.052915
+          },
+          "task3": {
+            "mean": 0.47619,
+            "sample_std": 0.041239
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.662459,
+            "sample_std": 0.092107
+          },
+          "task2": {
+            "mean": 0.802885,
+            "sample_std": 0.046142
+          },
+          "task3": {
+            "mean": 0.47619,
+            "sample_std": 0.041239
+          }
+        }
+      },
+      {
+        "epoch": 36,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.743333,
+            "sample_std": 0.083865
+          },
+          "task2": {
+            "mean": 0.806667,
+            "sample_std": 0.041633
+          },
+          "task3": {
+            "mean": 0.464286,
+            "sample_std": 0.061859
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.654122,
+            "sample_std": 0.0996
+          },
+          "task2": {
+            "mean": 0.808761,
+            "sample_std": 0.034829
+          },
+          "task3": {
+            "mean": 0.464286,
+            "sample_std": 0.061859
+          }
+        }
+      },
+      {
+        "epoch": 37,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.73,
+            "sample_std": 0.079373
+          },
+          "task2": {
+            "mean": 0.8,
+            "sample_std": 0.02
+          },
+          "task3": {
+            "mean": 0.47619,
+            "sample_std": 0.041239
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.635577,
+            "sample_std": 0.102655
+          },
+          "task2": {
+            "mean": 0.801282,
+            "sample_std": 0.014423
+          },
+          "task3": {
+            "mean": 0.47619,
+            "sample_std": 0.041239
+          }
+        }
+      },
+      {
+        "epoch": 38,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.72,
+            "sample_std": 0.088882
+          },
+          "task2": {
+            "mean": 0.82,
+            "sample_std": 0.02
+          },
+          "task3": {
+            "mean": 0.47619,
+            "sample_std": 0.041239
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.619448,
+            "sample_std": 0.117036
+          },
+          "task2": {
+            "mean": 0.821047,
+            "sample_std": 0.018013
+          },
+          "task3": {
+            "mean": 0.47619,
+            "sample_std": 0.041239
+          }
+        }
+      },
+      {
+        "epoch": 39,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.733333,
+            "sample_std": 0.083865
+          },
+          "task2": {
+            "mean": 0.82,
+            "sample_std": 0.02
+          },
+          "task3": {
+            "mean": 0.47619,
+            "sample_std": 0.02062
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.62911,
+            "sample_std": 0.114515
+          },
+          "task2": {
+            "mean": 0.821047,
+            "sample_std": 0.019584
+          },
+          "task3": {
+            "mean": 0.47619,
+            "sample_std": 0.02062
+          }
+        }
+      },
+      {
+        "epoch": 40,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.73,
+            "sample_std": 0.095394
+          },
+          "task2": {
+            "mean": 0.826667,
+            "sample_std": 0.030551
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.623734,
+            "sample_std": 0.13421
+          },
+          "task2": {
+            "mean": 0.826923,
+            "sample_std": 0.028979
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 41,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.716667,
+            "sample_std": 0.107858
+          },
+          "task2": {
+            "mean": 0.853333,
+            "sample_std": 0.050332
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.605189,
+            "sample_std": 0.150498
+          },
+          "task2": {
+            "mean": 0.852564,
+            "sample_std": 0.050652
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 42,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.72,
+            "sample_std": 0.115326
+          },
+          "task2": {
+            "mean": 0.833333,
+            "sample_std": 0.070238
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.035714
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.607605,
+            "sample_std": 0.155738
+          },
+          "task2": {
+            "mean": 0.832799,
+            "sample_std": 0.070664
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.035714
+          }
+        }
+      },
+      {
+        "epoch": 43,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.72,
+            "sample_std": 0.108167
+          },
+          "task2": {
+            "mean": 0.813333,
+            "sample_std": 0.064291
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.163663
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.610566,
+            "sample_std": 0.146892
+          },
+          "task2": {
+            "mean": 0.811966,
+            "sample_std": 0.064229
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.163663
+          }
+        }
+      },
+      {
+        "epoch": 44,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.71,
+            "sample_std": 0.098489
+          },
+          "task2": {
+            "mean": 0.8,
+            "sample_std": 0.052915
+          },
+          "task3": {
+            "mean": 0.630952,
+            "sample_std": 0.164957
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.600358,
+            "sample_std": 0.135033
+          },
+          "task2": {
+            "mean": 0.797009,
+            "sample_std": 0.055174
+          },
+          "task3": {
+            "mean": 0.630952,
+            "sample_std": 0.164957
+          }
+        }
+      },
+      {
+        "epoch": 45,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.696667,
+            "sample_std": 0.085049
+          },
+          "task2": {
+            "mean": 0.773333,
+            "sample_std": 0.102632
+          },
+          "task3": {
+            "mean": 0.702381,
+            "sample_std": 0.161045
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.590697,
+            "sample_std": 0.116358
+          },
+          "task2": {
+            "mean": 0.768697,
+            "sample_std": 0.106908
+          },
+          "task3": {
+            "mean": 0.702381,
+            "sample_std": 0.161045
+          }
+        }
+      },
+      {
+        "epoch": 46,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.69,
+            "sample_std": 0.08544
+          },
+          "task2": {
+            "mean": 0.686667,
+            "sample_std": 0.155349
+          },
+          "task3": {
+            "mean": 0.654762,
+            "sample_std": 0.183271
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.588827,
+            "sample_std": 0.11172
+          },
+          "task2": {
+            "mean": 0.679487,
+            "sample_std": 0.160521
+          },
+          "task3": {
+            "mean": 0.654762,
+            "sample_std": 0.183271
+          }
+        }
+      },
+      {
+        "epoch": 47,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.683333,
+            "sample_std": 0.086217
+          },
+          "task2": {
+            "mean": 0.66,
+            "sample_std": 0.144222
+          },
+          "task3": {
+            "mean": 0.642857,
+            "sample_std": 0.12877
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.583996,
+            "sample_std": 0.119997
+          },
+          "task2": {
+            "mean": 0.651175,
+            "sample_std": 0.149136
+          },
+          "task3": {
+            "mean": 0.642857,
+            "sample_std": 0.12877
+          }
+        }
+      },
+      {
+        "epoch": 48,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.683333,
+            "sample_std": 0.066583
+          },
+          "task2": {
+            "mean": 0.646667,
+            "sample_std": 0.155349
+          },
+          "task3": {
+            "mean": 0.690476,
+            "sample_std": 0.125424
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.586957,
+            "sample_std": 0.101539
+          },
+          "task2": {
+            "mean": 0.636752,
+            "sample_std": 0.161417
+          },
+          "task3": {
+            "mean": 0.690476,
+            "sample_std": 0.125424
+          }
+        }
+      },
+      {
+        "epoch": 49,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.676667,
+            "sample_std": 0.023094
+          },
+          "task2": {
+            "mean": 0.613333,
+            "sample_std": 0.092376
+          },
+          "task3": {
+            "mean": 0.797619,
+            "sample_std": 0.135212
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.582126,
+            "sample_std": 0.061387
+          },
+          "task2": {
+            "mean": 0.600427,
+            "sample_std": 0.097616
+          },
+          "task3": {
+            "mean": 0.797619,
+            "sample_std": 0.135212
+          }
+        }
+      },
+      {
+        "epoch": 50,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.696667,
+            "sample_std": 0.020817
+          },
+          "task2": {
+            "mean": 0.566667,
+            "sample_std": 0.050332
+          },
+          "task3": {
+            "mean": 0.77381,
+            "sample_std": 0.109109
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.605501,
+            "sample_std": 0.073624
+          },
+          "task2": {
+            "mean": 0.55235,
+            "sample_std": 0.052674
+          },
+          "task3": {
+            "mean": 0.77381,
+            "sample_std": 0.109109
+          }
+        }
+      },
+      {
+        "epoch": 51,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.69,
+            "sample_std": 0.03
+          },
+          "task2": {
+            "mean": 0.56,
+            "sample_std": 0.06
+          },
+          "task3": {
+            "mean": 0.809524,
+            "sample_std": 0.114805
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.591787,
+            "sample_std": 0.087748
+          },
+          "task2": {
+            "mean": 0.54594,
+            "sample_std": 0.061742
+          },
+          "task3": {
+            "mean": 0.809524,
+            "sample_std": 0.114805
+          }
+        }
+      },
+      {
+        "epoch": 52,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.7,
+            "sample_std": 0.017321
+          },
+          "task2": {
+            "mean": 0.58,
+            "sample_std": 0.04
+          },
+          "task3": {
+            "mean": 0.833333,
+            "sample_std": 0.135212
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.599034,
+            "sample_std": 0.069593
+          },
+          "task2": {
+            "mean": 0.566239,
+            "sample_std": 0.040107
+          },
+          "task3": {
+            "mean": 0.833333,
+            "sample_std": 0.135212
+          }
+        }
+      },
+      {
+        "epoch": 53,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.703333,
+            "sample_std": 0.005774
+          },
+          "task2": {
+            "mean": 0.593333,
+            "sample_std": 0.023094
+          },
+          "task3": {
+            "mean": 0.833333,
+            "sample_std": 0.089879
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.607371,
+            "sample_std": 0.058202
+          },
+          "task2": {
+            "mean": 0.579594,
+            "sample_std": 0.02411
+          },
+          "task3": {
+            "mean": 0.833333,
+            "sample_std": 0.089879
+          }
+        }
+      },
+      {
+        "epoch": 54,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.703333,
+            "sample_std": 0.015275
+          },
+          "task2": {
+            "mean": 0.586667,
+            "sample_std": 0.011547
+          },
+          "task3": {
+            "mean": 0.892857,
+            "sample_std": 0.061859
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.601449,
+            "sample_std": 0.050379
+          },
+          "task2": {
+            "mean": 0.57265,
+            "sample_std": 0.01067
+          },
+          "task3": {
+            "mean": 0.892857,
+            "sample_std": 0.061859
+          }
+        }
+      },
+      {
+        "epoch": 55,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.72,
+            "sample_std": 0.01
+          },
+          "task2": {
+            "mean": 0.613333,
+            "sample_std": 0.023094
+          },
+          "task3": {
+            "mean": 0.857143,
+            "sample_std": 0.061859
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.622409,
+            "sample_std": 0.037325
+          },
+          "task2": {
+            "mean": 0.599893,
+            "sample_std": 0.023186
+          },
+          "task3": {
+            "mean": 0.857143,
+            "sample_std": 0.061859
+          }
+        }
+      },
+      {
+        "epoch": 56,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.726667,
+            "sample_std": 0.011547
+          },
+          "task2": {
+            "mean": 0.64,
+            "sample_std": 0.04
+          },
+          "task3": {
+            "mean": 0.869048,
+            "sample_std": 0.054554
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.62724,
+            "sample_std": 0.039507
+          },
+          "task2": {
+            "mean": 0.627671,
+            "sample_std": 0.040075
+          },
+          "task3": {
+            "mean": 0.869048,
+            "sample_std": 0.054554
+          }
+        }
+      },
+      {
+        "epoch": 57,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.73,
+            "sample_std": 0.017321
+          },
+          "task2": {
+            "mean": 0.633333,
+            "sample_std": 0.041633
+          },
+          "task3": {
+            "mean": 0.869048,
+            "sample_std": 0.054554
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.632616,
+            "sample_std": 0.036412
+          },
+          "task2": {
+            "mean": 0.621261,
+            "sample_std": 0.041831
+          },
+          "task3": {
+            "mean": 0.869048,
+            "sample_std": 0.054554
+          }
+        }
+      },
+      {
+        "epoch": 58,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.74,
+            "sample_std": 0.02
+          },
+          "task2": {
+            "mean": 0.626667,
+            "sample_std": 0.050332
+          },
+          "task3": {
+            "mean": 0.857143,
+            "sample_std": 0.035714
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.651706,
+            "sample_std": 0.026063
+          },
+          "task2": {
+            "mean": 0.61485,
+            "sample_std": 0.0501
+          },
+          "task3": {
+            "mean": 0.857143,
+            "sample_std": 0.035714
+          }
+        }
+      },
+      {
+        "epoch": 59,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.736667,
+            "sample_std": 0.020817
+          },
+          "task2": {
+            "mean": 0.633333,
+            "sample_std": 0.050332
+          },
+          "task3": {
+            "mean": 0.833333,
+            "sample_std": 0.054554
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.649291,
+            "sample_std": 0.028732
+          },
+          "task2": {
+            "mean": 0.621795,
+            "sample_std": 0.049989
+          },
+          "task3": {
+            "mean": 0.833333,
+            "sample_std": 0.054554
+          }
+        }
+      },
+      {
+        "epoch": 60,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.746667,
+            "sample_std": 0.020817
+          },
+          "task2": {
+            "mean": 0.626667,
+            "sample_std": 0.030551
+          },
+          "task3": {
+            "mean": 0.845238,
+            "sample_std": 0.041239
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.662459,
+            "sample_std": 0.023761
+          },
+          "task2": {
+            "mean": 0.615919,
+            "sample_std": 0.029215
+          },
+          "task3": {
+            "mean": 0.845238,
+            "sample_std": 0.041239
+          }
+        }
+      }
+    ],
+    "replay": [
+      {
+        "epoch": 0,
+        "phase": 0,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.436667,
+            "sample_std": 0.116762
+          },
+          "task2": {
+            "mean": 0.466667,
+            "sample_std": 0.061101
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.535531,
+            "sample_std": 0.048612
+          },
+          "task2": {
+            "mean": 0.474359,
+            "sample_std": 0.080064
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 1,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.53,
+            "sample_std": 0.115326
+          },
+          "task2": {
+            "mean": 0.473333,
+            "sample_std": 0.100664
+          },
+          "task3": {
+            "mean": 0.535714,
+            "sample_std": 0.094491
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.617968,
+            "sample_std": 0.064942
+          },
+          "task2": {
+            "mean": 0.477564,
+            "sample_std": 0.110716
+          },
+          "task3": {
+            "mean": 0.535714,
+            "sample_std": 0.094491
+          }
+        }
+      },
+      {
+        "epoch": 2,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.68,
+            "sample_std": 0.078102
+          },
+          "task2": {
+            "mean": 0.406667,
+            "sample_std": 0.046188
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.670407,
+            "sample_std": 0.049449
+          },
+          "task2": {
+            "mean": 0.39797,
+            "sample_std": 0.052282
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 3,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.703333,
+            "sample_std": 0.056862
+          },
+          "task2": {
+            "mean": 0.48,
+            "sample_std": 0.091652
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.648823,
+            "sample_std": 0.054751
+          },
+          "task2": {
+            "mean": 0.467949,
+            "sample_std": 0.094958
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 4,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.716667,
+            "sample_std": 0.051316
+          },
+          "task2": {
+            "mean": 0.513333,
+            "sample_std": 0.110151
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.655524,
+            "sample_std": 0.050474
+          },
+          "task2": {
+            "mean": 0.502137,
+            "sample_std": 0.112241
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 5,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.743333,
+            "sample_std": 0.040415
+          },
+          "task2": {
+            "mean": 0.533333,
+            "sample_std": 0.090185
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.68077,
+            "sample_std": 0.053782
+          },
+          "task2": {
+            "mean": 0.527244,
+            "sample_std": 0.097203
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 6,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.763333,
+            "sample_std": 0.041633
+          },
+          "task2": {
+            "mean": 0.56,
+            "sample_std": 0.072111
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.710067,
+            "sample_std": 0.062915
+          },
+          "task2": {
+            "mean": 0.556624,
+            "sample_std": 0.080005
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 7,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.78,
+            "sample_std": 0.026458
+          },
+          "task2": {
+            "mean": 0.573333,
+            "sample_std": 0.064291
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.731027,
+            "sample_std": 0.046663
+          },
+          "task2": {
+            "mean": 0.57265,
+            "sample_std": 0.071889
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 8,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.773333,
+            "sample_std": 0.025166
+          },
+          "task2": {
+            "mean": 0.573333,
+            "sample_std": 0.090185
+          },
+          "task3": {
+            "mean": 0.511905,
+            "sample_std": 0.02062
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.73804,
+            "sample_std": 0.053687
+          },
+          "task2": {
+            "mean": 0.574786,
+            "sample_std": 0.096691
+          },
+          "task3": {
+            "mean": 0.511905,
+            "sample_std": 0.02062
+          }
+        }
+      },
+      {
+        "epoch": 9,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.786667,
+            "sample_std": 0.028868
+          },
+          "task2": {
+            "mean": 0.566667,
+            "sample_std": 0.110151
+          },
+          "task3": {
+            "mean": 0.547619,
+            "sample_std": 0.041239
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.765467,
+            "sample_std": 0.054657
+          },
+          "task2": {
+            "mean": 0.569979,
+            "sample_std": 0.115388
+          },
+          "task3": {
+            "mean": 0.547619,
+            "sample_std": 0.041239
+          }
+        }
+      },
+      {
+        "epoch": 10,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.803333,
+            "sample_std": 0.023094
+          },
+          "task2": {
+            "mean": 0.546667,
+            "sample_std": 0.100664
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.035714
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.801231,
+            "sample_std": 0.037155
+          },
+          "task2": {
+            "mean": 0.551282,
+            "sample_std": 0.107072
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.035714
+          }
+        }
+      },
+      {
+        "epoch": 11,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.81,
+            "sample_std": 0.01
+          },
+          "task2": {
+            "mean": 0.526667,
+            "sample_std": 0.090185
+          },
+          "task3": {
+            "mean": 0.630952,
+            "sample_std": 0.054554
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.817906,
+            "sample_std": 0.013992
+          },
+          "task2": {
+            "mean": 0.532051,
+            "sample_std": 0.096154
+          },
+          "task3": {
+            "mean": 0.630952,
+            "sample_std": 0.054554
+          }
+        }
+      },
+      {
+        "epoch": 12,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.8,
+            "sample_std": 0.017321
+          },
+          "task2": {
+            "mean": 0.493333,
+            "sample_std": 0.110151
+          },
+          "task3": {
+            "mean": 0.714286,
+            "sample_std": 0.094491
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.807698,
+            "sample_std": 0.024477
+          },
+          "task2": {
+            "mean": 0.499466,
+            "sample_std": 0.115833
+          },
+          "task3": {
+            "mean": 0.714286,
+            "sample_std": 0.094491
+          }
+        }
+      },
+      {
+        "epoch": 13,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.8,
+            "sample_std": 0.026458
+          },
+          "task2": {
+            "mean": 0.486667,
+            "sample_std": 0.110151
+          },
+          "task3": {
+            "mean": 0.72619,
+            "sample_std": 0.114805
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.810659,
+            "sample_std": 0.034614
+          },
+          "task2": {
+            "mean": 0.49359,
+            "sample_std": 0.116194
+          },
+          "task3": {
+            "mean": 0.72619,
+            "sample_std": 0.114805
+          }
+        }
+      },
+      {
+        "epoch": 14,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.79,
+            "sample_std": 0.017321
+          },
+          "task2": {
+            "mean": 0.486667,
+            "sample_std": 0.090185
+          },
+          "task3": {
+            "mean": 0.607143,
+            "sample_std": 0.035714
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.803413,
+            "sample_std": 0.020725
+          },
+          "task2": {
+            "mean": 0.49359,
+            "sample_std": 0.096194
+          },
+          "task3": {
+            "mean": 0.607143,
+            "sample_std": 0.035714
+          }
+        }
+      },
+      {
+        "epoch": 15,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.796667,
+            "sample_std": 0.020817
+          },
+          "task2": {
+            "mean": 0.473333,
+            "sample_std": 0.120554
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.071429
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.817126,
+            "sample_std": 0.015085
+          },
+          "task2": {
+            "mean": 0.480769,
+            "sample_std": 0.126176
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.071429
+          }
+        }
+      },
+      {
+        "epoch": 16,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.8,
+            "sample_std": 0.026458
+          },
+          "task2": {
+            "mean": 0.466667,
+            "sample_std": 0.098658
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.135212
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.819542,
+            "sample_std": 0.019172
+          },
+          "task2": {
+            "mean": 0.474893,
+            "sample_std": 0.104417
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.135212
+          }
+        }
+      },
+      {
+        "epoch": 17,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.796667,
+            "sample_std": 0.028868
+          },
+          "task2": {
+            "mean": 0.46,
+            "sample_std": 0.091652
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.135212
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.817126,
+            "sample_std": 0.020918
+          },
+          "task2": {
+            "mean": 0.470085,
+            "sample_std": 0.097918
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.135212
+          }
+        }
+      },
+      {
+        "epoch": 18,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.803333,
+            "sample_std": 0.040415
+          },
+          "task2": {
+            "mean": 0.466667,
+            "sample_std": 0.080829
+          },
+          "task3": {
+            "mean": 0.583333,
+            "sample_std": 0.114805
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.824918,
+            "sample_std": 0.034414
+          },
+          "task2": {
+            "mean": 0.477564,
+            "sample_std": 0.087248
+          },
+          "task3": {
+            "mean": 0.583333,
+            "sample_std": 0.114805
+          }
+        }
+      },
+      {
+        "epoch": 19,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.803333,
+            "sample_std": 0.040415
+          },
+          "task2": {
+            "mean": 0.486667,
+            "sample_std": 0.061101
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.109109
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.824918,
+            "sample_std": 0.034414
+          },
+          "task2": {
+            "mean": 0.498397,
+            "sample_std": 0.066637
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.109109
+          }
+        }
+      },
+      {
+        "epoch": 20,
+        "phase": 1,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.81,
+            "sample_std": 0.051962
+          },
+          "task2": {
+            "mean": 0.5,
+            "sample_std": 0.04
+          },
+          "task3": {
+            "mean": 0.607143,
+            "sample_std": 0.094491
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.829749,
+            "sample_std": 0.042782
+          },
+          "task2": {
+            "mean": 0.513355,
+            "sample_std": 0.044073
+          },
+          "task3": {
+            "mean": 0.607143,
+            "sample_std": 0.094491
+          }
+        }
+      },
+      {
+        "epoch": 21,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.806667,
+            "sample_std": 0.055076
+          },
+          "task2": {
+            "mean": 0.54,
+            "sample_std": 0.0
+          },
+          "task3": {
+            "mean": 0.619048,
+            "sample_std": 0.125424
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.827334,
+            "sample_std": 0.04502
+          },
+          "task2": {
+            "mean": 0.554487,
+            "sample_std": 0.002776
+          },
+          "task3": {
+            "mean": 0.619048,
+            "sample_std": 0.125424
+          }
+        }
+      },
+      {
+        "epoch": 22,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.826667,
+            "sample_std": 0.056862
+          },
+          "task2": {
+            "mean": 0.56,
+            "sample_std": 0.02
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.089879
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.841826,
+            "sample_std": 0.046171
+          },
+          "task2": {
+            "mean": 0.574786,
+            "sample_std": 0.017652
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.089879
+          }
+        }
+      },
+      {
+        "epoch": 23,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.83,
+            "sample_std": 0.045826
+          },
+          "task2": {
+            "mean": 0.56,
+            "sample_std": 0.02
+          },
+          "task3": {
+            "mean": 0.630952,
+            "sample_std": 0.114805
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.841281,
+            "sample_std": 0.033207
+          },
+          "task2": {
+            "mean": 0.574786,
+            "sample_std": 0.017652
+          },
+          "task3": {
+            "mean": 0.630952,
+            "sample_std": 0.114805
+          }
+        }
+      },
+      {
+        "epoch": 24,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.836667,
+            "sample_std": 0.050332
+          },
+          "task2": {
+            "mean": 0.553333,
+            "sample_std": 0.011547
+          },
+          "task3": {
+            "mean": 0.619048,
+            "sample_std": 0.125424
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.846112,
+            "sample_std": 0.036473
+          },
+          "task2": {
+            "mean": 0.567842,
+            "sample_std": 0.008826
+          },
+          "task3": {
+            "mean": 0.619048,
+            "sample_std": 0.125424
+          }
+        }
+      },
+      {
+        "epoch": 25,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.83,
+            "sample_std": 0.045826
+          },
+          "task2": {
+            "mean": 0.54,
+            "sample_std": 0.0
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.123718
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.835359,
+            "sample_std": 0.029522
+          },
+          "task2": {
+            "mean": 0.554487,
+            "sample_std": 0.002776
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.123718
+          }
+        }
+      },
+      {
+        "epoch": 26,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.806667,
+            "sample_std": 0.035119
+          },
+          "task2": {
+            "mean": 0.553333,
+            "sample_std": 0.023094
+          },
+          "task3": {
+            "mean": 0.559524,
+            "sample_std": 0.135212
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.797725,
+            "sample_std": 0.016612
+          },
+          "task2": {
+            "mean": 0.567308,
+            "sample_std": 0.024982
+          },
+          "task3": {
+            "mean": 0.559524,
+            "sample_std": 0.135212
+          }
+        }
+      },
+      {
+        "epoch": 27,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.81,
+            "sample_std": 0.03
+          },
+          "task2": {
+            "mean": 0.566667,
+            "sample_std": 0.030551
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.214286
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.803101,
+            "sample_std": 0.008797
+          },
+          "task2": {
+            "mean": 0.580662,
+            "sample_std": 0.031823
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.214286
+          }
+        }
+      },
+      {
+        "epoch": 28,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.793333,
+            "sample_std": 0.032146
+          },
+          "task2": {
+            "mean": 0.58,
+            "sample_std": 0.02
+          },
+          "task3": {
+            "mean": 0.47619,
+            "sample_std": 0.272772
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.785102,
+            "sample_std": 0.014069
+          },
+          "task2": {
+            "mean": 0.593483,
+            "sample_std": 0.020915
+          },
+          "task3": {
+            "mean": 0.47619,
+            "sample_std": 0.272772
+          }
+        }
+      },
+      {
+        "epoch": 29,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.793333,
+            "sample_std": 0.020817
+          },
+          "task2": {
+            "mean": 0.626667,
+            "sample_std": 0.080829
+          },
+          "task3": {
+            "mean": 0.464286,
+            "sample_std": 0.269637
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.77918,
+            "sample_std": 0.012855
+          },
+          "task2": {
+            "mean": 0.638355,
+            "sample_std": 0.080037
+          },
+          "task3": {
+            "mean": 0.464286,
+            "sample_std": 0.269637
+          }
+        }
+      },
+      {
+        "epoch": 30,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.793333,
+            "sample_std": 0.015275
+          },
+          "task2": {
+            "mean": 0.653333,
+            "sample_std": 0.110151
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.257539
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.776219,
+            "sample_std": 0.017352
+          },
+          "task2": {
+            "mean": 0.662927,
+            "sample_std": 0.106306
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.257539
+          }
+        }
+      },
+      {
+        "epoch": 31,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.786667,
+            "sample_std": 0.015275
+          },
+          "task2": {
+            "mean": 0.68,
+            "sample_std": 0.1249
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.215275
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.765467,
+            "sample_std": 0.015916
+          },
+          "task2": {
+            "mean": 0.6875,
+            "sample_std": 0.118557
+          },
+          "task3": {
+            "mean": 0.595238,
+            "sample_std": 0.215275
+          }
+        }
+      },
+      {
+        "epoch": 32,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.786667,
+            "sample_std": 0.011547
+          },
+          "task2": {
+            "mean": 0.7,
+            "sample_std": 0.12
+          },
+          "task3": {
+            "mean": 0.535714,
+            "sample_std": 0.198849
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.765467,
+            "sample_std": 0.036503
+          },
+          "task2": {
+            "mean": 0.705128,
+            "sample_std": 0.111387
+          },
+          "task3": {
+            "mean": 0.535714,
+            "sample_std": 0.198849
+          }
+        }
+      },
+      {
+        "epoch": 33,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.783333,
+            "sample_std": 0.023094
+          },
+          "task2": {
+            "mean": 0.706667,
+            "sample_std": 0.120554
+          },
+          "task3": {
+            "mean": 0.511905,
+            "sample_std": 0.196699
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.757129,
+            "sample_std": 0.034167
+          },
+          "task2": {
+            "mean": 0.711004,
+            "sample_std": 0.111977
+          },
+          "task3": {
+            "mean": 0.511905,
+            "sample_std": 0.196699
+          }
+        }
+      },
+      {
+        "epoch": 34,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.78,
+            "sample_std": 0.01
+          },
+          "task2": {
+            "mean": 0.713333,
+            "sample_std": 0.090185
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.155675
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.748792,
+            "sample_std": 0.019702
+          },
+          "task2": {
+            "mean": 0.71688,
+            "sample_std": 0.082689
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.155675
+          }
+        }
+      },
+      {
+        "epoch": 35,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.78,
+            "sample_std": 0.02
+          },
+          "task2": {
+            "mean": 0.706667,
+            "sample_std": 0.070238
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.185577
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.742871,
+            "sample_std": 0.038642
+          },
+          "task2": {
+            "mean": 0.71047,
+            "sample_std": 0.063586
+          },
+          "task3": {
+            "mean": 0.571429,
+            "sample_std": 0.185577
+          }
+        }
+      },
+      {
+        "epoch": 36,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.78,
+            "sample_std": 0.01
+          },
+          "task2": {
+            "mean": 0.7,
+            "sample_std": 0.06
+          },
+          "task3": {
+            "mean": 0.535714,
+            "sample_std": 0.123718
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.73991,
+            "sample_std": 0.026646
+          },
+          "task2": {
+            "mean": 0.70406,
+            "sample_std": 0.053688
+          },
+          "task3": {
+            "mean": 0.535714,
+            "sample_std": 0.123718
+          }
+        }
+      },
+      {
+        "epoch": 37,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.783333,
+            "sample_std": 0.032146
+          },
+          "task2": {
+            "mean": 0.733333,
+            "sample_std": 0.050332
+          },
+          "task3": {
+            "mean": 0.488095,
+            "sample_std": 0.054554
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.742325,
+            "sample_std": 0.027353
+          },
+          "task2": {
+            "mean": 0.737179,
+            "sample_std": 0.044613
+          },
+          "task3": {
+            "mean": 0.488095,
+            "sample_std": 0.054554
+          }
+        }
+      },
+      {
+        "epoch": 38,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.776667,
+            "sample_std": 0.045092
+          },
+          "task2": {
+            "mean": 0.746667,
+            "sample_std": 0.061101
+          },
+          "task3": {
+            "mean": 0.47619,
+            "sample_std": 0.02062
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.731572,
+            "sample_std": 0.041544
+          },
+          "task2": {
+            "mean": 0.750534,
+            "sample_std": 0.055337
+          },
+          "task3": {
+            "mean": 0.47619,
+            "sample_std": 0.02062
+          }
+        }
+      },
+      {
+        "epoch": 39,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.783333,
+            "sample_std": 0.055076
+          },
+          "task2": {
+            "mean": 0.766667,
+            "sample_std": 0.080829
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.035714
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.739364,
+            "sample_std": 0.068796
+          },
+          "task2": {
+            "mean": 0.770833,
+            "sample_std": 0.075559
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.035714
+          }
+        }
+      },
+      {
+        "epoch": 40,
+        "phase": 2,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.79,
+            "sample_std": 0.043589
+          },
+          "task2": {
+            "mean": 0.773333,
+            "sample_std": 0.070238
+          },
+          "task3": {
+            "mean": 0.535714,
+            "sample_std": 0.061859
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.747156,
+            "sample_std": 0.070595
+          },
+          "task2": {
+            "mean": 0.777244,
+            "sample_std": 0.065274
+          },
+          "task3": {
+            "mean": 0.535714,
+            "sample_std": 0.061859
+          }
+        }
+      },
+      {
+        "epoch": 41,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.793333,
+            "sample_std": 0.055076
+          },
+          "task2": {
+            "mean": 0.76,
+            "sample_std": 0.04
+          },
+          "task3": {
+            "mean": 0.547619,
+            "sample_std": 0.082479
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.749571,
+            "sample_std": 0.087248
+          },
+          "task2": {
+            "mean": 0.763889,
+            "sample_std": 0.035305
+          },
+          "task3": {
+            "mean": 0.547619,
+            "sample_std": 0.082479
+          }
+        }
+      },
+      {
+        "epoch": 42,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.796667,
+            "sample_std": 0.051316
+          },
+          "task2": {
+            "mean": 0.753333,
+            "sample_std": 0.030551
+          },
+          "task3": {
+            "mean": 0.642857,
+            "sample_std": 0.123718
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.749026,
+            "sample_std": 0.085284
+          },
+          "task2": {
+            "mean": 0.755876,
+            "sample_std": 0.026688
+          },
+          "task3": {
+            "mean": 0.642857,
+            "sample_std": 0.123718
+          }
+        }
+      },
+      {
+        "epoch": 43,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.79,
+            "sample_std": 0.03
+          },
+          "task2": {
+            "mean": 0.773333,
+            "sample_std": 0.050332
+          },
+          "task3": {
+            "mean": 0.654762,
+            "sample_std": 0.164957
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.750117,
+            "sample_std": 0.05727
+          },
+          "task2": {
+            "mean": 0.775641,
+            "sample_std": 0.046197
+          },
+          "task3": {
+            "mean": 0.654762,
+            "sample_std": 0.164957
+          }
+        }
+      },
+      {
+        "epoch": 44,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.793333,
+            "sample_std": 0.023094
+          },
+          "task2": {
+            "mean": 0.76,
+            "sample_std": 0.034641
+          },
+          "task3": {
+            "mean": 0.642857,
+            "sample_std": 0.198849
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.755493,
+            "sample_std": 0.04516
+          },
+          "task2": {
+            "mean": 0.761752,
+            "sample_std": 0.031499
+          },
+          "task3": {
+            "mean": 0.642857,
+            "sample_std": 0.198849
+          }
+        }
+      },
+      {
+        "epoch": 45,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.796667,
+            "sample_std": 0.020817
+          },
+          "task2": {
+            "mean": 0.74,
+            "sample_std": 0.052915
+          },
+          "task3": {
+            "mean": 0.702381,
+            "sample_std": 0.082479
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.754948,
+            "sample_std": 0.045717
+          },
+          "task2": {
+            "mean": 0.741987,
+            "sample_std": 0.049108
+          },
+          "task3": {
+            "mean": 0.702381,
+            "sample_std": 0.082479
+          }
+        }
+      },
+      {
+        "epoch": 46,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.8,
+            "sample_std": 0.03
+          },
+          "task2": {
+            "mean": 0.746667,
+            "sample_std": 0.011547
+          },
+          "task3": {
+            "mean": 0.738095,
+            "sample_std": 0.144338
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.757363,
+            "sample_std": 0.049637
+          },
+          "task2": {
+            "mean": 0.749466,
+            "sample_std": 0.008826
+          },
+          "task3": {
+            "mean": 0.738095,
+            "sample_std": 0.144338
+          }
+        }
+      },
+      {
+        "epoch": 47,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.786667,
+            "sample_std": 0.041633
+          },
+          "task2": {
+            "mean": 0.746667,
+            "sample_std": 0.030551
+          },
+          "task3": {
+            "mean": 0.797619,
+            "sample_std": 0.196699
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.744741,
+            "sample_std": 0.048303
+          },
+          "task2": {
+            "mean": 0.748932,
+            "sample_std": 0.031335
+          },
+          "task3": {
+            "mean": 0.797619,
+            "sample_std": 0.196699
+          }
+        }
+      },
+      {
+        "epoch": 48,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.75,
+            "sample_std": 0.095394
+          },
+          "task2": {
+            "mean": 0.76,
+            "sample_std": 0.04
+          },
+          "task3": {
+            "mean": 0.809524,
+            "sample_std": 0.209267
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.71817,
+            "sample_std": 0.088908
+          },
+          "task2": {
+            "mean": 0.762821,
+            "sample_std": 0.039287
+          },
+          "task3": {
+            "mean": 0.809524,
+            "sample_std": 0.209267
+          }
+        }
+      },
+      {
+        "epoch": 49,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.756667,
+            "sample_std": 0.111505
+          },
+          "task2": {
+            "mean": 0.753333,
+            "sample_std": 0.041633
+          },
+          "task3": {
+            "mean": 0.809524,
+            "sample_std": 0.209267
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.725962,
+            "sample_std": 0.102858
+          },
+          "task2": {
+            "mean": 0.755342,
+            "sample_std": 0.039396
+          },
+          "task3": {
+            "mean": 0.809524,
+            "sample_std": 0.209267
+          }
+        }
+      },
+      {
+        "epoch": 50,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.766667,
+            "sample_std": 0.097125
+          },
+          "task2": {
+            "mean": 0.7,
+            "sample_std": 0.04
+          },
+          "task3": {
+            "mean": 0.821429,
+            "sample_std": 0.188982
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.733209,
+            "sample_std": 0.08242
+          },
+          "task2": {
+            "mean": 0.701923,
+            "sample_std": 0.036963
+          },
+          "task3": {
+            "mean": 0.821429,
+            "sample_std": 0.188982
+          }
+        }
+      },
+      {
+        "epoch": 51,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.793333,
+            "sample_std": 0.073711
+          },
+          "task2": {
+            "mean": 0.66,
+            "sample_std": 0.02
+          },
+          "task3": {
+            "mean": 0.809524,
+            "sample_std": 0.14869
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.761415,
+            "sample_std": 0.069496
+          },
+          "task2": {
+            "mean": 0.660256,
+            "sample_std": 0.025791
+          },
+          "task3": {
+            "mean": 0.809524,
+            "sample_std": 0.14869
+          }
+        }
+      },
+      {
+        "epoch": 52,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.78,
+            "sample_std": 0.052915
+          },
+          "task2": {
+            "mean": 0.673333,
+            "sample_std": 0.030551
+          },
+          "task3": {
+            "mean": 0.869048,
+            "sample_std": 0.054554
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.742871,
+            "sample_std": 0.060109
+          },
+          "task2": {
+            "mean": 0.673611,
+            "sample_std": 0.03645
+          },
+          "task3": {
+            "mean": 0.869048,
+            "sample_std": 0.054554
+          }
+        }
+      },
+      {
+        "epoch": 53,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.773333,
+            "sample_std": 0.023094
+          },
+          "task2": {
+            "mean": 0.7,
+            "sample_std": 0.02
+          },
+          "task3": {
+            "mean": 0.880952,
+            "sample_std": 0.054554
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.735079,
+            "sample_std": 0.024995
+          },
+          "task2": {
+            "mean": 0.702457,
+            "sample_std": 0.016985
+          },
+          "task3": {
+            "mean": 0.880952,
+            "sample_std": 0.054554
+          }
+        }
+      },
+      {
+        "epoch": 54,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.76,
+            "sample_std": 0.017321
+          },
+          "task2": {
+            "mean": 0.72,
+            "sample_std": 0.02
+          },
+          "task3": {
+            "mean": 0.880952,
+            "sample_std": 0.054554
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.716534,
+            "sample_std": 0.035429
+          },
+          "task2": {
+            "mean": 0.723291,
+            "sample_std": 0.018574
+          },
+          "task3": {
+            "mean": 0.880952,
+            "sample_std": 0.054554
+          }
+        }
+      },
+      {
+        "epoch": 55,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.75,
+            "sample_std": 0.036056
+          },
+          "task2": {
+            "mean": 0.76,
+            "sample_std": 0.04
+          },
+          "task3": {
+            "mean": 0.892857,
+            "sample_std": 0.035714
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.706327,
+            "sample_std": 0.015074
+          },
+          "task2": {
+            "mean": 0.764423,
+            "sample_std": 0.039287
+          },
+          "task3": {
+            "mean": 0.892857,
+            "sample_std": 0.035714
+          }
+        }
+      },
+      {
+        "epoch": 56,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.74,
+            "sample_std": 0.06245
+          },
+          "task2": {
+            "mean": 0.74,
+            "sample_std": 0.052915
+          },
+          "task3": {
+            "mean": 0.880952,
+            "sample_std": 0.041239
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.699081,
+            "sample_std": 0.008272
+          },
+          "task2": {
+            "mean": 0.745192,
+            "sample_std": 0.052102
+          },
+          "task3": {
+            "mean": 0.880952,
+            "sample_std": 0.041239
+          }
+        }
+      },
+      {
+        "epoch": 57,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.746667,
+            "sample_std": 0.066583
+          },
+          "task2": {
+            "mean": 0.74,
+            "sample_std": 0.069282
+          },
+          "task3": {
+            "mean": 0.869048,
+            "sample_std": 0.054554
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.706872,
+            "sample_std": 0.02655
+          },
+          "task2": {
+            "mean": 0.745192,
+            "sample_std": 0.06801
+          },
+          "task3": {
+            "mean": 0.869048,
+            "sample_std": 0.054554
+          }
+        }
+      },
+      {
+        "epoch": 58,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.75,
+            "sample_std": 0.069282
+          },
+          "task2": {
+            "mean": 0.74,
+            "sample_std": 0.072111
+          },
+          "task3": {
+            "mean": 0.857143,
+            "sample_std": 0.035714
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.709288,
+            "sample_std": 0.030314
+          },
+          "task2": {
+            "mean": 0.745726,
+            "sample_std": 0.070007
+          },
+          "task3": {
+            "mean": 0.857143,
+            "sample_std": 0.035714
+          }
+        }
+      },
+      {
+        "epoch": 59,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.753333,
+            "sample_std": 0.072342
+          },
+          "task2": {
+            "mean": 0.746667,
+            "sample_std": 0.075719
+          },
+          "task3": {
+            "mean": 0.857143,
+            "sample_std": 0.035714
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.714664,
+            "sample_std": 0.030787
+          },
+          "task2": {
+            "mean": 0.752137,
+            "sample_std": 0.073375
+          },
+          "task3": {
+            "mean": 0.857143,
+            "sample_std": 0.035714
+          }
+        }
+      },
+      {
+        "epoch": 60,
+        "phase": 3,
+        "train_accuracy": {
+          "task1": {
+            "mean": 0.746667,
+            "sample_std": 0.085049
+          },
+          "task2": {
+            "mean": 0.746667,
+            "sample_std": 0.057735
+          },
+          "task3": {
+            "mean": 0.857143,
+            "sample_std": 0.035714
+          }
+        },
+        "train_balanced_accuracy": {
+          "task1": {
+            "mean": 0.712794,
+            "sample_std": 0.041595
+          },
+          "task2": {
+            "mean": 0.752671,
+            "sample_std": 0.055058
+          },
+          "task3": {
+            "mean": 0.857143,
+            "sample_std": 0.035714
+          }
+        }
+      }
+    ]
+  },
+  "aggregate_metrics": {
+    "baseline": {
+      "task1": {
+        "train_accuracy_at_phase_end": {
+          "mean": 0.81,
+          "sample_std": 0.051962
+        },
+        "train_accuracy_final": {
+          "mean": 0.746667,
+          "sample_std": 0.020817
+        },
+        "train_balanced_accuracy_at_phase_end": {
+          "mean": 0.8297,
+          "sample_std": 0.042782
+        },
+        "train_balanced_accuracy_final": {
+          "mean": 0.662467,
+          "sample_std": 0.023783
+        },
+        "train_balanced_phase_end_drop": {
+          "mean": 0.1673,
+          "sample_std": 0.020922
+        },
+        "train_balanced_forgetting": {
+          "mean": 0.1673,
+          "sample_std": 0.020922
+        },
+        "test_accuracy_at_phase_end": {
+          "mean": 0.77,
+          "sample_std": 0.01
+        },
+        "test_accuracy_final": {
+          "mean": 0.67,
+          "sample_std": 0.036056
+        },
+        "test_balanced_accuracy_at_phase_end": {
+          "mean": 0.7717,
+          "sample_std": 0.025193
+        },
+        "test_balanced_accuracy_final": {
+          "mean": 0.6085,
+          "sample_std": 0.027966
+        },
+        "test_balanced_phase_end_drop": {
+          "mean": 0.1632,
+          "sample_std": 0.034373
+        },
+        "test_balanced_forgetting": {
+          "mean": 0.1632,
+          "sample_std": 0.034373
+        },
+        "phase_end_epoch": 20
+      },
+      "task2": {
+        "train_accuracy_at_phase_end": {
+          "mean": 0.826667,
+          "sample_std": 0.030551
+        },
+        "train_accuracy_final": {
+          "mean": 0.626667,
+          "sample_std": 0.030551
+        },
+        "train_balanced_accuracy_at_phase_end": {
+          "mean": 0.826933,
+          "sample_std": 0.028986
+        },
+        "train_balanced_accuracy_final": {
+          "mean": 0.6159,
+          "sample_std": 0.029213
+        },
+        "train_balanced_phase_end_drop": {
+          "mean": 0.211,
+          "sample_std": 0.02247
+        },
+        "train_balanced_forgetting": {
+          "mean": 0.211,
+          "sample_std": 0.02247
+        },
+        "test_accuracy_at_phase_end": {
+          "mean": 0.704433,
+          "sample_std": 0.042847
+        },
+        "test_accuracy_final": {
+          "mean": 0.573333,
+          "sample_std": 0.030551
+        },
+        "test_balanced_accuracy_at_phase_end": {
+          "mean": 0.704967,
+          "sample_std": 0.04271
+        },
+        "test_balanced_accuracy_final": {
+          "mean": 0.576467,
+          "sample_std": 0.029126
+        },
+        "test_balanced_phase_end_drop": {
+          "mean": 0.128467,
+          "sample_std": 0.023201
+        },
+        "test_balanced_forgetting": {
+          "mean": 0.128467,
+          "sample_std": 0.023201
+        },
+        "phase_end_epoch": 40
+      },
+      "task3": {
+        "train_accuracy_at_phase_end": {
+          "mean": 0.845233,
+          "sample_std": 0.041281
+        },
+        "train_accuracy_final": {
+          "mean": 0.845233,
+          "sample_std": 0.041281
+        },
+        "train_balanced_accuracy_at_phase_end": {
+          "mean": 0.845233,
+          "sample_std": 0.041281
+        },
+        "train_balanced_accuracy_final": {
+          "mean": 0.845233,
+          "sample_std": 0.041281
+        },
+        "train_balanced_phase_end_drop": {
+          "mean": 0.0,
+          "sample_std": 0.0
+        },
+        "train_balanced_forgetting": {
+          "mean": 0.0,
+          "sample_std": 0.0
+        },
+        "test_accuracy_at_phase_end": {
+          "mean": 0.869067,
+          "sample_std": 0.074372
+        },
+        "test_accuracy_final": {
+          "mean": 0.869067,
+          "sample_std": 0.074372
+        },
+        "test_balanced_accuracy_at_phase_end": {
+          "mean": 0.874367,
+          "sample_std": 0.065431
+        },
+        "test_balanced_accuracy_final": {
+          "mean": 0.874367,
+          "sample_std": 0.065431
+        },
+        "test_balanced_phase_end_drop": {
+          "mean": 0.0,
+          "sample_std": 0.0
+        },
+        "test_balanced_forgetting": {
+          "mean": 0.0,
+          "sample_std": 0.0
+        },
+        "phase_end_epoch": 60
+      },
+      "summary": {
+        "average_final_train_accuracy": {
+          "mean": 0.739533,
+          "sample_std": 0.020359
+        },
+        "average_final_train_balanced_accuracy": {
+          "mean": 0.707867,
+          "sample_std": 0.020064
+        },
+        "old_task_balanced_retention_final": {
+          "mean": 0.6392,
+          "sample_std": 0.026482
+        },
+        "new_task_balanced_adaptation": {
+          "mean": 0.845233,
+          "sample_std": 0.041281
+        },
+        "average_old_task_balanced_forgetting": {
+          "mean": 0.189167,
+          "sample_std": 0.017234
+        },
+        "average_final_test_accuracy": {
+          "mean": 0.704133,
+          "sample_std": 0.036651
+        },
+        "average_final_test_balanced_accuracy": {
+          "mean": 0.686467,
+          "sample_std": 0.040407
+        }
+      }
+    },
+    "replay": {
+      "task1": {
+        "train_accuracy_at_phase_end": {
+          "mean": 0.81,
+          "sample_std": 0.051962
+        },
+        "train_accuracy_final": {
+          "mean": 0.746667,
+          "sample_std": 0.085049
+        },
+        "train_balanced_accuracy_at_phase_end": {
+          "mean": 0.8297,
+          "sample_std": 0.042782
+        },
+        "train_balanced_accuracy_final": {
+          "mean": 0.712767,
+          "sample_std": 0.041595
+        },
+        "train_balanced_phase_end_drop": {
+          "mean": 0.116933,
+          "sample_std": 0.083643
+        },
+        "train_balanced_forgetting": {
+          "mean": 0.116933,
+          "sample_std": 0.083643
+        },
+        "test_accuracy_at_phase_end": {
+          "mean": 0.77,
+          "sample_std": 0.01
+        },
+        "test_accuracy_final": {
+          "mean": 0.676667,
+          "sample_std": 0.041633
+        },
+        "test_balanced_accuracy_at_phase_end": {
+          "mean": 0.7717,
+          "sample_std": 0.025193
+        },
+        "test_balanced_accuracy_final": {
+          "mean": 0.652167,
+          "sample_std": 0.043447
+        },
+        "test_balanced_phase_end_drop": {
+          "mean": 0.1195,
+          "sample_std": 0.038143
+        },
+        "test_balanced_forgetting": {
+          "mean": 0.1195,
+          "sample_std": 0.038143
+        },
+        "phase_end_epoch": 20
+      },
+      "task2": {
+        "train_accuracy_at_phase_end": {
+          "mean": 0.773333,
+          "sample_std": 0.070238
+        },
+        "train_accuracy_final": {
+          "mean": 0.746667,
+          "sample_std": 0.057735
+        },
+        "train_balanced_accuracy_at_phase_end": {
+          "mean": 0.777233,
+          "sample_std": 0.065275
+        },
+        "train_balanced_accuracy_final": {
+          "mean": 0.7527,
+          "sample_std": 0.055085
+        },
+        "train_balanced_phase_end_drop": {
+          "mean": 0.024567,
+          "sample_std": 0.114688
+        },
+        "train_balanced_forgetting": {
+          "mean": 0.0502,
+          "sample_std": 0.085567
+        },
+        "test_accuracy_at_phase_end": {
+          "mean": 0.6222,
+          "sample_std": 0.095769
+        },
+        "test_accuracy_final": {
+          "mean": 0.6422,
+          "sample_std": 0.09437
+        },
+        "test_balanced_accuracy_at_phase_end": {
+          "mean": 0.6211,
+          "sample_std": 0.097123
+        },
+        "test_balanced_accuracy_final": {
+          "mean": 0.640267,
+          "sample_std": 0.094917
+        },
+        "test_balanced_phase_end_drop": {
+          "mean": -0.019133,
+          "sample_std": 0.158606
+        },
+        "test_balanced_forgetting": {
+          "mean": 0.0437,
+          "sample_std": 0.071235
+        },
+        "phase_end_epoch": 40
+      },
+      "task3": {
+        "train_accuracy_at_phase_end": {
+          "mean": 0.857133,
+          "sample_std": 0.03575
+        },
+        "train_accuracy_final": {
+          "mean": 0.857133,
+          "sample_std": 0.03575
+        },
+        "train_balanced_accuracy_at_phase_end": {
+          "mean": 0.857133,
+          "sample_std": 0.03575
+        },
+        "train_balanced_accuracy_final": {
+          "mean": 0.857133,
+          "sample_std": 0.03575
+        },
+        "train_balanced_phase_end_drop": {
+          "mean": 0.0,
+          "sample_std": 0.0
+        },
+        "train_balanced_forgetting": {
+          "mean": 0.0,
+          "sample_std": 0.0
+        },
+        "test_accuracy_at_phase_end": {
+          "mean": 0.7857,
+          "sample_std": 0.0357
+        },
+        "test_accuracy_final": {
+          "mean": 0.7857,
+          "sample_std": 0.0357
+        },
+        "test_balanced_accuracy_at_phase_end": {
+          "mean": 0.796567,
+          "sample_std": 0.033827
+        },
+        "test_balanced_accuracy_final": {
+          "mean": 0.796567,
+          "sample_std": 0.033827
+        },
+        "test_balanced_phase_end_drop": {
+          "mean": 0.0,
+          "sample_std": 0.0
+        },
+        "test_balanced_forgetting": {
+          "mean": 0.0,
+          "sample_std": 0.0
+        },
+        "phase_end_epoch": 60
+      },
+      "summary": {
+        "average_final_train_accuracy": {
+          "mean": 0.783467,
+          "sample_std": 0.058509
+        },
+        "average_final_train_balanced_accuracy": {
+          "mean": 0.7742,
+          "sample_std": 0.043142
+        },
+        "old_task_balanced_retention_final": {
+          "mean": 0.732767,
+          "sample_std": 0.047961
+        },
+        "new_task_balanced_adaptation": {
+          "mean": 0.857133,
+          "sample_std": 0.03575
+        },
+        "average_old_task_balanced_forgetting": {
+          "mean": 0.0836,
+          "sample_std": 0.084467
+        },
+        "average_final_test_accuracy": {
+          "mean": 0.701533,
+          "sample_std": 0.027686
+        },
+        "average_final_test_balanced_accuracy": {
+          "mean": 0.696333,
+          "sample_std": 0.033308
+        }
+      }
+    }
+  },
+  "paired_seed_metrics": [
+    {
+      "seed": 42,
+      "baseline_old_task_balanced_retention": 0.6331,
+      "replay_old_task_balanced_retention": 0.7544,
+      "baseline_new_task_balanced_adaptation": 0.8929,
+      "replay_new_task_balanced_adaptation": 0.8571,
+      "old_task_balanced_retention_gain": 0.1213,
+      "new_task_balanced_adaptation_change": -0.0358,
+      "average_final_train_balanced_accuracy_gain": 0.0689,
+      "old_task_balanced_forgetting_reduction": 0.1285
+    },
+    {
+      "seed": 43,
+      "baseline_old_task_balanced_retention": 0.6682,
+      "replay_old_task_balanced_retention": 0.6778,
+      "baseline_new_task_balanced_adaptation": 0.8214,
+      "replay_new_task_balanced_adaptation": 0.8214,
+      "old_task_balanced_retention_gain": 0.0096,
+      "new_task_balanced_adaptation_change": 0.0,
+      "average_final_train_balanced_accuracy_gain": 0.0065,
+      "old_task_balanced_forgetting_reduction": 0.0192
+    },
+    {
+      "seed": 44,
+      "baseline_old_task_balanced_retention": 0.6163,
+      "replay_old_task_balanced_retention": 0.7661,
+      "baseline_new_task_balanced_adaptation": 0.8214,
+      "replay_new_task_balanced_adaptation": 0.8929,
+      "old_task_balanced_retention_gain": 0.1498,
+      "new_task_balanced_adaptation_change": 0.0715,
+      "average_final_train_balanced_accuracy_gain": 0.1236,
+      "old_task_balanced_forgetting_reduction": 0.169
+    }
+  ],
+  "paired_aggregate": {
+    "old_task_balanced_retention_gain": {
+      "mean": 0.093567,
+      "sample_std": 0.0741
+    },
+    "new_task_balanced_adaptation_change": {
+      "mean": 0.0119,
+      "sample_std": 0.054631
+    },
+    "average_final_train_balanced_accuracy_gain": {
+      "mean": 0.066333,
+      "sample_std": 0.058592
+    },
+    "old_task_balanced_forgetting_reduction": {
+      "mean": 0.105567,
+      "sample_std": 0.077488
+    }
+  },
+  "compute": {
+    "baseline": {
+      "train_time_sec": {
+        "mean": 13.889333,
+        "sample_std": 0.367987
+      },
+      "objective_sample_exposures": {
+        "mean": 3560.0,
+        "sample_std": 0.0
+      },
+      "relative_objective_sample_exposure": {
+        "mean": 1.0,
+        "sample_std": 0.0
+      }
+    },
+    "replay": {
+      "train_time_sec": {
+        "mean": 16.598,
+        "sample_std": 0.5277
+      },
+      "objective_sample_exposures": {
+        "mean": 4520.0,
+        "sample_std": 0.0
+      },
+      "relative_objective_sample_exposure": {
+        "mean": 1.2697,
+        "sample_std": 0.0
+      }
+    },
+    "paired_replay_minus_baseline": {
+      "train_time_sec": {
+        "mean": 2.708667,
+        "sample_std": 0.160936
+      },
+      "train_time_ratio": {
+        "mean": 1.194907,
+        "sample_std": 0.006513
+      }
+    }
+  }
+}

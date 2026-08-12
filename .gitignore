@@ -34,6 +34,7 @@ htmlcov/
 # Agent tooling (local, personal)
 .claude/
 .agent/
+data/e006_cache/
 
 # Large / generated outputs (keep the directories, ignore bulky artifacts)
 results/**/*.csv
@@ -62,6 +63,12 @@ figures/**/*.pdf
 !figures/e004_continual_seed43.png
 !figures/e004_continual_seed44.png
 !figures/e004_continual_mean.png
+!results/e006_advanced_seed42.json
+!results/e006_advanced_seed43.json
+!results/e006_advanced_seed44.json
+!results/e006_advanced_summary.json
+!figures/e006_advanced_vs_e004_baseline.png
+!figures/e006_advanced_tradeoff.png
 
 # LaTeX drawer diagnostic generated when a local TeX installation is incomplete
 latex_error.log

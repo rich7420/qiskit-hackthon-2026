@@ -250,3 +250,100 @@ Artifacts:
 - `figures/e004_continual_seed42.png`, `e004_continual_seed43.png`, and
   `e004_continual_seed44.png` show the three training-accuracy runs
 - `figures/e004_continual_mean.png` shows the three-seed mean with +/-1 sample-SD bands
+
+---
+
+## E006 Advanced — temporal quantum continual learning with balanced replay
+
+Goal: perform sequential learning on real time-series data with a compact hybrid quantum
+temporal classifier, measure catastrophic forgetting, and test whether balanced episodic
+replay improves retention without materially reducing adaptation. E006 compares the Advanced
+method with the **E004 protocol** (naive sequential fine-tuning) on the same E006 data and
+model. It does not compare the numerical E004 MNIST/Fashion-MNIST/SPT results directly because
+the tasks differ.
+
+Source hash:       9fdbe691fb18c9894e0940c3ea38f7430be6034556c8edb333ea93bdf1ebfad6
+Processed data hash (all seeds):
+                   ed2472b7d649d0b02bd97ee3906699673ca91c70baec9bd612add4c0e71487f5
+Framework:         pennylane 0.45.1 (`default.qubit`, backprop, exact / no shots)
+First-run command: `python scripts/run_e006_multiseed.py`
+Cached rerun:      `python scripts/run_e006_multiseed.py --offline`
+Plot command:      `python scripts/plot_e006_advanced.py`
+
+Data and task order:
+- ECG200 -> GunPoint -> Coffee, using the archive's official train/test splits: 100/100,
+  50/150, and 28/28 samples respectively
+- each full series is normalized independently, reduced to 12 ordered bins with equal-width
+  piecewise aggregate approximation (PAA), clipped at three standard deviations, and scaled
+  to `[-pi, pi]`; no future task data enters the training objective before that task arrives
+- archive descriptions and provenance: ECG200
+  https://www.timeseriesclassification.com/description.php?Dataset=ECG200, GunPoint
+  https://www.timeseriesclassification.com/description.php?Dataset=GunPoint, and Coffee
+  https://www.timeseriesclassification.com/description.php?Dataset=Coffee
+- the downloaded zip files are locked to SHA256 values in `src/temporal_data.py`; ECG200's
+  archive description names the clinical classes but does not map those names to `-1/+1`, so
+  the result artifact deliberately preserves neutral archive-label names
+
+Model and training configuration:
+- four-qubit shared-parameter temporal circuit: at each of 12 steps, the scalar observation is
+  angle-encoded on all qubits, followed by one shared RY/RZ variational block and a CNOT ring;
+  the quantum state persists across steps
+- four Z readouts feed a trainable linear+tanh head; eight quantum weights plus five classical
+  head weights; logical depth 96 and 48 two-qubit gates
+- this is a compact recurrent/data-reuploading circuit inspired by quantum recurrent sequence
+  models, not a reproduction or claim of a canonical QRNN architecture. Related sequential
+  quantum-learning reference: https://arxiv.org/abs/2302.03244
+- Adam(lr=0.03), inverse-class-frequency weighted MSE, 20 full-batch epochs per task, one
+  optimizer whose weights and state continue across boundaries, seeds 42/43/44
+- baseline = no replay; Advanced = a fixed seeded class-balanced memory of 16 examples from
+  each previous task, without replacement, with current/replay losses weighted 0.5/0.5.
+  Experience replay is an established continual-learning baseline:
+  https://proceedings.neurips.cc/paper_files/paper/2019/hash/fa7cdfad1a5aaf8370ebeda47a1ff1c3-Abstract.html
+
+Training balanced-accuracy result (mean +/- sample standard deviation across three paired
+seeds):
+- E004-style baseline: final old-task retention = 0.6392 +/- 0.0265; new-task adaptation =
+  0.8452 +/- 0.0413; average old-task forgetting = 0.1892 +/- 0.0172; average final accuracy
+  across tasks = 0.7079 +/- 0.0201
+- Advanced replay: final old-task retention = 0.7328 +/- 0.0480; new-task adaptation =
+  0.8571 +/- 0.0358; average old-task forgetting = 0.0836 +/- 0.0845; average final accuracy
+  across tasks = 0.7742 +/- 0.0431
+- paired Advanced-minus-baseline changes: retention +0.0936 +/- 0.0741, adaptation
+  +0.0119 +/- 0.0546, average final accuracy +0.0663 +/- 0.0586, and forgetting reduction
+  +0.1056 +/- 0.0775
+
+Balanced accuracy is the headline metric because ECG200's training split is 31/69; ordinary
+accuracy would give a majority-only predictor 0.69 while its balanced accuracy is 0.50.
+Forgetting is the maximum balanced accuracy at a task boundary minus its final value. The
+three paired seeds all improve old-task retention, but three runs are still too few for a
+precise population estimate.
+
+Fixed-test diagnostic (configuration was frozen before these values were inspected and test
+was never used for parameter or epoch selection):
+- average final test balanced accuracy = 0.6865 +/- 0.0404 baseline versus
+  0.6963 +/- 0.0333 Advanced
+- final Advanced test balanced accuracy by task = 0.6522 ECG200, 0.6403 GunPoint, and
+  0.7966 Coffee; the baseline values are 0.6085, 0.5765, and 0.8744 respectively
+- separate balanced LogisticRegression references on the same processed splits are 0.7795,
+  0.7720, and 0.9000. E006 therefore supports a retention/adaptation engineering result, not
+  quantum advantage
+
+Cost and limitations: replay uses 4,520 logical objective-sample exposures per seed versus
+3,560 for the baseline (+26.97%) and stores previous examples. Measured training time was
+16.598 +/- 0.528 s for replay versus 13.889 +/- 0.368 s for the baseline, a paired ratio of
+1.195 +/- 0.007 on this machine; runtime is informational and machine-dependent. The
+retention gain is therefore not free. The datasets are small, PAA compresses each series to
+12 steps, results use only three seeds and exact statevector simulation, and the final Coffee
+test score shows a stability-plasticity trade-off that is less favorable than the training
+headline.
+
+Artifacts:
+- `results/e006_advanced_seed42.json`, `e006_advanced_seed43.json`, and
+  `e006_advanced_seed44.json` store the complete paired histories, fixed memory indices,
+  initial/final weights, hashes, package versions, circuit resources, test diagnostics, and
+  runtime
+- `results/e006_advanced_summary.json` stores mean/sample-SD histories, per-seed paired deltas,
+  aggregate metrics, data/source hashes, and the exact comparison scope
+- `figures/e006_advanced_vs_e004_baseline.png` compares the three task curves only after each
+  task is introduced; `figures/e006_advanced_tradeoff.png` shows paired retention/adaptation
+  movement for all three seeds

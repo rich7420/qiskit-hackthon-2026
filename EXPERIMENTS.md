@@ -250,3 +250,45 @@ Artifacts:
 - `figures/e004_continual_seed42.png`, `e004_continual_seed43.png`, and
   `e004_continual_seed44.png` show the three training-accuracy runs
 - `figures/e004_continual_mean.png` shows the three-seed mean with +/-1 sample-SD bands
+
+---
+
+## E005 — continual learning with consolidation: Baseline vs EWC (CFI) vs QEWC (QFI)
+
+Goal: reproduce the core contribution of arXiv:2607.16030 on the e004 three-task sequence —
+mitigate catastrophic forgetting with Elastic Weight Consolidation using the classical Fisher
+(EWC) and the Quantum Fisher Information (QEWC). No public code exists for the paper; the
+methods are implemented from its equations. Paper-inspired reproduction, 3 seeds.
+
+Framework:         pennylane 0.45.1 (default.qubit, backprop, exact / no shots)
+Command:           `python scripts/e005_run_multiseed.py --seeds 42 43 44 --qfi-samples 32`
+
+Method (faithful to the paper's classifier):
+- readout = two Pauli-Z on qubits 0,1 -> softmax (Eq. 7); loss = binary cross-entropy
+- CFI = empirical Fisher from softmax log-likelihood gradients (Eq. 9)
+- QFI diag = 4(<d_i psi|d_i psi> - |<psi|d_i psi>|^2) (Eq. 18) via Fubini-Study metric tensor,
+  averaged over a data subsample; QFI is a state property so it is readout-independent
+- penalty = (lambda/2) sum_j alpha_j^(k) sum_i F_i^(j) (theta_i - theta*_{j,i})^2 (Eq. 2/21)
+- alpha_j^(k) = j/(k-1) for k>1 (Eq. 30); lambda_EWC = 30, lambda_QEWC = 0.8
+- learner = 4 qubits, RY/RZ + CNOT (20 layers, 160 weights), Adam(lr=0.02), 20 epochs/task
+- tasks = MNIST 0/1 -> Fashion-MNIST 0/1 -> SPT/ATF (same as e004); seeds 42/43/44
+
+Result (mean final test accuracy on the two earlier tasks, mean +/- sample SD over 3 seeds):
+- baseline = 0.627 +/- 0.103   (severe forgetting)
+- EWC      = 0.755 +/- 0.033
+- QEWC     = 0.826 +/- 0.045   (best retention, tightest variance)
+- ordering QEWC > EWC > baseline reproduces the paper's headline; single-seed T1(MNIST) final:
+  baseline 0.575, EWC 0.775, QEWC 0.895
+
+Deviations from the paper (documented in the result JSON): independent RY/RZ (no weight
+sharing), 20 layers/160 params vs the paper's shared 30 layers/120 params; Adam state continues
+across task boundaries (paper unspecified). Noise experiments (depolarizing, mixed-state QFI,
+retuned lambda_q) not implemented.
+
+Files: src/e005_consolidation.py (CFI/QFI/EWC), src/e005_softmax.py (2-Z softmax readout),
+experiments/e005_ewc_qewc.py, scripts/e005_run_multiseed.py, scripts/e005_plot_curve.py,
+results/e005_seed{42,43,44}.json + results/e005_summary.json.
+
+Figure: `figures/e005_ewc_qewc.png` (via `scripts/e005_plot_curve.py`) — three panels (per task)
+comparing Baseline / EWC / QEWC with mean +/- 1 sample-SD bands, in the style of
+`figures/e004_continual_mean.png`.

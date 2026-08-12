@@ -134,3 +134,53 @@ Tuning artifact:
 Figures:
 - `figures/e002_qnn_circuit.png` — circuit schematic (via `scripts/plot_e002_circuit.py`)
 - `figures/e002_training_curve.png` — train/validation accuracy vs epoch (via `scripts/plot_e002_curve.py`)
+
+---
+
+## E003 — sequential-training baseline: MNIST then Fashion-MNIST
+
+Goal: establish the no-consolidation baseline for comparing training accuracy when one QNN
+is trained on MNIST 0/1 first and then continued on Fashion-MNIST 0/1. This is a single-seed
+engineering result, not a statistical reproduction or quantum-advantage claim.
+
+Source hash:       96c529c300304f340cebe55715fb45e7e8fd644f6948f829b19894a060df4aec
+Data split hash:   5445553de9ccdf87be4e545949f930e3fe9fd53dc44ed0e2edb9e7729cc3753a
+Framework:         pennylane 0.45.1 (`default.qubit`, backprop, exact / no shots)
+Command:           `python experiments/e003_continual_baseline.py --n-qubits 4 --layers 20 --lr 0.02 --epochs-per-task 40 --n-train 800 --n-test 200 --seed 42 --output results/e003_continual_baseline_reference.json`
+
+Configuration:
+- task order = MNIST 0/1 for epochs 1–40, then Fashion-MNIST 0/1 for epochs 41–80
+- representation = PCA fit once on MNIST training data and applied unchanged to both tasks;
+  each 16-feature vector is L2-normalized for amplitude encoding
+- ansatz = independent RY/RZ + nearest-neighbor CNOT, 20 layers, 160 weights
+- output/loss = one `<Z_0>` expectation with {-1, +1} labels and mean squared error
+- optimizer = one full-batch Adam(lr=0.02) instance; weights and optimizer state both continue
+  across the task boundary; no EWC or other consolidation; seed = 42
+
+Circuit:
+- qubits = 4; logical depth = 82; two-qubit gates = 60
+
+Training-accuracy comparison:
+- MNIST = 0.9625 after phase 1 -> 0.5800 after phase 2; forgetting = 0.3825
+- Fashion-MNIST = 0.3600 before phase 2 -> 0.9500 after phase 2
+
+Test-set diagnostic (fixed 40 epochs per task; not used for model selection):
+- MNIST = 0.9600 at the boundary -> 0.6050 final
+- Fashion-MNIST = 0.9550 final
+- separate LogisticRegression baselines = 0.9950 MNIST / 0.9450 Fashion-MNIST
+- QNN train time = 26.825 s (runtime is informational and machine-dependent)
+
+Finding: sequential fine-tuning learns both tasks when they are active, but Fashion-MNIST
+training reduces MNIST training accuracy by 0.3825. This is the intended catastrophic-
+forgetting baseline; a later consolidation method should be compared against the same task
+order, split, representation, epoch budget, and seed.
+
+The reference JSON stores epoch 0 plus every post-update epoch, including train/test accuracy
+for both tasks, active-task loss, initial/final weights, hashes, versions, circuit metrics, and
+the explicit `optimizer_state_reset_at_boundary = false` contract.
+
+Figures:
+- `figures/e003_training_curve.png` — both training-accuracy curves across the two phases
+  (via `scripts/plot_e003_training.py`)
+- `figures/e003_continual_baseline.png` — train/test curves for each task, showing learning
+  and forgetting (via `scripts/plot_e003_curve.py`)

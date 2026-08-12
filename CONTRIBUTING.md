@@ -9,9 +9,11 @@ comments, documentation, and commit messages in English.
 
 ## Git workflow
 
-- Work on a feature branch, not directly on `main`: `git checkout -b <name>/<topic>`.
+- **Solo (setup phase):** committing directly to `main` is fine.
+- **Once teammates join:** stop pushing to `main`. Work on a feature branch and open
+  a pull request: `git checkout -b <name>/<topic>`, then PR into `main`.
 - Keep commits small and descriptive (imperative mood, e.g. `Add QAOA baseline for Max-Cut`).
-- Open a pull request into `main` and let a teammate glance at it before merging.
+- Have a teammate glance at each PR before merging.
 - Pull `main` often to stay in sync — a 1.5-day event moves fast.
 
 ## Notebooks

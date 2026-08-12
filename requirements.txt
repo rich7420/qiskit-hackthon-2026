@@ -15,6 +15,9 @@ scikit-learn
 jupyterlab
 ipykernel
 
+# Testing
+pytest
+
 # Optional — install only if the problem needs it:
 # qiskit-optimization        # QUBO / QAOA / combinatorial optimization
 # qiskit-machine-learning    # quantum machine learning

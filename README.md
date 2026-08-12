@@ -6,38 +6,59 @@ We pick a problem on-site, analyze it with quantum computing / Qiskit, and prese
 
 ## Quick start
 
+> Use **Python 3.11–3.13** (Qiskit 2.x supports 3.10+). Any OS works.
+
+**macOS / Linux**
+
 ```bash
-# 1. Create and activate a virtual environment
 python3 -m venv .venv
 source .venv/bin/activate
-
-# 2. Install dependencies
 pip install -r requirements.txt
+```
 
-# 3. Register a Jupyter kernel for this project
-python -m ipykernel install \
-  --user \
+**Windows (PowerShell)**
+
+```powershell
+py -3.13 -m venv .venv
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
+
+Then, on any OS:
+
+```bash
+# Register a Jupyter kernel for this project
+python -m ipykernel install --user \
   --name qiskit-hackathon-2026 \
   --display-name "Qiskit Hackathon 2026"
 
-# 4. Verify the environment
+# Verify the environment
 python test_qiskit.py
 ```
 
-`test_qiskit.py` runs a Bell-state circuit on a local simulator. Output should be mostly `00` and `11` counts (roughly 50/50), which confirms a working setup.
+`test_qiskit.py` is a preflight check: it verifies the Qiskit import, the
+statevector simulator (Bell state), Aer, transpilation, and IBM Quantum Runtime
+connectivity, printing a PASS / WARN / FAIL summary. IBM connectivity is a WARN
+(not a failure) until an account is configured.
 
 ## Repository structure
 
 ```text
 .
 ├── README.md
+├── CLAUDE.md              # shared project instructions for Claude Code
 ├── CONTRIBUTING.md
+├── EXPERIMENTS.md         # append-only experiment log
 ├── requirements.txt
-├── test_qiskit.py         # local environment smoke test
-├── notebooks/             # exploratory notebooks (problem, baseline, quantum, hardware)
+├── .env.example           # copy to .env for IBM credentials (git-ignored)
+├── test_qiskit.py         # environment preflight check
+├── notebooks/             # exploratory notebooks
 ├── src/                   # reusable code (encoding, quantum, baseline, metrics)
-├── experiments/           # runnable scripts (simulator / hardware)
-├── results/               # experiment results (data, logs)
+├── experiments/           # runnable experiment entrypoints (eNNN_*.py)
+├── scripts/               # one-off utilities (data prep, figure export)
+├── tests/                 # unit and regression tests
+├── data/                  # datasets: raw/ and processed/ (only if needed)
+├── results/               # machine-readable outputs (CSV / JSON)
 ├── figures/               # plots for the presentation
 └── slides/                # final presentation
 ```
@@ -51,6 +72,22 @@ from qiskit_ibm_runtime import QiskitRuntimeService
 ```
 
 Develop and debug on the local simulator (`qiskit-aer`), and reserve real QPU runs for final validation to avoid wasting queue time.
+
+## Troubleshooting
+
+**macOS + Homebrew Python: `Symbol not found: _XML_SetAllocTrackerActivationThreshold`**
+
+On macOS 26 (Tahoe), Homebrew's Python links `pyexpat` against the system
+`libexpat`, which is missing a symbol the build expects. This breaks `venv`/`pip`.
+Point the loader at Homebrew's newer expat (no system files are modified):
+
+```bash
+export DYLD_LIBRARY_PATH="/opt/homebrew/opt/expat/lib:$DYLD_LIBRARY_PATH"
+python3 -m venv .venv
+```
+
+To make it permanent for this project, append that `export` line to `.venv/bin/activate`.
+This only affects macOS/Homebrew setups — Linux and Windows are unaffected.
 
 ## Optional add-ons
 

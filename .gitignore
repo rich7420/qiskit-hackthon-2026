@@ -16,9 +16,15 @@ env/
 
 # Secrets / credentials (never commit IBM Quantum tokens)
 .env
-*.env
+.env.*
+!.env.example
 .qiskit/
 qiskit-ibm.json
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
 
 # OS / editor
 .DS_Store

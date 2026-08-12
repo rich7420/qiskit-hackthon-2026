@@ -36,10 +36,9 @@ python -m ipykernel install --user \
 python test_qiskit.py
 ```
 
-`test_qiskit.py` is a preflight check: it verifies the Qiskit import, the
-statevector simulator (Bell state), Aer, transpilation, and IBM Quantum Runtime
-connectivity, printing a PASS / WARN / FAIL summary. IBM connectivity is a WARN
-(not a failure) until an account is configured.
+`test_qiskit.py` is a preflight check (Qiskit import, simulator, Aer, transpilation,
+IBM Runtime) that prints a PASS / WARN / FAIL summary. IBM stays a WARN until an
+account is configured.
 
 ## Repository structure
 

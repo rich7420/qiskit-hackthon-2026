@@ -1,0 +1,267 @@
+{
+  "experiment": "e007_bures_check",
+  "operating_point": "trained on MNIST 0/1, 20 epochs",
+  "n_qubits": 4,
+  "layers": 20,
+  "n_weights": 160,
+  "qfi": "diagonal, Fubini-Study metric",
+  "seed": 42,
+  "pearson_pred_vs_actual": 0.9945,
+  "slope_overall": 1.032,
+  "slope_small_updates": 1.069,
+  "note": "diagonal QFI upper-bounds true drift -> (1/2)sqrt(R) is a conservative, proportional estimate of Bures D_B; calibration of eps absorbs the constant",
+  "sweep": [
+    {
+      "scale": 0.005,
+      "R": 2.287806175209957e-05,
+      "predicted_half_sqrt_R": 0.002391550843704748,
+      "actual_bures": 0.002070290504132857
+    },
+    {
+      "scale": 0.005,
+      "R": 2.2439519881131488e-05,
+      "predicted_half_sqrt_R": 0.0023685185180367225,
+      "actual_bures": 0.002352076700966499
+    },
+    {
+      "scale": 0.005,
+      "R": 2.3135716137864492e-05,
+      "predicted_half_sqrt_R": 0.0024049800486627996,
+      "actual_bures": 0.002433966898014935
+    },
+    {
+      "scale": 0.005,
+      "R": 2.271222607903018e-05,
+      "predicted_half_sqrt_R": 0.0023828672895815127,
+      "actual_bures": 0.0021338321144665374
+    },
+    {
+      "scale": 0.005,
+      "R": 2.2632540031165683e-05,
+      "predicted_half_sqrt_R": 0.0023786834610328928,
+      "actual_bures": 0.002111737305180223
+    },
+    {
+      "scale": 0.005,
+      "R": 2.2955955213994457e-05,
+      "predicted_half_sqrt_R": 0.0023956186682146667,
+      "actual_bures": 0.002210197130358797
+    },
+    {
+      "scale": 0.01,
+      "R": 8.978395749915583e-05,
+      "predicted_half_sqrt_R": 0.004737719849757788,
+      "actual_bures": 0.004442041189323335
+    },
+    {
+      "scale": 0.01,
+      "R": 9.023763777421842e-05,
+      "predicted_half_sqrt_R": 0.0047496746671276974,
+      "actual_bures": 0.00479970824804365
+    },
+    {
+      "scale": 0.01,
+      "R": 8.889063864792233e-05,
+      "predicted_half_sqrt_R": 0.004714091605174913,
+      "actual_bures": 0.004380494266930832
+    },
+    {
+      "scale": 0.01,
+      "R": 9.120495576225e-05,
+      "predicted_half_sqrt_R": 0.0047750642865371454,
+      "actual_bures": 0.005221557492202664
+    },
+    {
+      "scale": 0.01,
+      "R": 8.964474829915366e-05,
+      "predicted_half_sqrt_R": 0.004734045529437631,
+      "actual_bures": 0.0050110015530033265
+    },
+    {
+      "scale": 0.01,
+      "R": 8.968031777469673e-05,
+      "predicted_half_sqrt_R": 0.004734984629718895,
+      "actual_bures": 0.005345759631775441
+    },
+    {
+      "scale": 0.02,
+      "R": 0.00036385843180784523,
+      "predicted_half_sqrt_R": 0.009537536786401471,
+      "actual_bures": 0.008926250097389734
+    },
+    {
+      "scale": 0.02,
+      "R": 0.0003521223641443164,
+      "predicted_half_sqrt_R": 0.009382461885671538,
+      "actual_bures": 0.00776124371428707
+    },
+    {
+      "scale": 0.02,
+      "R": 0.00035878922761841065,
+      "predicted_half_sqrt_R": 0.009470866217226525,
+      "actual_bures": 0.009498967190593344
+    },
+    {
+      "scale": 0.02,
+      "R": 0.00036185798037343205,
+      "predicted_half_sqrt_R": 0.009511282515694611,
+      "actual_bures": 0.01097480965816726
+    },
+    {
+      "scale": 0.02,
+      "R": 0.00035461729634923725,
+      "predicted_half_sqrt_R": 0.00941564252121486,
+      "actual_bures": 0.010064884778124738
+    },
+    {
+      "scale": 0.02,
+      "R": 0.00036116508191215565,
+      "predicted_half_sqrt_R": 0.009502171882156149,
+      "actual_bures": 0.00958932984528514
+    },
+    {
+      "scale": 0.04,
+      "R": 0.0014812653569465908,
+      "predicted_half_sqrt_R": 0.0192436051517549,
+      "actual_bures": 0.01642839844121867
+    },
+    {
+      "scale": 0.04,
+      "R": 0.0014735067789174894,
+      "predicted_half_sqrt_R": 0.019193141867067318,
+      "actual_bures": 0.019426199110139653
+    },
+    {
+      "scale": 0.04,
+      "R": 0.0014657459869963504,
+      "predicted_half_sqrt_R": 0.019142531095680308,
+      "actual_bures": 0.02192066051310037
+    },
+    {
+      "scale": 0.04,
+      "R": 0.0014408161276184789,
+      "predicted_half_sqrt_R": 0.018979041912188816,
+      "actual_bures": 0.02047171707167901
+    },
+    {
+      "scale": 0.04,
+      "R": 0.0014106436306775684,
+      "predicted_half_sqrt_R": 0.01877926802805136,
+      "actual_bures": 0.018091661016392657
+    },
+    {
+      "scale": 0.04,
+      "R": 0.0014474757606232087,
+      "predicted_half_sqrt_R": 0.019022853102408224,
+      "actual_bures": 0.018386889805056816
+    },
+    {
+      "scale": 0.08,
+      "R": 0.005661919655273485,
+      "predicted_half_sqrt_R": 0.037622864242616766,
+      "actual_bures": 0.03709890547653141
+    },
+    {
+      "scale": 0.08,
+      "R": 0.005823724508151469,
+      "predicted_half_sqrt_R": 0.0381566655649818,
+      "actual_bures": 0.035619577915075556
+    },
+    {
+      "scale": 0.08,
+      "R": 0.005679082605115588,
+      "predicted_half_sqrt_R": 0.037679844098388954,
+      "actual_bures": 0.03576189506612279
+    },
+    {
+      "scale": 0.08,
+      "R": 0.005528195019605009,
+      "predicted_half_sqrt_R": 0.037175916329005965,
+      "actual_bures": 0.04035198760759619
+    },
+    {
+      "scale": 0.08,
+      "R": 0.005812311306963592,
+      "predicted_half_sqrt_R": 0.03811925795107898,
+      "actual_bures": 0.03663893859169827
+    },
+    {
+      "scale": 0.08,
+      "R": 0.005723965616733387,
+      "predicted_half_sqrt_R": 0.037828447023151066,
+      "actual_bures": 0.036984548583306076
+    },
+    {
+      "scale": 0.16,
+      "R": 0.022336373792938166,
+      "predicted_half_sqrt_R": 0.07472679203762558,
+      "actual_bures": 0.0771461006688351
+    },
+    {
+      "scale": 0.16,
+      "R": 0.02319934770365662,
+      "predicted_half_sqrt_R": 0.07615666041728823,
+      "actual_bures": 0.08330957014556029
+    },
+    {
+      "scale": 0.16,
+      "R": 0.02314682885565393,
+      "predicted_half_sqrt_R": 0.07607040958160724,
+      "actual_bures": 0.0819745518037073
+    },
+    {
+      "scale": 0.16,
+      "R": 0.023246491249772842,
+      "predicted_half_sqrt_R": 0.07623400037019709,
+      "actual_bures": 0.07220565724807827
+    },
+    {
+      "scale": 0.16,
+      "R": 0.023154162640384383,
+      "predicted_half_sqrt_R": 0.07608245960861212,
+      "actual_bures": 0.07313272543160626
+    },
+    {
+      "scale": 0.16,
+      "R": 0.02294583387093746,
+      "predicted_half_sqrt_R": 0.07573941158825018,
+      "actual_bures": 0.07791657938191424
+    },
+    {
+      "scale": 0.32,
+      "R": 0.09246902120241965,
+      "predicted_half_sqrt_R": 0.15204359671030185,
+      "actual_bures": 0.14914303092518832
+    },
+    {
+      "scale": 0.32,
+      "R": 0.09429673048867364,
+      "predicted_half_sqrt_R": 0.15353886355632704,
+      "actual_bures": 0.12853643572868645
+    },
+    {
+      "scale": 0.32,
+      "R": 0.09499072553059762,
+      "predicted_half_sqrt_R": 0.15410282730258199,
+      "actual_bures": 0.14380922967354293
+    },
+    {
+      "scale": 0.32,
+      "R": 0.09367917115884432,
+      "predicted_half_sqrt_R": 0.1530352664901495,
+      "actual_bures": 0.16093534604536525
+    },
+    {
+      "scale": 0.32,
+      "R": 0.0903652614639798,
+      "predicted_half_sqrt_R": 0.1503040763452374,
+      "actual_bures": 0.13194138896807361
+    },
+    {
+      "scale": 0.32,
+      "R": 0.09352367418691324,
+      "predicted_half_sqrt_R": 0.15290820300666771,
+      "actual_bures": 0.15680018825452266
+    }
+  ]
+}

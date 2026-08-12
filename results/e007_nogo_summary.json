@@ -1,0 +1,111 @@
+{
+  "experiment": "e007_directional_nogo",
+  "verdict": "NO-GO: forgetting is step-magnitude (radial), not quantum-geometric (directional)",
+  "evidence_1_isotropy": {
+    "n_weights": 160,
+    "global_qfi_effective_rank": 157.6,
+    "global_qfi_max_over_min": 2.08,
+    "cfi_effective_rank": 96.2,
+    "cfi_max_over_min": 1.99e+28
+  },
+  "evidence_2_directional_multiseed": {
+    "n_seeds": 5,
+    "per_task": {
+      "Q_global": {
+        "beta2_signs": {
+          "n_pos": 2,
+          "n_neg": 3,
+          "consistent": false
+        },
+        "mean_dR2": 0.0893,
+        "std_dR2": 0.0802
+      },
+      "Q_readout": {
+        "beta2_signs": {
+          "n_pos": 2,
+          "n_neg": 3,
+          "consistent": false
+        },
+        "mean_dR2": 0.063,
+        "std_dR2": 0.0464
+      },
+      "Q_cfi": {
+        "beta2_signs": {
+          "n_pos": 4,
+          "n_neg": 1,
+          "consistent": false
+        },
+        "mean_dR2": 0.1627,
+        "std_dR2": 0.1184
+      }
+    },
+    "note": "mixed-sign beta2 across seeds => noise, not signal"
+  },
+  "evidence_3_exact_bures_vs_euclid": {
+    "corr_euclid": 0.898,
+    "corr_bures_global": 0.8287,
+    "corr_bures_readout": 0.8106,
+    "R2_on_euclid": 0.8063,
+    "incremental_R2": {
+      "bures_global": 0.0168,
+      "bures_readout": 0.026
+    },
+    "note": "exact state distance does not beat Euclidean parameter movement"
+  },
+  "sanity_R_measures_state_drift": {
+    "pearson_pred_vs_bures": 0.9945,
+    "slope": 1.032
+  },
+  "per_seed": [
+    {
+      "seed": 42,
+      "R2_step": 0.7401,
+      "Q_global_beta2": -0.0073,
+      "Q_global_dR2": 0.0421,
+      "Q_readout_beta2": -0.0126,
+      "Q_readout_dR2": 0.0467,
+      "Q_cfi_beta2": -0.0314,
+      "Q_cfi_dR2": 0.0009
+    },
+    {
+      "seed": 43,
+      "R2_step": 0.7464,
+      "Q_global_beta2": -0.0009,
+      "Q_global_dR2": 0.0004,
+      "Q_readout_beta2": -0.0021,
+      "Q_readout_dR2": 0.0005,
+      "Q_cfi_beta2": 0.9956,
+      "Q_cfi_dR2": 0.1721
+    },
+    {
+      "seed": 44,
+      "R2_step": 0.5755,
+      "Q_global_beta2": 0.0216,
+      "Q_global_dR2": 0.1533,
+      "Q_readout_beta2": 0.0356,
+      "Q_readout_dR2": 0.1037,
+      "Q_cfi_beta2": 0.1918,
+      "Q_cfi_dR2": 0.1734
+    },
+    {
+      "seed": 45,
+      "R2_step": 0.471,
+      "Q_global_beta2": 0.0112,
+      "Q_global_dR2": 0.213,
+      "Q_readout_beta2": 0.0193,
+      "Q_readout_dR2": 0.1279,
+      "Q_cfi_beta2": 0.3779,
+      "Q_cfi_dR2": 0.3634
+    },
+    {
+      "seed": 46,
+      "R2_step": 0.6968,
+      "Q_global_beta2": -0.005,
+      "Q_global_dR2": 0.0379,
+      "Q_readout_beta2": -0.0082,
+      "Q_readout_dR2": 0.0363,
+      "Q_cfi_beta2": 0.2796,
+      "Q_cfi_dR2": 0.1039
+    }
+  ]
+}

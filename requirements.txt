@@ -1,24 +1,27 @@
 # Core Qiskit stack
-qiskit
-qiskit-ibm-runtime
-qiskit-aer
+qiskit==2.5.1
+qiskit-ibm-runtime==0.49.0
+qiskit-aer==0.17.2
 
 # Scientific / analysis tooling
-numpy
-scipy
-pandas
-matplotlib
-networkx
-scikit-learn
+numpy==2.5.2
+scipy==1.18.0
+pandas==3.0.5
+matplotlib==3.11.1
+networkx==3.6.1
+scikit-learn==1.9.0
+pylatexenc==2.11          # circuit diagram rendering (QuantumCircuit.draw("mpl"))
 
 # Notebook environment
-jupyterlab
-ipykernel
+jupyterlab==4.6.3
+ipykernel==7.3.0
 
 # Testing
-pytest
+pytest==9.1.1
+
+# Quantum machine learning (used by experiments/e001_qnn_mnist.py)
+qiskit-machine-learning==0.9.0
 
 # Optional — install only if the problem needs it:
 # qiskit-optimization        # QUBO / QAOA / combinatorial optimization
-# qiskit-machine-learning    # quantum machine learning
 # qiskit-nature              # chemistry / physics / VQE

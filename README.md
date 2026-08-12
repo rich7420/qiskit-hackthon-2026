@@ -59,6 +59,11 @@ python experiments/e001_qnn_mnist.py --dataset digits --seed 42
 Use `--dataset auto` only when an explicitly warned MNIST-to-digits fallback is desired.
 The checked-in reference run is `results/e001_qnn_mnist_reference.json`.
 
+E002 is a single-seed, paper-inspired PennyLane amplitude-QNN experiment. Its hyperparameters
+are selected on a validation split and its held-out test split is evaluated once. The checked-in
+reference run is `results/e002_amplitude_qnn_reference.json`; see `EXPERIMENTS.md` for the
+scope and paper-method differences.
+
 ## Repository structure
 
 ```text

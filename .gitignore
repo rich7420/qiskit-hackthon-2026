@@ -47,6 +47,10 @@ figures/**/*.pdf
 !results/e001_qnn_mnist_reference.json
 !figures/e001_qnn_circuit.png
 !figures/e001_training_curve.png
+!results/e002_amplitude_qnn_reference.json
+!results/tune_e002.json
+!figures/e002_qnn_circuit.png
+!figures/e002_training_curve.png
 
 # LaTeX drawer diagnostic generated when a local TeX installation is incomplete
 latex_error.log

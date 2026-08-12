@@ -19,8 +19,11 @@ ipykernel==7.3.0
 # Testing
 pytest==9.1.1
 
-# Quantum machine learning (used by experiments/e001_qnn_mnist.py)
+# Quantum machine learning
 qiskit-machine-learning==0.9.0
+# PennyLane: statevector backpropagation for experiments/e002_amplitude_qnn.py.
+# Qiskit's RawFeatureVector/ParameterizedInitialize path does not support gradient optimizers.
+pennylane==0.45.1
 
 # Optional — install only if the problem needs it:
 # qiskit-optimization        # QUBO / QAOA / combinatorial optimization

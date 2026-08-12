@@ -76,3 +76,61 @@ The source/data hashes, package versions, weights, and full evaluation history a
 Figures:
 - `figures/e001_qnn_circuit.png` — circuit schematic (via `scripts/plot_qnn_circuit.py`)
 - `figures/e001_training_curve.png` — train/test accuracy vs objective evaluation (via `scripts/plot_training_curve.py`)
+
+---
+
+## E002 — amplitude-encoding QNN, gradient-trained (PennyLane)
+
+Goal: test a paper-inspired amplitude-encoding classifier with exact-statevector gradients.
+This is a single-seed engineering experiment, not a paper reproduction or a statistical
+comparison. The closest reference is arXiv:2607.16030:
+https://arxiv.org/html/2607.16030v1
+
+Source hash:       cb0746cf66dc21276376935f0a34429c49f7af3be03d53baeaa73986a394776c
+Data split hash:   263e2bef53d342880f60d4b28d74aedaaa91eda092e7d96a7873c8e414a07aec
+Framework:         pennylane 0.45.1 (`default.qubit`, backprop, exact / no shots)
+Command:           `python experiments/e002_amplitude_qnn.py --n-qubits 4 --layers 30 --epochs 75 --lr 0.01 --n-train 600 --n-validation 200 --n-test 200 --seed 42 --output results/e002_amplitude_qnn_reference.json`
+
+Configuration (selected by validation only; test was held out during `scripts/tune_e002.py`):
+- task = MNIST 0 vs 1; 600 train / 200 validation / 200 test
+- preprocessing = train-only PCA -> 16 features, then per-sample L2 normalization
+- ansatz = independent RY/RZ + nearest-neighbor CNOT, 30 layers, 240 weights
+- output/loss = one `<Z_0>` expectation with {-1, +1} labels and mean squared error
+- optimizer = full-batch Adam(lr=0.01), 75 epochs; seed = 42
+
+Circuit:
+- qubits = 4; logical depth = 122; two-qubit gates = 90
+
+Result:
+- QNN accuracy = 0.9833 train / 0.9900 validation / 0.9800 held-out test
+- final training loss = 0.3260
+- classical baseline (LogisticRegression, same 16 features) = 0.995
+- train time = 24.933 s (runtime is informational and machine-dependent)
+
+Finding: on this fixed split and seed, the QNN learns a high-accuracy classifier but remains
+below the simple classical baseline (196/200 versus 199/200 correct). Validation-only tuning
+selected 30 layers, lr=0.01, and epoch 75; the tuning artifact records zero test evaluations.
+No optimizer-causality or quantum-advantage claim is made from this run.
+
+Method note: arXiv:2607.16030 shares each qubit's RY/RZ angle, uses two Z readouts with
+softmax/BCE, parameter-shift gradients, 20 training epochs, and six trials. E002 instead uses
+independent RY/RZ angles, one Z readout with MSE, statevector backprop, and one seed. The
+earlier arXiv:2108.02786 experiment is an 8-qubit continual-learning setup, so its accuracy is
+not directly comparable: https://arxiv.org/abs/2108.02786
+
+Framework note: Qiskit's `RawFeatureVector` / `ParameterizedInitialize` implementation cannot
+be used with gradient-based optimizers; this is narrower than saying Qiskit cannot
+differentiate amplitude encoding in general:
+https://qiskit-community.github.io/qiskit-machine-learning/_modules/qiskit_machine_learning/circuit/library/raw_feature_vector.html
+
+The package versions, weights, hashes, split sizes, circuit metrics, and full train/validation
+history are stored in `results/e002_amplitude_qnn_reference.json`. Test accuracy is absent
+from the per-epoch history because the test split is evaluated only after training.
+
+Tuning artifact:
+- `results/tune_e002.json` — all validation-only candidates, selected epoch, versions, hashes,
+  seed, split sizes, and `test_evaluations = 0`
+
+Figures:
+- `figures/e002_qnn_circuit.png` — circuit schematic (via `scripts/plot_e002_circuit.py`)
+- `figures/e002_training_curve.png` — train/validation accuracy vs epoch (via `scripts/plot_e002_curve.py`)

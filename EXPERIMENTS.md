@@ -38,20 +38,3 @@ IBM Job ID:         # hardware runs only
 Notes:
 - ...
 ```
-
----
-
-## E001 — Classical baseline
-
-Commit:
-Backend: (none / classical)
-
-Configuration:
-- method =
-- seed =
-
-Result:
-- objective =
-
-Notes:
-- ...

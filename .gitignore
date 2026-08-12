@@ -31,6 +31,10 @@ htmlcov/
 .idea/
 .vscode/
 
+# Agent tooling (local, personal)
+.claude/
+.agent/
+
 # Large / generated outputs (keep the directories, ignore bulky artifacts)
 results/**/*.csv
 results/**/*.npy

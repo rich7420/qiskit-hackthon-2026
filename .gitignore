@@ -42,3 +42,11 @@ results/**/*.json
 figures/**/*.png
 figures/**/*.pdf
 !**/.gitkeep
+
+# Small reference artifacts used by the experiment log and regression review
+!results/e001_qnn_mnist_reference.json
+!figures/e001_qnn_circuit.png
+!figures/e001_training_curve.png
+
+# LaTeX drawer diagnostic generated when a local TeX installation is incomplete
+latex_error.log

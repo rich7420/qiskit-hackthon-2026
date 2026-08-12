@@ -184,3 +184,69 @@ Figures:
   (via `scripts/plot_e003_training.py`)
 - `figures/e003_continual_baseline.png` — train/test curves for each task, showing learning
   and forgetting (via `scripts/plot_e003_curve.py`)
+
+---
+
+## E004 — 3-task continual-learning baseline: MNIST -> Fashion-MNIST -> SPT/ATF
+
+Goal: extend E003 with the quantum-native SPT/ATF task and measure training-accuracy
+retention under naive sequential fine-tuning. This is a three-seed, paper-inspired engineering
+baseline, not a reproduction or a quantum-advantage result. Reference:
+https://arxiv.org/html/2607.16030v1
+
+Source hash:       517acacfc01d2c1cda90e4fbae6f15f9cc19a07d1afc28002503d1a3f77c6e90
+Data split hashes: seed 42 `ea2430213eb950aaf1fbc2bbbdd8f9bdbd500be94b328c90a27486917ab289c9`
+                   seed 43 `22a8bd27e83c259f51407f4f0a6a59426e208e9628df7d91926d30b019cf573b`
+                   seed 44 `374b55ddb4b8c649679341ee473b188e7e2cf4b49a6aeea9fbba734d40d70d21`
+Framework:         pennylane 0.45.1 (`default.qubit`, backprop, exact / no shots)
+Command:           `python scripts/run_e004_multiseed.py --seeds 42 43 44 --layers 20 --lr 0.02 --epochs-per-task 20 --n-train 800 --n-test 200`
+Plot command:      `python scripts/plot_e004_curve.py --seeds 42 43 44`
+
+Configuration:
+- task order = MNIST 0/1, Fashion-MNIST 0/1, then SPT/ATF; 800 train / 200 fixed
+  test samples per task and 20 full-batch epochs per task
+- image representation = one PCA-16 transform fit on MNIST train and held fixed for both
+  image tasks; each vector is L2-normalized for amplitude encoding
+- phase representation = exact-diagonalization ground states of the four-spin open-boundary
+  cluster-Ising Hamiltonian; SPT samples use `h in [0.0, 0.5]` and ATF samples use
+  `h in [2.5, 3.0]`; the even-global-Z-parity representative is selected deterministically
+  from the degenerate ground space and amplitude-encoded directly
+- learner = 20 layers of independent RY/RZ rotations and nearest-neighbor CNOTs, 160
+  weights, one `<Z_0>` readout, {-1,+1} labels, and MSE
+- training = one Adam(lr=0.02) instance whose weights and optimizer state both continue
+  across task boundaries; no EWC/QEWC; independently seeded data and weights for 42/43/44
+
+Training-accuracy result (mean +/- sample standard deviation across three seeds):
+- MNIST = 0.9204 +/- 0.0264 at its phase end -> 0.5280 +/- 0.0321 final;
+  forgetting = 0.3925 +/- 0.0569
+- Fashion-MNIST = 0.9296 +/- 0.0125 at its phase end -> 0.8029 +/- 0.1297 final;
+  forgetting = 0.1267 +/- 0.1313
+- SPT/ATF = 1.0000 +/- 0.0000 at its phase end and final
+
+Fixed-test diagnostic (not used for parameter or epoch selection):
+- final MNIST = 0.5317 +/- 0.0425
+- final Fashion-MNIST = 0.8083 +/- 0.1665
+- final SPT/ATF = 1.0000 +/- 0.0000
+
+Finding: the baseline reliably learns each active task and exhibits catastrophic forgetting,
+especially on MNIST. Fashion-MNIST retention varies substantially by seed, so the earlier
+single-seed curve was not a credible estimate of its typical forgetting. Three seeds expose
+that variance but remain a small sample; these values should be treated as an internal
+baseline for later consolidation experiments, not as precise population estimates.
+
+Paper-comparison limit: the reference uses 30 layers with 120 shared parameters, two Z
+readouts with softmax/BCE, parameter-shift gradients, and six trials. E004 deliberately keeps
+the E003 learner (20 layers, 160 independent parameters, one Z/MSE readout, backprop) and runs
+three seeds. The reference reports final three-task accuracies of 0.632/0.498/1.000, whereas
+our final training means are 0.528/0.803/1.000. These are not directly comparable metrics or
+architectures, and E004 must not be described as reproducing the paper's curve.
+
+Artifacts:
+- `results/e004_continual_seed42.json`, `e004_continual_seed43.json`, and
+  `e004_continual_seed44.json` store complete per-epoch train/test histories, initial/final
+  weights, versions, hashes, circuit resources, and runtime
+- `results/e004_continual_summary.json` stores the mean and sample SD curve, per-task
+  aggregates, seed list, source hash, and per-seed data hashes
+- `figures/e004_continual_seed42.png`, `e004_continual_seed43.png`, and
+  `e004_continual_seed44.png` show the three training-accuracy runs
+- `figures/e004_continual_mean.png` shows the three-seed mean with +/-1 sample-SD bands

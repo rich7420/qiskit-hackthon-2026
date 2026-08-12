@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "experiment": "e002_validation_tuning",
+  "created_at_utc": "2026-08-12T10:57:16.586482+00:00",
+  "source_code_sha256": "e51b534962ae823ca6c090f2d5adcebbf8c964129e875e8c3d580ae021b72f71",
+  "data_split_sha256": "263e2bef53d342880f60d4b28d74aedaaa91eda092e7d96a7873c8e414a07aec",
+  "environment": {
+    "pennylane": "0.45.1",
+    "numpy": "2.5.2",
+    "scipy": "1.18.0",
+    "scikit-learn": "1.9.0"
+  },
+  "dataset": {
+    "source": "mnist_784",
+    "n_train": 600,
+    "n_validation": 200,
+    "n_test_held_out": 200
+  },
+  "epochs": 80,
+  "seed": 42,
+  "selection_metric": "best_validation_accuracy",
+  "test_evaluations": 0,
+  "results": [
+    {
+      "final_validation_accuracy": 0.985,
+      "best_validation_accuracy": 0.99,
+      "best_epoch": 75,
+      "train_accuracy": 0.985,
+      "n_weights": 240,
+      "layers": 30,
+      "learning_rate": 0.01,
+      "train_time_sec": 16.727
+    },
+    {
+      "final_validation_accuracy": 0.97,
+      "best_validation_accuracy": 0.98,
+      "best_epoch": 50,
+      "train_accuracy": 0.98,
+      "n_weights": 80,
+      "layers": 10,
+      "learning_rate": 0.05,
+      "train_time_sec": 5.633
+    },
+    {
+      "final_validation_accuracy": 0.975,
+      "best_validation_accuracy": 0.975,
+      "best_epoch": 67,
+      "train_accuracy": 0.9833333333333333,
+      "n_weights": 240,
+      "layers": 30,
+      "learning_rate": 0.02,
+      "train_time_sec": 17.125
+    },
+    {
+      "final_validation_accuracy": 0.97,
+      "best_validation_accuracy": 0.97,
+      "best_epoch": 44,
+      "train_accuracy": 0.9833333333333333,
+      "n_weights": 160,
+      "layers": 20,
+      "learning_rate": 0.02,
+      "train_time_sec": 11.569
+    },
+    {
+      "final_validation_accuracy": 0.955,
+      "best_validation_accuracy": 0.955,
+      "best_epoch": 44,
+      "train_accuracy": 0.9733333333333334,
+      "n_weights": 120,
+      "layers": 15,
+      "learning_rate": 0.03,
+      "train_time_sec": 8.511
+    },
+    {
+      "final_validation_accuracy": 0.95,
+      "best_validation_accuracy": 0.95,
+      "best_epoch": 80,
+      "train_accuracy": 0.9733333333333334,
+      "n_weights": 80,
+      "layers": 10,
+      "learning_rate": 0.02,
+      "train_time_sec": 5.884
+    },
+    {
+      "final_validation_accuracy": 0.93,
+      "best_validation_accuracy": 0.94,
+      "best_epoch": 70,
+      "train_accuracy": 0.9533333333333334,
+      "n_weights": 48,
+      "layers": 6,
+      "learning_rate": 0.05,
+      "train_time_sec": 3.413
+    }
+  ]
+}

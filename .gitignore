@@ -133,3 +133,5 @@ figures/**/*.pdf
 
 # LaTeX drawer diagnostic generated when a local TeX installation is incomplete
 latex_error.log
+
+!results/e014_hard_task_screen.json

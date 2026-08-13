@@ -39,13 +39,18 @@ from src.e005_softmax import (
 )
 
 
-def make_probs_qnode(n_qubits: int = 4, n_layers: int = 20, diff_method: str = "backprop"):
-    """Return (qnode, weight_shape); qnode(features, weights) -> p_theta(x) in R^{2^n}.
+def make_probs_qnode(n_qubits: int = 4, n_layers: int = 20, diff_method: str = "backprop",
+                     readout_wires=None):
+    """Return (qnode, weight_shape); qnode(features, weights) -> p_theta(x) in R^{2^m}.
 
     Same ansatz as ``make_softmax_qnode`` so the prepared state is identical -- only the
-    readout differs (full computational-basis probabilities instead of two Pauli-Z).
+    readout differs. ``readout_wires`` selects the measured subsystem (default: all n qubits,
+    the full 2^n distribution); a smaller local readout (e.g. (0, 1)) gives a 2^m-dim
+    probability vector -- a genuinely lightweight, hardware-cheap, barren-plateau-safe
+    observable, at the cost of the circuit having to route task info onto those wires.
     """
     dev = qml.device("default.qubit", wires=n_qubits)
+    wires = tuple(range(n_qubits)) if readout_wires is None else tuple(int(w) for w in readout_wires)
 
     @qml.qnode(dev, diff_method=diff_method)
     def qnode(features, weights):
@@ -56,7 +61,7 @@ def make_probs_qnode(n_qubits: int = 4, n_layers: int = 20, diff_method: str = "
                 qml.RZ(weights[layer, q, 1], wires=q)
             for q in range(n_qubits - 1):
                 qml.CNOT(wires=[q, q + 1])
-        return qml.probs(wires=range(n_qubits))
+        return qml.probs(wires=wires)
 
     return qnode, (n_layers, n_qubits, 2)
 
@@ -175,7 +180,7 @@ def train_task_isolated_head(
     Returns (weights, W, b) after training.  ``weights`` is unchanged when train_theta
     is False (it is passed as a non-trainable constant into the cost).
     """
-    n_probs = 2 ** len(probs_qnode.device.wires)
+    n_probs = int(probs_features(probs_qnode, weights, task.X_train[:1]).shape[1])
     W, b = init_head_weights(n_probs, seed=head_seed)
     weights = pnp.array(np.asarray(weights), requires_grad=bool(train_theta))
     Xtr = pnp.array(task.X_train, requires_grad=False)

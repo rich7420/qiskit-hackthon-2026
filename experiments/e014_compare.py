@@ -119,7 +119,7 @@ def _run_shared_readout(method: str, tasks, *, layers, lr, epochs, lam_qewc,
 
 
 def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, verbose,
-                       n_qubits=N_QUBITS) -> dict[str, Any]:
+                       n_qubits=N_QUBITS, readout_qubits=None) -> dict[str, Any]:
     """frozen_head / free_head / anchor_head: shared backbone + one isolated head per task.
 
     theta is advanced by a quantum gradient step (Variants B/C) or frozen (A); each task's
@@ -128,7 +128,8 @@ def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, v
     fit at task j on theta_j is kept fixed and re-evaluated on the *current* theta, so any
     later backbone drift surfaces as representation forgetting in R.
     """
-    probs_qnode, _ = make_probs_qnode(n_qubits=n_qubits, n_layers=layers)
+    readout_wires = None if readout_qubits is None else range(readout_qubits)
+    probs_qnode, _ = make_probs_qnode(n_qubits=n_qubits, n_layers=layers, readout_wires=readout_wires)
     heads: list = []  # frozen sklearn LinearHead per completed task (fit at theta_j)
     R: list[list[float | None]] = [[None] * len(tasks) for _ in tasks]
     weights = None
@@ -161,7 +162,8 @@ def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, v
 
 
 def run_experiment(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8, lam_ewc=30.0,
-                   qfi_samples=64, n_train=800, n_test=200, seed=42, verbose=True) -> dict[str, Any]:
+                   qfi_samples=64, n_train=800, n_test=200, seed=42, readout_qubits=None,
+                   verbose=True) -> dict[str, Any]:
     task1, task2 = load_two_tasks(n_features=2**N_QUBITS, n_train=n_train, n_test=n_test, seed=seed)
     task3 = load_spt_atf(n_train=n_train, n_test=n_test, n_qubits=N_QUBITS, seed=seed)
     tasks = [task1, task2, task3]
@@ -176,7 +178,8 @@ def run_experiment(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8, la
                                          seed=seed, verbose=verbose)
     for m in ("frozen_head", "free_head", "anchor_head"):
         methods[m] = _run_isolated_head(m, tasks, layers=layers, lr=lr, epochs=epochs,
-                                        alpha=alpha, seed=seed, verbose=verbose)
+                                        alpha=alpha, seed=seed, verbose=verbose,
+                                        readout_qubits=readout_qubits)
     elapsed = time.perf_counter() - started
 
     return {
@@ -193,7 +196,9 @@ def run_experiment(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8, la
             "optimizer": "Adam", "learning_rate": lr, "epochs_per_task": epochs,
             "alpha_l2_anchor": alpha, "lambda_qewc": lam_qewc, "lambda_ewc": lam_ewc,
             "qfi_samples": qfi_samples,
-            "isolated_head": "logistic-style linear head over 2^n probs (diagonal observable per class)",
+            "isolated_head": "logistic-style linear head over probs (diagonal observable per class)",
+            "readout_qubits": readout_qubits if readout_qubits is not None else N_QUBITS,
+            "readout_dim": 2 ** (readout_qubits if readout_qubits is not None else N_QUBITS),
             "n_train_per_task": n_train, "n_test_per_task": n_test, "seed": seed,
             "method_notes": {
                 "sequential": "shared softmax readout, no isolation (CF baseline)",
@@ -231,6 +236,8 @@ def main() -> None:
     ap.add_argument("--n-train", type=int, default=800)
     ap.add_argument("--n-test", type=int, default=200)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--readout-qubits", type=int, default=None,
+                    help="isolated-head readout width m (default: all n qubits, full 2^n probs)")
     ap.add_argument("--output", type=Path)
     args = ap.parse_args()
 
@@ -238,6 +245,7 @@ def main() -> None:
         layers=args.layers, lr=args.lr, epochs=args.epochs, alpha=args.alpha,
         lam_qewc=args.lam_qewc, lam_ewc=args.lam_ewc, qfi_samples=args.qfi_samples,
         n_train=args.n_train, n_test=args.n_test, seed=args.seed,
+        readout_qubits=args.readout_qubits,
     )
     path = write_result(result, args.output)
     print("\nACC / BWT by method:")

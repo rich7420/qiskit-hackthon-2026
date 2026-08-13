@@ -1,0 +1,71 @@
+{
+  "experiment": "e014_hard_task_screen",
+  "created_at_utc": "2026-08-13T11:44:23.821991+00:00",
+  "source_code_sha256": "ea62a5623f80450ad1f182e904cf860a8238990455d845ed8e5a7cbfb6d48cbc",
+  "environment": {
+    "python": "3.13.15",
+    "packages": {
+      "pennylane": "0.45.1",
+      "numpy": "2.5.2",
+      "scikit-learn": "1.9.0"
+    }
+  },
+  "config": {
+    "depths": [
+      1,
+      2,
+      4,
+      8
+    ],
+    "n_train": 600,
+    "n_test": 200,
+    "lr": 0.05,
+    "epochs": 30,
+    "seed": 42,
+    "n_qubits": 4,
+    "note": "classical = logistic head on raw 2^n amplitudes; quantum = trained VQC"
+  },
+  "tasks": {
+    "cluster_deep": {
+      "classical_linear": 1.0,
+      "quantum": {
+        "L1": 0.5,
+        "L2": 0.69,
+        "L4": 1.0,
+        "L8": 1.0
+      },
+      "gap": 0.0
+    },
+    "cluster_near": {
+      "classical_linear": 1.0,
+      "quantum": {
+        "L1": 0.5,
+        "L2": 0.61,
+        "L4": 1.0,
+        "L8": 1.0
+      },
+      "gap": 0.0
+    },
+    "parity": {
+      "classical_linear": 0.46,
+      "quantum": {
+        "L1": 0.51,
+        "L2": 0.54,
+        "L4": 0.775,
+        "L8": 0.745
+      },
+      "gap": 0.315
+    },
+    "string": {
+      "classical_linear": 0.525,
+      "quantum": {
+        "L1": 0.5,
+        "L2": 0.465,
+        "L4": 0.84,
+        "L8": 0.76
+      },
+      "gap": 0.315
+    }
+  },
+  "elapsed_sec": 13.1
+}

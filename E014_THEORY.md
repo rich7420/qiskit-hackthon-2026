@@ -40,7 +40,7 @@ parameters — all learning is in $U(\theta)$ and the readout.
 with $\theta\in\mathbb R^{L\times n\times2}$ (here $n=4$). Each $R_P(\phi)=e^{-i\phi P/2}$.
 
 **Readout.** A Hermitian observable $H$ gives the scalar score
-$f(x)=\operatorname{Tr}[H\rho_\theta(x)]=\langle\psi_\theta(x)|H|\psi_\theta(x)\rangle$.
+$f(x)=\mathrm{Tr}[H\rho_\theta(x)]=\langle\psi_\theta(x)|H|\psi_\theta(x)\rangle$.
 
 Naming: $\rho_\theta(x)$ = **shared representation**; $H$ = **readout / measurement**.
 
@@ -72,7 +72,7 @@ misalignment of $H_{\mathrm{eff}}^{(T)}$ with what an earlier task required.
 
 $$
 \boxed{\;\rho_\theta(x)\ \text{shared},\qquad H^{(1)},\dots,H^{(T)}\ \text{task-specific},\qquad
-f_t(x)=\operatorname{Tr}[H^{(t)}\rho_\theta(x)]\;}.
+f_t(x)=\mathrm{Tr}[H^{(t)}\rho_\theta(x)]\;}.
 $$
 
 ---
@@ -82,7 +82,7 @@ $$
 Take each task observable diagonal in a fixed basis $U_b$ (a DANO-style form):
 
 $$
-H^{(t)}=U_b^\dagger\operatorname{diag}(\lambda^{(t)})U_b,\qquad \lambda^{(t)}\in\mathbb R^N .
+H^{(t)}=U_b^\dagger\mathrm{diag}(\lambda^{(t)})U_b,\qquad \lambda^{(t)}\in\mathbb R^N .
 $$
 
 Define the **measured probability vector**
@@ -98,8 +98,8 @@ a point on the probability simplex ($p_k\ge0$, $\sum_kp_k=1$).
 **Proposition 1 (readout identity).**
 $\displaystyle \big\langle H^{(t)}\big\rangle=\sum_k\lambda_k^{(t)}p_k(x;\theta)=\lambda^{(t)}\!\cdot p_\theta(x).$
 
-*Proof.* By cyclicity, $\operatorname{Tr}[U_b^\dagger\operatorname{diag}(\lambda)U_b\rho]
-=\operatorname{Tr}[\operatorname{diag}(\lambda)U_b\rho U_b^\dagger]
+*Proof.* By cyclicity, $\mathrm{Tr}[U_b^\dagger\mathrm{diag}(\lambda)U_b\rho]
+=\mathrm{Tr}[\mathrm{diag}(\lambda)U_b\rho U_b^\dagger]
 =\sum_k\lambda_k\langle k|U_b\rho U_b^\dagger|k\rangle=\sum_k\lambda_kp_k.$ $\blacksquare$
 
 For $C$ classes, stack $C$ diagonal observables into $W^{(t)}\in\mathbb R^{C\times N}$ (row $c$ is
@@ -115,8 +115,8 @@ the computational-basis distribution. **A task-specific observable is exactly a 
 the quantum probability vector.**
 
 *Subsystem variant.* Reading only $m<n$ wires uses the reduced state
-$\rho^{S}_\theta(x)=\operatorname{Tr}_{\bar S}\rho_\theta(x)$ and gives the marginal
-$p^{S}_k=\operatorname{Tr}[(|k\rangle\langle k|_S\otimes\mathbb I_{\bar S})\rho_\theta]$; the same
+$\rho^{S}_\theta(x)=\mathrm{Tr}_{\bar S}\rho_\theta(x)$ and gives the marginal
+$p^{S}_k=\mathrm{Tr}[(|k\rangle\langle k|_S\otimes\mathbb I_{\bar S})\rho_\theta]$; the same
 identity holds with $N\to2^m$. The 2-wire marginal is our "few-observable" baseline.
 
 ---
@@ -168,8 +168,8 @@ readout; both are special cases of a diagonal readout.)
 parameter-shift rule gives exact derivatives,
 
 $$
-\frac{\partial}{\partial\theta_r}\operatorname{Tr}[H\rho_\theta(x)]
-=\tfrac12\Big(\operatorname{Tr}[H\rho_{\theta+\frac\pi2 e_r}(x)]-\operatorname{Tr}[H\rho_{\theta-\frac\pi2 e_r}(x)]\Big).
+\frac{\partial}{\partial\theta_r}\mathrm{Tr}[H\rho_\theta(x)]
+=\tfrac12\Big(\mathrm{Tr}[H\rho_{\theta+\frac\pi2 e_r}(x)]-\mathrm{Tr}[H\rho_{\theta-\frac\pi2 e_r}(x)]\Big).
 $$
 
 **No quantum gradient for the head.** Since $z^{(t)}=W^{(t)}p_\theta$ is *linear in $W^{(t)}$*,
@@ -319,7 +319,7 @@ On hardware $p_k$ is estimated from $S$ computational-basis shots as $\hat p_k=n
 
 $$
 \widehat{\langle H^{(t)}\rangle}=\sum_k\lambda_k^{(t)}\hat p_k,\qquad
-\operatorname{Var}\big[\widehat{\langle H^{(t)}\rangle}\big]
+\mathrm{Var}\big[\widehat{\langle H^{(t)}\rangle}\big]
 =\frac1S\Big(\sum_k(\lambda_k^{(t)})^2p_k-\langle H^{(t)}\rangle^2\Big)\le\frac{\Lambda^2}{S}.
 $$
 
@@ -348,7 +348,7 @@ bases. A concrete hardware advantage of the commuting-family restriction of §5.
 | Method | intervenes on | mechanism | forgetting guarantee |
 |---|---|---|---|
 | Naive sequential | $\theta$ | none | none |
-| EWC / **QEWC** | $\theta$ | $\min L_t+\sum_j\alpha_j (\theta-\theta_j^\*)^\top\!\operatorname{diag}(F_j)(\theta-\theta_j^\*)$; $F=F_C$ (EWC) or $F_Q$ (QEWC) | approximate (soft) |
+| EWC / **QEWC** | $\theta$ | $\min L_t+\sum_j\alpha_j (\theta-\theta_j^\*)^\top\!\mathrm{diag}(F_j)(\theta-\theta_j^\*)$; $F=F_C$ (EWC) or $F_Q$ (QEWC) | approximate (soft) |
 | Quantum GEM | $\theta$ | project $\nabla L_t$ to not increase old-task loss | approximate (projection) |
 | e008/e010/e013 | $\theta$ | QEWC-style with a *measurement-derived* Fisher (smarter importance) | approximate (soft) |
 | **OI-QCL (ours)** | **measurement** | isolate $W^{(t)}$; share/soft-anchor $\theta$ | **structural on measurement side (Prop 3)**; residual = representation drift only |

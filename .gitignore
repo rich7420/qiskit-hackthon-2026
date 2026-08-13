@@ -146,3 +146,9 @@ latex_error.log
 !results/e014_noise_compare.json
 !results/e014_noise_figure_provenance.json
 !figures/e014_noise.png
+!results/e014_cmp_red_noiseless_seed42.json
+!results/e014_cmp_red_noiseless_seed43.json
+!results/e014_cmp_red_noiseless_seed44.json
+!results/e014_cmp_red_noisy_seed42.json
+!results/e014_cmp_red_noisy_seed43.json
+!results/e014_cmp_red_noisy_seed44.json

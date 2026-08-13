@@ -80,13 +80,21 @@ def _acc_matrix_stats(R: list[list[float | None]]) -> dict[str, Any]:
 
 
 def _run_shared_readout(method: str, tasks, *, layers, lr, epochs, lam_qewc,
-                        qfi_samples, seed, verbose, lam_ewc=30.0, n_qubits=N_QUBITS) -> dict[str, Any]:
+                        qfi_samples, seed, verbose, lam_ewc=30.0, n_qubits=N_QUBITS,
+                        noise=None) -> dict[str, Any]:
     """sequential / ewc / qewc: one shared softmax readout, theta continued across tasks.
 
     ewc consolidates with the classical (empirical) Fisher; qewc with the diagonal QFI.
+    ``noise`` trains + evaluates through the mixed-state noisy readout; QEWC still computes
+    its QFI regularizer from the noiseless state (QFI is a pure-state property).
     """
-    clf_qnode, weight_shape = make_softmax_qnode(n_qubits=n_qubits, n_layers=layers)
-    qfi_qnode, _ = make_softmax_qnode(n_qubits=n_qubits, n_layers=layers)  # state-equivalent
+    if noise is None:
+        clf_qnode, weight_shape = make_softmax_qnode(n_qubits=n_qubits, n_layers=layers)
+    else:
+        from src.e014_noise import make_noisy_softmax_qnode
+        clf_qnode, weight_shape = make_noisy_softmax_qnode(n_qubits=n_qubits, n_layers=layers,
+                                                           noise=noise)
+    qfi_qnode, _ = make_softmax_qnode(n_qubits=n_qubits, n_layers=layers)  # noiseless state QFI
     reg = EWC({"sequential": 0.0, "ewc": lam_ewc, "qewc": lam_qewc}[method])
     weights = pnp.array(0.01 * np.random.default_rng(seed).standard_normal(weight_shape),
                         requires_grad=True)
@@ -119,7 +127,7 @@ def _run_shared_readout(method: str, tasks, *, layers, lr, epochs, lam_qewc,
 
 
 def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, verbose,
-                       n_qubits=N_QUBITS, readout_qubits=None) -> dict[str, Any]:
+                       n_qubits=N_QUBITS, readout_qubits=None, noise=None) -> dict[str, Any]:
     """frozen_head / free_head / anchor_head: shared backbone + one isolated head per task.
 
     theta is advanced by a quantum gradient step (Variants B/C) or frozen (A); each task's
@@ -129,7 +137,12 @@ def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, v
     later backbone drift surfaces as representation forgetting in R.
     """
     readout_wires = None if readout_qubits is None else range(readout_qubits)
-    probs_qnode, _ = make_probs_qnode(n_qubits=n_qubits, n_layers=layers, readout_wires=readout_wires)
+    if noise is None:
+        probs_qnode, _ = make_probs_qnode(n_qubits=n_qubits, n_layers=layers, readout_wires=readout_wires)
+    else:
+        from src.e014_noise import make_noisy_probs_qnode
+        probs_qnode, _ = make_noisy_probs_qnode(n_qubits=n_qubits, n_layers=layers,
+                                                noise=noise, readout_wires=readout_wires)
     heads: list = []  # frozen sklearn LinearHead per completed task (fit at theta_j)
     R: list[list[float | None]] = [[None] * len(tasks) for _ in tasks]
     weights = None
@@ -138,7 +151,7 @@ def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, v
         if phase == 0:
             # Solid shared representation from Task 1 (softmax/BCE backbone).
             weights, _, _ = train_backbone(task, n_qubits=n_qubits, n_layers=layers,
-                                           lr=lr, epochs=epochs, seed=seed)
+                                           lr=lr, epochs=epochs, seed=seed, noise=noise)
         elif method != "frozen_head":
             # Variant B: free theta; Variant C: soft-L2 anchor to previous theta.
             use_alpha = alpha if method == "anchor_head" else 0.0
@@ -163,7 +176,7 @@ def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, v
 
 def run_experiment(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8, lam_ewc=30.0,
                    qfi_samples=64, n_train=800, n_test=200, seed=42, readout_qubits=None,
-                   t3="spt", verbose=True) -> dict[str, Any]:
+                   t3="spt", noise=None, verbose=True) -> dict[str, Any]:
     task1, task2 = load_two_tasks(n_features=2**N_QUBITS, n_train=n_train, n_test=n_test, seed=seed)
     _t3_loader = {"spt": load_spt_atf, "cluster_full": load_cluster_full}[t3]
     task3 = _t3_loader(n_train=n_train, n_test=n_test, n_qubits=N_QUBITS, seed=seed)
@@ -176,11 +189,11 @@ def run_experiment(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8, la
     for m in ("sequential", "ewc", "qewc"):
         methods[m] = _run_shared_readout(m, tasks, layers=layers, lr=lr, epochs=epochs,
                                          lam_qewc=lam_qewc, lam_ewc=lam_ewc, qfi_samples=qfi_samples,
-                                         seed=seed, verbose=verbose)
+                                         seed=seed, verbose=verbose, noise=noise)
     for m in ("frozen_head", "free_head", "anchor_head"):
         methods[m] = _run_isolated_head(m, tasks, layers=layers, lr=lr, epochs=epochs,
                                         alpha=alpha, seed=seed, verbose=verbose,
-                                        readout_qubits=readout_qubits)
+                                        readout_qubits=readout_qubits, noise=noise)
     elapsed = time.perf_counter() - started
 
     return {
@@ -201,6 +214,7 @@ def run_experiment(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8, la
             "isolated_head": "logistic-style linear head over probs (diagonal observable per class)",
             "readout_qubits": readout_qubits if readout_qubits is not None else N_QUBITS,
             "readout_dim": 2 ** (readout_qubits if readout_qubits is not None else N_QUBITS),
+            "noise": noise, "device": "default.mixed" if noise else "default.qubit",
             "n_train_per_task": n_train, "n_test_per_task": n_test, "seed": seed,
             "method_notes": {
                 "sequential": "shared softmax readout, no isolation (CF baseline)",
@@ -242,14 +256,22 @@ def main() -> None:
                     help="isolated-head readout width m (default: all n qubits, full 2^n probs)")
     ap.add_argument("--t3", choices=["spt", "cluster_full"], default="spt",
                     help="T3 task: deep SPT/ATF (default) or complete cluster-Ising")
+    ap.add_argument("--noise", action="store_true",
+                    help="train+eval all methods under the mixed-state noise model (default.mixed)")
+    ap.add_argument("--depol", type=float, default=0.01)
+    ap.add_argument("--meas", type=float, default=0.02)
+    ap.add_argument("--bit", type=float, default=0.0)
+    ap.add_argument("--phase", type=float, default=0.0)
     ap.add_argument("--output", type=Path)
     args = ap.parse_args()
 
+    noise = ({"bit": args.bit, "phase": args.phase, "depol": args.depol, "meas": args.meas}
+             if args.noise else None)
     result = run_experiment(
         layers=args.layers, lr=args.lr, epochs=args.epochs, alpha=args.alpha,
         lam_qewc=args.lam_qewc, lam_ewc=args.lam_ewc, qfi_samples=args.qfi_samples,
         n_train=args.n_train, n_test=args.n_test, seed=args.seed,
-        readout_qubits=args.readout_qubits, t3=args.t3,
+        readout_qubits=args.readout_qubits, t3=args.t3, noise=noise,
     )
     path = write_result(result, args.output)
     print("\nACC / BWT by method:")

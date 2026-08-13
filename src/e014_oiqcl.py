@@ -208,14 +208,21 @@ def train_backbone(
     lr: float = 0.02,
     epochs: int = 20,
     seed: int = 42,
+    noise: dict | None = None,
     verbose: bool = False,
 ):
     """Train the shared VQC on one task via the paper-faithful softmax/BCE readout.
 
     Returns (weights, softmax_qnode, weight_shape).  The returned theta is what gets
     frozen (Variant A) or soft-anchored (Variant C) for the measurement-side heads.
+    ``noise`` (a {bit,phase,depol,meas} dict) trains through the mixed-state noisy readout.
     """
-    clf_qnode, weight_shape = make_softmax_qnode(n_qubits=n_qubits, n_layers=n_layers)
+    if noise is None:
+        clf_qnode, weight_shape = make_softmax_qnode(n_qubits=n_qubits, n_layers=n_layers)
+    else:
+        from src.e014_noise import make_noisy_softmax_qnode
+        clf_qnode, weight_shape = make_noisy_softmax_qnode(n_qubits=n_qubits, n_layers=n_layers,
+                                                           noise=noise)
     weights = pnp.array(
         0.01 * np.random.default_rng(seed).standard_normal(weight_shape),
         requires_grad=True,

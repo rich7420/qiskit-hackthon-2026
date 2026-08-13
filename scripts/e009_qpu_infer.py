@@ -113,7 +113,7 @@ def validate(meta):
     print("OK — Qiskit circuit reproduces the PennyLane forecaster exactly.")
 
 
-def run_hardware(meta, backend_name, shots):
+def run_hardware(meta, backend_name, shots, output):
     from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
     from qiskit_ibm_runtime import QiskitRuntimeService, SamplerV2
 
@@ -155,8 +155,8 @@ def run_hardware(meta, backend_name, shots):
     out = {"experiment": "e009_qpu_infer", "backend": backend.name, "shots": shots,
            "job_id": job.job_id(), "transpiled_2q_depth": int(depth2q),
            "windows_per_task": meta["windows_per_task"], "hardware_nmse": hw}
-    (RESULTS / "e009_qpu_hardware.json").write_text(json.dumps(out, indent=2) + "\n")
-    print(f"\nWrote {RESULTS / 'e009_qpu_hardware.json'}")
+    output.write_text(json.dumps(out, indent=2) + "\n")
+    print(f"\nWrote {output}")
 
 
 def main() -> None:
@@ -166,13 +166,14 @@ def main() -> None:
     ap.add_argument("--run", action="store_true")
     ap.add_argument("--backend", default="ibm_marrakesh")
     ap.add_argument("--shots", type=int, default=1024)
+    ap.add_argument("--output", type=Path, default=RESULTS / "e009_qpu_hardware.json")
     args = ap.parse_args()
 
     meta = json.loads(args.models.read_text())
     if args.validate:
         validate(meta)
     if args.run:
-        run_hardware(meta, args.backend, args.shots)
+        run_hardware(meta, args.backend, args.shots, args.output)
     if not (args.validate or args.run):
         print("nothing to do — pass --validate and/or --run")
 

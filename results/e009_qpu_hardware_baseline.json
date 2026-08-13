@@ -1,0 +1,40 @@
+{
+  "experiment": "e009_qpu_infer",
+  "backend": "ibm_marrakesh",
+  "shots": 1024,
+  "job_id": "d9uverv2sl0c73bl804g",
+  "transpiled_2q_depth": 157,
+  "windows_per_task": 15,
+  "hardware_nmse": {
+    "qewc:42": {
+      "narma_5": 0.3394,
+      "damped_shm": 0.5017,
+      "bessel_j2": 0.7041
+    },
+    "qewc:43": {
+      "narma_5": 1.0552,
+      "damped_shm": 1.5588,
+      "bessel_j2": 4.9502
+    },
+    "qewc:44": {
+      "narma_5": 0.6275,
+      "damped_shm": 0.7564,
+      "bessel_j2": 2.6172
+    },
+    "qgr:42": {
+      "narma_5": 0.2624,
+      "damped_shm": 0.1301,
+      "bessel_j2": 0.755
+    },
+    "qgr:43": {
+      "narma_5": 0.927,
+      "damped_shm": 0.7948,
+      "bessel_j2": 3.4438
+    },
+    "qgr:44": {
+      "narma_5": 0.7205,
+      "damped_shm": 0.5337,
+      "bessel_j2": 2.113
+    }
+  }
+}

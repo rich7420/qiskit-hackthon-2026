@@ -103,6 +103,24 @@
         "mean": 0.0591,
         "sd": 0.0195
       }
+    },
+    "qgr": {
+      "retention_earlier_nmse": {
+        "mean": 0.1319,
+        "sd": 0.1349
+      },
+      "plasticity_final_nmse": {
+        "mean": 0.0685,
+        "sd": 0.025
+      },
+      "avg_earlier_forgetting": {
+        "mean": 0.0453,
+        "sd": 0.154
+      },
+      "avg_final_nmse": {
+        "mean": 0.1107,
+        "sd": 0.0862
+      }
     }
   },
   "mean_curves": {
@@ -19472,6 +19490,3880 @@
           "bessel_j2": {
             "mean": 0.08264,
             "sd": 0.02388
+          }
+        }
+      }
+    ],
+    "qgr": [
+      {
+        "epoch": 0,
+        "phase": 0,
+        "nmse": {
+          "narma_5": {
+            "mean": 1.52291,
+            "sd": 0.31943
+          },
+          "damped_shm": {
+            "mean": 1.33989,
+            "sd": 0.37271
+          },
+          "bessel_j2": {
+            "mean": 4.65571,
+            "sd": 1.8608
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 1.2916,
+            "sd": 0.20552
+          },
+          "damped_shm": {
+            "mean": 1.09069,
+            "sd": 0.11647
+          },
+          "bessel_j2": {
+            "mean": 1.96941,
+            "sd": 0.47676
+          }
+        }
+      },
+      {
+        "epoch": 1,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 1.15227,
+            "sd": 0.23218
+          },
+          "damped_shm": {
+            "mean": 1.16245,
+            "sd": 0.24289
+          },
+          "bessel_j2": {
+            "mean": 2.29565,
+            "sd": 1.04748
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 1.08358,
+            "sd": 0.18756
+          },
+          "damped_shm": {
+            "mean": 1.01253,
+            "sd": 0.12116
+          },
+          "bessel_j2": {
+            "mean": 1.38098,
+            "sd": 0.31697
+          }
+        }
+      },
+      {
+        "epoch": 2,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.96475,
+            "sd": 0.2592
+          },
+          "damped_shm": {
+            "mean": 1.45506,
+            "sd": 0.63902
+          },
+          "bessel_j2": {
+            "mean": 1.32231,
+            "sd": 0.47628
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.94403,
+            "sd": 0.1866
+          },
+          "damped_shm": {
+            "mean": 0.97645,
+            "sd": 0.19339
+          },
+          "bessel_j2": {
+            "mean": 1.10635,
+            "sd": 0.24268
+          }
+        }
+      },
+      {
+        "epoch": 3,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.88858,
+            "sd": 0.29334
+          },
+          "damped_shm": {
+            "mean": 1.85868,
+            "sd": 1.2719
+          },
+          "bessel_j2": {
+            "mean": 1.39473,
+            "sd": 0.66775
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.852,
+            "sd": 0.208
+          },
+          "damped_shm": {
+            "mean": 0.95189,
+            "sd": 0.22325
+          },
+          "bessel_j2": {
+            "mean": 1.05386,
+            "sd": 0.29941
+          }
+        }
+      },
+      {
+        "epoch": 4,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.8242,
+            "sd": 0.27729
+          },
+          "damped_shm": {
+            "mean": 1.84548,
+            "sd": 1.45638
+          },
+          "bessel_j2": {
+            "mean": 1.53035,
+            "sd": 0.84386
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.79116,
+            "sd": 0.22394
+          },
+          "damped_shm": {
+            "mean": 0.91253,
+            "sd": 0.23784
+          },
+          "bessel_j2": {
+            "mean": 1.03815,
+            "sd": 0.29269
+          }
+        }
+      },
+      {
+        "epoch": 5,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.75158,
+            "sd": 0.28153
+          },
+          "damped_shm": {
+            "mean": 1.62448,
+            "sd": 1.26128
+          },
+          "bessel_j2": {
+            "mean": 1.46301,
+            "sd": 0.53827
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.74001,
+            "sd": 0.26081
+          },
+          "damped_shm": {
+            "mean": 0.86266,
+            "sd": 0.27788
+          },
+          "bessel_j2": {
+            "mean": 1.00953,
+            "sd": 0.2038
+          }
+        }
+      },
+      {
+        "epoch": 6,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.68359,
+            "sd": 0.27965
+          },
+          "damped_shm": {
+            "mean": 1.41684,
+            "sd": 0.92745
+          },
+          "bessel_j2": {
+            "mean": 1.41079,
+            "sd": 0.30864
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.68231,
+            "sd": 0.29272
+          },
+          "damped_shm": {
+            "mean": 0.80448,
+            "sd": 0.30095
+          },
+          "bessel_j2": {
+            "mean": 1.00505,
+            "sd": 0.08436
+          }
+        }
+      },
+      {
+        "epoch": 7,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.65169,
+            "sd": 0.23695
+          },
+          "damped_shm": {
+            "mean": 1.32823,
+            "sd": 0.70169
+          },
+          "bessel_j2": {
+            "mean": 1.55649,
+            "sd": 0.64501
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.6324,
+            "sd": 0.28994
+          },
+          "damped_shm": {
+            "mean": 0.75785,
+            "sd": 0.28649
+          },
+          "bessel_j2": {
+            "mean": 1.04968,
+            "sd": 0.13094
+          }
+        }
+      },
+      {
+        "epoch": 8,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.64413,
+            "sd": 0.19648
+          },
+          "damped_shm": {
+            "mean": 1.37593,
+            "sd": 0.71588
+          },
+          "bessel_j2": {
+            "mean": 1.9014,
+            "sd": 1.04359
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.58928,
+            "sd": 0.26957
+          },
+          "damped_shm": {
+            "mean": 0.71899,
+            "sd": 0.26454
+          },
+          "bessel_j2": {
+            "mean": 1.12367,
+            "sd": 0.2426
+          }
+        }
+      },
+      {
+        "epoch": 9,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.64861,
+            "sd": 0.17414
+          },
+          "damped_shm": {
+            "mean": 1.51586,
+            "sd": 0.75347
+          },
+          "bessel_j2": {
+            "mean": 2.30155,
+            "sd": 1.30758
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.54777,
+            "sd": 0.25726
+          },
+          "damped_shm": {
+            "mean": 0.68472,
+            "sd": 0.25005
+          },
+          "bessel_j2": {
+            "mean": 1.20346,
+            "sd": 0.30412
+          }
+        }
+      },
+      {
+        "epoch": 10,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.63823,
+            "sd": 0.14973
+          },
+          "damped_shm": {
+            "mean": 1.6419,
+            "sd": 0.77011
+          },
+          "bessel_j2": {
+            "mean": 2.57429,
+            "sd": 1.51245
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.50541,
+            "sd": 0.23908
+          },
+          "damped_shm": {
+            "mean": 0.65227,
+            "sd": 0.23052
+          },
+          "bessel_j2": {
+            "mean": 1.25987,
+            "sd": 0.35506
+          }
+        }
+      },
+      {
+        "epoch": 11,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.60554,
+            "sd": 0.14069
+          },
+          "damped_shm": {
+            "mean": 1.66647,
+            "sd": 0.81197
+          },
+          "bessel_j2": {
+            "mean": 2.61537,
+            "sd": 1.50661
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.4628,
+            "sd": 0.21994
+          },
+          "damped_shm": {
+            "mean": 0.61765,
+            "sd": 0.20618
+          },
+          "bessel_j2": {
+            "mean": 1.28025,
+            "sd": 0.3821
+          }
+        }
+      },
+      {
+        "epoch": 12,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.56848,
+            "sd": 0.14188
+          },
+          "damped_shm": {
+            "mean": 1.62242,
+            "sd": 0.87523
+          },
+          "bessel_j2": {
+            "mean": 2.4251,
+            "sd": 1.32049
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.42657,
+            "sd": 0.20294
+          },
+          "damped_shm": {
+            "mean": 0.58149,
+            "sd": 0.17964
+          },
+          "bessel_j2": {
+            "mean": 1.25892,
+            "sd": 0.37345
+          }
+        }
+      },
+      {
+        "epoch": 13,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.52897,
+            "sd": 0.13095
+          },
+          "damped_shm": {
+            "mean": 1.57579,
+            "sd": 0.9039
+          },
+          "bessel_j2": {
+            "mean": 2.14386,
+            "sd": 1.04582
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.38989,
+            "sd": 0.18289
+          },
+          "damped_shm": {
+            "mean": 0.54004,
+            "sd": 0.15398
+          },
+          "bessel_j2": {
+            "mean": 1.20378,
+            "sd": 0.33624
+          }
+        }
+      },
+      {
+        "epoch": 14,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.48207,
+            "sd": 0.1287
+          },
+          "damped_shm": {
+            "mean": 1.50843,
+            "sd": 0.91758
+          },
+          "bessel_j2": {
+            "mean": 1.87358,
+            "sd": 0.7262
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.34625,
+            "sd": 0.16099
+          },
+          "damped_shm": {
+            "mean": 0.49155,
+            "sd": 0.13252
+          },
+          "bessel_j2": {
+            "mean": 1.1345,
+            "sd": 0.27835
+          }
+        }
+      },
+      {
+        "epoch": 15,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.43174,
+            "sd": 0.12781
+          },
+          "damped_shm": {
+            "mean": 1.39915,
+            "sd": 0.88669
+          },
+          "bessel_j2": {
+            "mean": 1.64842,
+            "sd": 0.48496
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.3009,
+            "sd": 0.1395
+          },
+          "damped_shm": {
+            "mean": 0.44079,
+            "sd": 0.11435
+          },
+          "bessel_j2": {
+            "mean": 1.06278,
+            "sd": 0.20765
+          }
+        }
+      },
+      {
+        "epoch": 16,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.37501,
+            "sd": 0.11539
+          },
+          "damped_shm": {
+            "mean": 1.23577,
+            "sd": 0.79727
+          },
+          "bessel_j2": {
+            "mean": 1.43407,
+            "sd": 0.51854
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.25691,
+            "sd": 0.12097
+          },
+          "damped_shm": {
+            "mean": 0.39101,
+            "sd": 0.09627
+          },
+          "bessel_j2": {
+            "mean": 0.98108,
+            "sd": 0.14357
+          }
+        }
+      },
+      {
+        "epoch": 17,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.31455,
+            "sd": 0.09289
+          },
+          "damped_shm": {
+            "mean": 1.03046,
+            "sd": 0.6799
+          },
+          "bessel_j2": {
+            "mean": 1.17728,
+            "sd": 0.61711
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.21953,
+            "sd": 0.10226
+          },
+          "damped_shm": {
+            "mean": 0.34583,
+            "sd": 0.07411
+          },
+          "bessel_j2": {
+            "mean": 0.88219,
+            "sd": 0.12017
+          }
+        }
+      },
+      {
+        "epoch": 18,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.25874,
+            "sd": 0.06815
+          },
+          "damped_shm": {
+            "mean": 0.7903,
+            "sd": 0.56517
+          },
+          "bessel_j2": {
+            "mean": 0.86451,
+            "sd": 0.44152
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.194,
+            "sd": 0.08285
+          },
+          "damped_shm": {
+            "mean": 0.30898,
+            "sd": 0.05243
+          },
+          "bessel_j2": {
+            "mean": 0.77362,
+            "sd": 0.11224
+          }
+        }
+      },
+      {
+        "epoch": 19,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.21949,
+            "sd": 0.04681
+          },
+          "damped_shm": {
+            "mean": 0.60417,
+            "sd": 0.42782
+          },
+          "bessel_j2": {
+            "mean": 0.63864,
+            "sd": 0.35896
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.17907,
+            "sd": 0.06665
+          },
+          "damped_shm": {
+            "mean": 0.282,
+            "sd": 0.04603
+          },
+          "bessel_j2": {
+            "mean": 0.68721,
+            "sd": 0.1045
+          }
+        }
+      },
+      {
+        "epoch": 20,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.19984,
+            "sd": 0.04823
+          },
+          "damped_shm": {
+            "mean": 0.52075,
+            "sd": 0.31513
+          },
+          "bessel_j2": {
+            "mean": 0.55722,
+            "sd": 0.37895
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.16819,
+            "sd": 0.05062
+          },
+          "damped_shm": {
+            "mean": 0.26262,
+            "sd": 0.04928
+          },
+          "bessel_j2": {
+            "mean": 0.63553,
+            "sd": 0.09638
+          }
+        }
+      },
+      {
+        "epoch": 21,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.1895,
+            "sd": 0.0516
+          },
+          "damped_shm": {
+            "mean": 0.49738,
+            "sd": 0.287
+          },
+          "bessel_j2": {
+            "mean": 0.56466,
+            "sd": 0.37146
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.1569,
+            "sd": 0.03325
+          },
+          "damped_shm": {
+            "mean": 0.2479,
+            "sd": 0.04885
+          },
+          "bessel_j2": {
+            "mean": 0.61542,
+            "sd": 0.10123
+          }
+        }
+      },
+      {
+        "epoch": 22,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.18473,
+            "sd": 0.05043
+          },
+          "damped_shm": {
+            "mean": 0.53991,
+            "sd": 0.28887
+          },
+          "bessel_j2": {
+            "mean": 0.72319,
+            "sd": 0.47157
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.14673,
+            "sd": 0.02297
+          },
+          "damped_shm": {
+            "mean": 0.23804,
+            "sd": 0.04515
+          },
+          "bessel_j2": {
+            "mean": 0.63634,
+            "sd": 0.13647
+          }
+        }
+      },
+      {
+        "epoch": 23,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.16812,
+            "sd": 0.03574
+          },
+          "damped_shm": {
+            "mean": 0.52962,
+            "sd": 0.30536
+          },
+          "bessel_j2": {
+            "mean": 0.73083,
+            "sd": 0.39504
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.13338,
+            "sd": 0.0193
+          },
+          "damped_shm": {
+            "mean": 0.23016,
+            "sd": 0.0399
+          },
+          "bessel_j2": {
+            "mean": 0.64214,
+            "sd": 0.11929
+          }
+        }
+      },
+      {
+        "epoch": 24,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.15379,
+            "sd": 0.03579
+          },
+          "damped_shm": {
+            "mean": 0.51996,
+            "sd": 0.3527
+          },
+          "bessel_j2": {
+            "mean": 0.70551,
+            "sd": 0.37451
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.1216,
+            "sd": 0.01773
+          },
+          "damped_shm": {
+            "mean": 0.2257,
+            "sd": 0.03685
+          },
+          "bessel_j2": {
+            "mean": 0.65457,
+            "sd": 0.11131
+          }
+        }
+      },
+      {
+        "epoch": 25,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.15002,
+            "sd": 0.04374
+          },
+          "damped_shm": {
+            "mean": 0.5975,
+            "sd": 0.4225
+          },
+          "bessel_j2": {
+            "mean": 0.86099,
+            "sd": 0.58641
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.11302,
+            "sd": 0.01715
+          },
+          "damped_shm": {
+            "mean": 0.22166,
+            "sd": 0.03447
+          },
+          "bessel_j2": {
+            "mean": 0.71039,
+            "sd": 0.16189
+          }
+        }
+      },
+      {
+        "epoch": 26,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.1586,
+            "sd": 0.0509
+          },
+          "damped_shm": {
+            "mean": 0.66803,
+            "sd": 0.4689
+          },
+          "bessel_j2": {
+            "mean": 1.00877,
+            "sd": 0.65697
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.1097,
+            "sd": 0.0205
+          },
+          "damped_shm": {
+            "mean": 0.22065,
+            "sd": 0.03558
+          },
+          "bessel_j2": {
+            "mean": 0.75947,
+            "sd": 0.17897
+          }
+        }
+      },
+      {
+        "epoch": 27,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.15872,
+            "sd": 0.05969
+          },
+          "damped_shm": {
+            "mean": 0.60736,
+            "sd": 0.49773
+          },
+          "bessel_j2": {
+            "mean": 0.91145,
+            "sd": 0.24122
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.10238,
+            "sd": 0.016
+          },
+          "damped_shm": {
+            "mean": 0.21804,
+            "sd": 0.03421
+          },
+          "bessel_j2": {
+            "mean": 0.75124,
+            "sd": 0.15848
+          }
+        }
+      },
+      {
+        "epoch": 28,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.15973,
+            "sd": 0.06357
+          },
+          "damped_shm": {
+            "mean": 0.58862,
+            "sd": 0.51137
+          },
+          "bessel_j2": {
+            "mean": 0.87167,
+            "sd": 0.20217
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09673,
+            "sd": 0.01521
+          },
+          "damped_shm": {
+            "mean": 0.21643,
+            "sd": 0.03509
+          },
+          "bessel_j2": {
+            "mean": 0.74475,
+            "sd": 0.18779
+          }
+        }
+      },
+      {
+        "epoch": 29,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.15225,
+            "sd": 0.05484
+          },
+          "damped_shm": {
+            "mean": 0.60079,
+            "sd": 0.40717
+          },
+          "bessel_j2": {
+            "mean": 0.91242,
+            "sd": 0.4193
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09244,
+            "sd": 0.02067
+          },
+          "damped_shm": {
+            "mean": 0.20989,
+            "sd": 0.03895
+          },
+          "bessel_j2": {
+            "mean": 0.73453,
+            "sd": 0.18343
+          }
+        }
+      },
+      {
+        "epoch": 30,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.12696,
+            "sd": 0.04058
+          },
+          "damped_shm": {
+            "mean": 0.49313,
+            "sd": 0.36272
+          },
+          "bessel_j2": {
+            "mean": 0.72964,
+            "sd": 0.38727
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08402,
+            "sd": 0.01829
+          },
+          "damped_shm": {
+            "mean": 0.19752,
+            "sd": 0.04129
+          },
+          "bessel_j2": {
+            "mean": 0.66414,
+            "sd": 0.16174
+          }
+        }
+      },
+      {
+        "epoch": 31,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.10432,
+            "sd": 0.02694
+          },
+          "damped_shm": {
+            "mean": 0.35557,
+            "sd": 0.341
+          },
+          "bessel_j2": {
+            "mean": 0.5241,
+            "sd": 0.2358
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.0786,
+            "sd": 0.01823
+          },
+          "damped_shm": {
+            "mean": 0.18467,
+            "sd": 0.04466
+          },
+          "bessel_j2": {
+            "mean": 0.58182,
+            "sd": 0.14517
+          }
+        }
+      },
+      {
+        "epoch": 32,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.09171,
+            "sd": 0.01575
+          },
+          "damped_shm": {
+            "mean": 0.32033,
+            "sd": 0.27225
+          },
+          "bessel_j2": {
+            "mean": 0.58968,
+            "sd": 0.50934
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.07715,
+            "sd": 0.02124
+          },
+          "damped_shm": {
+            "mean": 0.17274,
+            "sd": 0.05144
+          },
+          "bessel_j2": {
+            "mean": 0.55644,
+            "sd": 0.13964
+          }
+        }
+      },
+      {
+        "epoch": 33,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07933,
+            "sd": 0.00978
+          },
+          "damped_shm": {
+            "mean": 0.31274,
+            "sd": 0.2539
+          },
+          "bessel_j2": {
+            "mean": 0.63595,
+            "sd": 0.77784
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.07267,
+            "sd": 0.01586
+          },
+          "damped_shm": {
+            "mean": 0.16366,
+            "sd": 0.0535
+          },
+          "bessel_j2": {
+            "mean": 0.54398,
+            "sd": 0.16538
+          }
+        }
+      },
+      {
+        "epoch": 34,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07065,
+            "sd": 0.01305
+          },
+          "damped_shm": {
+            "mean": 0.27048,
+            "sd": 0.14228
+          },
+          "bessel_j2": {
+            "mean": 0.56299,
+            "sd": 0.64751
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06945,
+            "sd": 0.01724
+          },
+          "damped_shm": {
+            "mean": 0.15656,
+            "sd": 0.05801
+          },
+          "bessel_j2": {
+            "mean": 0.51607,
+            "sd": 0.16923
+          }
+        }
+      },
+      {
+        "epoch": 35,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06777,
+            "sd": 0.01628
+          },
+          "damped_shm": {
+            "mean": 0.28862,
+            "sd": 0.1423
+          },
+          "bessel_j2": {
+            "mean": 0.62332,
+            "sd": 0.73702
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06747,
+            "sd": 0.01585
+          },
+          "damped_shm": {
+            "mean": 0.1524,
+            "sd": 0.05757
+          },
+          "bessel_j2": {
+            "mean": 0.53052,
+            "sd": 0.18357
+          }
+        }
+      },
+      {
+        "epoch": 36,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.0643,
+            "sd": 0.01626
+          },
+          "damped_shm": {
+            "mean": 0.3344,
+            "sd": 0.21962
+          },
+          "bessel_j2": {
+            "mean": 0.81586,
+            "sd": 1.11167
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06338,
+            "sd": 0.01336
+          },
+          "damped_shm": {
+            "mean": 0.14846,
+            "sd": 0.05394
+          },
+          "bessel_j2": {
+            "mean": 0.58758,
+            "sd": 0.21929
+          }
+        }
+      },
+      {
+        "epoch": 37,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07094,
+            "sd": 0.02176
+          },
+          "damped_shm": {
+            "mean": 0.35795,
+            "sd": 0.25235
+          },
+          "bessel_j2": {
+            "mean": 0.89393,
+            "sd": 1.03317
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06298,
+            "sd": 0.01557
+          },
+          "damped_shm": {
+            "mean": 0.14887,
+            "sd": 0.05247
+          },
+          "bessel_j2": {
+            "mean": 0.61896,
+            "sd": 0.20574
+          }
+        }
+      },
+      {
+        "epoch": 38,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06817,
+            "sd": 0.01949
+          },
+          "damped_shm": {
+            "mean": 0.3411,
+            "sd": 0.29063
+          },
+          "bessel_j2": {
+            "mean": 0.75761,
+            "sd": 0.70188
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.05855,
+            "sd": 0.01087
+          },
+          "damped_shm": {
+            "mean": 0.14403,
+            "sd": 0.04578
+          },
+          "bessel_j2": {
+            "mean": 0.59553,
+            "sd": 0.16067
+          }
+        }
+      },
+      {
+        "epoch": 39,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06835,
+            "sd": 0.02749
+          },
+          "damped_shm": {
+            "mean": 0.36665,
+            "sd": 0.27592
+          },
+          "bessel_j2": {
+            "mean": 0.73738,
+            "sd": 0.69395
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.05692,
+            "sd": 0.01322
+          },
+          "damped_shm": {
+            "mean": 0.13858,
+            "sd": 0.044
+          },
+          "bessel_j2": {
+            "mean": 0.58249,
+            "sd": 0.13219
+          }
+        }
+      },
+      {
+        "epoch": 40,
+        "phase": 1,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07041,
+            "sd": 0.03124
+          },
+          "damped_shm": {
+            "mean": 0.35206,
+            "sd": 0.28473
+          },
+          "bessel_j2": {
+            "mean": 0.7259,
+            "sd": 0.69551
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.05515,
+            "sd": 0.01031
+          },
+          "damped_shm": {
+            "mean": 0.13673,
+            "sd": 0.03788
+          },
+          "bessel_j2": {
+            "mean": 0.56906,
+            "sd": 0.1075
+          }
+        }
+      },
+      {
+        "epoch": 41,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.08376,
+            "sd": 0.04772
+          },
+          "damped_shm": {
+            "mean": 0.33236,
+            "sd": 0.31649
+          },
+          "bessel_j2": {
+            "mean": 0.66371,
+            "sd": 0.52717
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06433,
+            "sd": 0.01534
+          },
+          "damped_shm": {
+            "mean": 0.11837,
+            "sd": 0.0352
+          },
+          "bessel_j2": {
+            "mean": 0.46282,
+            "sd": 0.0948
+          }
+        }
+      },
+      {
+        "epoch": 42,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.09971,
+            "sd": 0.04198
+          },
+          "damped_shm": {
+            "mean": 0.56338,
+            "sd": 0.37245
+          },
+          "bessel_j2": {
+            "mean": 1.15503,
+            "sd": 1.31968
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06706,
+            "sd": 0.01378
+          },
+          "damped_shm": {
+            "mean": 0.12512,
+            "sd": 0.03776
+          },
+          "bessel_j2": {
+            "mean": 0.53494,
+            "sd": 0.24406
+          }
+        }
+      },
+      {
+        "epoch": 43,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.08085,
+            "sd": 0.0409
+          },
+          "damped_shm": {
+            "mean": 0.3883,
+            "sd": 0.23428
+          },
+          "bessel_j2": {
+            "mean": 0.72544,
+            "sd": 0.67223
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06076,
+            "sd": 0.01405
+          },
+          "damped_shm": {
+            "mean": 0.109,
+            "sd": 0.02879
+          },
+          "bessel_j2": {
+            "mean": 0.43014,
+            "sd": 0.0993
+          }
+        }
+      },
+      {
+        "epoch": 44,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.08207,
+            "sd": 0.04691
+          },
+          "damped_shm": {
+            "mean": 0.36366,
+            "sd": 0.25868
+          },
+          "bessel_j2": {
+            "mean": 0.42865,
+            "sd": 0.3492
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06288,
+            "sd": 0.01965
+          },
+          "damped_shm": {
+            "mean": 0.1046,
+            "sd": 0.03096
+          },
+          "bessel_j2": {
+            "mean": 0.3624,
+            "sd": 0.04956
+          }
+        }
+      },
+      {
+        "epoch": 45,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07326,
+            "sd": 0.05564
+          },
+          "damped_shm": {
+            "mean": 0.45547,
+            "sd": 0.3287
+          },
+          "bessel_j2": {
+            "mean": 0.74937,
+            "sd": 0.93513
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06014,
+            "sd": 0.02218
+          },
+          "damped_shm": {
+            "mean": 0.09814,
+            "sd": 0.03325
+          },
+          "bessel_j2": {
+            "mean": 0.42388,
+            "sd": 0.12886
+          }
+        }
+      },
+      {
+        "epoch": 46,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07247,
+            "sd": 0.04161
+          },
+          "damped_shm": {
+            "mean": 0.4357,
+            "sd": 0.24528
+          },
+          "bessel_j2": {
+            "mean": 0.88679,
+            "sd": 1.18849
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06365,
+            "sd": 0.02267
+          },
+          "damped_shm": {
+            "mean": 0.09612,
+            "sd": 0.03069
+          },
+          "bessel_j2": {
+            "mean": 0.45236,
+            "sd": 0.16454
+          }
+        }
+      },
+      {
+        "epoch": 47,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06091,
+            "sd": 0.03022
+          },
+          "damped_shm": {
+            "mean": 0.34211,
+            "sd": 0.26619
+          },
+          "bessel_j2": {
+            "mean": 0.65816,
+            "sd": 0.66528
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06089,
+            "sd": 0.01563
+          },
+          "damped_shm": {
+            "mean": 0.08649,
+            "sd": 0.02608
+          },
+          "bessel_j2": {
+            "mean": 0.396,
+            "sd": 0.08015
+          }
+        }
+      },
+      {
+        "epoch": 48,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.05857,
+            "sd": 0.03056
+          },
+          "damped_shm": {
+            "mean": 0.35243,
+            "sd": 0.2383
+          },
+          "bessel_j2": {
+            "mean": 0.57878,
+            "sd": 0.50628
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.05869,
+            "sd": 0.0138
+          },
+          "damped_shm": {
+            "mean": 0.08736,
+            "sd": 0.03209
+          },
+          "bessel_j2": {
+            "mean": 0.375,
+            "sd": 0.08733
+          }
+        }
+      },
+      {
+        "epoch": 49,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.05093,
+            "sd": 0.01864
+          },
+          "damped_shm": {
+            "mean": 0.32158,
+            "sd": 0.25648
+          },
+          "bessel_j2": {
+            "mean": 0.80427,
+            "sd": 0.81063
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.0594,
+            "sd": 0.01252
+          },
+          "damped_shm": {
+            "mean": 0.08348,
+            "sd": 0.02969
+          },
+          "bessel_j2": {
+            "mean": 0.41181,
+            "sd": 0.13114
+          }
+        }
+      },
+      {
+        "epoch": 50,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.05594,
+            "sd": 0.02137
+          },
+          "damped_shm": {
+            "mean": 0.35337,
+            "sd": 0.25854
+          },
+          "bessel_j2": {
+            "mean": 0.87831,
+            "sd": 0.96618
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06336,
+            "sd": 0.01193
+          },
+          "damped_shm": {
+            "mean": 0.08377,
+            "sd": 0.03159
+          },
+          "bessel_j2": {
+            "mean": 0.41355,
+            "sd": 0.14862
+          }
+        }
+      },
+      {
+        "epoch": 51,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.05211,
+            "sd": 0.01703
+          },
+          "damped_shm": {
+            "mean": 0.28745,
+            "sd": 0.24278
+          },
+          "bessel_j2": {
+            "mean": 0.71079,
+            "sd": 0.63442
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06362,
+            "sd": 0.01084
+          },
+          "damped_shm": {
+            "mean": 0.07542,
+            "sd": 0.02753
+          },
+          "bessel_j2": {
+            "mean": 0.35438,
+            "sd": 0.09744
+          }
+        }
+      },
+      {
+        "epoch": 52,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.05956,
+            "sd": 0.02567
+          },
+          "damped_shm": {
+            "mean": 0.29167,
+            "sd": 0.29519
+          },
+          "bessel_j2": {
+            "mean": 0.66361,
+            "sd": 0.66461
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06917,
+            "sd": 0.01522
+          },
+          "damped_shm": {
+            "mean": 0.07446,
+            "sd": 0.02505
+          },
+          "bessel_j2": {
+            "mean": 0.33356,
+            "sd": 0.10304
+          }
+        }
+      },
+      {
+        "epoch": 53,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.05524,
+            "sd": 0.02496
+          },
+          "damped_shm": {
+            "mean": 0.33288,
+            "sd": 0.2966
+          },
+          "bessel_j2": {
+            "mean": 0.75294,
+            "sd": 0.75897
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06564,
+            "sd": 0.01096
+          },
+          "damped_shm": {
+            "mean": 0.07522,
+            "sd": 0.02678
+          },
+          "bessel_j2": {
+            "mean": 0.35511,
+            "sd": 0.09564
+          }
+        }
+      },
+      {
+        "epoch": 54,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.05106,
+            "sd": 0.0252
+          },
+          "damped_shm": {
+            "mean": 0.27259,
+            "sd": 0.18124
+          },
+          "bessel_j2": {
+            "mean": 0.77608,
+            "sd": 0.79553
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06705,
+            "sd": 0.01737
+          },
+          "damped_shm": {
+            "mean": 0.0742,
+            "sd": 0.0242
+          },
+          "bessel_j2": {
+            "mean": 0.36391,
+            "sd": 0.12082
+          }
+        }
+      },
+      {
+        "epoch": 55,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.04692,
+            "sd": 0.02039
+          },
+          "damped_shm": {
+            "mean": 0.27453,
+            "sd": 0.19538
+          },
+          "bessel_j2": {
+            "mean": 0.59083,
+            "sd": 0.51586
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06488,
+            "sd": 0.01497
+          },
+          "damped_shm": {
+            "mean": 0.07083,
+            "sd": 0.02492
+          },
+          "bessel_j2": {
+            "mean": 0.32168,
+            "sd": 0.07966
+          }
+        }
+      },
+      {
+        "epoch": 56,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.04528,
+            "sd": 0.01704
+          },
+          "damped_shm": {
+            "mean": 0.20773,
+            "sd": 0.14103
+          },
+          "bessel_j2": {
+            "mean": 0.46262,
+            "sd": 0.41883
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06825,
+            "sd": 0.01817
+          },
+          "damped_shm": {
+            "mean": 0.06875,
+            "sd": 0.02179
+          },
+          "bessel_j2": {
+            "mean": 0.31019,
+            "sd": 0.09596
+          }
+        }
+      },
+      {
+        "epoch": 57,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.04037,
+            "sd": 0.01006
+          },
+          "damped_shm": {
+            "mean": 0.19699,
+            "sd": 0.1545
+          },
+          "bessel_j2": {
+            "mean": 0.49423,
+            "sd": 0.42327
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06723,
+            "sd": 0.01982
+          },
+          "damped_shm": {
+            "mean": 0.06459,
+            "sd": 0.02079
+          },
+          "bessel_j2": {
+            "mean": 0.31398,
+            "sd": 0.09382
+          }
+        }
+      },
+      {
+        "epoch": 58,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.04373,
+            "sd": 0.01075
+          },
+          "damped_shm": {
+            "mean": 0.23843,
+            "sd": 0.15257
+          },
+          "bessel_j2": {
+            "mean": 0.5855,
+            "sd": 0.50536
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.07032,
+            "sd": 0.02185
+          },
+          "damped_shm": {
+            "mean": 0.06449,
+            "sd": 0.02141
+          },
+          "bessel_j2": {
+            "mean": 0.32524,
+            "sd": 0.09275
+          }
+        }
+      },
+      {
+        "epoch": 59,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.0438,
+            "sd": 0.01619
+          },
+          "damped_shm": {
+            "mean": 0.18891,
+            "sd": 0.14436
+          },
+          "bessel_j2": {
+            "mean": 0.53183,
+            "sd": 0.45159
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.07422,
+            "sd": 0.03617
+          },
+          "damped_shm": {
+            "mean": 0.06227,
+            "sd": 0.02138
+          },
+          "bessel_j2": {
+            "mean": 0.31549,
+            "sd": 0.09545
+          }
+        }
+      },
+      {
+        "epoch": 60,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.04611,
+            "sd": 0.01905
+          },
+          "damped_shm": {
+            "mean": 0.23649,
+            "sd": 0.15715
+          },
+          "bessel_j2": {
+            "mean": 0.46834,
+            "sd": 0.43989
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.07398,
+            "sd": 0.02991
+          },
+          "damped_shm": {
+            "mean": 0.05996,
+            "sd": 0.02191
+          },
+          "bessel_j2": {
+            "mean": 0.28513,
+            "sd": 0.08446
+          }
+        }
+      },
+      {
+        "epoch": 61,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.04463,
+            "sd": 0.01642
+          },
+          "damped_shm": {
+            "mean": 0.20919,
+            "sd": 0.14154
+          },
+          "bessel_j2": {
+            "mean": 0.45338,
+            "sd": 0.47599
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.07621,
+            "sd": 0.03597
+          },
+          "damped_shm": {
+            "mean": 0.05661,
+            "sd": 0.01929
+          },
+          "bessel_j2": {
+            "mean": 0.28148,
+            "sd": 0.08605
+          }
+        }
+      },
+      {
+        "epoch": 62,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03763,
+            "sd": 0.01096
+          },
+          "damped_shm": {
+            "mean": 0.17666,
+            "sd": 0.12178
+          },
+          "bessel_j2": {
+            "mean": 0.4891,
+            "sd": 0.45065
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.07274,
+            "sd": 0.03294
+          },
+          "damped_shm": {
+            "mean": 0.05472,
+            "sd": 0.0176
+          },
+          "bessel_j2": {
+            "mean": 0.29787,
+            "sd": 0.07563
+          }
+        }
+      },
+      {
+        "epoch": 63,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03835,
+            "sd": 0.01068
+          },
+          "damped_shm": {
+            "mean": 0.2121,
+            "sd": 0.1435
+          },
+          "bessel_j2": {
+            "mean": 0.52349,
+            "sd": 0.45051
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.07061,
+            "sd": 0.02931
+          },
+          "damped_shm": {
+            "mean": 0.05473,
+            "sd": 0.01856
+          },
+          "bessel_j2": {
+            "mean": 0.29799,
+            "sd": 0.08558
+          }
+        }
+      },
+      {
+        "epoch": 64,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03839,
+            "sd": 0.01056
+          },
+          "damped_shm": {
+            "mean": 0.18329,
+            "sd": 0.17929
+          },
+          "bessel_j2": {
+            "mean": 0.50322,
+            "sd": 0.44905
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.07416,
+            "sd": 0.03235
+          },
+          "damped_shm": {
+            "mean": 0.05324,
+            "sd": 0.01636
+          },
+          "bessel_j2": {
+            "mean": 0.29572,
+            "sd": 0.1018
+          }
+        }
+      },
+      {
+        "epoch": 65,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03738,
+            "sd": 0.01457
+          },
+          "damped_shm": {
+            "mean": 0.18818,
+            "sd": 0.14713
+          },
+          "bessel_j2": {
+            "mean": 0.45351,
+            "sd": 0.47973
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.07155,
+            "sd": 0.02901
+          },
+          "damped_shm": {
+            "mean": 0.05215,
+            "sd": 0.0152
+          },
+          "bessel_j2": {
+            "mean": 0.28241,
+            "sd": 0.09687
+          }
+        }
+      },
+      {
+        "epoch": 66,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03778,
+            "sd": 0.01474
+          },
+          "damped_shm": {
+            "mean": 0.1896,
+            "sd": 0.14453
+          },
+          "bessel_j2": {
+            "mean": 0.45909,
+            "sd": 0.47711
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.07101,
+            "sd": 0.02757
+          },
+          "damped_shm": {
+            "mean": 0.04998,
+            "sd": 0.01392
+          },
+          "bessel_j2": {
+            "mean": 0.27685,
+            "sd": 0.08223
+          }
+        }
+      },
+      {
+        "epoch": 67,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03518,
+            "sd": 0.01232
+          },
+          "damped_shm": {
+            "mean": 0.14773,
+            "sd": 0.12478
+          },
+          "bessel_j2": {
+            "mean": 0.45046,
+            "sd": 0.41657
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.07025,
+            "sd": 0.03023
+          },
+          "damped_shm": {
+            "mean": 0.04842,
+            "sd": 0.01182
+          },
+          "bessel_j2": {
+            "mean": 0.28635,
+            "sd": 0.06857
+          }
+        }
+      },
+      {
+        "epoch": 68,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03348,
+            "sd": 0.01142
+          },
+          "damped_shm": {
+            "mean": 0.15529,
+            "sd": 0.1011
+          },
+          "bessel_j2": {
+            "mean": 0.39539,
+            "sd": 0.33877
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06662,
+            "sd": 0.02734
+          },
+          "damped_shm": {
+            "mean": 0.04788,
+            "sd": 0.01106
+          },
+          "bessel_j2": {
+            "mean": 0.27354,
+            "sd": 0.05106
+          }
+        }
+      },
+      {
+        "epoch": 69,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03388,
+            "sd": 0.01154
+          },
+          "damped_shm": {
+            "mean": 0.1475,
+            "sd": 0.09581
+          },
+          "bessel_j2": {
+            "mean": 0.33939,
+            "sd": 0.2673
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06703,
+            "sd": 0.02561
+          },
+          "damped_shm": {
+            "mean": 0.04624,
+            "sd": 0.00974
+          },
+          "bessel_j2": {
+            "mean": 0.25603,
+            "sd": 0.04656
+          }
+        }
+      },
+      {
+        "epoch": 70,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03458,
+            "sd": 0.01239
+          },
+          "damped_shm": {
+            "mean": 0.13149,
+            "sd": 0.07605
+          },
+          "bessel_j2": {
+            "mean": 0.32104,
+            "sd": 0.25103
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.0674,
+            "sd": 0.02784
+          },
+          "damped_shm": {
+            "mean": 0.04527,
+            "sd": 0.0083
+          },
+          "bessel_j2": {
+            "mean": 0.25125,
+            "sd": 0.05734
+          }
+        }
+      },
+      {
+        "epoch": 71,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03395,
+            "sd": 0.00975
+          },
+          "damped_shm": {
+            "mean": 0.13492,
+            "sd": 0.09158
+          },
+          "bessel_j2": {
+            "mean": 0.3578,
+            "sd": 0.24315
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06604,
+            "sd": 0.02316
+          },
+          "damped_shm": {
+            "mean": 0.04511,
+            "sd": 0.00773
+          },
+          "bessel_j2": {
+            "mean": 0.25573,
+            "sd": 0.05127
+          }
+        }
+      },
+      {
+        "epoch": 72,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03187,
+            "sd": 0.00898
+          },
+          "damped_shm": {
+            "mean": 0.14004,
+            "sd": 0.09805
+          },
+          "bessel_j2": {
+            "mean": 0.38752,
+            "sd": 0.28563
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06288,
+            "sd": 0.02432
+          },
+          "damped_shm": {
+            "mean": 0.04485,
+            "sd": 0.00769
+          },
+          "bessel_j2": {
+            "mean": 0.26791,
+            "sd": 0.04987
+          }
+        }
+      },
+      {
+        "epoch": 73,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03136,
+            "sd": 0.00682
+          },
+          "damped_shm": {
+            "mean": 0.12928,
+            "sd": 0.11413
+          },
+          "bessel_j2": {
+            "mean": 0.4086,
+            "sd": 0.27094
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06335,
+            "sd": 0.02335
+          },
+          "damped_shm": {
+            "mean": 0.04367,
+            "sd": 0.00679
+          },
+          "bessel_j2": {
+            "mean": 0.27544,
+            "sd": 0.05008
+          }
+        }
+      },
+      {
+        "epoch": 74,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03021,
+            "sd": 0.00776
+          },
+          "damped_shm": {
+            "mean": 0.1299,
+            "sd": 0.09642
+          },
+          "bessel_j2": {
+            "mean": 0.3585,
+            "sd": 0.25809
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06102,
+            "sd": 0.02358
+          },
+          "damped_shm": {
+            "mean": 0.04229,
+            "sd": 0.00664
+          },
+          "bessel_j2": {
+            "mean": 0.25895,
+            "sd": 0.04652
+          }
+        }
+      },
+      {
+        "epoch": 75,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03068,
+            "sd": 0.00822
+          },
+          "damped_shm": {
+            "mean": 0.1198,
+            "sd": 0.0873
+          },
+          "bessel_j2": {
+            "mean": 0.33877,
+            "sd": 0.25208
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06183,
+            "sd": 0.02296
+          },
+          "damped_shm": {
+            "mean": 0.04133,
+            "sd": 0.0064
+          },
+          "bessel_j2": {
+            "mean": 0.25062,
+            "sd": 0.04495
+          }
+        }
+      },
+      {
+        "epoch": 76,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.03118,
+            "sd": 0.00669
+          },
+          "damped_shm": {
+            "mean": 0.11365,
+            "sd": 0.09781
+          },
+          "bessel_j2": {
+            "mean": 0.36072,
+            "sd": 0.23228
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06318,
+            "sd": 0.02459
+          },
+          "damped_shm": {
+            "mean": 0.04049,
+            "sd": 0.00504
+          },
+          "bessel_j2": {
+            "mean": 0.25142,
+            "sd": 0.04889
+          }
+        }
+      },
+      {
+        "epoch": 77,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.02885,
+            "sd": 0.00578
+          },
+          "damped_shm": {
+            "mean": 0.11823,
+            "sd": 0.0944
+          },
+          "bessel_j2": {
+            "mean": 0.35686,
+            "sd": 0.23786
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06069,
+            "sd": 0.02581
+          },
+          "damped_shm": {
+            "mean": 0.04038,
+            "sd": 0.00506
+          },
+          "bessel_j2": {
+            "mean": 0.25129,
+            "sd": 0.04914
+          }
+        }
+      },
+      {
+        "epoch": 78,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.02889,
+            "sd": 0.00454
+          },
+          "damped_shm": {
+            "mean": 0.11167,
+            "sd": 0.09137
+          },
+          "bessel_j2": {
+            "mean": 0.35285,
+            "sd": 0.20924
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06158,
+            "sd": 0.02508
+          },
+          "damped_shm": {
+            "mean": 0.03959,
+            "sd": 0.00432
+          },
+          "bessel_j2": {
+            "mean": 0.2479,
+            "sd": 0.05345
+          }
+        }
+      },
+      {
+        "epoch": 79,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.02921,
+            "sd": 0.006
+          },
+          "damped_shm": {
+            "mean": 0.10313,
+            "sd": 0.07817
+          },
+          "bessel_j2": {
+            "mean": 0.32385,
+            "sd": 0.18938
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.06167,
+            "sd": 0.02645
+          },
+          "damped_shm": {
+            "mean": 0.03858,
+            "sd": 0.00424
+          },
+          "bessel_j2": {
+            "mean": 0.241,
+            "sd": 0.06122
+          }
+        }
+      },
+      {
+        "epoch": 80,
+        "phase": 2,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.02796,
+            "sd": 0.00685
+          },
+          "damped_shm": {
+            "mean": 0.10274,
+            "sd": 0.06575
+          },
+          "bessel_j2": {
+            "mean": 0.29492,
+            "sd": 0.17238
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.05897,
+            "sd": 0.02577
+          },
+          "damped_shm": {
+            "mean": 0.03848,
+            "sd": 0.00467
+          },
+          "bessel_j2": {
+            "mean": 0.23684,
+            "sd": 0.05332
+          }
+        }
+      },
+      {
+        "epoch": 81,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.0927,
+            "sd": 0.05199
+          },
+          "damped_shm": {
+            "mean": 0.49,
+            "sd": 0.46282
+          },
+          "bessel_j2": {
+            "mean": 0.47472,
+            "sd": 0.65649
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09317,
+            "sd": 0.04709
+          },
+          "damped_shm": {
+            "mean": 0.06078,
+            "sd": 0.01683
+          },
+          "bessel_j2": {
+            "mean": 0.1917,
+            "sd": 0.0716
+          }
+        }
+      },
+      {
+        "epoch": 82,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.12809,
+            "sd": 0.08207
+          },
+          "damped_shm": {
+            "mean": 0.31817,
+            "sd": 0.25457
+          },
+          "bessel_j2": {
+            "mean": 0.24448,
+            "sd": 0.07745
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.1237,
+            "sd": 0.06039
+          },
+          "damped_shm": {
+            "mean": 0.07124,
+            "sd": 0.02678
+          },
+          "bessel_j2": {
+            "mean": 0.17585,
+            "sd": 0.04693
+          }
+        }
+      },
+      {
+        "epoch": 83,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.11259,
+            "sd": 0.10673
+          },
+          "damped_shm": {
+            "mean": 0.45817,
+            "sd": 0.66584
+          },
+          "bessel_j2": {
+            "mean": 0.37028,
+            "sd": 0.33772
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.10235,
+            "sd": 0.05645
+          },
+          "damped_shm": {
+            "mean": 0.07415,
+            "sd": 0.0494
+          },
+          "bessel_j2": {
+            "mean": 0.18595,
+            "sd": 0.06566
+          }
+        }
+      },
+      {
+        "epoch": 84,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.10538,
+            "sd": 0.07596
+          },
+          "damped_shm": {
+            "mean": 0.37876,
+            "sd": 0.37888
+          },
+          "bessel_j2": {
+            "mean": 0.39952,
+            "sd": 0.25975
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.10372,
+            "sd": 0.05421
+          },
+          "damped_shm": {
+            "mean": 0.06738,
+            "sd": 0.03078
+          },
+          "bessel_j2": {
+            "mean": 0.17977,
+            "sd": 0.02837
+          }
+        }
+      },
+      {
+        "epoch": 85,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.08226,
+            "sd": 0.05078
+          },
+          "damped_shm": {
+            "mean": 0.25624,
+            "sd": 0.19633
+          },
+          "bessel_j2": {
+            "mean": 0.24946,
+            "sd": 0.2046
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09395,
+            "sd": 0.05129
+          },
+          "damped_shm": {
+            "mean": 0.05763,
+            "sd": 0.01905
+          },
+          "bessel_j2": {
+            "mean": 0.15198,
+            "sd": 0.02603
+          }
+        }
+      },
+      {
+        "epoch": 86,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07818,
+            "sd": 0.0273
+          },
+          "damped_shm": {
+            "mean": 0.2045,
+            "sd": 0.13234
+          },
+          "bessel_j2": {
+            "mean": 0.19408,
+            "sd": 0.1222
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09184,
+            "sd": 0.04316
+          },
+          "damped_shm": {
+            "mean": 0.0591,
+            "sd": 0.01019
+          },
+          "bessel_j2": {
+            "mean": 0.15699,
+            "sd": 0.04456
+          }
+        }
+      },
+      {
+        "epoch": 87,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.08013,
+            "sd": 0.03056
+          },
+          "damped_shm": {
+            "mean": 0.14096,
+            "sd": 0.06187
+          },
+          "bessel_j2": {
+            "mean": 0.12243,
+            "sd": 0.05518
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09644,
+            "sd": 0.05204
+          },
+          "damped_shm": {
+            "mean": 0.05937,
+            "sd": 0.01559
+          },
+          "bessel_j2": {
+            "mean": 0.1467,
+            "sd": 0.03765
+          }
+        }
+      },
+      {
+        "epoch": 88,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.08839,
+            "sd": 0.03216
+          },
+          "damped_shm": {
+            "mean": 0.22739,
+            "sd": 0.26719
+          },
+          "bessel_j2": {
+            "mean": 0.19063,
+            "sd": 0.113
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09974,
+            "sd": 0.04979
+          },
+          "damped_shm": {
+            "mean": 0.06281,
+            "sd": 0.01554
+          },
+          "bessel_j2": {
+            "mean": 0.14024,
+            "sd": 0.02975
+          }
+        }
+      },
+      {
+        "epoch": 89,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.09046,
+            "sd": 0.05968
+          },
+          "damped_shm": {
+            "mean": 0.32862,
+            "sd": 0.35849
+          },
+          "bessel_j2": {
+            "mean": 0.23384,
+            "sd": 0.26409
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.0981,
+            "sd": 0.05591
+          },
+          "damped_shm": {
+            "mean": 0.06889,
+            "sd": 0.03166
+          },
+          "bessel_j2": {
+            "mean": 0.13406,
+            "sd": 0.02621
+          }
+        }
+      },
+      {
+        "epoch": 90,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.09746,
+            "sd": 0.10636
+          },
+          "damped_shm": {
+            "mean": 0.32897,
+            "sd": 0.30033
+          },
+          "bessel_j2": {
+            "mean": 0.21125,
+            "sd": 0.05414
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.10394,
+            "sd": 0.05386
+          },
+          "damped_shm": {
+            "mean": 0.07656,
+            "sd": 0.05904
+          },
+          "bessel_j2": {
+            "mean": 0.13309,
+            "sd": 0.01068
+          }
+        }
+      },
+      {
+        "epoch": 91,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.10652,
+            "sd": 0.14542
+          },
+          "damped_shm": {
+            "mean": 0.26117,
+            "sd": 0.36841
+          },
+          "bessel_j2": {
+            "mean": 0.13917,
+            "sd": 0.06526
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.11116,
+            "sd": 0.06257
+          },
+          "damped_shm": {
+            "mean": 0.08234,
+            "sd": 0.07899
+          },
+          "bessel_j2": {
+            "mean": 0.12795,
+            "sd": 0.0358
+          }
+        }
+      },
+      {
+        "epoch": 92,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.11606,
+            "sd": 0.14628
+          },
+          "damped_shm": {
+            "mean": 0.27807,
+            "sd": 0.39866
+          },
+          "bessel_j2": {
+            "mean": 0.09551,
+            "sd": 0.05396
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.11385,
+            "sd": 0.06276
+          },
+          "damped_shm": {
+            "mean": 0.08639,
+            "sd": 0.08387
+          },
+          "bessel_j2": {
+            "mean": 0.11032,
+            "sd": 0.01987
+          }
+        }
+      },
+      {
+        "epoch": 93,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.12649,
+            "sd": 0.12646
+          },
+          "damped_shm": {
+            "mean": 0.39369,
+            "sd": 0.40694
+          },
+          "bessel_j2": {
+            "mean": 0.16049,
+            "sd": 0.1164
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.11522,
+            "sd": 0.06243
+          },
+          "damped_shm": {
+            "mean": 0.09013,
+            "sd": 0.07572
+          },
+          "bessel_j2": {
+            "mean": 0.11375,
+            "sd": 0.01423
+          }
+        }
+      },
+      {
+        "epoch": 94,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.11509,
+            "sd": 0.09275
+          },
+          "damped_shm": {
+            "mean": 0.34784,
+            "sd": 0.32729
+          },
+          "bessel_j2": {
+            "mean": 0.15946,
+            "sd": 0.1448
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.11433,
+            "sd": 0.0584
+          },
+          "damped_shm": {
+            "mean": 0.08264,
+            "sd": 0.05596
+          },
+          "bessel_j2": {
+            "mean": 0.11133,
+            "sd": 0.02443
+          }
+        }
+      },
+      {
+        "epoch": 95,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.08938,
+            "sd": 0.07638
+          },
+          "damped_shm": {
+            "mean": 0.22383,
+            "sd": 0.18642
+          },
+          "bessel_j2": {
+            "mean": 0.12405,
+            "sd": 0.02591
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.10833,
+            "sd": 0.05392
+          },
+          "damped_shm": {
+            "mean": 0.0709,
+            "sd": 0.04534
+          },
+          "bessel_j2": {
+            "mean": 0.10922,
+            "sd": 0.0115
+          }
+        }
+      },
+      {
+        "epoch": 96,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07763,
+            "sd": 0.07356
+          },
+          "damped_shm": {
+            "mean": 0.18598,
+            "sd": 0.20159
+          },
+          "bessel_j2": {
+            "mean": 0.15503,
+            "sd": 0.06902
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.10342,
+            "sd": 0.04919
+          },
+          "damped_shm": {
+            "mean": 0.067,
+            "sd": 0.04434
+          },
+          "bessel_j2": {
+            "mean": 0.12115,
+            "sd": 0.01928
+          }
+        }
+      },
+      {
+        "epoch": 97,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07201,
+            "sd": 0.06663
+          },
+          "damped_shm": {
+            "mean": 0.17462,
+            "sd": 0.17698
+          },
+          "bessel_j2": {
+            "mean": 0.12412,
+            "sd": 0.03286
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.0987,
+            "sd": 0.04707
+          },
+          "damped_shm": {
+            "mean": 0.06399,
+            "sd": 0.03933
+          },
+          "bessel_j2": {
+            "mean": 0.11013,
+            "sd": 0.01074
+          }
+        }
+      },
+      {
+        "epoch": 98,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.08428,
+            "sd": 0.0687
+          },
+          "damped_shm": {
+            "mean": 0.24421,
+            "sd": 0.21031
+          },
+          "bessel_j2": {
+            "mean": 0.13143,
+            "sd": 0.10409
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.10221,
+            "sd": 0.04986
+          },
+          "damped_shm": {
+            "mean": 0.06827,
+            "sd": 0.03885
+          },
+          "bessel_j2": {
+            "mean": 0.10287,
+            "sd": 0.01445
+          }
+        }
+      },
+      {
+        "epoch": 99,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.09344,
+            "sd": 0.07413
+          },
+          "damped_shm": {
+            "mean": 0.31994,
+            "sd": 0.29058
+          },
+          "bessel_j2": {
+            "mean": 0.1399,
+            "sd": 0.11165
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.10541,
+            "sd": 0.0487
+          },
+          "damped_shm": {
+            "mean": 0.07261,
+            "sd": 0.04444
+          },
+          "bessel_j2": {
+            "mean": 0.1022,
+            "sd": 0.01544
+          }
+        }
+      },
+      {
+        "epoch": 100,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.08405,
+            "sd": 0.07604
+          },
+          "damped_shm": {
+            "mean": 0.27498,
+            "sd": 0.2858
+          },
+          "bessel_j2": {
+            "mean": 0.08799,
+            "sd": 0.0219
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.1028,
+            "sd": 0.04821
+          },
+          "damped_shm": {
+            "mean": 0.06718,
+            "sd": 0.04436
+          },
+          "bessel_j2": {
+            "mean": 0.09497,
+            "sd": 0.00881
+          }
+        }
+      },
+      {
+        "epoch": 101,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07459,
+            "sd": 0.06987
+          },
+          "damped_shm": {
+            "mean": 0.21149,
+            "sd": 0.23907
+          },
+          "bessel_j2": {
+            "mean": 0.08742,
+            "sd": 0.04168
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09903,
+            "sd": 0.04824
+          },
+          "damped_shm": {
+            "mean": 0.06099,
+            "sd": 0.03764
+          },
+          "bessel_j2": {
+            "mean": 0.09737,
+            "sd": 0.01315
+          }
+        }
+      },
+      {
+        "epoch": 102,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06945,
+            "sd": 0.05585
+          },
+          "damped_shm": {
+            "mean": 0.20911,
+            "sd": 0.24007
+          },
+          "bessel_j2": {
+            "mean": 0.1063,
+            "sd": 0.04157
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09279,
+            "sd": 0.04111
+          },
+          "damped_shm": {
+            "mean": 0.05841,
+            "sd": 0.03144
+          },
+          "bessel_j2": {
+            "mean": 0.09692,
+            "sd": 0.00786
+          }
+        }
+      },
+      {
+        "epoch": 103,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07059,
+            "sd": 0.0396
+          },
+          "damped_shm": {
+            "mean": 0.21138,
+            "sd": 0.20161
+          },
+          "bessel_j2": {
+            "mean": 0.10863,
+            "sd": 0.05842
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09125,
+            "sd": 0.03636
+          },
+          "damped_shm": {
+            "mean": 0.05738,
+            "sd": 0.02174
+          },
+          "bessel_j2": {
+            "mean": 0.09393,
+            "sd": 0.01332
+          }
+        }
+      },
+      {
+        "epoch": 104,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06772,
+            "sd": 0.02624
+          },
+          "damped_shm": {
+            "mean": 0.18519,
+            "sd": 0.15206
+          },
+          "bessel_j2": {
+            "mean": 0.09701,
+            "sd": 0.0942
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09158,
+            "sd": 0.03573
+          },
+          "damped_shm": {
+            "mean": 0.05412,
+            "sd": 0.01216
+          },
+          "bessel_j2": {
+            "mean": 0.09366,
+            "sd": 0.02
+          }
+        }
+      },
+      {
+        "epoch": 105,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.05981,
+            "sd": 0.02686
+          },
+          "damped_shm": {
+            "mean": 0.16649,
+            "sd": 0.13604
+          },
+          "bessel_j2": {
+            "mean": 0.07571,
+            "sd": 0.03396
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08881,
+            "sd": 0.03524
+          },
+          "damped_shm": {
+            "mean": 0.05155,
+            "sd": 0.01249
+          },
+          "bessel_j2": {
+            "mean": 0.09132,
+            "sd": 0.01509
+          }
+        }
+      },
+      {
+        "epoch": 106,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.05669,
+            "sd": 0.03113
+          },
+          "damped_shm": {
+            "mean": 0.15562,
+            "sd": 0.15085
+          },
+          "bessel_j2": {
+            "mean": 0.08,
+            "sd": 0.03958
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08841,
+            "sd": 0.0369
+          },
+          "damped_shm": {
+            "mean": 0.05053,
+            "sd": 0.01431
+          },
+          "bessel_j2": {
+            "mean": 0.09153,
+            "sd": 0.01331
+          }
+        }
+      },
+      {
+        "epoch": 107,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06096,
+            "sd": 0.03575
+          },
+          "damped_shm": {
+            "mean": 0.16329,
+            "sd": 0.15627
+          },
+          "bessel_j2": {
+            "mean": 0.08855,
+            "sd": 0.04799
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09026,
+            "sd": 0.03837
+          },
+          "damped_shm": {
+            "mean": 0.0511,
+            "sd": 0.01503
+          },
+          "bessel_j2": {
+            "mean": 0.08796,
+            "sd": 0.01076
+          }
+        }
+      },
+      {
+        "epoch": 108,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07127,
+            "sd": 0.04685
+          },
+          "damped_shm": {
+            "mean": 0.23045,
+            "sd": 0.2482
+          },
+          "bessel_j2": {
+            "mean": 0.0973,
+            "sd": 0.06166
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09141,
+            "sd": 0.03924
+          },
+          "damped_shm": {
+            "mean": 0.05619,
+            "sd": 0.02319
+          },
+          "bessel_j2": {
+            "mean": 0.08501,
+            "sd": 0.01365
+          }
+        }
+      },
+      {
+        "epoch": 109,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07367,
+            "sd": 0.05291
+          },
+          "damped_shm": {
+            "mean": 0.2442,
+            "sd": 0.259
+          },
+          "bessel_j2": {
+            "mean": 0.08823,
+            "sd": 0.07125
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.09121,
+            "sd": 0.03968
+          },
+          "damped_shm": {
+            "mean": 0.05695,
+            "sd": 0.02631
+          },
+          "bessel_j2": {
+            "mean": 0.08321,
+            "sd": 0.01682
+          }
+        }
+      },
+      {
+        "epoch": 110,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06801,
+            "sd": 0.0555
+          },
+          "damped_shm": {
+            "mean": 0.20329,
+            "sd": 0.2193
+          },
+          "bessel_j2": {
+            "mean": 0.07147,
+            "sd": 0.03834
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08896,
+            "sd": 0.03782
+          },
+          "damped_shm": {
+            "mean": 0.05372,
+            "sd": 0.02591
+          },
+          "bessel_j2": {
+            "mean": 0.0816,
+            "sd": 0.01489
+          }
+        }
+      },
+      {
+        "epoch": 111,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06394,
+            "sd": 0.05632
+          },
+          "damped_shm": {
+            "mean": 0.19442,
+            "sd": 0.24464
+          },
+          "bessel_j2": {
+            "mean": 0.07943,
+            "sd": 0.03851
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08559,
+            "sd": 0.03588
+          },
+          "damped_shm": {
+            "mean": 0.05288,
+            "sd": 0.02852
+          },
+          "bessel_j2": {
+            "mean": 0.08307,
+            "sd": 0.01385
+          }
+        }
+      },
+      {
+        "epoch": 112,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06329,
+            "sd": 0.04745
+          },
+          "damped_shm": {
+            "mean": 0.18139,
+            "sd": 0.19915
+          },
+          "bessel_j2": {
+            "mean": 0.07712,
+            "sd": 0.02883
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08487,
+            "sd": 0.0351
+          },
+          "damped_shm": {
+            "mean": 0.0517,
+            "sd": 0.02439
+          },
+          "bessel_j2": {
+            "mean": 0.07916,
+            "sd": 0.01136
+          }
+        }
+      },
+      {
+        "epoch": 113,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06765,
+            "sd": 0.04128
+          },
+          "damped_shm": {
+            "mean": 0.19816,
+            "sd": 0.19148
+          },
+          "bessel_j2": {
+            "mean": 0.08755,
+            "sd": 0.04374
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08667,
+            "sd": 0.03628
+          },
+          "damped_shm": {
+            "mean": 0.05284,
+            "sd": 0.02173
+          },
+          "bessel_j2": {
+            "mean": 0.07747,
+            "sd": 0.01265
+          }
+        }
+      },
+      {
+        "epoch": 114,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06807,
+            "sd": 0.04448
+          },
+          "damped_shm": {
+            "mean": 0.21985,
+            "sd": 0.21718
+          },
+          "bessel_j2": {
+            "mean": 0.09774,
+            "sd": 0.03751
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08678,
+            "sd": 0.03786
+          },
+          "damped_shm": {
+            "mean": 0.05375,
+            "sd": 0.02415
+          },
+          "bessel_j2": {
+            "mean": 0.07872,
+            "sd": 0.01348
+          }
+        }
+      },
+      {
+        "epoch": 115,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06353,
+            "sd": 0.0471
+          },
+          "damped_shm": {
+            "mean": 0.19063,
+            "sd": 0.18926
+          },
+          "bessel_j2": {
+            "mean": 0.07655,
+            "sd": 0.03826
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08558,
+            "sd": 0.03679
+          },
+          "damped_shm": {
+            "mean": 0.05166,
+            "sd": 0.02392
+          },
+          "bessel_j2": {
+            "mean": 0.07739,
+            "sd": 0.01308
+          }
+        }
+      },
+      {
+        "epoch": 116,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06469,
+            "sd": 0.05426
+          },
+          "damped_shm": {
+            "mean": 0.18286,
+            "sd": 0.20851
+          },
+          "bessel_j2": {
+            "mean": 0.0677,
+            "sd": 0.03179
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08545,
+            "sd": 0.03469
+          },
+          "damped_shm": {
+            "mean": 0.05178,
+            "sd": 0.02705
+          },
+          "bessel_j2": {
+            "mean": 0.0754,
+            "sd": 0.01546
+          }
+        }
+      },
+      {
+        "epoch": 117,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07151,
+            "sd": 0.06202
+          },
+          "damped_shm": {
+            "mean": 0.21443,
+            "sd": 0.25721
+          },
+          "bessel_j2": {
+            "mean": 0.078,
+            "sd": 0.01286
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08651,
+            "sd": 0.03416
+          },
+          "damped_shm": {
+            "mean": 0.05481,
+            "sd": 0.0321
+          },
+          "bessel_j2": {
+            "mean": 0.07328,
+            "sd": 0.01505
+          }
+        }
+      },
+      {
+        "epoch": 118,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.0729,
+            "sd": 0.06044
+          },
+          "damped_shm": {
+            "mean": 0.21899,
+            "sd": 0.23678
+          },
+          "bessel_j2": {
+            "mean": 0.08497,
+            "sd": 0.04576
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08691,
+            "sd": 0.03546
+          },
+          "damped_shm": {
+            "mean": 0.0545,
+            "sd": 0.0306
+          },
+          "bessel_j2": {
+            "mean": 0.07206,
+            "sd": 0.017
+          }
+        }
+      },
+      {
+        "epoch": 119,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.07006,
+            "sd": 0.06063
+          },
+          "damped_shm": {
+            "mean": 0.21505,
+            "sd": 0.23363
+          },
+          "bessel_j2": {
+            "mean": 0.08547,
+            "sd": 0.03732
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08579,
+            "sd": 0.03563
+          },
+          "damped_shm": {
+            "mean": 0.05333,
+            "sd": 0.03092
+          },
+          "bessel_j2": {
+            "mean": 0.0728,
+            "sd": 0.0149
+          }
+        }
+      },
+      {
+        "epoch": 120,
+        "phase": 3,
+        "nmse": {
+          "narma_5": {
+            "mean": 0.06797,
+            "sd": 0.05762
+          },
+          "damped_shm": {
+            "mean": 0.19571,
+            "sd": 0.21579
+          },
+          "bessel_j2": {
+            "mean": 0.06854,
+            "sd": 0.02504
+          }
+        },
+        "train_nmse": {
+          "narma_5": {
+            "mean": 0.08489,
+            "sd": 0.03434
+          },
+          "damped_shm": {
+            "mean": 0.05228,
+            "sd": 0.02951
+          },
+          "bessel_j2": {
+            "mean": 0.07263,
+            "sd": 0.01483
           }
         }
       }

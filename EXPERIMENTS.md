@@ -292,3 +292,48 @@ results/e005_seed{42,43,44}.json + results/e005_summary.json.
 Figure: `figures/e005_ewc_qewc.png` (via `scripts/e005_plot_curve.py`) — three panels (per task)
 comparing Baseline / EWC / QEWC with mean +/- 1 sample-SD bands, in the style of
 `figures/e004_continual_mean.png`.
+
+---
+
+## E011 - schedule study: blocked vs interleaved (fixed epoch budget)
+
+Question: E004/E005 forget earlier tasks because they train in *blocks* (T1x20, T2x20, T3x20).
+If the per-task epoch budget is held fixed (still 20 each, 60 gradient steps total), does simply
+*interleaving* the tasks change the picture? No consolidation (no EWC/QEWC) -- this isolates the
+effect of the training schedule alone.
+
+Method:
+- blocked      = step order [T1]*20, [T2]*20, [T3]*20   (identical to the E005 baseline)
+- interleaved  = step order [T1, T2, T3] repeated 20 times
+- same initial weights, same learner (4 qubits, RY/RZ + CNOT, 20 layers/160 weights,
+  Adam(lr=0.02)), same 20 epochs/task, same tasks (MNIST 0/1 -> Fashion-MNIST 0/1 -> SPT/ATF);
+  test accuracy on all three tasks recorded after every gradient step. Seeds 42/43/44.
+
+Result (mean final test accuracy over 3 seeds, mean +/- sample SD):
+- earlier tasks (T1,T2):  blocked 0.627 +/- 0.103  ->  interleaved 0.849 +/- 0.051
+- all tasks (T1-T3):      blocked 0.752 +/- 0.069  ->  interleaved 0.899 +/- 0.034
+- interleaving recovers most of the forgetting for free (T1 0.540->0.748, T2 0.715->0.950
+  single-seed means) at identical compute; both reach ~1.0 on T3. This is the classic
+  continual-learning "interleaved ~ joint-training upper bound": the blocked schedule's
+  forgetting is a property of the ordering, not the data. It is the reference EWC/QEWC (E005)
+  aim to approach *without* revisiting earlier tasks -- interleaving assumes all tasks stay
+  available, which the continual setting forbids.
+
+Three-way comparison (blocked vs QEWC vs interleaved), earlier-task (T1,T2) mean final acc,
+all with identical params (4 qubits, 20 layers/160 weights, Adam lr=0.02, 20 epochs/task,
+n_train=800, seeds 42/43/44 -- verified equal across the E005 and E011 summaries; E005 baseline
+== E011 blocked to 4 dp):
+- blocked      0.627 +/- 0.103   (lower reference: naive schedule, forgets)
+- QEWC (E005)  0.826 +/- 0.045   (continual method: fixes forgetting WITHOUT revisiting tasks)
+- interleaved  0.849 +/- 0.051   (upper bound: revisits every task each round)
+QEWC recovers ~90% of the blocked->interleaved gap while respecting the continual constraint
+(no earlier-task data at train time), which interleaving violates.
+
+Files: experiments/e011_interleaved.py, scripts/e011_run_multiseed.py,
+scripts/e011_plot_curve.py, scripts/e011_plot_combined.py, tests/test_e011.py,
+results/e011_seed{42,43,44}.json + results/e011_summary.json. Reuses src/e005_softmax.py,
+src/continual_data.py, src/phase_data.py from the E005 PR (no consolidation code needed).
+Figures: `figures/e011_interleaved.png` (blocked vs interleaved) and
+`figures/e011_combined.png` (blocked vs QEWC vs interleaved on one plot; needs
+results/e005_summary.json from scripts/e005_run_multiseed.py). Both are three panels (per
+task), mean +/- 1 sample-SD bands over seeds.

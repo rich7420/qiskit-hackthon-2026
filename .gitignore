@@ -62,6 +62,12 @@ figures/**/*.pdf
 !figures/e004_continual_seed43.png
 !figures/e004_continual_seed44.png
 !figures/e004_continual_mean.png
+!results/e011_seed42.json
+!results/e011_seed43.json
+!results/e011_seed44.json
+!results/e011_summary.json
+!figures/e011_interleaved.png
+!figures/e011_combined.png
 
 # LaTeX drawer diagnostic generated when a local TeX installation is incomplete
 latex_error.log

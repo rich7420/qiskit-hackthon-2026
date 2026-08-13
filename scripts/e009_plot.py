@@ -22,7 +22,7 @@ OUT = ROOT / "figures" / "e009_forgetting.png"
 
 # method -> (label, color, linestyle). Replay is a classical, model-agnostic method and is
 # omitted here to focus on the quantum-model regularizers (QEWC = quantum Fisher).
-STYLE = {"naive": ("naive (no CL)", "0.45", "--"),
+STYLE = {"naive": ("Baseline (naive seq.)", "0.45", "--"),
          "l2": ("L2 anchor", "#CCBB44", "-."),
          "ewc": ("EWC (classical Fisher)", "#4477AA", "-."),
          "qewc": ("QEWC (quantum Fisher)", "#228833", "-")}

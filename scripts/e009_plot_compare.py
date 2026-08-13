@@ -1,8 +1,8 @@
-"""e009 method comparison: retention vs plasticity (both NMSE, lower-left is best).
+"""e009 method comparison across all three datasets (grouped bars, final test NMSE).
 
-Reads results/e009_multiseed.json. x = mean earlier-task test NMSE (retention; lower = better
-retained), y = final-task test NMSE (plasticity; lower = better learned), error bars = sample SD
-across seeds. The bottom-left corner is the ideal (retain old + learn new).
+For each of the 3 forecasting tasks, show the final test NMSE (lower = better) of every method,
+with +/-1 sample-SD error bars across seeds. This makes per-dataset behaviour explicit (naive
+forgets the earlier tasks; replay/QEWC retain them). Reads results/e009_multiseed.json.
 
 Run:
     python scripts/e009_plot_compare.py
@@ -14,45 +14,53 @@ import json
 from pathlib import Path
 
 import matplotlib.pyplot as plt
+import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULT = ROOT / "results" / "e009_multiseed.json"
 OUT = ROOT / "figures" / "e009_compare.png"
 
-STYLE = {"naive": ("naive (no CL)", "0.45"), "l2": ("L2 anchor", "#CCBB44"),
+STYLE = {"naive": ("naive (no CL)", "0.55"), "l2": ("L2 anchor", "#CCBB44"),
          "ewc": ("EWC (classical Fisher)", "#4477AA"), "qewc": ("QEWC (quantum Fisher)", "#228833"),
          "replay": ("replay", "#EE6677")}
 
 
 def main() -> None:
     data = json.loads(RESULT.read_text())
-    summ = data["summary"]
+    tasks = data["tasks"]
+    methods = list(STYLE)
     n_seeds = len(data["seeds"])
+    # final-epoch per-task test NMSE (mean + sd) for each method
+    final = {m: data["mean_curves"][m][-1]["nmse"] for m in methods}
 
+    x = np.arange(len(tasks))
+    w = 0.16
     plt.rcParams.update({"font.size": 12, "axes.linewidth": 1.2})
-    fig, ax = plt.subplots(figsize=(7, 5.6))
+    fig, ax = plt.subplots(figsize=(9.5, 5.2))
 
-    for m, (label, color) in STYLE.items():
-        x = summ[m]["retention_earlier_nmse"]["mean"]
-        xe = summ[m]["retention_earlier_nmse"]["sd"]
-        y = summ[m]["plasticity_final_nmse"]["mean"]
-        ye = summ[m]["plasticity_final_nmse"]["sd"]
-        avg = summ[m]["avg_final_nmse"]["mean"]
-        ax.errorbar(x, y, xerr=xe, yerr=ye, fmt="o", ms=13, color=color, ecolor=color,
-                    elinewidth=1.5, capsize=4, markeredgecolor="k", zorder=3)
-        ax.annotate(f"{label}\navg NMSE {avg:.3f}", (x, y), textcoords="offset points",
-                    xytext=(10, 8), fontsize=10)
+    for j, m in enumerate(methods):
+        means = [final[m][t]["mean"] for t in tasks]
+        sds = [final[m][t]["sd"] for t in tasks]
+        label, color = STYLE[m]
+        ax.bar(x + (j - 2) * w, means, w, yerr=sds, capsize=3, color=color,
+               edgecolor="k", linewidth=0.5, label=label,
+               error_kw={"elinewidth": 1, "alpha": 0.7})
 
-    ax.set_xlabel("retention — earlier-task test NMSE   (lower ← better retained)")
-    ax.set_ylabel("plasticity — new-task test NMSE   (lower ↓ better learned)")
-    ax.set_title(f"e009: balancing retention vs adaptation on quantum forecasting "
+    # mark which task is trained in which phase (1st, 2nd, last)
+    phase_lbl = ["trained 1st\n(most forgotten)", "trained 2nd", "trained last\n(newest)"]
+    for i, t in enumerate(tasks):
+        ax.text(i, -0.07, phase_lbl[i], ha="center", va="top", fontsize=8.5, color="dimgray",
+                transform=ax.get_xaxis_transform())
+
+    ax.set_xticks(x)
+    ax.set_xticklabels([f"Task {i+1}\n{t}" for i, t in enumerate(tasks)])
+    ax.set_ylabel("final test NMSE  (lower = better)")
+    ax.set_title(f"e009: per-dataset final forecasting error after sequential training "
                  f"({n_seeds} seeds)")
-    ax.grid(alpha=0.25)
-    ax.annotate("BEST\n(retain old + learn new)", xy=(0.02, 0.02), xycoords="axes fraction",
-                ha="left", va="bottom", fontsize=11, fontweight="bold", color="tab:green")
-    # a little arrow toward the ideal corner
-    ax.annotate("", xy=(0.13, 0.06), xytext=(0.30, 0.22), xycoords="axes fraction",
-                arrowprops=dict(arrowstyle="->", color="tab:green", lw=1.5))
+    ax.legend(loc="upper center", fontsize=9, ncol=5, framealpha=0.9)
+    ax.grid(axis="y", alpha=0.25)
+    ax.set_ylim(0, None)
+    ax.margins(y=0.15)
     fig.tight_layout()
     OUT.parent.mkdir(exist_ok=True)
     fig.savefig(OUT, dpi=200, bbox_inches="tight")

@@ -158,3 +158,6 @@ latex_error.log
 !results/e014_hardware_aer_alltasks.json
 !results/e014_hardware_figure_provenance.json
 !figures/e014_hardware.png
+!results/e014_hardware_ibm_marrakesh_alltasks.json
+!results/e014_hardware_aer_qewc_alltasks.json
+!results/e014_hardware_ibm_marrakesh_qewc_alltasks.json

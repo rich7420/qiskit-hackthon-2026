@@ -174,6 +174,130 @@ def run(*, task="mnist", layers=4, readout=(0, 1), epochs=20, n_head=150, n_test
     }
 
 
+def _build_softmax_circuit(x_state, weights, layers):
+    """Same ansatz, but the QEWC/paper readout: measure qubits 0 and 1 (two Pauli-Z scores)."""
+    from qiskit import ClassicalRegister, QuantumCircuit
+
+    n = N_QUBITS
+    qc = QuantumCircuit(n)
+    qc.prepare_state(list(map(float, x_state)), list(range(n)))
+    for layer in range(layers):
+        for q in range(n):
+            qc.ry(float(weights[layer, q, 0]), q)
+            qc.rz(float(weights[layer, q, 1]), q)
+        for q in range(n - 1):
+            qc.cx(q, q + 1)
+    creg = ClassicalRegister(2, "c")
+    qc.add_register(creg)
+    qc.measure(0, creg[0])
+    qc.measure(1, creg[1])
+    return qc
+
+
+def _counts_to_z(counts, shots):
+    """<Z_0>, <Z_1> from 2-bit counts (key: ...c1 c0; last char = classical bit 0)."""
+    z0 = z1 = 0.0
+    for bits, c in counts.items():
+        s = bits.replace(" ", "")
+        z0 += c * (1 - 2 * int(s[-1]))
+        z1 += c * (1 - 2 * int(s[-2]))
+    return z0 / shots, z1 / shots
+
+
+def _sample_counts(circuits, sampler, shots):
+    job = sampler.run(circuits, shots=shots)
+    res = job.result()
+    counts = [r.data.c.get_counts() for r in res]
+    return counts, getattr(job, "job_id", lambda: None)()
+
+
+def _train_qewc(tasks, layers, epochs, lam_qewc, qfi_samples, seed, lr=0.05):
+    import pennylane as qml
+    from pennylane import numpy as pnp
+
+    from src.e005_consolidation import EWC, quantum_fisher_diag
+    from src.e005_softmax import bce_loss, make_softmax_qnode
+
+    clf, shape = make_softmax_qnode(n_qubits=N_QUBITS, n_layers=layers)
+    qfi, _ = make_softmax_qnode(n_qubits=N_QUBITS, n_layers=layers)
+    reg = EWC(lam_qewc)
+    w = pnp.array(0.01 * np.random.default_rng(seed).standard_normal(shape), requires_grad=True)
+    opt = qml.AdamOptimizer(lr)
+    for phase, t in enumerate(tasks):
+        Xtr = pnp.array(t.X_train, requires_grad=False)
+        ytr = pnp.array(t.y_train, requires_grad=False)
+
+        def cost(W, Xtr=Xtr, ytr=ytr, phase=phase):
+            return bce_loss(clf, W, Xtr, ytr) + reg.penalty(W.flatten(), phase + 1)
+
+        for _ in range(epochs):
+            w = opt.step(cost, w)
+        if phase < len(tasks) - 1:
+            f = quantum_fisher_diag(qfi, w, t.X_train, n_samples=qfi_samples, seed=seed)
+            reg.consolidate(np.asarray(w).flatten(), f)
+    return np.asarray(w)
+
+
+def run_qewc_cl(*, layers=4, epochs=20, lam_qewc=0.8, qfi_samples=32, n_train=250, n_test=24,
+                shots=4096, backend_name="aer", seed=42) -> dict[str, Any]:
+    """QEWC (shared 2-Z softmax readout, QFI-consolidated theta) evaluated on hardware, per task."""
+    from src.e005_softmax import accuracy as softmax_accuracy
+    from src.e005_softmax import make_softmax_qnode
+
+    started = time.perf_counter()
+    tasks = [_load_task(n, n_train, max(n_test, 60), seed) for n in ("mnist", "fashion", "spt")]
+    w = _train_qewc(tasks, layers, epochs, lam_qewc, qfi_samples, seed)  # final consolidated theta
+    clf, _ = make_softmax_qnode(n_qubits=N_QUBITS, n_layers=layers)
+
+    from qiskit import transpile
+    from qiskit_aer import AerSimulator
+    from qiskit_aer.primitives import SamplerV2 as AerSamplerV2
+
+    aer_dev, aer = AerSimulator(), AerSamplerV2()
+    pm = sampler = backend = None
+    if backend_name != "aer":
+        from qiskit.transpiler.preset_passmanagers import generate_preset_pass_manager
+        from qiskit_ibm_runtime import QiskitRuntimeService, SamplerV2
+        env = _load_env()
+        svc = QiskitRuntimeService(channel="ibm_quantum_platform", token=env["IBM_QUANTUM_TOKEN"],
+                                   instance=env.get("IBM_QUANTUM_INSTANCE") or None)
+        backend = svc.backend(backend_name)
+        pm = generate_preset_pass_manager(backend=backend, optimization_level=3)
+        sampler = SamplerV2(mode=backend)
+
+    per_task, jobs = {}, {}
+    keys = ("task1", "task2", "task3")
+    for key, t in zip(keys, tasks):
+        Xte, yte = t.X_test[:n_test], t.y_test[:n_test]
+        sim_acc = float(softmax_accuracy(clf, w, Xte, yte))
+        circs = [_build_softmax_circuit(x, w, layers) for x in Xte]
+        if backend_name == "aer":
+            counts, jid = _sample_counts(transpile(circs, aer_dev), aer, shots)
+        else:
+            counts, jid = _sample_counts([pm.run(c) for c in circs], sampler, shots)
+        preds = np.array([0 if (lambda z: z[0] >= z[1])(_counts_to_z(c, shots)) else 1 for c in counts])
+        hw_acc = float(np.mean(preds == _labels_to_classes(yte)))
+        per_task[key] = {"name": t.name, "sim_acc": round(sim_acc, 4),
+                         "backend_acc": round(hw_acc, 4), "n_test": int(len(yte))}
+        jobs[key] = jid
+        print(f"  {key} ({t.name:16s}): sim={sim_acc:.3f}  {backend_name}={hw_acc:.3f}", flush=True)
+
+    return {
+        "experiment": "e014_hardware_eval_qewc",
+        "created_at_utc": datetime.now(timezone.utc).isoformat(),
+        "source_code_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "environment": {"python": platform.python_version(),
+                        "packages": {p: version(p) for p in ("qiskit", "qiskit-ibm-runtime",
+                                                             "qiskit-aer", "pennylane")}},
+        "config": {"method": "QEWC (shared 2-Z softmax, QFI-consolidated theta)", "layers": layers,
+                   "n_qubits": N_QUBITS, "n_train": n_train, "n_test": n_test, "shots": shots,
+                   "lam_qewc": lam_qewc, "qfi_samples": qfi_samples, "seed": seed},
+        "backend": backend_name if backend_name == "aer" else backend.name,
+        "ibm_job_ids": jobs, "per_task": per_task,
+        "elapsed_sec": round(time.perf_counter() - started, 1),
+    }
+
+
 def run_cl(*, layers=4, readout=(0, 1, 2, 3), epochs=20, n_head=250, n_test=48,
            shots=4096, backend_name="aer", seed=42) -> dict[str, Any]:
     """Complete OI-QCL frozen-A across all 3 tasks: shared theta trained on T1 (sim), each
@@ -256,6 +380,8 @@ def run_cl(*, layers=4, readout=(0, 1, 2, 3), epochs=20, n_head=250, n_test=48,
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--all-tasks", action="store_true", help="frozen-A across MNIST/Fashion/SPT")
+    ap.add_argument("--method", choices=["oiqcl", "qewc"], default="oiqcl",
+                    help="with --all-tasks: OI-QCL frozen-A (default) or QEWC shared readout")
     ap.add_argument("--task", choices=["mnist", "fashion", "spt"], default="mnist")
     ap.add_argument("--backend", default="aer", help="'aer' (dry-run) or an IBM backend name")
     ap.add_argument("--layers", type=int, default=4)
@@ -264,10 +390,23 @@ def main() -> None:
     ap.add_argument("--n-head", type=int, default=150)
     ap.add_argument("--n-test", type=int, default=24)
     ap.add_argument("--shots", type=int, default=4096)
+    ap.add_argument("--qfi-samples", type=int, default=32, help="QEWC QFI mini-batch (--method qewc)")
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--output", type=Path)
     args = ap.parse_args()
     RESULTS.mkdir(exist_ok=True)
+    if args.all_tasks and args.method == "qewc":
+        result = run_qewc_cl(layers=args.layers, epochs=args.epochs, n_train=args.n_head,
+                             n_test=args.n_test, shots=args.shots, backend_name=args.backend,
+                             qfi_samples=args.qfi_samples, seed=args.seed)
+        out = args.output or RESULTS / f"e014_hardware_{args.backend}_qewc_alltasks.json"
+        out = out if out.is_absolute() else ROOT / out
+        out.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+        print(f"\n[QEWC] backend={result['backend']}  shots={result['config']['shots']}")
+        for k, v in result["per_task"].items():
+            print(f"  {v['name']:16s}: sim={v['sim_acc']:.3f}  hw={v['backend_acc']:.3f}")
+        print(f"wrote {out.relative_to(ROOT)}")
+        return
     if args.all_tasks:
         result = run_cl(layers=args.layers, readout=tuple(args.readout), epochs=args.epochs,
                         n_head=args.n_head, n_test=args.n_test, shots=args.shots,

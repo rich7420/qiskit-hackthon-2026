@@ -42,3 +42,28 @@ results/**/*.json
 figures/**/*.png
 figures/**/*.pdf
 !**/.gitkeep
+
+# Small reference artifacts used by the experiment log and regression review
+!results/e001_qnn_mnist_reference.json
+!figures/e001_qnn_circuit.png
+!figures/e001_training_curve.png
+!results/e002_amplitude_qnn_reference.json
+!results/tune_e002.json
+!figures/e002_qnn_circuit.png
+!figures/e002_training_curve.png
+!results/e003_continual_baseline_reference.json
+!figures/e003_continual_baseline.png
+!figures/e003_training_curve.png
+!results/e004_continual_seed42.json
+!results/e004_continual_seed43.json
+!results/e004_continual_seed44.json
+!results/e004_continual_summary.json
+!figures/e004_continual_seed42.png
+!figures/e004_continual_seed43.png
+!figures/e004_continual_seed44.png
+!figures/e004_continual_mean.png
+
+# LaTeX drawer diagnostic generated when a local TeX installation is incomplete
+latex_error.log
+# CocoIndex Code (ccc)
+/.cocoindex_code/

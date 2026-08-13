@@ -175,6 +175,8 @@ def train_method(method, tasks, *, n_layers, seq_len, lr, epochs, lam, buffer_si
         "retention_earlier_nmse": round(float(np.mean([final[names[i]] for i in range(len(tasks) - 1)])), 4),
         "plasticity_final_nmse": round(float(final[names[-1]]), 4),
         "avg_final_nmse": round(float(np.mean(list(final.values()))), 4),
+        "circ_w": np.asarray(cw).tolist(),   # final trained weights (for hardware inference)
+        "head_w": np.asarray(hw).tolist(),
         "history": history,
     }
 

@@ -72,6 +72,10 @@ figures/**/*.pdf
 !figures/e008_measqcl_stability_plasticity.png
 !figures/e008_measqcl_measurement_geometry.png
 !figures/e004_e008_comparison.png
+!results/e012_frontier_seed42.json
+!results/e012_frontier_seed43.json
+!results/e012_frontier_seed44.json
+!figures/e012_frontier.png
 
 # LaTeX drawer diagnostic generated when a local TeX installation is incomplete
 latex_error.log

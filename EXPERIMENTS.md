@@ -292,3 +292,40 @@ results/e005_seed{42,43,44}.json + results/e005_summary.json.
 Figure: `figures/e005_ewc_qewc.png` (via `scripts/e005_plot_curve.py`) — three panels (per task)
 comparing Baseline / EWC / QEWC with mean +/- 1 sample-SD bands, in the style of
 `figures/e004_continual_mean.png`.
+
+---
+
+## E009 — continual learning on quantum time-series forecasting (provided datasets)
+
+Goal: the temporal topic — quantum temporal model + sequential learning on time-series, measure
+catastrophic forgetting, apply continual-learning methods. Regression counterpart to e005/e007,
+on the provided quantum/physics forecasting series (Peng & Chen, arXiv:2605.06734). Full details
+in `E009_FINDINGS.md`.
+
+Framework:         pennylane 0.45.1 (default.qubit, backprop, exact / no shots)
+Command:           `python scripts/e009_multiseed.py --seeds 42 43 44 45 46`
+
+Setup:
+- data = provided series, torch-free loader (src/e009_data.py); sequence narma_5 -> damped_shm
+  -> bessel_j2; one-step forecasting, window 8, scaled [-1,1], time-ordered 80/20
+- model = recurrent data-reuploading quantum forecaster (src/e009_qtsf.py): 4 qubits, 2 shared
+  RY/RZ+CNOT blocks re-applied per step (state persists), Z readouts -> linear+tanh head, 21
+  weights, Adam(0.05), 40 epochs/task
+- metric = test NMSE (lower better); methods = naive / L2 / EWC (empirical Fisher) / replay
+
+Result (5 seeds, mean +/- sd; NMSE, lower better):
+- naive:  retention 0.262 +/- 0.135, plasticity 0.032, avg 0.185  (best plasticity, worst forgetting)
+- L2:     retention 0.211 +/- 0.107, plasticity 0.355, avg 0.259
+- EWC:    retention 0.180 +/- 0.042, plasticity 0.223, avg 0.194
+- replay: retention 0.058 +/- 0.026, plasticity 0.061, avg 0.059  (best overall, tightest variance)
+
+Finding: catastrophic forgetting is clear (naive: narma_5 NMSE ~0.03 -> ~0.27 after bessel).
+Replay decisively balances retention and adaptation; EWC > L2 > naive on retention. Notably EWC
+clearly beats L2 here (empirical Fisher is informative), the opposite of the classification study
+where isotropic QFI made QEWC ~ L2 — so Fisher usefulness is benchmark-dependent, not universal.
+Classical ridge AR forecasts each series at NMSE ~ 0, so no quantum-advantage claim; the study is
+about forgetting and its mitigation.
+
+Figures:
+- `figures/e009_forgetting.png` — per-task test NMSE over the sequential run (via scripts/e009_plot.py)
+- `figures/e009_compare.png` — retention vs plasticity, lower-left best (via scripts/e009_plot_compare.py)

@@ -1,0 +1,17 @@
+{
+  "experiment": "e009_method_arch_compare",
+  "note": "All numbers are logged 5-seed (42-46) test-NMSE means. Cross-validation: QEWC on the original 2-axis architecture is IDENTICAL in both source logs (ret 0.150 / plas 0.165 / avg 0.155), so the QGR-worktree and gate-ablation results are directly comparable on one axis.",
+  "sources": {
+    "original_arch": "qiskit-hackthon-2026-qgr/results/e009_multiseed.json (qgr, qewc, ewc, naive, replay)",
+    "single_axis_arch": "e009-gates/results/e009_gate_ablation_qewc.json (enc_ry) + e009_gate_lam_sweep.json"
+  },
+  "combos": [
+    {"key": "naive_orig",  "label": "naive (orig)",         "method": "naive",  "arch": "orig",        "cnot": 64, "ret": 0.262, "plas": 0.032, "avg": 0.185},
+    {"key": "ewc_orig",    "label": "EWC (orig)",           "method": "ewc",    "arch": "orig",        "cnot": 64, "ret": 0.165, "plas": 0.346, "avg": 0.226},
+    {"key": "qewc_orig",   "label": "QEWC (orig)",          "method": "qewc",   "arch": "orig",        "cnot": 64, "ret": 0.150, "plas": 0.165, "avg": 0.155},
+    {"key": "qgr_orig",    "label": "QGR (orig)",           "method": "qgr",    "arch": "orig",        "cnot": 64, "ret": 0.122, "plas": 0.093, "avg": 0.113},
+    {"key": "qewc_simpl",  "label": "QEWC + single-axis",   "method": "qewc",   "arch": "single-axis", "cnot": 64, "ret": 0.053, "plas": 0.105, "avg": 0.070},
+    {"key": "replay_orig", "label": "replay (stores data)", "method": "replay", "arch": "orig",        "cnot": 64, "ret": 0.058, "plas": 0.061, "avg": 0.059},
+    {"key": "qgr_simpl",   "label": "QGR + single-axis (NOT MEASURED)", "method": "qgr", "arch": "single-axis", "cnot": 64, "ret": null, "plas": null, "avg": null}
+  ]
+}

@@ -59,9 +59,11 @@ def empirical_fisher(qnode, circ_w, head_w, X):
 
 
 def train_method(method, tasks, *, n_layers, seq_len, lr, epochs, lam, buffer_size,
-                 seed, qfi_samples=16, verbose=False):
-    qnode, cs, hs = make_forecaster(n_qubits=4, n_layers=n_layers, seq_len=seq_len)
-    state_qnode = make_state_forecaster(4, n_layers, seq_len) if method == "qewc" else None
+                 seed, qfi_samples=16, ansatz=None, verbose=False):
+    ansatz = ansatz or {}   # {"entangler": ..., "encoding": ...} for the gate-count ablation
+    qnode, cs, hs = make_forecaster(n_qubits=4, n_layers=n_layers, seq_len=seq_len, **ansatz)
+    state_qnode = (make_state_forecaster(4, n_layers, seq_len, **ansatz)
+                   if method == "qewc" else None)
     n_circ = int(np.prod(cs))
     cw, hw = init_weights(cs, hs, seed=seed)
     opt = qml.AdamOptimizer(lr)

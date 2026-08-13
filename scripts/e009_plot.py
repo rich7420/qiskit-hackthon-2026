@@ -47,13 +47,16 @@ def main() -> None:
             mean = np.array([r["nmse"][task]["mean"] for r in rows])
             sd = np.array([r["nmse"][task]["sd"] for r in rows])
             ax.plot(ep, mean, ls, color=color, lw=2.0, label=label)
-            ax.fill_between(ep, np.clip(mean - sd, 0, None), mean + sd, color=color, alpha=0.18)
+            ax.fill_between(ep, np.clip(mean - sd, 2e-2, None), mean + sd, color=color, alpha=0.18)
         for b in boundaries:
             ax.axvline(b, color="0.35", ls="--", lw=1.0)
         # shade the phase in which this task is actively trained
         ax.axvspan((i - 1) * epochs_per_task, i * epochs_per_task, color="green", alpha=0.05)
         ax.set_xlim(0, total_epochs)
-        ax.set_ylim(0, 1.05)
+        # log y so the high untrained NMSE (~1-5) AND the low trained region (~0.03) are both
+        # visible: each task starts high and drops sharply once its own phase begins.
+        ax.set_yscale("log")
+        ax.set_ylim(2e-2, 6)
         ax.set_ylabel(f"T{i}\ntest NMSE")
         ax.set_title(f"Task {i}: {task}", loc="left", fontsize=10, fontweight="bold")
         ax.grid(alpha=0.2)

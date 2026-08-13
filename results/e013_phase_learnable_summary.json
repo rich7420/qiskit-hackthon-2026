@@ -1,0 +1,1559 @@
+{
+  "schema_version": 1,
+  "experiment": "e013_phase_learnable_joint_measurement_exact_multiseed",
+  "created_at_utc": "2026-08-13T06:13:58.405865+00:00",
+  "source_code_sha256": "3b0a973f7cf1f4492c8d77987067a68db208a4846feb1652de7ed675e1a175ca",
+  "aggregation_code_sha256": "7392cb1c8d51d264fab40963d712ce07063be73b5ed7de58c9ea4c9dd93f83fb",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "n_seeds": 3,
+  "uncertainty": "sample standard deviation across paired seeds (ddof=1)",
+  "result_artifacts": [
+    {
+      "file": "results/e013_phase_learnable_seed42.json",
+      "sha256": "1ab2fb916e841f64a4b533bbbc539a4ecdbb3dd6025bbceff9f80ff1ecf55109"
+    },
+    {
+      "file": "results/e013_phase_learnable_seed43.json",
+      "sha256": "60e9bc91b8be25efca8b2a58c3d5281bff7649bf63e4a82a705cef8e5d4dbf9e"
+    },
+    {
+      "file": "results/e013_phase_learnable_seed44.json",
+      "sha256": "12e356dec33fb18b73fad50eb6ea35ca05ae71fb2beb080b1881e9a440265d7f"
+    }
+  ],
+  "configuration": {
+    "data": {
+      "task_order": [
+        "SPT/ATF phases",
+        "MNIST 0/1",
+        "Fashion-MNIST 0/1"
+      ],
+      "n_train_per_task": 400,
+      "n_test_per_task": 200,
+      "test_used_for_selection": false,
+      "phase_ranges": {
+        "SPT": [
+          0.0,
+          0.5
+        ],
+        "ATF": [
+          2.5,
+          3.0
+        ]
+      }
+    },
+    "model": {
+      "n_qubits": 4,
+      "layers": 3,
+      "n_parameters": 24,
+      "ansatz": "independent RY/RZ plus directed nearest-neighbor CNOT chain",
+      "classifier_readout": "Z0/Z1 expectations plus softmax",
+      "shots": null,
+      "learned_measurement_domain": "all four output qubits",
+      "learned_measurement_class": "local fixed-spectrum projective axes with all 16 joint outcomes",
+      "n_learned_settings": 3,
+      "prediction_measurement_unchanged": true
+    },
+    "training": {
+      "optimizer": "Adam",
+      "learning_rate": 0.02,
+      "epochs_per_task": 40,
+      "ewc_lambda": 0.1,
+      "selection_policy": "inherits E010 train-only phase capacity and shared lambda; inherits prespecified E013 measurement optimizer without phase-test tuning"
+    },
+    "measurement_design": {
+      "fisher_parameter": "classifier weights theta, not measurement axes phi",
+      "outcomes_per_setting": 16,
+      "fixed_axes_order": [
+        "ZZZZ",
+        "XXXX",
+        "YYYY"
+      ],
+      "task_relevance_source": "paired E010 phase-boundary EWC-DR importance",
+      "minimum_allocation": 0.01,
+      "relevance_floor": 0.001,
+      "diversity_coefficient": 0.001,
+      "outer_iterations": 100,
+      "axis_max_iterations": 3000,
+      "initialization_noise": 0.01,
+      "optimizer": "analytic-gradient local tangent trust regions with sphere retraction and physical-gradient stopping; certified convex q solve alternated afterward"
+    }
+  },
+  "aggregate_metrics": {
+    "joint_zzzz": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.891667,
+          "sample_std": 0.181182
+        },
+        "phase_forgetting": {
+          "mean": 0.108333,
+          "sample_std": 0.181182
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.465833,
+          "sample_std": 0.009465
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.8675,
+          "sample_std": 0.073866
+        },
+        "average_final_accuracy": {
+          "mean": 0.7417,
+          "sample_std": 0.082424
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.903333,
+          "sample_std": 0.163121
+        },
+        "phase_forgetting": {
+          "mean": 0.096667,
+          "sample_std": 0.163121
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.493333,
+          "sample_std": 0.035473
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.881667,
+          "sample_std": 0.01893
+        },
+        "average_final_accuracy": {
+          "mean": 0.759467,
+          "sample_std": 0.052043
+        }
+      }
+    },
+    "uniform_xyz_joint": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.905,
+          "sample_std": 0.164545
+        },
+        "phase_forgetting": {
+          "mean": 0.095,
+          "sample_std": 0.164545
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.456667,
+          "sample_std": 0.016073
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.883333,
+          "sample_std": 0.051255
+        },
+        "average_final_accuracy": {
+          "mean": 0.748333,
+          "sample_std": 0.073995
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.915,
+          "sample_std": 0.147224
+        },
+        "phase_forgetting": {
+          "mean": 0.085,
+          "sample_std": 0.147224
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.488333,
+          "sample_std": 0.034034
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.901667,
+          "sample_std": 0.010408
+        },
+        "average_final_accuracy": {
+          "mean": 0.768333,
+          "sample_std": 0.050411
+        }
+      }
+    },
+    "info_learn_basis_alloc": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.934167,
+          "sample_std": 0.114027
+        },
+        "phase_forgetting": {
+          "mean": 0.065833,
+          "sample_std": 0.114027
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.458333,
+          "sample_std": 0.023629
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.8925,
+          "sample_std": 0.037333
+        },
+        "average_final_accuracy": {
+          "mean": 0.761667,
+          "sample_std": 0.051315
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.94,
+          "sample_std": 0.103923
+        },
+        "phase_forgetting": {
+          "mean": 0.06,
+          "sample_std": 0.103923
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.481667,
+          "sample_std": 0.027538
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.91,
+          "sample_std": 0.01
+        },
+        "average_final_accuracy": {
+          "mean": 0.7772,
+          "sample_std": 0.029625
+        }
+      }
+    },
+    "task_learn_basis_uniform": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.919167,
+          "sample_std": 0.140007
+        },
+        "phase_forgetting": {
+          "mean": 0.080833,
+          "sample_std": 0.140007
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.46,
+          "sample_std": 0.021651
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.885,
+          "sample_std": 0.045208
+        },
+        "average_final_accuracy": {
+          "mean": 0.7547,
+          "sample_std": 0.064301
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.926667,
+          "sample_std": 0.127017
+        },
+        "phase_forgetting": {
+          "mean": 0.073333,
+          "sample_std": 0.127017
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.49,
+          "sample_std": 0.032787
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.898333,
+          "sample_std": 0.010408
+        },
+        "average_final_accuracy": {
+          "mean": 0.771667,
+          "sample_std": 0.045285
+        }
+      }
+    },
+    "task_learn_basis_alloc": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.923333,
+          "sample_std": 0.132791
+        },
+        "phase_forgetting": {
+          "mean": 0.076667,
+          "sample_std": 0.132791
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.454167,
+          "sample_std": 0.013769
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.876667,
+          "sample_std": 0.051377
+        },
+        "average_final_accuracy": {
+          "mean": 0.7514,
+          "sample_std": 0.061908
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.933333,
+          "sample_std": 0.11547
+        },
+        "phase_forgetting": {
+          "mean": 0.066667,
+          "sample_std": 0.11547
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.48,
+          "sample_std": 0.04
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.893333,
+          "sample_std": 0.007638
+        },
+        "average_final_accuracy": {
+          "mean": 0.7689,
+          "sample_std": 0.042745
+        }
+      }
+    },
+    "naive": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.5,
+          "sample_std": 0.0
+        },
+        "phase_forgetting": {
+          "mean": 0.5,
+          "sample_std": 0.0
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.5275,
+          "sample_std": 0.167724
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.930833,
+          "sample_std": 0.007638
+        },
+        "average_final_accuracy": {
+          "mean": 0.652767,
+          "sample_std": 0.058083
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.5,
+          "sample_std": 0.0
+        },
+        "phase_forgetting": {
+          "mean": 0.5,
+          "sample_std": 0.0
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.501667,
+          "sample_std": 0.153731
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.925,
+          "sample_std": 0.031225
+        },
+        "average_final_accuracy": {
+          "mean": 0.6422,
+          "sample_std": 0.040953
+        }
+      }
+    },
+    "output_cfi": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.701667,
+          "sample_std": 0.263644
+        },
+        "phase_forgetting": {
+          "mean": 0.298333,
+          "sample_std": 0.263644
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.6275,
+          "sample_std": 0.14239
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.919167,
+          "sample_std": 0.027651
+        },
+        "average_final_accuracy": {
+          "mean": 0.749433,
+          "sample_std": 0.033406
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.706667,
+          "sample_std": 0.261024
+        },
+        "phase_forgetting": {
+          "mean": 0.293333,
+          "sample_std": 0.261024
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.6,
+          "sample_std": 0.14239
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.915,
+          "sample_std": 0.021794
+        },
+        "average_final_accuracy": {
+          "mean": 0.740567,
+          "sample_std": 0.037092
+        }
+      }
+    },
+    "ewc_dr": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.703333,
+          "sample_std": 0.262742
+        },
+        "phase_forgetting": {
+          "mean": 0.296667,
+          "sample_std": 0.262742
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.625,
+          "sample_std": 0.14239
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.9175,
+          "sample_std": 0.026339
+        },
+        "average_final_accuracy": {
+          "mean": 0.748633,
+          "sample_std": 0.034485
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.711667,
+          "sample_std": 0.258666
+        },
+        "phase_forgetting": {
+          "mean": 0.288333,
+          "sample_std": 0.258666
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.606667,
+          "sample_std": 0.139672
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.916667,
+          "sample_std": 0.024664
+        },
+        "average_final_accuracy": {
+          "mean": 0.745,
+          "sample_std": 0.036123
+        }
+      }
+    },
+    "one_local": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.82,
+          "sample_std": 0.277849
+        },
+        "phase_forgetting": {
+          "mean": 0.18,
+          "sample_std": 0.277849
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.51,
+          "sample_std": 0.066285
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.898333,
+          "sample_std": 0.028431
+        },
+        "average_final_accuracy": {
+          "mean": 0.742767,
+          "sample_std": 0.080022
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.816667,
+          "sample_std": 0.275379
+        },
+        "phase_forgetting": {
+          "mean": 0.183333,
+          "sample_std": 0.275379
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.525,
+          "sample_std": 0.078581
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.913333,
+          "sample_std": 0.014434
+        },
+        "average_final_accuracy": {
+          "mean": 0.751667,
+          "sample_std": 0.078152
+        }
+      }
+    },
+    "two_local": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.666667,
+          "sample_std": 0.288675
+        },
+        "phase_forgetting": {
+          "mean": 0.333333,
+          "sample_std": 0.288675
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.469167,
+          "sample_std": 0.026964
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.898333,
+          "sample_std": 0.03503
+        },
+        "average_final_accuracy": {
+          "mean": 0.678067,
+          "sample_std": 0.116497
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.666667,
+          "sample_std": 0.288675
+        },
+        "phase_forgetting": {
+          "mean": 0.333333,
+          "sample_std": 0.288675
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.473333,
+          "sample_std": 0.067144
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.908333,
+          "sample_std": 0.007638
+        },
+        "average_final_accuracy": {
+          "mean": 0.682767,
+          "sample_std": 0.118851
+        }
+      }
+    },
+    "hamiltonian": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.833333,
+          "sample_std": 0.288675
+        },
+        "phase_forgetting": {
+          "mean": 0.166667,
+          "sample_std": 0.288675
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.424167,
+          "sample_std": 0.039078
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.8875,
+          "sample_std": 0.041608
+        },
+        "average_final_accuracy": {
+          "mean": 0.715,
+          "sample_std": 0.103252
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.833333,
+          "sample_std": 0.288675
+        },
+        "phase_forgetting": {
+          "mean": 0.166667,
+          "sample_std": 0.288675
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.443333,
+          "sample_std": 0.010408
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.906667,
+          "sample_std": 0.007638
+        },
+        "average_final_accuracy": {
+          "mean": 0.727767,
+          "sample_std": 0.094834
+        }
+      }
+    },
+    "nonlocal": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.7075,
+          "sample_std": 0.255233
+        },
+        "phase_forgetting": {
+          "mean": 0.2925,
+          "sample_std": 0.255233
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.581667,
+          "sample_std": 0.136045
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.875,
+          "sample_std": 0.069597
+        },
+        "average_final_accuracy": {
+          "mean": 0.7214,
+          "sample_std": 0.033494
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.706667,
+          "sample_std": 0.257407
+        },
+        "phase_forgetting": {
+          "mean": 0.293333,
+          "sample_std": 0.257407
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.543333,
+          "sample_std": 0.139851
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.895,
+          "sample_std": 0.00866
+        },
+        "average_final_accuracy": {
+          "mean": 0.715033,
+          "sample_std": 0.045369
+        }
+      }
+    },
+    "task_relevant_all": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.783333,
+          "sample_std": 0.25658
+        },
+        "phase_forgetting": {
+          "mean": 0.216667,
+          "sample_std": 0.25658
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.590833,
+          "sample_std": 0.115497
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.9075,
+          "sample_std": 0.025372
+        },
+        "average_final_accuracy": {
+          "mean": 0.760567,
+          "sample_std": 0.064114
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.788333,
+          "sample_std": 0.258666
+        },
+        "phase_forgetting": {
+          "mean": 0.211667,
+          "sample_std": 0.258666
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.575,
+          "sample_std": 0.112583
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.913333,
+          "sample_std": 0.01893
+        },
+        "average_final_accuracy": {
+          "mean": 0.7589,
+          "sample_std": 0.059191
+        }
+      }
+    },
+    "qewc": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.92,
+          "sample_std": 0.138564
+        },
+        "phase_forgetting": {
+          "mean": 0.08,
+          "sample_std": 0.138564
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.456667,
+          "sample_std": 0.016646
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.8875,
+          "sample_std": 0.04423
+        },
+        "average_final_accuracy": {
+          "mean": 0.7547,
+          "sample_std": 0.063165
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.926667,
+          "sample_std": 0.127017
+        },
+        "phase_forgetting": {
+          "mean": 0.073333,
+          "sample_std": 0.127017
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.491667,
+          "sample_std": 0.033292
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.901667,
+          "sample_std": 0.007638
+        },
+        "average_final_accuracy": {
+          "mean": 0.773333,
+          "sample_std": 0.043684
+        }
+      }
+    }
+  },
+  "measurement_geometry": {
+    "info_learn_basis_alloc": {
+      "orientation_power": {
+        "X": {
+          "mean": 0.252139,
+          "sample_std": 0.101353
+        },
+        "Y": {
+          "mean": 0.340312,
+          "sample_std": 0.182037
+        },
+        "Z": {
+          "mean": 0.407549,
+          "sample_std": 0.155149
+        }
+      },
+      "allocation": {
+        "setting_0": {
+          "mean": 0.333333,
+          "sample_std": 0.56003
+        },
+        "setting_1": {
+          "mean": 0.245505,
+          "sample_std": 0.242803
+        },
+        "setting_2": {
+          "mean": 0.421162,
+          "sample_std": 0.379666
+        }
+      },
+      "cosine_to_full_qfi": {
+        "mean": 0.978769,
+        "sample_std": 0.002547
+      }
+    },
+    "task_learn_basis_uniform": {
+      "orientation_power": {
+        "X": {
+          "mean": 0.246096,
+          "sample_std": 0.080938
+        },
+        "Y": {
+          "mean": 0.38101,
+          "sample_std": 0.100935
+        },
+        "Z": {
+          "mean": 0.372894,
+          "sample_std": 0.023744
+        }
+      },
+      "allocation": {
+        "setting_0": {
+          "mean": 0.333333,
+          "sample_std": 0.0
+        },
+        "setting_1": {
+          "mean": 0.333333,
+          "sample_std": 0.0
+        },
+        "setting_2": {
+          "mean": 0.333333,
+          "sample_std": 0.0
+        }
+      },
+      "cosine_to_full_qfi": {
+        "mean": 0.975318,
+        "sample_std": 0.0053
+      }
+    },
+    "task_learn_basis_alloc": {
+      "orientation_power": {
+        "X": {
+          "mean": 0.021739,
+          "sample_std": 0.006198
+        },
+        "Y": {
+          "mean": 0.352709,
+          "sample_std": 0.076857
+        },
+        "Z": {
+          "mean": 0.625552,
+          "sample_std": 0.080187
+        }
+      },
+      "allocation": {
+        "setting_0": {
+          "mean": 0.98,
+          "sample_std": 0.0
+        },
+        "setting_1": {
+          "mean": 0.01,
+          "sample_std": 0.0
+        },
+        "setting_2": {
+          "mean": 0.01,
+          "sample_std": 0.0
+        }
+      },
+      "cosine_to_full_qfi": {
+        "mean": 0.966201,
+        "sample_std": 0.007137
+      }
+    }
+  },
+  "paired_differences": {
+    "joint_zzzz": {
+      "minus_uniform_xyz_joint": {
+        "phase_final_retention": {
+          "mean": -0.011667,
+          "sample_std": 0.016073
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.005,
+          "sample_std": 0.02
+        },
+        "fashion_final_adaptation": {
+          "mean": -0.02,
+          "sample_std": 0.01
+        },
+        "average_final_accuracy": {
+          "mean": -0.008867,
+          "sample_std": 0.004821
+        }
+      },
+      "minus_qewc": {
+        "phase_final_retention": {
+          "mean": -0.023333,
+          "sample_std": 0.036171
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.001667,
+          "sample_std": 0.022546
+        },
+        "fashion_final_adaptation": {
+          "mean": -0.02,
+          "sample_std": 0.015
+        },
+        "average_final_accuracy": {
+          "mean": -0.013867,
+          "sample_std": 0.010861
+        }
+      }
+    },
+    "uniform_xyz_joint": {
+      "minus_joint_zzzz": {
+        "phase_final_retention": {
+          "mean": 0.011667,
+          "sample_std": 0.016073
+        },
+        "mnist_final_adaptation": {
+          "mean": -0.005,
+          "sample_std": 0.02
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.02,
+          "sample_std": 0.01
+        },
+        "average_final_accuracy": {
+          "mean": 0.008867,
+          "sample_std": 0.004821
+        }
+      },
+      "minus_qewc": {
+        "phase_final_retention": {
+          "mean": -0.011667,
+          "sample_std": 0.020207
+        },
+        "mnist_final_adaptation": {
+          "mean": -0.003333,
+          "sample_std": 0.002887
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.0,
+          "sample_std": 0.005
+        },
+        "average_final_accuracy": {
+          "mean": -0.005,
+          "sample_std": 0.007238
+        }
+      }
+    },
+    "info_learn_basis_alloc": {
+      "minus_joint_zzzz": {
+        "phase_final_retention": {
+          "mean": 0.036667,
+          "sample_std": 0.059231
+        },
+        "mnist_final_adaptation": {
+          "mean": -0.011667,
+          "sample_std": 0.016073
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.028333,
+          "sample_std": 0.028431
+        },
+        "average_final_accuracy": {
+          "mean": 0.017733,
+          "sample_std": 0.023746
+        }
+      },
+      "minus_uniform_xyz_joint": {
+        "phase_final_retention": {
+          "mean": 0.025,
+          "sample_std": 0.043301
+        },
+        "mnist_final_adaptation": {
+          "mean": -0.006667,
+          "sample_std": 0.007638
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.008333,
+          "sample_std": 0.01893
+        },
+        "average_final_accuracy": {
+          "mean": 0.008867,
+          "sample_std": 0.021224
+        }
+      },
+      "minus_qewc": {
+        "phase_final_retention": {
+          "mean": 0.013333,
+          "sample_std": 0.023094
+        },
+        "mnist_final_adaptation": {
+          "mean": -0.01,
+          "sample_std": 0.00866
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.008333,
+          "sample_std": 0.014434
+        },
+        "average_final_accuracy": {
+          "mean": 0.003867,
+          "sample_std": 0.014194
+        }
+      }
+    },
+    "task_learn_basis_uniform": {
+      "minus_joint_zzzz": {
+        "phase_final_retention": {
+          "mean": 0.023333,
+          "sample_std": 0.036171
+        },
+        "mnist_final_adaptation": {
+          "mean": -0.003333,
+          "sample_std": 0.025166
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.016667,
+          "sample_std": 0.015275
+        },
+        "average_final_accuracy": {
+          "mean": 0.0122,
+          "sample_std": 0.010095
+        }
+      },
+      "minus_uniform_xyz_joint": {
+        "phase_final_retention": {
+          "mean": 0.011667,
+          "sample_std": 0.020207
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.001667,
+          "sample_std": 0.005774
+        },
+        "fashion_final_adaptation": {
+          "mean": -0.003333,
+          "sample_std": 0.005774
+        },
+        "average_final_accuracy": {
+          "mean": 0.003333,
+          "sample_std": 0.006019
+        }
+      },
+      "minus_qewc": {
+        "phase_final_retention": {
+          "mean": 0.0,
+          "sample_std": 0.0
+        },
+        "mnist_final_adaptation": {
+          "mean": -0.001667,
+          "sample_std": 0.002887
+        },
+        "fashion_final_adaptation": {
+          "mean": -0.003333,
+          "sample_std": 0.002887
+        },
+        "average_final_accuracy": {
+          "mean": -0.001667,
+          "sample_std": 0.00165
+        }
+      }
+    },
+    "task_learn_basis_alloc": {
+      "minus_joint_zzzz": {
+        "phase_final_retention": {
+          "mean": 0.03,
+          "sample_std": 0.047697
+        },
+        "mnist_final_adaptation": {
+          "mean": -0.013333,
+          "sample_std": 0.032532
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.011667,
+          "sample_std": 0.011547
+        },
+        "average_final_accuracy": {
+          "mean": 0.009433,
+          "sample_std": 0.011741
+        }
+      },
+      "minus_uniform_xyz_joint": {
+        "phase_final_retention": {
+          "mean": 0.018333,
+          "sample_std": 0.031754
+        },
+        "mnist_final_adaptation": {
+          "mean": -0.008333,
+          "sample_std": 0.012583
+        },
+        "fashion_final_adaptation": {
+          "mean": -0.008333,
+          "sample_std": 0.005774
+        },
+        "average_final_accuracy": {
+          "mean": 0.000567,
+          "sample_std": 0.008214
+        }
+      },
+      "minus_qewc": {
+        "phase_final_retention": {
+          "mean": 0.006667,
+          "sample_std": 0.011547
+        },
+        "mnist_final_adaptation": {
+          "mean": -0.011667,
+          "sample_std": 0.010408
+        },
+        "fashion_final_adaptation": {
+          "mean": -0.008333,
+          "sample_std": 0.007638
+        },
+        "average_final_accuracy": {
+          "mean": -0.004433,
+          "sample_std": 0.000981
+        }
+      }
+    }
+  },
+  "paired_seed_metrics": {
+    "42": {
+      "joint_zzzz": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.715,
+        "phase_forgetting": 0.285,
+        "mnist_final_adaptation": 0.525,
+        "fashion_final_adaptation": 0.86,
+        "average_final_accuracy": 0.7
+      },
+      "uniform_xyz_joint": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.745,
+        "phase_forgetting": 0.255,
+        "mnist_final_adaptation": 0.5,
+        "fashion_final_adaptation": 0.89,
+        "average_final_accuracy": 0.7117
+      },
+      "info_learn_basis_alloc": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.82,
+        "phase_forgetting": 0.18,
+        "mnist_final_adaptation": 0.495,
+        "fashion_final_adaptation": 0.92,
+        "average_final_accuracy": 0.745
+      },
+      "task_learn_basis_uniform": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.78,
+        "phase_forgetting": 0.22,
+        "mnist_final_adaptation": 0.495,
+        "fashion_final_adaptation": 0.89,
+        "average_final_accuracy": 0.7217
+      },
+      "task_learn_basis_alloc": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.8,
+        "phase_forgetting": 0.2,
+        "mnist_final_adaptation": 0.48,
+        "fashion_final_adaptation": 0.885,
+        "average_final_accuracy": 0.7217
+      },
+      "naive": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.325,
+        "fashion_final_adaptation": 0.96,
+        "average_final_accuracy": 0.595
+      },
+      "output_cfi": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.725,
+        "fashion_final_adaptation": 0.94,
+        "average_final_accuracy": 0.7217
+      },
+      "ewc_dr": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.73,
+        "fashion_final_adaptation": 0.945,
+        "average_final_accuracy": 0.725
+      },
+      "one_local": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.56,
+        "fashion_final_adaptation": 0.93,
+        "average_final_accuracy": 0.6633
+      },
+      "two_local": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.445,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.615
+      },
+      "hamiltonian": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.44,
+        "fashion_final_adaptation": 0.915,
+        "average_final_accuracy": 0.6183
+      },
+      "nonlocal": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.625,
+        "phase_forgetting": 0.375,
+        "mnist_final_adaptation": 0.65,
+        "fashion_final_adaptation": 0.89,
+        "average_final_accuracy": 0.7217
+      },
+      "task_relevant_all": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.64,
+        "fashion_final_adaptation": 0.935,
+        "average_final_accuracy": 0.6917
+      },
+      "qewc": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.78,
+        "phase_forgetting": 0.22,
+        "mnist_final_adaptation": 0.5,
+        "fashion_final_adaptation": 0.895,
+        "average_final_accuracy": 0.725
+      }
+    },
+    "43": {
+      "joint_zzzz": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.995,
+        "phase_forgetting": 0.005,
+        "mnist_final_adaptation": 0.455,
+        "fashion_final_adaptation": 0.895,
+        "average_final_accuracy": 0.7817
+      },
+      "uniform_xyz_joint": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.45,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.785
+      },
+      "info_learn_basis_alloc": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.45,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.7833
+      },
+      "task_learn_basis_uniform": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.455,
+        "fashion_final_adaptation": 0.895,
+        "average_final_accuracy": 0.7833
+      },
+      "task_learn_basis_alloc": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.44,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.78
+      },
+      "naive": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.605,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.6683
+      },
+      "output_cfi": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.445,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.7833
+      },
+      "ewc_dr": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.455,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.7867
+      },
+      "one_local": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.435,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.78
+      },
+      "two_local": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.425,
+        "fashion_final_adaptation": 0.915,
+        "average_final_accuracy": 0.6133
+      },
+      "hamiltonian": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.435,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.78
+      },
+      "nonlocal": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.995,
+        "phase_forgetting": 0.005,
+        "mnist_final_adaptation": 0.385,
+        "fashion_final_adaptation": 0.89,
+        "average_final_accuracy": 0.7567
+      },
+      "task_relevant_all": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.445,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.7817
+      },
+      "qewc": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.455,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.785
+      }
+    },
+    "44": {
+      "joint_zzzz": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.5,
+        "fashion_final_adaptation": 0.89,
+        "average_final_accuracy": 0.7967
+      },
+      "uniform_xyz_joint": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.515,
+        "fashion_final_adaptation": 0.91,
+        "average_final_accuracy": 0.8083
+      },
+      "info_learn_basis_alloc": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.5,
+        "fashion_final_adaptation": 0.91,
+        "average_final_accuracy": 0.8033
+      },
+      "task_learn_basis_uniform": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.52,
+        "fashion_final_adaptation": 0.91,
+        "average_final_accuracy": 0.81
+      },
+      "task_learn_basis_alloc": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.52,
+        "fashion_final_adaptation": 0.895,
+        "average_final_accuracy": 0.805
+      },
+      "naive": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.575,
+        "fashion_final_adaptation": 0.915,
+        "average_final_accuracy": 0.6633
+      },
+      "output_cfi": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.62,
+        "phase_forgetting": 0.38,
+        "mnist_final_adaptation": 0.63,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.7167
+      },
+      "ewc_dr": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.635,
+        "phase_forgetting": 0.365,
+        "mnist_final_adaptation": 0.635,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.7233
+      },
+      "one_local": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.95,
+        "phase_forgetting": 0.05,
+        "mnist_final_adaptation": 0.58,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.8117
+      },
+      "two_local": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.55,
+        "fashion_final_adaptation": 0.91,
+        "average_final_accuracy": 0.82
+      },
+      "hamiltonian": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.455,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.785
+      },
+      "nonlocal": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.595,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.6667
+      },
+      "task_relevant_all": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.865,
+        "phase_forgetting": 0.135,
+        "mnist_final_adaptation": 0.64,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.8033
+      },
+      "qewc": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.52,
+        "fashion_final_adaptation": 0.91,
+        "average_final_accuracy": 0.81
+      }
+    }
+  },
+  "ceiling_effect_diagnostic": {
+    "definition": "Joint ZZZZ phase forgetting <= 0.01 at final evaluation",
+    "ceiling_seeds": [
+      43,
+      44
+    ],
+    "interpretation": "post-hoc diagnostic only; the formal headline remains the paired three-seed mean and sample SD"
+  },
+  "claim_boundaries": {
+    "finite_shot_result": false,
+    "hardware_result": false,
+    "entangled_or_global_povm": false,
+    "thermodynamic_phase_transition": false,
+    "input_locality_equivalence": false,
+    "qfi_attainability": false,
+    "quantum_advantage": false,
+    "scope": "exact-statevector four-qubit joint product-measurement diagnostic",
+    "statistical_significance_claimed": false,
+    "superiority_claimed": false,
+    "interpretation": "exact-statevector three-seed diagnostic: learned full-output product measurements improve the one seed with substantial phase forgetting, while two seeds have a retention ceiling"
+  }
+}

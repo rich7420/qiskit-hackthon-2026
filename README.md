@@ -64,6 +64,44 @@ are selected on a validation split and its held-out test split is evaluated once
 reference run is `results/e002_amplitude_qnn_reference.json`; see `EXPERIMENTS.md` for the
 scope and paper-method differences.
 
+E010 (`PhysMeas-QCL`) extends the measurement-aware E008 baseline with task-relevant
+measurement allocation, an explicitly costed finite-shot selection audit, and a phase-first
+locality study. Run the checked entrypoints with:
+
+```bash
+python scripts/run_e010_multiseed.py
+python scripts/run_e010_finite_shot_multiseed.py
+python scripts/run_e010_phase_multiseed.py
+python scripts/plot_e010_physmeas.py
+```
+
+The committed JSON artifacts already contain the expensive seeded runs. These aggregation
+commands validate their source/provenance hashes; see `EXPERIMENTS.md` for the numerical
+results and claim boundaries.
+
+E013 learns continuous local product-measurement axes at the old-task boundary while keeping
+the classifier prediction readout fixed. It caches all shifted reduced states once, so the
+measurement search itself is classical and auditable:
+
+```bash
+python scripts/run_e013_multiseed.py
+python scripts/plot_e013_learnable.py
+```
+
+The three-seed result shows that task-relevant learned bases match the fixed-Z frontier, while
+information-only bases become more QFI-like without improving retention. See `EXPERIMENTS.md`
+for the physical interpretation and strict exact-statevector claim boundaries.
+
+The phase-first E013 extension learns full four-qubit product settings while retaining all
+16 joint outcomes. It tests whether non-Z, correlation-sensitive output measurements preserve
+SPT/ATF task memory better than Joint ZZZZ, fixed XYZ, locality baselines, and full-state QEWC:
+
+```bash
+python scripts/run_e013_phase_multiseed.py
+python scripts/plot_e013_phase_learnable.py
+python scripts/plot_e013_phase_training.py
+```
+
 ## Repository structure
 
 ```text

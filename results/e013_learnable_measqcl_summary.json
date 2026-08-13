@@ -1,0 +1,692 @@
+{
+  "schema_version": 1,
+  "experiment": "e013_learnable_measurement_fisher_exact_multiseed",
+  "created_at_utc": "2026-08-13T06:13:58.412116+00:00",
+  "source_code_sha256": "226d24b291c29fddada91ab57376ea8a31754624f3155e85d2246e6570d8274a",
+  "aggregation_code_sha256": "6599cb74ef11c6354e065cd17547158b12f5752d462ba66d23e106d79ca8b5a3",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "n_seeds": 3,
+  "uncertainty": "sample standard deviation across paired seeds (ddof=1)",
+  "result_artifacts": [
+    {
+      "file": "results/e013_learnable_measqcl_seed42.json",
+      "sha256": "d0c30f8807d1eac0537a1894236d24b23efbc467f6adc54a37c74da490cdcb9e"
+    },
+    {
+      "file": "results/e013_learnable_measqcl_seed43.json",
+      "sha256": "326367918aaf92d4030920b0140fc8c2f1792a64d8f9aa4010bcb1c73508404a"
+    },
+    {
+      "file": "results/e013_learnable_measqcl_seed44.json",
+      "sha256": "2b01dbfcb4f96c31873faf36d457201f6c73a661a2413454b5c1418af812a980"
+    }
+  ],
+  "configuration": {
+    "data": {
+      "task_order": [
+        "MNIST 0/1",
+        "Fashion-MNIST 0/1"
+      ],
+      "n_train_per_task": 400,
+      "n_test_per_task": 200,
+      "test_used_for_selection": false
+    },
+    "model": {
+      "n_qubits": 6,
+      "layers": 10,
+      "n_parameters": 120,
+      "ansatz": "independent RY/RZ plus nearest-neighbor CNOT chain",
+      "classifier_readout": "Pauli-Z expectations on qubits 0 and 1 plus softmax",
+      "consolidation_measurements": [
+        "ZZ",
+        "XX",
+        "YY"
+      ],
+      "consolidation_readout_wires": [
+        0,
+        1
+      ],
+      "candidate_measurement_scope": "same-axis Pauli products on the two readout qubits; ZZ/XX/YY is not tomographically complete",
+      "readout_qfi_reference": "SLD QFI of the two-readout-qubit reduced density matrix; an upper bound for that subsystem, not a jointly attainable multiparameter CFI",
+      "prediction_measurement_unchanged": true,
+      "device": "default.qubit",
+      "shots": null,
+      "logical_depth": 44,
+      "two_qubit_gates": 50,
+      "learned_measurement_class": "local fixed-spectrum projective axes on each readout qubit, with joint bitstring outcomes",
+      "n_learned_settings": 3
+    },
+    "training": {
+      "optimizer": "Adam",
+      "learning_rate": 0.02,
+      "epochs_per_task": 40,
+      "ewc_lambda_shared": 0.1,
+      "selection_policy": "inherits E008 train-only classifier/lambda and E010 EWC-DR relevance; measurement hyperparameters are prespecified for the seed-42 development run"
+    },
+    "measurement_design": {
+      "fisher_parameter": "classifier weights theta, not measurement axes phi",
+      "task_relevance_source": "paired E010 EWC-DR boundary importance",
+      "objective_variants": {
+        "info_learn_basis_alloc": "uniform relevance; learned axes and allocation",
+        "task_learn_basis_uniform": "EWC-DR relevance; learned axes; uniform allocation",
+        "task_learn_basis_alloc": "EWC-DR relevance; learned axes and allocation"
+      },
+      "initialization": "Z/X/Y product axes plus deterministic small noise",
+      "initialization_noise": 0.01,
+      "minimum_allocation": 0.01,
+      "relevance_floor": 0.001,
+      "diversity_coefficient": 0.001,
+      "outer_iterations": 100,
+      "axis_max_iterations": 3000,
+      "optimizer": "analytic-gradient local tangent trust regions with sphere retraction and physical-gradient stopping; certified convex q solve alternated afterward"
+    }
+  },
+  "aggregate_metrics": {
+    "info_learn_basis_alloc": {
+      "train": {
+        "task1_at_boundary": {
+          "mean": 0.883333,
+          "sample_std": 0.001443
+        },
+        "task1_final_retention": {
+          "mean": 0.84,
+          "sample_std": 0.035
+        },
+        "task1_forgetting": {
+          "mean": 0.043333,
+          "sample_std": 0.034126
+        },
+        "backward_transfer": {
+          "mean": -0.043333,
+          "sample_std": 0.034126
+        },
+        "task2_final_adaptation": {
+          "mean": 0.935833,
+          "sample_std": 0.003819
+        },
+        "average_final_accuracy": {
+          "mean": 0.8879,
+          "sample_std": 0.019163
+        }
+      },
+      "test": {
+        "task1_at_boundary": {
+          "mean": 0.875,
+          "sample_std": 0.018028
+        },
+        "task1_final_retention": {
+          "mean": 0.845,
+          "sample_std": 0.043589
+        },
+        "task1_forgetting": {
+          "mean": 0.03,
+          "sample_std": 0.052678
+        },
+        "backward_transfer": {
+          "mean": -0.03,
+          "sample_std": 0.052678
+        },
+        "task2_final_adaptation": {
+          "mean": 0.941667,
+          "sample_std": 0.023094
+        },
+        "average_final_accuracy": {
+          "mean": 0.893333,
+          "sample_std": 0.010408
+        }
+      }
+    },
+    "task_learn_basis_uniform": {
+      "train": {
+        "task1_at_boundary": {
+          "mean": 0.883333,
+          "sample_std": 0.001443
+        },
+        "task1_final_retention": {
+          "mean": 0.863333,
+          "sample_std": 0.024664
+        },
+        "task1_forgetting": {
+          "mean": 0.02,
+          "sample_std": 0.024109
+        },
+        "backward_transfer": {
+          "mean": -0.02,
+          "sample_std": 0.024109
+        },
+        "task2_final_adaptation": {
+          "mean": 0.944167,
+          "sample_std": 0.014434
+        },
+        "average_final_accuracy": {
+          "mean": 0.903767,
+          "sample_std": 0.019583
+        }
+      },
+      "test": {
+        "task1_at_boundary": {
+          "mean": 0.875,
+          "sample_std": 0.018028
+        },
+        "task1_final_retention": {
+          "mean": 0.861667,
+          "sample_std": 0.042525
+        },
+        "task1_forgetting": {
+          "mean": 0.013333,
+          "sample_std": 0.05252
+        },
+        "backward_transfer": {
+          "mean": -0.013333,
+          "sample_std": 0.05252
+        },
+        "task2_final_adaptation": {
+          "mean": 0.955,
+          "sample_std": 0.026458
+        },
+        "average_final_accuracy": {
+          "mean": 0.908333,
+          "sample_std": 0.008036
+        }
+      }
+    },
+    "task_learn_basis_alloc": {
+      "train": {
+        "task1_at_boundary": {
+          "mean": 0.883333,
+          "sample_std": 0.001443
+        },
+        "task1_final_retention": {
+          "mean": 0.8625,
+          "sample_std": 0.026101
+        },
+        "task1_forgetting": {
+          "mean": 0.020833,
+          "sample_std": 0.025536
+        },
+        "backward_transfer": {
+          "mean": -0.020833,
+          "sample_std": 0.025536
+        },
+        "task2_final_adaptation": {
+          "mean": 0.945,
+          "sample_std": 0.01299
+        },
+        "average_final_accuracy": {
+          "mean": 0.9038,
+          "sample_std": 0.019526
+        }
+      },
+      "test": {
+        "task1_at_boundary": {
+          "mean": 0.875,
+          "sample_std": 0.018028
+        },
+        "task1_final_retention": {
+          "mean": 0.86,
+          "sample_std": 0.043589
+        },
+        "task1_forgetting": {
+          "mean": 0.015,
+          "sample_std": 0.052678
+        },
+        "backward_transfer": {
+          "mean": -0.015,
+          "sample_std": 0.052678
+        },
+        "task2_final_adaptation": {
+          "mean": 0.955,
+          "sample_std": 0.026458
+        },
+        "average_final_accuracy": {
+          "mean": 0.9075,
+          "sample_std": 0.00866
+        }
+      }
+    }
+  },
+  "measurement_geometry": {
+    "info_learn_basis_alloc": {
+      "orientation_power": {
+        "X": {
+          "mean": 0.656683,
+          "sample_std": 0.080991
+        },
+        "Y": {
+          "mean": 0.26413,
+          "sample_std": 0.04367
+        },
+        "Z": {
+          "mean": 0.079188,
+          "sample_std": 0.044646
+        }
+      },
+      "diversity_penalty": {
+        "mean": 0.457419,
+        "sample_std": 0.160984
+      },
+      "cosine_to_output_cfi": {
+        "mean": 0.690057,
+        "sample_std": 0.03271
+      },
+      "cosine_to_readout_qfi": {
+        "mean": 0.981864,
+        "sample_std": 0.00661
+      },
+      "cosine_to_full_qfi": {
+        "mean": 0.912696,
+        "sample_std": 0.001813
+      },
+      "minimum_readout_qfi_minus_basis_cfi": {
+        "mean": -0.0,
+        "sample_std": 0.0
+      },
+      "minimum_readout_qfi_minus_accessible_cfi": {
+        "mean": -0.0,
+        "sample_std": 0.0
+      }
+    },
+    "task_learn_basis_uniform": {
+      "orientation_power": {
+        "X": {
+          "mean": 0.114449,
+          "sample_std": 0.092197
+        },
+        "Y": {
+          "mean": 0.045986,
+          "sample_std": 0.063265
+        },
+        "Z": {
+          "mean": 0.839565,
+          "sample_std": 0.154915
+        }
+      },
+      "diversity_penalty": {
+        "mean": 0.899364,
+        "sample_std": 0.174306
+      },
+      "cosine_to_output_cfi": {
+        "mean": 0.891786,
+        "sample_std": 0.020297
+      },
+      "cosine_to_readout_qfi": {
+        "mean": 0.892737,
+        "sample_std": 0.038461
+      },
+      "cosine_to_full_qfi": {
+        "mean": 0.793356,
+        "sample_std": 0.052017
+      },
+      "minimum_readout_qfi_minus_basis_cfi": {
+        "mean": -0.0,
+        "sample_std": 0.0
+      },
+      "minimum_readout_qfi_minus_accessible_cfi": {
+        "mean": -0.0,
+        "sample_std": 0.0
+      }
+    },
+    "task_learn_basis_alloc": {
+      "orientation_power": {
+        "X": {
+          "mean": 0.114079,
+          "sample_std": 0.091557
+        },
+        "Y": {
+          "mean": 0.046035,
+          "sample_std": 0.063349
+        },
+        "Z": {
+          "mean": 0.839886,
+          "sample_std": 0.15436
+        }
+      },
+      "diversity_penalty": {
+        "mean": 0.865641,
+        "sample_std": 0.232716
+      },
+      "cosine_to_output_cfi": {
+        "mean": 0.892051,
+        "sample_std": 0.019964
+      },
+      "cosine_to_readout_qfi": {
+        "mean": 0.893242,
+        "sample_std": 0.039332
+      },
+      "cosine_to_full_qfi": {
+        "mean": 0.793827,
+        "sample_std": 0.052807
+      },
+      "minimum_readout_qfi_minus_basis_cfi": {
+        "mean": -0.0,
+        "sample_std": 0.0
+      },
+      "minimum_readout_qfi_minus_accessible_cfi": {
+        "mean": 0.0,
+        "sample_std": 0.0
+      }
+    }
+  },
+  "paired_differences": {
+    "info_learn_basis_alloc": {
+      "minus_task_relevant_mof": {
+        "task1_final_retention": {
+          "mean": -0.015,
+          "sample_std": 0.015
+        },
+        "task2_final_adaptation": {
+          "mean": -0.013333,
+          "sample_std": 0.005774
+        },
+        "average_final_accuracy": {
+          "mean": -0.014167,
+          "sample_std": 0.010104
+        }
+      },
+      "minus_joint_zz": {
+        "task1_final_retention": {
+          "mean": -0.02,
+          "sample_std": 0.026458
+        },
+        "task2_final_adaptation": {
+          "mean": -0.01,
+          "sample_std": 0.0
+        },
+        "average_final_accuracy": {
+          "mean": -0.015,
+          "sample_std": 0.013229
+        }
+      },
+      "minus_task_agnostic_mof": {
+        "task1_final_retention": {
+          "mean": 0.003333,
+          "sample_std": 0.007638
+        },
+        "task2_final_adaptation": {
+          "mean": 0.005,
+          "sample_std": 0.005
+        },
+        "average_final_accuracy": {
+          "mean": 0.004167,
+          "sample_std": 0.005774
+        }
+      },
+      "minus_readout_qfi": {
+        "task1_final_retention": {
+          "mean": -0.016667,
+          "sample_std": 0.005774
+        },
+        "task2_final_adaptation": {
+          "mean": -0.003333,
+          "sample_std": 0.002887
+        },
+        "average_final_accuracy": {
+          "mean": -0.01,
+          "sample_std": 0.0025
+        }
+      },
+      "minus_full_qfi": {
+        "task1_final_retention": {
+          "mean": 0.005,
+          "sample_std": 0.0
+        },
+        "task2_final_adaptation": {
+          "mean": -0.001667,
+          "sample_std": 0.005774
+        },
+        "average_final_accuracy": {
+          "mean": 0.001667,
+          "sample_std": 0.002887
+        }
+      }
+    },
+    "task_learn_basis_uniform": {
+      "minus_task_relevant_mof": {
+        "task1_final_retention": {
+          "mean": 0.001667,
+          "sample_std": 0.017559
+        },
+        "task2_final_adaptation": {
+          "mean": 0.0,
+          "sample_std": 0.0
+        },
+        "average_final_accuracy": {
+          "mean": 0.000833,
+          "sample_std": 0.00878
+        }
+      },
+      "minus_joint_zz": {
+        "task1_final_retention": {
+          "mean": -0.003333,
+          "sample_std": 0.028431
+        },
+        "task2_final_adaptation": {
+          "mean": 0.003333,
+          "sample_std": 0.005774
+        },
+        "average_final_accuracy": {
+          "mean": -0.0,
+          "sample_std": 0.011456
+        }
+      },
+      "minus_task_agnostic_mof": {
+        "task1_final_retention": {
+          "mean": 0.02,
+          "sample_std": 0.01
+        },
+        "task2_final_adaptation": {
+          "mean": 0.018333,
+          "sample_std": 0.010408
+        },
+        "average_final_accuracy": {
+          "mean": 0.019167,
+          "sample_std": 0.008036
+        }
+      },
+      "minus_readout_qfi": {
+        "task1_final_retention": {
+          "mean": 0.0,
+          "sample_std": 0.00866
+        },
+        "task2_final_adaptation": {
+          "mean": 0.01,
+          "sample_std": 0.00866
+        },
+        "average_final_accuracy": {
+          "mean": 0.005,
+          "sample_std": 0.00433
+        }
+      },
+      "minus_full_qfi": {
+        "task1_final_retention": {
+          "mean": 0.021667,
+          "sample_std": 0.002887
+        },
+        "task2_final_adaptation": {
+          "mean": 0.011667,
+          "sample_std": 0.011547
+        },
+        "average_final_accuracy": {
+          "mean": 0.016667,
+          "sample_std": 0.005204
+        }
+      }
+    },
+    "task_learn_basis_alloc": {
+      "minus_task_relevant_mof": {
+        "task1_final_retention": {
+          "mean": 0.0,
+          "sample_std": 0.015
+        },
+        "task2_final_adaptation": {
+          "mean": 0.0,
+          "sample_std": 0.0
+        },
+        "average_final_accuracy": {
+          "mean": -0.0,
+          "sample_std": 0.0075
+        }
+      },
+      "minus_joint_zz": {
+        "task1_final_retention": {
+          "mean": -0.005,
+          "sample_std": 0.026458
+        },
+        "task2_final_adaptation": {
+          "mean": 0.003333,
+          "sample_std": 0.005774
+        },
+        "average_final_accuracy": {
+          "mean": -0.000833,
+          "sample_std": 0.010408
+        }
+      },
+      "minus_task_agnostic_mof": {
+        "task1_final_retention": {
+          "mean": 0.018333,
+          "sample_std": 0.007638
+        },
+        "task2_final_adaptation": {
+          "mean": 0.018333,
+          "sample_std": 0.010408
+        },
+        "average_final_accuracy": {
+          "mean": 0.018333,
+          "sample_std": 0.007638
+        }
+      },
+      "minus_readout_qfi": {
+        "task1_final_retention": {
+          "mean": -0.001667,
+          "sample_std": 0.005774
+        },
+        "task2_final_adaptation": {
+          "mean": 0.01,
+          "sample_std": 0.00866
+        },
+        "average_final_accuracy": {
+          "mean": 0.004167,
+          "sample_std": 0.003819
+        }
+      },
+      "minus_full_qfi": {
+        "task1_final_retention": {
+          "mean": 0.02,
+          "sample_std": 0.0
+        },
+        "task2_final_adaptation": {
+          "mean": 0.011667,
+          "sample_std": 0.011547
+        },
+        "average_final_accuracy": {
+          "mean": 0.015833,
+          "sample_std": 0.005774
+        }
+      }
+    }
+  },
+  "paired_seed_metrics": {
+    "42": {
+      "info_learn_basis_alloc": {
+        "task1_at_boundary": 0.895,
+        "task1_final_retention": 0.815,
+        "task1_forgetting": 0.08,
+        "backward_transfer": -0.08,
+        "task2_final_adaptation": 0.955,
+        "average_final_accuracy": 0.885
+      },
+      "task_learn_basis_uniform": {
+        "task1_at_boundary": 0.895,
+        "task1_final_retention": 0.83,
+        "task1_forgetting": 0.065,
+        "backward_transfer": -0.065,
+        "task2_final_adaptation": 0.975,
+        "average_final_accuracy": 0.9025
+      },
+      "task_learn_basis_alloc": {
+        "task1_at_boundary": 0.895,
+        "task1_final_retention": 0.83,
+        "task1_forgetting": 0.065,
+        "backward_transfer": -0.065,
+        "task2_final_adaptation": 0.975,
+        "average_final_accuracy": 0.9025
+      }
+    },
+    "43": {
+      "info_learn_basis_alloc": {
+        "task1_at_boundary": 0.86,
+        "task1_final_retention": 0.825,
+        "task1_forgetting": 0.035,
+        "backward_transfer": -0.035,
+        "task2_final_adaptation": 0.955,
+        "average_final_accuracy": 0.89
+      },
+      "task_learn_basis_uniform": {
+        "task1_at_boundary": 0.86,
+        "task1_final_retention": 0.845,
+        "task1_forgetting": 0.015,
+        "backward_transfer": -0.015,
+        "task2_final_adaptation": 0.965,
+        "average_final_accuracy": 0.905
+      },
+      "task_learn_basis_alloc": {
+        "task1_at_boundary": 0.86,
+        "task1_final_retention": 0.84,
+        "task1_forgetting": 0.02,
+        "backward_transfer": -0.02,
+        "task2_final_adaptation": 0.965,
+        "average_final_accuracy": 0.9025
+      }
+    },
+    "44": {
+      "info_learn_basis_alloc": {
+        "task1_at_boundary": 0.87,
+        "task1_final_retention": 0.895,
+        "task1_forgetting": -0.025,
+        "backward_transfer": 0.025,
+        "task2_final_adaptation": 0.915,
+        "average_final_accuracy": 0.905
+      },
+      "task_learn_basis_uniform": {
+        "task1_at_boundary": 0.87,
+        "task1_final_retention": 0.91,
+        "task1_forgetting": -0.04,
+        "backward_transfer": 0.04,
+        "task2_final_adaptation": 0.925,
+        "average_final_accuracy": 0.9175
+      },
+      "task_learn_basis_alloc": {
+        "task1_at_boundary": 0.87,
+        "task1_final_retention": 0.91,
+        "task1_forgetting": -0.04,
+        "backward_transfer": 0.04,
+        "task2_final_adaptation": 0.925,
+        "average_final_accuracy": 0.9175
+      }
+    }
+  },
+  "resource_accounting": {
+    "cached_quantum_circuit_configurations": 7712,
+    "formula": "n_anchors * (1 + 2 * n_classifier_parameters)",
+    "n_anchors": 32,
+    "n_classifier_parameters": 120,
+    "basis_independent_cache_reused_by_every_objective_evaluation": true,
+    "axis_optimization_quantum_circuit_configurations": 0,
+    "finite_shots": false,
+    "hardware_execution": false
+  },
+  "claim_boundaries": {
+    "finite_shot_result": false,
+    "hardware_result": false,
+    "global_or_entangled_povm": false,
+    "qfi_attainability": false,
+    "quantum_advantage": false,
+    "scope": "exact-statevector two-readout-qubit product-measurement basis learning",
+    "statistical_significance_claimed": false,
+    "interpretation": "paired three-seed exact-statevector diagnostic; continuous local basis learning does not establish superiority over fixed Joint ZZ"
+  }
+}

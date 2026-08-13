@@ -72,6 +72,35 @@ figures/**/*.pdf
 !figures/e008_measqcl_stability_plasticity.png
 !figures/e008_measqcl_measurement_geometry.png
 !figures/e004_e008_comparison.png
+!results/e010_physmeas_seed42.json
+!results/e010_physmeas_seed43.json
+!results/e010_physmeas_seed44.json
+!results/e010_physmeas_summary.json
+!results/e010_finite_shot_seed42.json
+!results/e010_finite_shot_seed43.json
+!results/e010_finite_shot_seed44.json
+!results/e010_finite_shot_summary.json
+!results/e010_phase_train_only_tuning.json
+!results/e010_phase_locality_seed42.json
+!results/e010_phase_locality_seed43.json
+!results/e010_phase_locality_seed44.json
+!results/e010_phase_locality_summary.json
+!figures/e010_physmeas_main.png
+!figures/e010_finite_shot.png
+!results/e013_learnable_measqcl_seed42.json
+!results/e013_learnable_measqcl_seed43.json
+!results/e013_learnable_measqcl_seed44.json
+!results/e013_learnable_measqcl_summary.json
+!results/e013_figure_provenance.json
+!figures/e013_learnable_measqcl.png
+!results/e013_phase_learnable_seed42.json
+!results/e013_phase_learnable_seed43.json
+!results/e013_phase_learnable_seed44.json
+!results/e013_phase_learnable_summary.json
+!results/e013_phase_figure_provenance.json
+!figures/e013_phase_learnable.png
+!results/e013_phase_training_figure_provenance.json
+!figures/e013_phase_training.png
 
 # LaTeX drawer diagnostic generated when a local TeX installation is incomplete
 latex_error.log

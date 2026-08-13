@@ -421,3 +421,220 @@ Cross-experiment overview:
 - The common forgetting panel uses phase-end minus final held-out score for every block. For
   E006 this is recomputed per seed from the committed raw test-balanced-accuracy histories; it
   is intentionally not the E006 summary's max-boundary forgetting headline.
+
+---
+
+## E010 — PhysMeas-QCL: task-relevant and locality-resolved measurement design
+
+Goal: follow the E008 negative result rather than hiding it. E008 showed that maximizing
+task-agnostic accessible Fisher coverage selected mostly XX, moved closer to QFI, but retained
+less old-task accuracy than fixed ZZ. E010 asks which measurable sensitivity is relevant to
+the old task, how stable its selection is under finite shots, and whether phase memory depends
+monotonically on output-observable locality.
+
+Core method:
+- EWC-DR reversed-logit importance is computed on the old-task anchors. For the proposed
+  method it is used only as a relevance weight in
+  `sum_i w_i log(epsilon + sum_m q_m F_mi)`; the EWC penalty itself remains the accessible
+  measurement CFI. This isolates measurement selection from changing the regularizer
+- every Fisher used in the penalty is normalized to mean one, so comparisons test profile
+  shape rather than raw Fisher mass. Prediction remains the original Z-readout classifier
+- the allocation solver rescales each nonzero parameter column (which adds only a constant
+  to the zero-epsilon log objective), records its solver and certified Frank-Wolfe dual gap,
+  and fails if the declared numerical tolerance is not reached
+
+Paired MNIST -> Fashion result (held-out test, mean +/- sample SD, seeds 42/43/44):
+
+| Method | MNIST retention | Fashion adaptation | Mean final accuracy |
+|---|---:|---:|---:|
+| Task-agnostic MOF (E008) | 0.842 +/- 0.051 | 0.937 +/- 0.019 | 0.889 +/- 0.016 |
+| Output CFI | 0.852 +/- 0.035 | 0.958 +/- 0.029 | 0.905 +/- 0.007 |
+| EWC-DR | 0.853 +/- 0.036 | 0.958 +/- 0.025 | 0.906 +/- 0.006 |
+| Task-relevant MOF | 0.860 +/- 0.044 | 0.955 +/- 0.026 | 0.908 +/- 0.011 |
+| Joint ZZ | **0.865 +/- 0.040** | 0.952 +/- 0.023 | **0.908 +/- 0.012** |
+
+Task relevance changes the three-basis allocation from E008's task-agnostic
+`ZZ/XX/YY = 0.000/0.922/0.078` to `0.878/0.112/0.010` on average. It repairs most of the
+task-agnostic MOF loss and reaches the same practical frontier as fixed ZZ, but does not
+establish a win over fixed ZZ with only three seeds. EWC-DR and vanilla output CFI are also
+nearly identical here; reversed logits avoid confidence collapse in the estimator, but their
+normalized profiles are highly aligned on this task.
+
+Finite-shot selection audit:
+- exact base and +/-pi/2 probability tables are independently sampled with multinomial
+  noise. Each budget has 20 repetitions per seed and a Jeffreys 0.5 outcome pseudocount;
+  first-order squared-derivative sampling noise is subtracted non-negatively
+- 64/256/1024 shots are **per probability circuit**, not total shots. Counting 32 anchors,
+  120 parameters, both shifts, and all three candidate bases gives 1,480,704 / 5,922,816 /
+  23,691,264 pilot shots per seed and repetition
+- selected accessible-profile cosine to exact is 0.9671 +/- 0.0051, 0.9949 +/- 0.0005,
+  and 0.9991 +/- 0.0001 across the three budgets. This validates selection stability in
+  simulation; production-shot allocation, shot-based training, noise, and hardware are not
+  performed
+- this budget covers measurement-specific CFI only. Task relevance is still computed by
+  exact simulator autodifferentiation; its hardware estimation cost is not included, so the
+  audit is conditional on exact relevance and is not yet a complete QPU resource estimate
+
+Phase-first locality experiment:
+- task order is SPT/ATF -> MNIST -> Fashion, so later tasks can actually erase phase memory.
+  The four-qubit, three-layer classifier is the smallest candidate reaching >=0.99 phase
+  training accuracy in the checked seed-42 train-only capacity scan. The shared lambda=0.1
+  is inherited from E008 and is not tuned on E010 phase results
+- for a Pauli observable P with binary +/-1 outcomes, the exact CFI is
+  `(d<P>/dtheta)^2 / (1-<P>^2)`. Families include classifier readout, all one-local Pauli
+  observables, same-axis nearest-neighbour two-local observables, the cluster-Ising XZX/YY
+  Hamiltonian terms, and the weight-four stabilizer-product correlation XYYX. Pauli weight, support
+  diameter, number of observables, and compatible product-basis settings are stored
+- to isolate phase memory, every branch keeps one fixed phase-boundary anchor through both
+  later image tasks; it does not add a second MNIST anchor. MNIST final accuracy is therefore
+  a plasticity/interference diagnostic, not a claim of full three-task consolidation
+- these are locality labels on the learned **output** state. The directed CNOT ansatz can
+  enlarge their Heisenberg pullback, so E010 does not claim equality with locality in the
+  input ground state or a thermodynamic phase transition
+
+Final phase-task retention after both image tasks (mean +/- sample SD):
+- naive = 0.500 +/- 0.000
+- output CFI = 0.707 +/- 0.261; readout Pauli = 0.700 +/- 0.265
+- one-local = 0.817 +/- 0.275; two-local = 0.667 +/- 0.289
+- Hamiltonian-aligned = 0.833 +/- 0.289; XYYX weight-four = 0.707 +/- 0.257
+- task-relevant all-Pauli = 0.788 +/- 0.259; full QFI comparator = **0.927 +/- 0.127**
+
+The phase result is strongly seed-dependent. Seed 42 favored XYYX while seed 44 favored
+two-local/Hamiltonian observables; therefore the data reject a simple "more nonlocal is
+always better" story. The defensible conclusion is that physics-informed accessible
+measurements recover part of the QFI retention benefit, observable choice is task- and
+trajectory-dependent, and QFI has the highest mean phase retention among these comparators.
+Three seeds and large sample SDs are not enough for statistical or universal locality claims.
+
+Artifacts:
+- `results/e010_physmeas_seed{42,43,44}.json` and `e010_physmeas_summary.json`
+- `results/e010_finite_shot_seed{42,43,44}.json` and `e010_finite_shot_summary.json`
+- `results/e010_phase_train_only_tuning.json`,
+  `e010_phase_locality_seed{42,43,44}.json`, and `e010_phase_locality_summary.json`
+- `figures/e010_physmeas_main.png` and `figures/e010_finite_shot.png`
+
+Claim boundaries: exact statevector training only; no hardware, noise, finite-shot retention,
+QFI attainability, thermodynamic-limit, statistical-significance, or quantum-advantage claim.
+
+## E013 — Learnable measurement Fisher consolidation
+
+Goal: test whether a continuous ensemble of physically implementable product-measurement
+bases can recover old-task parameter sensitivity that fixed ZZ/XX/YY misses. The classifier,
+two-Z prediction readout, Task-1 trajectory, Adam state, anchors, shared lambda, and data split
+remain paired to E008/E010. Only the task-boundary Fisher measurement changes.
+
+Method:
+- each local observable has fixed spectrum `{-1,+1}` and is parameterized by a unit Bloch
+  axis `n`, so `H=n_x X+n_y Y+n_z Z`. Joint bitstring probabilities from three two-qubit
+  product settings define the measurement CFI; the setting ID remains part of the outcome
+- the 32 anchor reduced density matrices at the Task-1 optimum and at every `+/-pi/2`
+  classifier-parameter shift are cached once. This costs
+  `32 * (1 + 2 * 120) = 7,712` exact circuit configurations per seed. All continuous-axis
+  objective evaluations are classical projector contractions and add zero quantum circuits
+- axes use seam-free local tangent coordinates with sphere retraction. Analytic automatic
+  differentiation through the cached density/projector contractions drives bounded local
+  trust-region solves; reaching a chart boundary causes a rebase, never convergence. Every
+  solve is rejected unless its coordinate-free projected Bloch-sphere gradient is at most
+  `1e-3`. When allocation is learned, axis steps alternate with the certified E010 convex
+  simplex solve. Initial settings are near Z/X/Y; task-relevant variants use the paired E010
+  EWC-DR relevance with a prespecified floor
+- the information-only ablation gives every classifier parameter equal relevance. Every
+  resulting accessible Fisher is normalized to mean importance one before the shared EWC
+  penalty, and test history is recorded but not used by the prespecified measurement design
+
+Paired MNIST -> Fashion result (held-out test, mean +/- sample SD, seeds 42/43/44):
+
+| Method | MNIST retention | Fashion adaptation | Mean final accuracy |
+|---|---:|---:|---:|
+| Task-agnostic Alloc-XYZ (E008) | 0.842 +/- 0.051 | 0.937 +/- 0.019 | 0.889 +/- 0.016 |
+| Task-relevant Alloc-XYZ (E010) | 0.860 +/- 0.044 | 0.955 +/- 0.026 | 0.908 +/- 0.011 |
+| Joint ZZ | **0.865 +/- 0.040** | 0.952 +/- 0.023 | 0.908 +/- 0.012 |
+| LearnBasis, information + allocation | 0.845 +/- 0.044 | 0.942 +/- 0.023 | 0.893 +/- 0.010 |
+| LearnBasis, task relevance + uniform | 0.862 +/- 0.043 | **0.955 +/- 0.026** | **0.908 +/- 0.008** |
+| LearnBasis, task relevance + allocation | 0.860 +/- 0.044 | **0.955 +/- 0.026** | 0.908 +/- 0.009 |
+| Readout QFI | 0.862 +/- 0.046 | 0.945 +/- 0.022 | 0.903 +/- 0.012 |
+
+Mechanistic result:
+- information-only basis learning finds complementary, mostly equatorial measurements:
+  allocation-weighted axis power is `X^2/Y^2/Z^2 = 0.657/0.264/0.079`. It reaches full-QFI
+  cosine `0.9127 +/- 0.0018` and physically matched readout-QFI cosine
+  `0.9819 +/- 0.0066`, but retains only `0.845 +/- 0.044`
+- task-relevant basis learning rotates back toward the classifier measurement:
+  `X^2/Y^2/Z^2 = 0.114/0.046/0.840`, and its output-CFI cosine rises to
+  `0.892 +/- 0.020`, while readout-QFI cosine is `0.893 +/- 0.038`. Multiple settings often
+  become antipodally equivalent, so learning q adds no aggregate performance over uniform
+  allocation on this task pair
+- every learned individual-basis CFI and accessible mixture passes the numerical diagonal
+  hierarchy `F_measurement <= F_readout-QFI`; full-state QFI remains a secondary global
+  reference, not the physically matched upper bound for these two-readout-qubit measurements
+- task-relevant LearnBasis repairs the information-only loss and matches the E010/Joint-ZZ
+  frontier. The uniform variant is `-0.0033 +/- 0.0284` retention relative to paired Joint ZZ;
+  learning allocation changes that to `-0.0050 +/- 0.0265`. Three seeds
+  do not establish superiority. The supported conclusion is that task relevance, not access
+  to more QFI-like state geometry, determines useful consolidation here; a continuous basis
+  is unnecessary for this Z-aligned image transition
+
+Artifacts:
+- `results/e013_learnable_measqcl_seed{42,43,44}.json`
+- `results/e013_learnable_measqcl_summary.json`
+- `results/e013_figure_provenance.json`
+- `figures/e013_learnable_measqcl.png`
+
+Phase-first full-output extension:
+- the old task is the four-qubit SPT/ATF classifier from E010, followed by MNIST and Fashion.
+  The exact E010 phase boundary, optimizer state, anchors, data split, lambda, and future-task
+  training are replayed and verified. The only branch-specific quantity is the phase-boundary
+  Fisher profile
+- each of three product settings learns one Bloch axis on **all four output qubits** and keeps
+  all 16 joint outcomes. Although each setting is a locally rotated product measurement, the
+  joint bitstring distribution is correlation-sensitive. It is therefore strictly richer
+  than measuring a single Z-aligned readout expectation, without claiming an entangled POVM
+- full-state QFI is the physically matched measurement-independent diagonal upper bound for
+  this all-output domain. Every fixed/learned basis and accessible mixture passes the checked
+  numerical hierarchy `F_C <= F_Q`. The density cache costs
+  `32 * (1 + 2 * 24) = 1,568` exact circuit configurations per seed; analytic-gradient axis
+  optimization reuses it and adds no quantum circuits
+
+Held-out phase-first result (mean +/- sample SD, seeds 42/43/44):
+
+| Method | Phase retention | Mean final accuracy |
+|---|---:|---:|
+| Joint ZZZZ | 0.903 +/- 0.163 | 0.759 +/- 0.052 |
+| Uniform joint Z/X/Y | 0.915 +/- 0.147 | 0.768 +/- 0.050 |
+| LearnBasis, information + allocation | **0.940 +/- 0.104** | **0.777 +/- 0.030** |
+| LearnBasis, task relevance + uniform | 0.927 +/- 0.127 | 0.772 +/- 0.045 |
+| LearnBasis, task relevance + allocation | 0.933 +/- 0.115 | 0.769 +/- 0.043 |
+| Full-state QEWC | 0.927 +/- 0.127 | 0.773 +/- 0.044 |
+
+The paired information-learned-minus-QEWC difference is `+0.0133 +/- 0.0231` phase
+retention and `+0.0039 +/- 0.0142` mean final accuracy. The task-relevant learned+allocation
+difference is only `+0.0067 +/- 0.0115` retention and `-0.0044 +/- 0.0010` average accuracy.
+This is a promising measurement diagnostic, not a
+superiority claim: seeds 43/44 have a ceiling (Joint ZZZZ retention >=0.995), while seed 42
+contains the identifiable forgetting event. On seed 42, information LearnBasis+Alloc raises
+phase retention from `0.715` (Joint ZZZZ), `0.745` (Uniform XYZ), and `0.780` (QEWC) to
+`0.820`; task-relevant LearnBasis+Alloc also reaches `0.800`.
+
+The learned ensembles are genuinely non-Z. Allocation-weighted axis power is
+`X^2/Y^2/Z^2 = 0.252/0.340/0.408` for the information objective and
+`0.022/0.353/0.626` for task relevance plus allocation. The latter has lower cosine to full
+QFI (`0.9662 +/- 0.0071`) than the information-only estimator (`0.9788 +/- 0.0026`) and also
+slightly lower mean retention. The phase extension therefore does not support a general claim
+that the chosen EWC-DR task weighting improves basis learning; it supports the narrower result
+that non-Z, correlation-sensitive accessible measurements can recover part of QFI's memory.
+
+Additional phase artifacts:
+- `results/e013_phase_learnable_seed{42,43,44}.json`
+- `results/e013_phase_learnable_summary.json`
+- `results/e013_phase_figure_provenance.json`
+- `figures/e013_phase_learnable.png`
+- `results/e013_phase_training_figure_provenance.json`
+- `figures/e013_phase_training.png` — per-task training accuracy across the full sequential
+  trajectory, with three-seed mean/sample-SD bands and active-task shading
+
+Claim boundaries: exact product projective measurements only—two readout qubits for the image
+experiment and all four output qubits for the phase extension. Neither is an arbitrary or
+entangled POVM, a finite-shot/hardware basis-optimization result, evidence of QFI attainability,
+a statistical-significance claim, or quantum advantage. Continuous axes are calibrated and
+diagnosed on the same 32 train anchors; no held-out test leaks into the optimizer, but this
+first exact study does not measure anchor-level calibration overfitting.

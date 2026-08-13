@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-13T06:14:06.080236+00:00",
+  "summary_file": "results/e013_learnable_measqcl_summary.json",
+  "summary_file_sha256": "eeaf915c79993b93ce391563d30ddc9bdd5705db26dd52063250e28fb8e52b7c",
+  "plot_source_file": "scripts/plot_e013_learnable.py",
+  "plot_source_sha256": "c67d2511bad6b34c4b5f173d3c8b4e2c3dd76bcfbad8507f40deff76c67b4531",
+  "figure_file": "figures/e013_learnable_measqcl.png",
+  "figure_file_sha256": "1ac13ba9ee9d3da36c07a596e8d7c37c1604c8ce3bea479a4a5410956f776a1b"
+}

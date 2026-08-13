@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-08-13T06:14:06.086945+00:00",
+  "summary_file": "results/e013_phase_learnable_summary.json",
+  "summary_file_sha256": "7790cf74992ed276a4ffc824ac1ef07acf8f5e9097f30080564401b8a2b9236b",
+  "plot_source_file": "scripts/plot_e013_phase_learnable.py",
+  "plot_source_sha256": "9ab1dd1ca334e7c9f5cde19bac21256341696a4387737c62b0465f52a2975079",
+  "figure_file": "figures/e013_phase_learnable.png",
+  "figure_file_sha256": "ce6b3be33b2b905c2972305f84d75e067eab95cc81bc22aec678bb27260c5c23"
+}

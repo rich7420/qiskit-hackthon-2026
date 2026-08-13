@@ -1,0 +1,151 @@
+{
+  "schema_version": 1,
+  "experiment": "e010_conditional_finite_shot_basis_fisher_multiseed",
+  "created_at_utc": "2026-08-13T03:01:32.861702+00:00",
+  "source_code_sha256": "d5592b75c498d467e92b8104e8e1302667b6f8173c961c0474a4a83b4e72ab8f",
+  "aggregation_code_sha256": "cfbf9ca6f83f58d392258acc54a3b63367a6907ab84ed462e0bd8d0aaf194dc9",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "n_seeds": 3,
+  "repetitions_per_seed_budget": 20,
+  "result_files": [
+    "results/e010_finite_shot_seed42.json",
+    "results/e010_finite_shot_seed43.json",
+    "results/e010_finite_shot_seed44.json"
+  ],
+  "measurement_cost_definition": "all anchors times base/+shift/-shift probability circuits times candidate bases times shots; pilot selection only",
+  "aggregate": {
+    "64": {
+      "shots_per_probability_circuit": 64,
+      "pilot_shots_per_seed_repetition": 1480704,
+      "allocation": {
+        "ZZ": {
+          "seed_mean": {
+            "mean": 0.897817,
+            "sample_std": 0.142346
+          },
+          "mean_within_seed_sample_std": 0.063942
+        },
+        "XX": {
+          "seed_mean": {
+            "mean": 0.089124,
+            "sample_std": 0.137047
+          },
+          "mean_within_seed_sample_std": 0.066586
+        },
+        "YY": {
+          "seed_mean": {
+            "mean": 0.013059,
+            "sample_std": 0.005299
+          },
+          "mean_within_seed_sample_std": 0.00985
+        }
+      },
+      "selected_profile_cosine_to_exact": {
+        "seed_mean": {
+          "mean": 0.967111,
+          "sample_std": 0.005074
+        },
+        "mean_within_seed_sample_std": 0.005459
+      },
+      "allocation_l1_error_to_exact": {
+        "seed_mean": {
+          "mean": 0.124847,
+          "sample_std": 0.216241
+        },
+        "mean_within_seed_sample_std": 0.062991
+      }
+    },
+    "256": {
+      "shots_per_probability_circuit": 256,
+      "pilot_shots_per_seed_repetition": 5922816,
+      "allocation": {
+        "ZZ": {
+          "seed_mean": {
+            "mean": 0.882407,
+            "sample_std": 0.169035
+          },
+          "mean_within_seed_sample_std": 0.029251
+        },
+        "XX": {
+          "seed_mean": {
+            "mean": 0.107593,
+            "sample_std": 0.169035
+          },
+          "mean_within_seed_sample_std": 0.029251
+        },
+        "YY": {
+          "seed_mean": {
+            "mean": 0.01,
+            "sample_std": 0.0
+          },
+          "mean_within_seed_sample_std": 0.0
+        }
+      },
+      "selected_profile_cosine_to_exact": {
+        "seed_mean": {
+          "mean": 0.994928,
+          "sample_std": 0.000525
+        },
+        "mean_within_seed_sample_std": 0.001314
+      },
+      "allocation_l1_error_to_exact": {
+        "seed_mean": {
+          "mean": 0.044792,
+          "sample_std": 0.077582
+        },
+        "mean_within_seed_sample_std": 0.038634
+      }
+    },
+    "1024": {
+      "shots_per_probability_circuit": 1024,
+      "pilot_shots_per_seed_repetition": 23691264,
+      "allocation": {
+        "ZZ": {
+          "seed_mean": {
+            "mean": 0.873845,
+            "sample_std": 0.183866
+          },
+          "mean_within_seed_sample_std": 0.010216
+        },
+        "XX": {
+          "seed_mean": {
+            "mean": 0.116155,
+            "sample_std": 0.183866
+          },
+          "mean_within_seed_sample_std": 0.010216
+        },
+        "YY": {
+          "seed_mean": {
+            "mean": 0.01,
+            "sample_std": 0.0
+          },
+          "mean_within_seed_sample_std": 0.0
+        }
+      },
+      "selected_profile_cosine_to_exact": {
+        "seed_mean": {
+          "mean": 0.999075,
+          "sample_std": 9.1e-05
+        },
+        "mean_within_seed_sample_std": 0.000242
+      },
+      "allocation_l1_error_to_exact": {
+        "seed_mean": {
+          "mean": 0.015839,
+          "sample_std": 0.027435
+        },
+        "mean_within_seed_sample_std": 0.01304
+      }
+    }
+  },
+  "claim_boundaries": {
+    "conditional_finite_shot_basis_fisher_selection": true,
+    "complete_finite_shot_measurement_selection": false,
+    "finite_shot_training_or_retention": false,
+    "hardware_result": false
+  }
+}

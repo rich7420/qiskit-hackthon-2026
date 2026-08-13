@@ -1,0 +1,1089 @@
+{
+  "schema_version": 1,
+  "experiment": "e010_phase_first_locality_resolved_exact_multiseed",
+  "created_at_utc": "2026-08-13T03:05:03.322403+00:00",
+  "source_code_sha256": "2a5bf8e1c953bd7ca59823bc2d7903f13748504d424e62e3b281c17925e47668",
+  "aggregation_code_sha256": "b9555136196f0c16463e596895a92101accddcd16e048f10de9969da8100091a",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "n_seeds": 3,
+  "uncertainty": "sample standard deviation across paired seeds (ddof=1)",
+  "result_files": [
+    "results/e010_phase_locality_seed42.json",
+    "results/e010_phase_locality_seed43.json",
+    "results/e010_phase_locality_seed44.json"
+  ],
+  "train_only_calibration_file": "results/e010_phase_train_only_tuning.json",
+  "configuration": {
+    "data": {
+      "task_order": [
+        "SPT/ATF phases",
+        "MNIST 0/1",
+        "Fashion-MNIST 0/1"
+      ],
+      "n_train_per_task": 400,
+      "n_test_per_task": 200,
+      "test_used_for_selection": false,
+      "phase_ranges": {
+        "SPT": [
+          0.0,
+          0.5
+        ],
+        "ATF": [
+          2.5,
+          3.0
+        ]
+      }
+    },
+    "model": {
+      "n_qubits": 4,
+      "layers": 3,
+      "n_parameters": 24,
+      "ansatz": "independent RY/RZ plus directed nearest-neighbor CNOT chain",
+      "classifier_readout": "Z0/Z1 expectations plus softmax",
+      "shots": null
+    },
+    "training": {
+      "optimizer": "Adam",
+      "learning_rate": 0.02,
+      "epochs_per_task": 40,
+      "ewc_lambda": 0.1,
+      "fisher_normalization": "mean parameter importance = 1",
+      "fisher_samples": 32
+    }
+  },
+  "aggregate_metrics": {
+    "naive": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.5,
+          "sample_std": 0.0
+        },
+        "phase_forgetting": {
+          "mean": 0.5,
+          "sample_std": 0.0
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.5275,
+          "sample_std": 0.167724
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.930833,
+          "sample_std": 0.007638
+        },
+        "average_final_accuracy": {
+          "mean": 0.652767,
+          "sample_std": 0.058083
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.5,
+          "sample_std": 0.0
+        },
+        "phase_forgetting": {
+          "mean": 0.5,
+          "sample_std": 0.0
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.501667,
+          "sample_std": 0.153731
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.925,
+          "sample_std": 0.031225
+        },
+        "average_final_accuracy": {
+          "mean": 0.6422,
+          "sample_std": 0.040953
+        }
+      }
+    },
+    "output_cfi": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.701667,
+          "sample_std": 0.263644
+        },
+        "phase_forgetting": {
+          "mean": 0.298333,
+          "sample_std": 0.263644
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.6275,
+          "sample_std": 0.14239
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.919167,
+          "sample_std": 0.027651
+        },
+        "average_final_accuracy": {
+          "mean": 0.749433,
+          "sample_std": 0.033406
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.706667,
+          "sample_std": 0.261024
+        },
+        "phase_forgetting": {
+          "mean": 0.293333,
+          "sample_std": 0.261024
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.6,
+          "sample_std": 0.14239
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.915,
+          "sample_std": 0.021794
+        },
+        "average_final_accuracy": {
+          "mean": 0.740567,
+          "sample_std": 0.037092
+        }
+      }
+    },
+    "ewc_dr": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.703333,
+          "sample_std": 0.262742
+        },
+        "phase_forgetting": {
+          "mean": 0.296667,
+          "sample_std": 0.262742
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.625,
+          "sample_std": 0.14239
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.9175,
+          "sample_std": 0.026339
+        },
+        "average_final_accuracy": {
+          "mean": 0.748633,
+          "sample_std": 0.034485
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.711667,
+          "sample_std": 0.258666
+        },
+        "phase_forgetting": {
+          "mean": 0.288333,
+          "sample_std": 0.258666
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.606667,
+          "sample_std": 0.139672
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.916667,
+          "sample_std": 0.024664
+        },
+        "average_final_accuracy": {
+          "mean": 0.745,
+          "sample_std": 0.036123
+        }
+      }
+    },
+    "readout_pauli": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.694167,
+          "sample_std": 0.268052
+        },
+        "phase_forgetting": {
+          "mean": 0.305833,
+          "sample_std": 0.268052
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.596667,
+          "sample_std": 0.111505
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.895,
+          "sample_std": 0.046301
+        },
+        "average_final_accuracy": {
+          "mean": 0.728633,
+          "sample_std": 0.05832
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.7,
+          "sample_std": 0.264575
+        },
+        "phase_forgetting": {
+          "mean": 0.3,
+          "sample_std": 0.264575
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.565,
+          "sample_std": 0.103923
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.908333,
+          "sample_std": 0.014434
+        },
+        "average_final_accuracy": {
+          "mean": 0.724433,
+          "sample_std": 0.051145
+        }
+      }
+    },
+    "one_local": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.82,
+          "sample_std": 0.277849
+        },
+        "phase_forgetting": {
+          "mean": 0.18,
+          "sample_std": 0.277849
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.51,
+          "sample_std": 0.066285
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.898333,
+          "sample_std": 0.028431
+        },
+        "average_final_accuracy": {
+          "mean": 0.742767,
+          "sample_std": 0.080022
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.816667,
+          "sample_std": 0.275379
+        },
+        "phase_forgetting": {
+          "mean": 0.183333,
+          "sample_std": 0.275379
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.525,
+          "sample_std": 0.078581
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.913333,
+          "sample_std": 0.014434
+        },
+        "average_final_accuracy": {
+          "mean": 0.751667,
+          "sample_std": 0.078152
+        }
+      }
+    },
+    "two_local": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.666667,
+          "sample_std": 0.288675
+        },
+        "phase_forgetting": {
+          "mean": 0.333333,
+          "sample_std": 0.288675
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.469167,
+          "sample_std": 0.026964
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.898333,
+          "sample_std": 0.03503
+        },
+        "average_final_accuracy": {
+          "mean": 0.678067,
+          "sample_std": 0.116497
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.666667,
+          "sample_std": 0.288675
+        },
+        "phase_forgetting": {
+          "mean": 0.333333,
+          "sample_std": 0.288675
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.473333,
+          "sample_std": 0.067144
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.908333,
+          "sample_std": 0.007638
+        },
+        "average_final_accuracy": {
+          "mean": 0.682767,
+          "sample_std": 0.118851
+        }
+      }
+    },
+    "hamiltonian": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.833333,
+          "sample_std": 0.288675
+        },
+        "phase_forgetting": {
+          "mean": 0.166667,
+          "sample_std": 0.288675
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.424167,
+          "sample_std": 0.039078
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.8875,
+          "sample_std": 0.041608
+        },
+        "average_final_accuracy": {
+          "mean": 0.715,
+          "sample_std": 0.103252
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.833333,
+          "sample_std": 0.288675
+        },
+        "phase_forgetting": {
+          "mean": 0.166667,
+          "sample_std": 0.288675
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.443333,
+          "sample_std": 0.010408
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.906667,
+          "sample_std": 0.007638
+        },
+        "average_final_accuracy": {
+          "mean": 0.727767,
+          "sample_std": 0.094834
+        }
+      }
+    },
+    "nonlocal": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.7075,
+          "sample_std": 0.255233
+        },
+        "phase_forgetting": {
+          "mean": 0.2925,
+          "sample_std": 0.255233
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.581667,
+          "sample_std": 0.136045
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.875,
+          "sample_std": 0.069597
+        },
+        "average_final_accuracy": {
+          "mean": 0.7214,
+          "sample_std": 0.033494
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.706667,
+          "sample_std": 0.257407
+        },
+        "phase_forgetting": {
+          "mean": 0.293333,
+          "sample_std": 0.257407
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.543333,
+          "sample_std": 0.139851
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.895,
+          "sample_std": 0.00866
+        },
+        "average_final_accuracy": {
+          "mean": 0.715033,
+          "sample_std": 0.045369
+        }
+      }
+    },
+    "task_relevant_all": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.783333,
+          "sample_std": 0.25658
+        },
+        "phase_forgetting": {
+          "mean": 0.216667,
+          "sample_std": 0.25658
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.590833,
+          "sample_std": 0.115497
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.9075,
+          "sample_std": 0.025372
+        },
+        "average_final_accuracy": {
+          "mean": 0.760567,
+          "sample_std": 0.064114
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.788333,
+          "sample_std": 0.258666
+        },
+        "phase_forgetting": {
+          "mean": 0.211667,
+          "sample_std": 0.258666
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.575,
+          "sample_std": 0.112583
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.913333,
+          "sample_std": 0.01893
+        },
+        "average_final_accuracy": {
+          "mean": 0.7589,
+          "sample_std": 0.059191
+        }
+      }
+    },
+    "qewc": {
+      "train": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.92,
+          "sample_std": 0.138564
+        },
+        "phase_forgetting": {
+          "mean": 0.08,
+          "sample_std": 0.138564
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.456667,
+          "sample_std": 0.016646
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.8875,
+          "sample_std": 0.04423
+        },
+        "average_final_accuracy": {
+          "mean": 0.7547,
+          "sample_std": 0.063165
+        }
+      },
+      "test": {
+        "phase_at_boundary": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "phase_final_retention": {
+          "mean": 0.926667,
+          "sample_std": 0.127017
+        },
+        "phase_forgetting": {
+          "mean": 0.073333,
+          "sample_std": 0.127017
+        },
+        "mnist_final_adaptation": {
+          "mean": 0.491667,
+          "sample_std": 0.033292
+        },
+        "fashion_final_adaptation": {
+          "mean": 0.901667,
+          "sample_std": 0.007638
+        },
+        "average_final_accuracy": {
+          "mean": 0.773333,
+          "sample_std": 0.043684
+        }
+      }
+    }
+  },
+  "measurement_resources": {
+    "readout": {
+      "n_observables": 2,
+      "n_product_basis_settings": 1,
+      "pauli_weights": [
+        1,
+        1
+      ],
+      "support_diameters": [
+        0,
+        0
+      ]
+    },
+    "one_local": {
+      "n_observables": 12,
+      "n_product_basis_settings": 3,
+      "pauli_weights": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ],
+      "support_diameters": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "two_local": {
+      "n_observables": 9,
+      "n_product_basis_settings": 3,
+      "pauli_weights": [
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2,
+        2
+      ],
+      "support_diameters": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "hamiltonian": {
+      "n_observables": 5,
+      "n_product_basis_settings": 3,
+      "pauli_weights": [
+        3,
+        3,
+        2,
+        2,
+        2
+      ],
+      "support_diameters": [
+        2,
+        2,
+        1,
+        1,
+        1
+      ]
+    },
+    "nonlocal": {
+      "n_observables": 1,
+      "n_product_basis_settings": 1,
+      "pauli_weights": [
+        4
+      ],
+      "support_diameters": [
+        3
+      ]
+    }
+  },
+  "task_relevant_allocation": {
+    "IIIX": {
+      "mean": 0.00023,
+      "sample_std": 0.000258
+    },
+    "IIIY": {
+      "mean": 1e-06,
+      "sample_std": 0.0
+    },
+    "IIIZ": {
+      "mean": 0.057361,
+      "sample_std": 0.099351
+    },
+    "IIXI": {
+      "mean": 0.003434,
+      "sample_std": 0.003209
+    },
+    "IIXX": {
+      "mean": 1e-06,
+      "sample_std": 0.0
+    },
+    "IIYI": {
+      "mean": 1e-06,
+      "sample_std": 0.0
+    },
+    "IIYY": {
+      "mean": 0.001089,
+      "sample_std": 0.000334
+    },
+    "IIZI": {
+      "mean": 0.015819,
+      "sample_std": 0.027397
+    },
+    "IIZZ": {
+      "mean": 0.115001,
+      "sample_std": 0.168905
+    },
+    "IXII": {
+      "mean": 1e-06,
+      "sample_std": 0.0
+    },
+    "IXXI": {
+      "mean": 1e-06,
+      "sample_std": 0.0
+    },
+    "IXZX": {
+      "mean": 0.123346,
+      "sample_std": 0.162184
+    },
+    "IYII": {
+      "mean": 1e-06,
+      "sample_std": 0.0
+    },
+    "IYYI": {
+      "mean": 0.001822,
+      "sample_std": 0.001647
+    },
+    "IZII": {
+      "mean": 0.39851,
+      "sample_std": 0.370467
+    },
+    "IZZI": {
+      "mean": 0.050913,
+      "sample_std": 0.088183
+    },
+    "XIII": {
+      "mean": 0.052908,
+      "sample_std": 0.060221
+    },
+    "XXII": {
+      "mean": 1e-06,
+      "sample_std": 0.0
+    },
+    "XYYX": {
+      "mean": 1e-06,
+      "sample_std": 0.0
+    },
+    "XZXI": {
+      "mean": 1e-06,
+      "sample_std": 0.0
+    },
+    "YIII": {
+      "mean": 1e-06,
+      "sample_std": 0.0
+    },
+    "YYII": {
+      "mean": 1e-06,
+      "sample_std": 0.0
+    },
+    "ZIII": {
+      "mean": 0.179554,
+      "sample_std": 0.310995
+    },
+    "ZZII": {
+      "mean": 1e-06,
+      "sample_std": 0.0
+    }
+  },
+  "cosine_to_qfi": {
+    "output_cfi": {
+      "mean": 0.396213,
+      "sample_std": 0.079392
+    },
+    "ewc_dr": {
+      "mean": 0.38648,
+      "sample_std": 0.086466
+    },
+    "readout_pauli": {
+      "mean": 0.531133,
+      "sample_std": 0.053091
+    },
+    "one_local": {
+      "mean": 0.868908,
+      "sample_std": 0.0137
+    },
+    "two_local": {
+      "mean": 0.633782,
+      "sample_std": 0.038249
+    },
+    "hamiltonian": {
+      "mean": 0.696515,
+      "sample_std": 0.020066
+    },
+    "nonlocal": {
+      "mean": 0.530187,
+      "sample_std": 0.016658
+    },
+    "task_relevant_all": {
+      "mean": 0.589585,
+      "sample_std": 0.05541
+    }
+  },
+  "paired_seed_metrics": {
+    "42": {
+      "naive": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.325,
+        "fashion_final_adaptation": 0.96,
+        "average_final_accuracy": 0.595
+      },
+      "output_cfi": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.725,
+        "fashion_final_adaptation": 0.94,
+        "average_final_accuracy": 0.7217
+      },
+      "ewc_dr": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.73,
+        "fashion_final_adaptation": 0.945,
+        "average_final_accuracy": 0.725
+      },
+      "readout_pauli": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.625,
+        "fashion_final_adaptation": 0.925,
+        "average_final_accuracy": 0.6833
+      },
+      "one_local": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.56,
+        "fashion_final_adaptation": 0.93,
+        "average_final_accuracy": 0.6633
+      },
+      "two_local": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.445,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.615
+      },
+      "hamiltonian": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.44,
+        "fashion_final_adaptation": 0.915,
+        "average_final_accuracy": 0.6183
+      },
+      "nonlocal": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.625,
+        "phase_forgetting": 0.375,
+        "mnist_final_adaptation": 0.65,
+        "fashion_final_adaptation": 0.89,
+        "average_final_accuracy": 0.7217
+      },
+      "task_relevant_all": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.64,
+        "fashion_final_adaptation": 0.935,
+        "average_final_accuracy": 0.6917
+      },
+      "qewc": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.78,
+        "phase_forgetting": 0.22,
+        "mnist_final_adaptation": 0.5,
+        "fashion_final_adaptation": 0.895,
+        "average_final_accuracy": 0.725
+      }
+    },
+    "43": {
+      "naive": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.605,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.6683
+      },
+      "output_cfi": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.445,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.7833
+      },
+      "ewc_dr": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.455,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.7867
+      },
+      "readout_pauli": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.445,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.7817
+      },
+      "one_local": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.435,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.78
+      },
+      "two_local": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.425,
+        "fashion_final_adaptation": 0.915,
+        "average_final_accuracy": 0.6133
+      },
+      "hamiltonian": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.435,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.78
+      },
+      "nonlocal": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.995,
+        "phase_forgetting": 0.005,
+        "mnist_final_adaptation": 0.385,
+        "fashion_final_adaptation": 0.89,
+        "average_final_accuracy": 0.7567
+      },
+      "task_relevant_all": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.445,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.7817
+      },
+      "qewc": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.455,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.785
+      }
+    },
+    "44": {
+      "naive": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.575,
+        "fashion_final_adaptation": 0.915,
+        "average_final_accuracy": 0.6633
+      },
+      "output_cfi": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.62,
+        "phase_forgetting": 0.38,
+        "mnist_final_adaptation": 0.63,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.7167
+      },
+      "ewc_dr": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.635,
+        "phase_forgetting": 0.365,
+        "mnist_final_adaptation": 0.635,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.7233
+      },
+      "readout_pauli": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.6,
+        "phase_forgetting": 0.4,
+        "mnist_final_adaptation": 0.625,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.7083
+      },
+      "one_local": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.95,
+        "phase_forgetting": 0.05,
+        "mnist_final_adaptation": 0.58,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.8117
+      },
+      "two_local": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.55,
+        "fashion_final_adaptation": 0.91,
+        "average_final_accuracy": 0.82
+      },
+      "hamiltonian": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.455,
+        "fashion_final_adaptation": 0.9,
+        "average_final_accuracy": 0.785
+      },
+      "nonlocal": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.5,
+        "phase_forgetting": 0.5,
+        "mnist_final_adaptation": 0.595,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.6667
+      },
+      "task_relevant_all": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 0.865,
+        "phase_forgetting": 0.135,
+        "mnist_final_adaptation": 0.64,
+        "fashion_final_adaptation": 0.905,
+        "average_final_accuracy": 0.8033
+      },
+      "qewc": {
+        "phase_at_boundary": 1.0,
+        "phase_final_retention": 1.0,
+        "phase_forgetting": 0.0,
+        "mnist_final_adaptation": 0.52,
+        "fashion_final_adaptation": 0.91,
+        "average_final_accuracy": 0.81
+      }
+    }
+  },
+  "claim_boundaries": {
+    "finite_shot_result": false,
+    "hardware_result": false,
+    "thermodynamic_phase_transition": false,
+    "input_locality_equivalence": false,
+    "statistical_significance_claimed": false,
+    "quantum_advantage": false,
+    "interpretation": "three-seed output-Pauli-locality diagnostic on a four-qubit phase-memory task"
+  }
+}

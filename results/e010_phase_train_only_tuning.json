@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "experiment": "e010_phase_train_only_capacity_calibration",
+  "created_at_utc": "2026-08-13T03:05:01.379538+00:00",
+  "source_code_sha256": "0c3651ecdef0b2a416f322e0ad2488eed52083c860b114f3205d606666afa5ab",
+  "seed": 42,
+  "test_evaluated": false,
+  "candidate_layers": [
+    2,
+    3,
+    5
+  ],
+  "selection_rule": "smallest layer count reaching phase training accuracy >= 0.99 after 40 epochs",
+  "scans": [
+    {
+      "layers": 2,
+      "n_parameters": 16,
+      "phase_train_accuracy": 0.98
+    },
+    {
+      "layers": 3,
+      "n_parameters": 24,
+      "phase_train_accuracy": 1.0
+    },
+    {
+      "layers": 5,
+      "n_parameters": 40,
+      "phase_train_accuracy": 1.0
+    }
+  ],
+  "selected_layers": 3,
+  "shared_lambda": {
+    "value": 0.1,
+    "selection": "inherited unchanged from the normalized-Fisher E008 train-only calibration; not tuned on E010 phase results"
+  }
+}

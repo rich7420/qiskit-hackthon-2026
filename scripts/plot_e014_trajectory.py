@@ -20,7 +20,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 SEEDS = (42, 43, 44)
 TASK_KEYS = ("task1", "task2", "task3")
-TASK_TITLES = ("MNIST 0/1", "Fashion-MNIST 0/1", "cluster-Ising")
+TASK_TITLES = ("MNIST 0/1", "Fashion-MNIST 0/1", "SPT/ATF phases")
 TEMPLATE = "results/e014_trajectory_seed{seed}.json"
 OUTPUT = ROOT / "figures/e014_trajectory.png"
 PROVENANCE = ROOT / "results/e014_trajectory_figure_provenance.json"
@@ -93,10 +93,9 @@ def main() -> None:
             ax.legend(loc="lower left", fontsize=8.5, framealpha=0.9)
 
     axes[-1].set_xlabel(f"Epoch (gradient step; {epochs_per_task} per task)")
-    fig.suptitle("OI-QCL (measurement-side, m=2 readout) vs θ-protection — "
-                 "MNIST → Fashion → cluster-Ising\n"
-                 f"seeds {list(SEEDS)} (test accuracy, Task-IL; continual-learning retention)",
-                 fontsize=11.5)
+    fig.suptitle("OI-QCL (measurement-side) vs θ-protection — MNIST → Fashion → SPT/ATF\n"
+                 f"seeds {list(SEEDS)} (test accuracy; OI-QCL uses task id / Task-IL — "
+                 "fair no-oracle comparison: figures/e014_fair_compare.png)", fontsize=11.5)
     fig.tight_layout(rect=(0, 0, 1, 0.97))
 
     (ROOT / "figures").mkdir(exist_ok=True)

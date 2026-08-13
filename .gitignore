@@ -127,6 +127,9 @@ figures/**/*.pdf
 !results/e014_depth_ablation.json
 !results/e014_depth_ablation_figure_provenance.json
 !figures/e014_depth_ablation.png
+!results/e014_readout_ablation.json
+!results/e014_readout_ablation_figure_provenance.json
+!figures/e014_readout_ablation.png
 
 # LaTeX drawer diagnostic generated when a local TeX installation is incomplete
 latex_error.log

@@ -176,6 +176,26 @@ C·2ⁿ+C = 34 params (17 for a binary logistic collapse), independent of L — 
 circuit, the head (34/task) outsizes the backbone θ (8 at L=1). Shrinking that needs fewer readout
 qubits (marginal probs 2^m) or sparse/structured λ.
 
+## Readout-width ablation — how small can the per-task observable be?
+
+`experiments/e014_readout_ablation.py` (`figures/e014_readout_ablation.png`): shrink the readout
+to m qubits (a diagonal observable on 2^m outcomes = C·2^m+C params) with AmplitudeEmbedding + L=12
+and a frozen backbone (Variant A). 3-seed mean:
+
+| readout | dim | head params/task | ACC | vs QEWC 0.82 |
+|--:|--:|--:|--:|:--|
+| 1 qubit | 2 | 6 | 0.903 | +0.08 |
+| 2 qubits | 4 | 10 | 0.943 | +0.12 |
+| 3 qubits | 8 | 18 | 0.955 | +0.14 |
+| 4 qubits | 16 | 34 | 0.964 | +0.14 |
+
+**Even a 6-param observable on 1 qubit (essentially a per-task ⟨Z₀⟩ threshold) gets 0.90**, still
+beating θ-protection. A 6-param head cannot be "a per-task model" — so the shared frozen circuit is
+demonstrably carrying the task-separable information (it routed it onto few qubits), which refutes the
+"three independent linear models" reading and makes the head a genuine lightweight observable. Sweet
+spot: **m=2 (10 params/task, 0.943)**. This also matters on hardware: a small local readout needs only
+O(2^m) computational-basis shots, whereas the full 2ⁿ-probs head needs exponentially many.
+
 ## Matched classical control — no quantum advantage on this benchmark (important, honest)
 
 `experiments/e014_classical_baseline.py`: the same per-task linear head capacity, but on the **raw

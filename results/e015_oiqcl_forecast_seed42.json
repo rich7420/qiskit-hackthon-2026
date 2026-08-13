@@ -1,0 +1,164 @@
+{
+  "experiment": "e015_oiqcl_forecast_compare",
+  "config": {
+    "setting": "Task-Incremental Learning (task id known at test), one-step forecasting",
+    "tasks": [
+      "narma_5",
+      "damped_shm",
+      "bessel_j2"
+    ],
+    "seq_len": 8,
+    "n_qubits": 4,
+    "layers": 2,
+    "optimizer": "Adam",
+    "learning_rate": 0.05,
+    "epochs_per_task": 40,
+    "alpha_l2_anchor": 5.0,
+    "lambda_qewc": 5.0,
+    "seed": 42,
+    "isolated_head": "ridge linear head over 2^n probs (diagonal observable per task)"
+  },
+  "methods": {
+    "sequential": {
+      "R": [
+        [
+          0.1182,
+          0.8065,
+          0.9763
+        ],
+        [
+          0.0304,
+          0.1417,
+          0.6652
+        ],
+        [
+          0.2648,
+          0.1067,
+          0.0327
+        ]
+      ],
+      "final_nmse_row": [
+        0.2648,
+        0.1067,
+        0.0327
+      ],
+      "retention_earlier_nmse": 0.1857,
+      "plasticity_final_nmse": 0.0327,
+      "avg_earlier_forgetting": 0.0558,
+      "avg_final_nmse": 0.1347
+    },
+    "qewc": {
+      "R": [
+        [
+          0.1182,
+          0.8065,
+          0.9763
+        ],
+        [
+          0.078,
+          0.4415,
+          0.6354
+        ],
+        [
+          0.1026,
+          0.0602,
+          0.1869
+        ]
+      ],
+      "final_nmse_row": [
+        0.1026,
+        0.0602,
+        0.1869
+      ],
+      "retention_earlier_nmse": 0.0814,
+      "plasticity_final_nmse": 0.1869,
+      "avg_earlier_forgetting": -0.1985,
+      "avg_final_nmse": 0.1166
+    },
+    "frozen_head": {
+      "R": [
+        [
+          0.0533,
+          null,
+          null
+        ],
+        [
+          0.0533,
+          0.2436,
+          null
+        ],
+        [
+          0.0533,
+          0.2436,
+          0.0383
+        ]
+      ],
+      "final_nmse_row": [
+        0.0533,
+        0.2436,
+        0.0383
+      ],
+      "retention_earlier_nmse": 0.1485,
+      "plasticity_final_nmse": 0.0383,
+      "avg_earlier_forgetting": 0.0,
+      "avg_final_nmse": 0.1117
+    },
+    "free_head": {
+      "R": [
+        [
+          0.0533,
+          null,
+          null
+        ],
+        [
+          0.5716,
+          0.044,
+          null
+        ],
+        [
+          0.6529,
+          0.2988,
+          0.0239
+        ]
+      ],
+      "final_nmse_row": [
+        0.6529,
+        0.2988,
+        0.0239
+      ],
+      "retention_earlier_nmse": 0.4759,
+      "plasticity_final_nmse": 0.0239,
+      "avg_earlier_forgetting": 0.4272,
+      "avg_final_nmse": 0.3252
+    },
+    "anchor_head": {
+      "R": [
+        [
+          0.0533,
+          null,
+          null
+        ],
+        [
+          0.0492,
+          0.235,
+          null
+        ],
+        [
+          0.053,
+          0.2036,
+          0.0324
+        ]
+      ],
+      "final_nmse_row": [
+        0.053,
+        0.2036,
+        0.0324
+      ],
+      "retention_earlier_nmse": 0.1283,
+      "plasticity_final_nmse": 0.0324,
+      "avg_earlier_forgetting": -0.0158,
+      "avg_final_nmse": 0.0963
+    }
+  },
+  "elapsed_sec": 177.3
+}

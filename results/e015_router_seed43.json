@@ -1,0 +1,234 @@
+{
+  "experiment": "e015_router",
+  "config": {
+    "setting": "task-agnostic (task id hidden at test), one-step forecasting, NMSE",
+    "tasks": [
+      "narma_5",
+      "damped_shm",
+      "bessel_j2"
+    ],
+    "seq_len": 8,
+    "n_qubits": 4,
+    "layers": 2,
+    "optimizer": "Adam",
+    "learning_rate": 0.05,
+    "epochs_per_task": 40,
+    "alpha_l2_anchor": 5.0,
+    "seed": 43,
+    "centroid_router": "nearest per-task mean-probs vector (unsupervised, no task labels)",
+    "learned_router": "LogisticRegression over p_theta(x), pooled-train task labels"
+  },
+  "methods": {
+    "frozen_head": {
+      "known_task_nmse": {
+        "narma_5": 0.0672,
+        "damped_shm": 0.1051,
+        "bessel_j2": 0.03
+      },
+      "known_task_avg_nmse": 0.0674,
+      "centroid": {
+        "task_inference_accuracy": 0.4599,
+        "task_agnostic_nmse": 0.1725,
+        "per_task_nmse": {
+          "narma_5": 0.0779,
+          "damped_shm": 0.193,
+          "bessel_j2": 0.2465
+        },
+        "per_task_task_inference": {
+          "narma_5": 0.557,
+          "damped_shm": 0.443,
+          "bessel_j2": 0.3797
+        },
+        "task_confusion": [
+          [
+            44,
+            23,
+            12
+          ],
+          [
+            8,
+            35,
+            36
+          ],
+          [
+            28,
+            21,
+            30
+          ]
+        ]
+      },
+      "router": {
+        "task_inference_accuracy": 0.4473,
+        "task_agnostic_nmse": 0.1188,
+        "per_task_nmse": {
+          "narma_5": 0.1054,
+          "damped_shm": 0.165,
+          "bessel_j2": 0.0861
+        },
+        "per_task_task_inference": {
+          "narma_5": 0.4557,
+          "damped_shm": 0.2532,
+          "bessel_j2": 0.6329
+        },
+        "task_confusion": [
+          [
+            36,
+            20,
+            23
+          ],
+          [
+            14,
+            20,
+            45
+          ],
+          [
+            29,
+            0,
+            50
+          ]
+        ]
+      }
+    },
+    "free_head": {
+      "known_task_nmse": {
+        "narma_5": 1.2546,
+        "damped_shm": 2.7353,
+        "bessel_j2": 0.0091
+      },
+      "known_task_avg_nmse": 1.333,
+      "centroid": {
+        "task_inference_accuracy": 0.5654,
+        "task_agnostic_nmse": 0.8066,
+        "per_task_nmse": {
+          "narma_5": 0.8056,
+          "damped_shm": 1.6051,
+          "bessel_j2": 0.0091
+        },
+        "per_task_task_inference": {
+          "narma_5": 0.1899,
+          "damped_shm": 0.5063,
+          "bessel_j2": 1.0
+        },
+        "task_confusion": [
+          [
+            15,
+            29,
+            35
+          ],
+          [
+            0,
+            40,
+            39
+          ],
+          [
+            0,
+            0,
+            79
+          ]
+        ]
+      },
+      "router": {
+        "task_inference_accuracy": 0.4979,
+        "task_agnostic_nmse": 0.6811,
+        "per_task_nmse": {
+          "narma_5": 0.6928,
+          "damped_shm": 1.3415,
+          "bessel_j2": 0.0091
+        },
+        "per_task_task_inference": {
+          "narma_5": 0.1519,
+          "damped_shm": 0.3418,
+          "bessel_j2": 1.0
+        },
+        "task_confusion": [
+          [
+            12,
+            23,
+            44
+          ],
+          [
+            0,
+            27,
+            52
+          ],
+          [
+            0,
+            0,
+            79
+          ]
+        ]
+      }
+    },
+    "anchor_head": {
+      "known_task_nmse": {
+        "narma_5": 0.0686,
+        "damped_shm": 0.0848,
+        "bessel_j2": 0.0461
+      },
+      "known_task_avg_nmse": 0.0665,
+      "centroid": {
+        "task_inference_accuracy": 0.4557,
+        "task_agnostic_nmse": 0.1194,
+        "per_task_nmse": {
+          "narma_5": 0.0665,
+          "damped_shm": 0.0944,
+          "bessel_j2": 0.1973
+        },
+        "per_task_task_inference": {
+          "narma_5": 0.5696,
+          "damped_shm": 0.4557,
+          "bessel_j2": 0.3418
+        },
+        "task_confusion": [
+          [
+            45,
+            23,
+            11
+          ],
+          [
+            12,
+            36,
+            31
+          ],
+          [
+            29,
+            23,
+            27
+          ]
+        ]
+      },
+      "router": {
+        "task_inference_accuracy": 0.4473,
+        "task_agnostic_nmse": 0.0926,
+        "per_task_nmse": {
+          "narma_5": 0.0954,
+          "damped_shm": 0.0983,
+          "bessel_j2": 0.0841
+        },
+        "per_task_task_inference": {
+          "narma_5": 0.4557,
+          "damped_shm": 0.2532,
+          "bessel_j2": 0.6329
+        },
+        "task_confusion": [
+          [
+            36,
+            20,
+            23
+          ],
+          [
+            15,
+            20,
+            44
+          ],
+          [
+            29,
+            0,
+            50
+          ]
+        ]
+      }
+    }
+  },
+  "elapsed_sec": 33.4
+}

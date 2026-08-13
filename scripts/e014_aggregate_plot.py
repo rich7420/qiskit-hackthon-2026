@@ -18,9 +18,10 @@ RESULTS = ROOT / "results"
 FIGURES = ROOT / "figures"
 
 SEEDS = (42, 43, 44)
-METHOD_ORDER = ("sequential", "qewc", "frozen_head", "free_head", "anchor_head")
+METHOD_ORDER = ("sequential", "ewc", "qewc", "frozen_head", "free_head", "anchor_head")
 LABELS = {
     "sequential": "Sequential\n(naive)",
+    "ewc": "EWC",
     "qewc": "QEWC",
     "frozen_head": "Frozen θ\n+ heads (A)",
     "free_head": "Free θ\n+ heads (B)",
@@ -71,16 +72,16 @@ def main() -> None:
     x = np.arange(len(METHOD_ORDER))
     accs = [summ[m]["ACC"][0] for m in METHOD_ORDER]
     errs = [summ[m]["ACC"][1] for m in METHOD_ORDER]
-    colors = ["#b0b0b0", "#b0b0b0", "#2c7fb8", "#7fcdbb", "#e6550d"]
+    colors = ["#b0b0b0", "#a0a0a0", "#808080", "#2c7fb8", "#7fcdbb", "#e6550d"]
     ax.bar(x, accs, yerr=errs, capsize=4, color=colors)
     ax.set_xticks(x)
     ax.set_xticklabels([LABELS[m] for m in METHOD_ORDER])
     ax.set_ylabel("Average accuracy (ACC), Task-IL")
     ax.set_ylim(0.4, 1.0)
-    ax.axvspan(-0.5, 1.5, color="0.95", zorder=0)
-    ax.text(0.5, 0.98, "shared readout", ha="center", va="top", transform=ax.get_xaxis_transform(),
+    ax.axvspan(-0.5, 2.5, color="0.95", zorder=0)
+    ax.text(1.0, 0.98, "shared readout", ha="center", va="top", transform=ax.get_xaxis_transform(),
             fontsize=9, color="0.4")
-    ax.text(3.0, 0.98, "measurement-side (ours)", ha="center", va="top",
+    ax.text(4.0, 0.98, "measurement-side (ours)", ha="center", va="top",
             transform=ax.get_xaxis_transform(), fontsize=9, color="0.4")
     for xi, (a, e) in enumerate(zip(accs, errs)):
         ax.text(xi, a + e + 0.01, f"{a:.2f}", ha="center", va="bottom", fontsize=9)

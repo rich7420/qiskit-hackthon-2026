@@ -39,7 +39,7 @@ sys.path.insert(0, str(ROOT))
 from src.continual_data import load_two_tasks  # noqa: E402
 from src.e005_consolidation import EWC, quantum_fisher_diag  # noqa: E402
 from src.e005_softmax import accuracy as softmax_accuracy  # noqa: E402
-from src.e005_softmax import bce_loss, make_softmax_qnode  # noqa: E402
+from src.e005_softmax import bce_loss, classical_fisher_diag, make_softmax_qnode  # noqa: E402
 from src.e014_oiqcl import (  # noqa: E402
     fit_linear_head,
     make_probs_qnode,
@@ -80,11 +80,14 @@ def _acc_matrix_stats(R: list[list[float | None]]) -> dict[str, Any]:
 
 
 def _run_shared_readout(method: str, tasks, *, layers, lr, epochs, lam_qewc,
-                        qfi_samples, seed, verbose, n_qubits=N_QUBITS) -> dict[str, Any]:
-    """sequential / qewc: one shared softmax readout, theta continued across tasks."""
+                        qfi_samples, seed, verbose, lam_ewc=30.0, n_qubits=N_QUBITS) -> dict[str, Any]:
+    """sequential / ewc / qewc: one shared softmax readout, theta continued across tasks.
+
+    ewc consolidates with the classical (empirical) Fisher; qewc with the diagonal QFI.
+    """
     clf_qnode, weight_shape = make_softmax_qnode(n_qubits=n_qubits, n_layers=layers)
     qfi_qnode, _ = make_softmax_qnode(n_qubits=n_qubits, n_layers=layers)  # state-equivalent
-    reg = EWC(lam_qewc if method == "qewc" else 0.0)
+    reg = EWC({"sequential": 0.0, "ewc": lam_ewc, "qewc": lam_qewc}[method])
     weights = pnp.array(0.01 * np.random.default_rng(seed).standard_normal(weight_shape),
                         requires_grad=True)
     optimizer = qml.AdamOptimizer(lr)
@@ -101,9 +104,12 @@ def _run_shared_readout(method: str, tasks, *, layers, lr, epochs, lam_qewc,
             weights = optimizer.step(cost, weights)
         for j, tj in enumerate(tasks):
             R[phase][j] = softmax_accuracy(clf_qnode, weights, tj.X_test, tj.y_test)
-        if method == "qewc" and phase < len(tasks) - 1:
-            fisher = quantum_fisher_diag(qfi_qnode, weights, task.X_train,
-                                         n_samples=qfi_samples, seed=seed)
+        if method in ("ewc", "qewc") and phase < len(tasks) - 1:
+            if method == "ewc":
+                fisher = classical_fisher_diag(clf_qnode, weights, task.X_train, task.y_train)
+            else:
+                fisher = quantum_fisher_diag(qfi_qnode, weights, task.X_train,
+                                             n_samples=qfi_samples, seed=seed)
             reg.consolidate(np.asarray(weights).flatten(), fisher)
         if verbose:
             print(f"    [{method}] after T{phase + 1}: "
@@ -154,7 +160,7 @@ def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, v
             **_acc_matrix_stats(R)}
 
 
-def run_experiment(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8,
+def run_experiment(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8, lam_ewc=30.0,
                    qfi_samples=64, n_train=800, n_test=200, seed=42, verbose=True) -> dict[str, Any]:
     task1, task2 = load_two_tasks(n_features=2**N_QUBITS, n_train=n_train, n_test=n_test, seed=seed)
     task3 = load_spt_atf(n_train=n_train, n_test=n_test, n_qubits=N_QUBITS, seed=seed)
@@ -164,9 +170,9 @@ def run_experiment(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8,
 
     started = time.perf_counter()
     methods: dict[str, Any] = {}
-    for m in ("sequential", "qewc"):
+    for m in ("sequential", "ewc", "qewc"):
         methods[m] = _run_shared_readout(m, tasks, layers=layers, lr=lr, epochs=epochs,
-                                         lam_qewc=lam_qewc, qfi_samples=qfi_samples,
+                                         lam_qewc=lam_qewc, lam_ewc=lam_ewc, qfi_samples=qfi_samples,
                                          seed=seed, verbose=verbose)
     for m in ("frozen_head", "free_head", "anchor_head"):
         methods[m] = _run_isolated_head(m, tasks, layers=layers, lr=lr, epochs=epochs,
@@ -185,11 +191,13 @@ def run_experiment(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8,
             "tasks": [t.name for t in tasks], "task_keys": list(TASK_KEYS),
             "n_qubits": N_QUBITS, "layers": layers,
             "optimizer": "Adam", "learning_rate": lr, "epochs_per_task": epochs,
-            "alpha_l2_anchor": alpha, "lambda_qewc": lam_qewc, "qfi_samples": qfi_samples,
+            "alpha_l2_anchor": alpha, "lambda_qewc": lam_qewc, "lambda_ewc": lam_ewc,
+            "qfi_samples": qfi_samples,
             "isolated_head": "logistic-style linear head over 2^n probs (diagonal observable per class)",
             "n_train_per_task": n_train, "n_test_per_task": n_test, "seed": seed,
             "method_notes": {
                 "sequential": "shared softmax readout, no isolation (CF baseline)",
+                "ewc": "shared readout + classical-Fisher EWC anchor (e005)",
                 "qewc": "shared readout + QFI-weighted EWC anchor (e005)",
                 "frozen_head": "Variant A: theta frozen after T1 + isolated heads",
                 "free_head": "Variant B: theta free + isolated heads (rep-drift probe)",
@@ -218,6 +226,7 @@ def main() -> None:
     ap.add_argument("--epochs", type=int, default=20)
     ap.add_argument("--alpha", type=float, default=5.0)
     ap.add_argument("--lam-qewc", type=float, default=0.8)
+    ap.add_argument("--lam-ewc", type=float, default=30.0)
     ap.add_argument("--qfi-samples", type=int, default=64)
     ap.add_argument("--n-train", type=int, default=800)
     ap.add_argument("--n-test", type=int, default=200)
@@ -227,7 +236,7 @@ def main() -> None:
 
     result = run_experiment(
         layers=args.layers, lr=args.lr, epochs=args.epochs, alpha=args.alpha,
-        lam_qewc=args.lam_qewc, qfi_samples=args.qfi_samples,
+        lam_qewc=args.lam_qewc, lam_ewc=args.lam_ewc, qfi_samples=args.qfi_samples,
         n_train=args.n_train, n_test=args.n_test, seed=args.seed,
     )
     path = write_result(result, args.output)

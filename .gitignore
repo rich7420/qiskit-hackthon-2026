@@ -119,6 +119,8 @@ figures/**/*.pdf
 !figures/e014_task_inference.png
 !figures/e014_circuit.png
 !figures/e014_circuit_pennylane.png
+!figures/e014_fair_compare.png
+!results/e014_fair_compare_provenance.json
 
 # LaTeX drawer diagnostic generated when a local TeX installation is incomplete
 latex_error.log

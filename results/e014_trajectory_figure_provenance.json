@@ -1,6 +1,6 @@
 {
   "figure": "e014_trajectory.png",
-  "created_at_utc": "2026-08-13T08:42:54.036524+00:00",
+  "created_at_utc": "2026-08-13T10:43:49.984143+00:00",
   "seeds": [
     42,
     43,
@@ -8,14 +8,15 @@
   ],
   "methods": [
     "sequential",
+    "ewc",
     "qewc",
     "frozen_head",
     "free_head",
     "anchor_head"
   ],
   "inputs": {
-    "e014_trajectory_seed42.json": "a178dd33e865363fe7be1f8c5a49c5b4b47753f641a7073eb4965d832eb63a1b",
-    "e014_trajectory_seed43.json": "81a918677bf65923015d7e787373f1b96db110502b270452280f0566ef9b3222",
-    "e014_trajectory_seed44.json": "195a324cbddf4aa6c68a86f885214ceb9cfc71b102245a1428b03a4f4bbc39fb"
+    "e014_trajectory_seed42.json": "880420a480114cd7abb67835477fe317451c9628f9f0db2af1f281133b79e7fa",
+    "e014_trajectory_seed43.json": "b8305215af75a75bddac36f474b2896a80cf8a64b72f533da6f17091c9d7398b",
+    "e014_trajectory_seed44.json": "423fdbb450b828b90cf686a52663573961bcfe1df859dc9889055ce27da20a67"
   }
 }

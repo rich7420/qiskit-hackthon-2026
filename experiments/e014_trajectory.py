@@ -37,7 +37,7 @@ sys.path.insert(0, str(ROOT))
 from src.continual_data import load_two_tasks  # noqa: E402
 from src.e005_consolidation import EWC, quantum_fisher_diag  # noqa: E402
 from src.e005_softmax import accuracy as softmax_accuracy  # noqa: E402
-from src.e005_softmax import bce_loss, make_softmax_qnode  # noqa: E402
+from src.e005_softmax import bce_loss, classical_fisher_diag, make_softmax_qnode  # noqa: E402
 from src.e014_oiqcl import (  # noqa: E402
     _head_logits,
     _probs_batched,
@@ -51,7 +51,7 @@ from src.phase_data import N_QUBITS, load_spt_atf  # noqa: E402
 RESULTS = ROOT / "results"
 SCHEMA_VERSION = 1
 TASK_KEYS = ("task1", "task2", "task3")
-SHARED = ("sequential", "qewc")
+SHARED = ("sequential", "ewc", "qewc")
 ISOLATED = ("frozen_head", "free_head", "anchor_head")
 METHODS = SHARED + ISOLATED
 
@@ -64,10 +64,10 @@ def _source_digest() -> str:
     return digest.hexdigest()
 
 
-def _shared_history(method, tasks, *, layers, lr, epochs, lam_qewc, qfi_samples, seed):
+def _shared_history(method, tasks, *, layers, lr, epochs, lam_qewc, qfi_samples, seed, lam_ewc=30.0):
     clf_qnode, weight_shape = make_softmax_qnode(n_qubits=N_QUBITS, n_layers=layers)
     qfi_qnode, _ = make_softmax_qnode(n_qubits=N_QUBITS, n_layers=layers)
-    reg = EWC(lam_qewc if method == "qewc" else 0.0)
+    reg = EWC({"sequential": 0.0, "ewc": lam_ewc, "qewc": lam_qewc}[method])
     weights = pnp.array(0.01 * np.random.default_rng(seed).standard_normal(weight_shape),
                         requires_grad=True)
     optimizer = qml.AdamOptimizer(lr)
@@ -89,9 +89,12 @@ def _shared_history(method, tasks, *, layers, lr, epochs, lam_qewc, qfi_samples,
         for _ in range(epochs):
             weights = optimizer.step(cost, weights)
             snap(history[-1]["epoch"] + 1, phase + 1)
-        if method == "qewc" and phase < len(tasks) - 1:
-            fisher = quantum_fisher_diag(qfi_qnode, weights, task.X_train,
-                                         n_samples=qfi_samples, seed=seed)
+        if method in ("ewc", "qewc") and phase < len(tasks) - 1:
+            if method == "ewc":
+                fisher = classical_fisher_diag(clf_qnode, weights, task.X_train, task.y_train)
+            else:
+                fisher = quantum_fisher_diag(qfi_qnode, weights, task.X_train,
+                                             n_samples=qfi_samples, seed=seed)
             reg.consolidate(np.asarray(weights).flatten(), fisher)
     return history
 

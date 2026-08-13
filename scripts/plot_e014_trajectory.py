@@ -28,6 +28,7 @@ PROVENANCE = ROOT / "results/e014_trajectory_figure_provenance.json"
 # method -> (label, color, linestyle)
 METHODS = {
     "sequential": ("Sequential (naive)", "#777777", "--"),
+    "ewc": ("EWC (classical Fisher)", "#F28E2B", (0, (4, 1, 1, 1))),
     "qewc": ("QEWC (QFI consolidation, E005)", "#4C78A8", ":"),
     "frozen_head": ("OI-QCL frozen θ + heads (A)", "#59A14F", "-"),
     "free_head": ("OI-QCL free θ + heads (B)", "#B07AA1", "-."),
@@ -93,7 +94,8 @@ def main() -> None:
 
     axes[-1].set_xlabel(f"Epoch (gradient step; {epochs_per_task} per task)")
     fig.suptitle("OI-QCL (measurement-side) vs θ-protection — MNIST → Fashion → SPT/ATF\n"
-                 f"seeds {list(SEEDS)} (test accuracy, Task-IL)", fontsize=13)
+                 f"seeds {list(SEEDS)} (test accuracy; OI-QCL uses task id / Task-IL — "
+                 "fair no-oracle comparison: figures/e014_fair_compare.png)", fontsize=11.5)
     fig.tight_layout(rect=(0, 0, 1, 0.97))
 
     (ROOT / "figures").mkdir(exist_ok=True)

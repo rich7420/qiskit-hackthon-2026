@@ -59,10 +59,13 @@ The ACC ordering holds in **every** seed.
 | Method | Shared θ | Head | ACC | BWT |
 |---|---|---|---:|---:|
 | Sequential (naive) | update | shared | 0.690 ± 0.046 | −0.383 ± 0.083 |
+| EWC (classical Fisher) | soft-anchor | shared | 0.818 ± 0.030 | −0.190 ± 0.048 |
 | QEWC | soft-anchor | shared | 0.819 ± 0.063 | −0.088 ± 0.096 |
 | **Frozen θ + heads (A)** | frozen | isolated | **0.964 ± 0.010** | +0.000 ± 0.000 |
 | Free θ + heads (B) | update | isolated | 0.801 ± 0.018 | −0.258 ± 0.038 |
 | **Anchor θ + heads (C)** | soft-L2 | isolated | **0.962 ± 0.007** | −0.004 ± 0.006 |
+
+EWC and QEWC land together (~0.82) — both are θ-protection, both trade away plasticity; OI-QCL A/C beat them by ~0.14 ACC.
 
 Both measurement-side methods (A, C) beat QEWC by **~0.14 ACC** with near-zero backward
 transfer. QEWC's shortfall is *plasticity*, not retention: it holds T1 (~0.87) but T2 stalls
@@ -145,6 +148,12 @@ decodable from the quantum measurement distribution** — the Task-IL assumption
 not a hard requirement, and a lightweight classical router removes most of it. (Variant B caps
 at 0.79 because its heads are already degraded by representation drift, not by routing — its
 router TIA is the best at 0.95.)
+
+**Fair no-oracle comparison** (`figures/e014_fair_compare.png`): with *no* method given the task
+id, baselines use their single shared head (never needed one) and OI-QCL uses the learned router.
+Average test accuracy: Sequential 0.69, EWC 0.82, QEWC 0.82, **OI-QCL+router (A/C) 0.91** (Task-IL
+ceiling 0.96). OI-QCL still wins by ~0.09 under the harder, oracle-free setting — the ~0.14 ACC
+advantage over θ-protection is not an artifact of the task oracle.
 
 ## Claim boundaries
 

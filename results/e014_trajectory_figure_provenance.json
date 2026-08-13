@@ -1,6 +1,6 @@
 {
   "figure": "e014_trajectory.png",
-  "created_at_utc": "2026-08-13T10:43:49.984143+00:00",
+  "created_at_utc": "2026-08-13T12:57:18.185892+00:00",
   "seeds": [
     42,
     43,
@@ -15,8 +15,8 @@
     "anchor_head"
   ],
   "inputs": {
-    "e014_trajectory_seed42.json": "880420a480114cd7abb67835477fe317451c9628f9f0db2af1f281133b79e7fa",
-    "e014_trajectory_seed43.json": "b8305215af75a75bddac36f474b2896a80cf8a64b72f533da6f17091c9d7398b",
-    "e014_trajectory_seed44.json": "423fdbb450b828b90cf686a52663573961bcfe1df859dc9889055ce27da20a67"
+    "e014_trajectory_seed42.json": "7f68e236167ba80c6d4ff5830bcbe3e2fc3448e4eb1acca53672e31a7a3f6b5e",
+    "e014_trajectory_seed43.json": "703c90328ba371e6cd7d29860083c5e70feac8bb12d3e98f23ca57c796c4efd2",
+    "e014_trajectory_seed44.json": "48a076114ba012540d781729682848b42c6234c8be6cd9eae447d0e7aa6492e1"
   }
 }

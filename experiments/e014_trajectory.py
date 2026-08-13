@@ -46,7 +46,7 @@ from src.e014_oiqcl import (  # noqa: E402
     init_head_weights,
     make_probs_qnode,
 )
-from src.phase_data import N_QUBITS, load_spt_atf  # noqa: E402
+from src.phase_data import N_QUBITS, load_cluster_full, load_spt_atf  # noqa: E402
 
 RESULTS = ROOT / "results"
 SCHEMA_VERSION = 1
@@ -99,7 +99,7 @@ def _shared_history(method, tasks, *, layers, lr, epochs, lam_qewc, qfi_samples,
     return history
 
 
-def _isolated_history(method, tasks, *, layers, lr, epochs, alpha, seed):
+def _isolated_history(method, tasks, *, layers, lr, epochs, alpha, seed, readout_qubits=None):
     """Every curve is a genuine gradient learning curve on a common accuracy axis.
 
     Each task's readout is a learnable diagonal-observable head (W, b) trained by Adam --
@@ -109,7 +109,8 @@ def _isolated_history(method, tasks, *, layers, lr, epochs, alpha, seed):
     add a fresh W_t while frozen (A) / free (B) / soft-anchored (C) drive theta; every old
     head is frozen at its boundary and re-evaluated on the current backbone (retention).
     """
-    probs_qnode, _ = make_probs_qnode(n_qubits=N_QUBITS, n_layers=layers)
+    readout_wires = None if readout_qubits is None else range(readout_qubits)
+    probs_qnode, _ = make_probs_qnode(n_qubits=N_QUBITS, n_layers=layers, readout_wires=readout_wires)
     weight_shape = (layers, N_QUBITS, 2)
     weights = pnp.array(0.01 * np.random.default_rng(seed).standard_normal(weight_shape),
                         requires_grad=True)
@@ -138,7 +139,8 @@ def _isolated_history(method, tasks, *, layers, lr, epochs, alpha, seed):
         use_alpha = alpha if (method == "anchor_head" and phase > 0) else 0.0
         anchor = np.asarray(weights) if (method == "anchor_head" and phase > 0) else None
         weights = pnp.array(np.asarray(weights), requires_grad=bool(train_theta))
-        W_live, b_live = init_head_weights(2 ** N_QUBITS, seed=seed + phase)
+        n_probs = 2 ** (readout_qubits if readout_qubits is not None else N_QUBITS)
+        W_live, b_live = init_head_weights(n_probs, seed=seed + phase)
         optimizer = qml.AdamOptimizer(lr)
 
         def cost(weights, W, b, Xtr=Xtr, ytr=ytr, use_alpha=use_alpha, anchor=anchor):
@@ -157,10 +159,12 @@ def _isolated_history(method, tasks, *, layers, lr, epochs, alpha, seed):
 
 
 def run(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8, qfi_samples=64,
-        n_train=800, n_test=200, seed=42, verbose=True) -> dict[str, Any]:
+        n_train=800, n_test=200, seed=42, t3="spt", readout_qubits=None,
+        verbose=True) -> dict[str, Any]:
     t1, t2 = load_two_tasks(n_features=2**N_QUBITS, n_train=n_train, n_test=n_test, seed=seed)
-    t3 = load_spt_atf(n_train=n_train, n_test=n_test, n_qubits=N_QUBITS, seed=seed)
-    tasks = [t1, t2, t3]
+    _t3_loader = {"spt": load_spt_atf, "cluster_full": load_cluster_full}[t3]
+    t3_task = _t3_loader(n_train=n_train, n_test=n_test, n_qubits=N_QUBITS, seed=seed)
+    tasks = [t1, t2, t3_task]
     started = time.perf_counter()
     histories: dict[str, Any] = {}
     for m in METHODS:
@@ -171,7 +175,7 @@ def run(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8, qfi_samples=6
                                            lam_qewc=lam_qewc, qfi_samples=qfi_samples, seed=seed)
         else:
             histories[m] = _isolated_history(m, tasks, layers=layers, lr=lr, epochs=epochs,
-                                             alpha=alpha, seed=seed)
+                                             alpha=alpha, seed=seed, readout_qubits=readout_qubits)
     return {
         "schema_version": SCHEMA_VERSION, "experiment": "e014_trajectory",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -197,11 +201,14 @@ def main() -> None:
     ap.add_argument("--n-train", type=int, default=800)
     ap.add_argument("--n-test", type=int, default=200)
     ap.add_argument("--seed", type=int, default=42)
+    ap.add_argument("--t3", choices=["spt", "cluster_full"], default="spt")
+    ap.add_argument("--readout-qubits", type=int, default=None)
     ap.add_argument("--output", type=Path)
     args = ap.parse_args()
     result = run(layers=args.layers, lr=args.lr, epochs=args.epochs, alpha=args.alpha,
                  lam_qewc=args.lam_qewc, qfi_samples=args.qfi_samples,
-                 n_train=args.n_train, n_test=args.n_test, seed=args.seed)
+                 n_train=args.n_train, n_test=args.n_test, seed=args.seed,
+                 t3=args.t3, readout_qubits=args.readout_qubits)
     RESULTS.mkdir(exist_ok=True)
     out = args.output or RESULTS / f"e014_trajectory_seed{args.seed}.json"
     out = out if out.is_absolute() else ROOT / out

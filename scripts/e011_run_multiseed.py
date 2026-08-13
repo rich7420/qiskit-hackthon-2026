@@ -84,6 +84,8 @@ def main() -> None:
     ap.add_argument("--layers", type=int, default=20)
     ap.add_argument("--lr", type=float, default=0.02, dest="learning_rate")
     ap.add_argument("--epochs-per-task", type=int, default=20)
+    ap.add_argument("--lam-qewc", type=float, default=0.8)
+    ap.add_argument("--qfi-samples", type=int, default=32)
     ap.add_argument("--n-train", type=int, default=800)
     ap.add_argument("--n-test", type=int, default=200)
     ap.add_argument("--summary-output", type=Path, default=RESULTS / "e011_summary.json")
@@ -93,7 +95,8 @@ def main() -> None:
     for seed in args.seeds:
         result = run_experiment(
             layers=args.layers, learning_rate=args.learning_rate,
-            epochs_per_task=args.epochs_per_task,
+            epochs_per_task=args.epochs_per_task, lam_qewc=args.lam_qewc,
+            qfi_samples=args.qfi_samples,
             n_train=args.n_train, n_test=args.n_test, seed=seed, verbose=True,
         )
         write_result(result, RESULTS / f"e011_seed{seed}.json")
@@ -108,7 +111,7 @@ def main() -> None:
     for s in SCHEDULES:
         me = summary["mean_earlier_task_final"][s]
         ma = summary["mean_all_task_final"][s]
-        print(f"  {s:12s} earlier(T1,T2)={me['mean']:.3f} +/- {me['sample_std']:.3f}   "
+        print(f"  {s:16s} earlier(T1,T2)={me['mean']:.3f} +/- {me['sample_std']:.3f}   "
               f"all(T1-T3)={ma['mean']:.3f} +/- {ma['sample_std']:.3f}")
 
 

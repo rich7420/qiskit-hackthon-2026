@@ -31,7 +31,8 @@ TASK_KEYS = ("task1", "task2", "task3")
 # label, color, linestyle, (source_summary_key, history_key)
 SERIES = [
     ("Blocked / sequential (baseline)", "0.45", "--", ("e011", "blocked")),
-    ("QEWC (QFI consolidation, E005)", "#4477AA", "-", ("e005", "qewc")),
+    ("QEWC blocked (QFI consolidation, E005)", "#4477AA", "-", ("e005", "qewc")),
+    ("QEWC interleaved (online QFI)", "#EE6677", "-", ("e011", "qewc_interleaved")),
     ("Interleaved (upper bound)", "#228833", "-", ("e011", "interleaved")),
 ]
 
@@ -74,7 +75,7 @@ def main() -> None:
 
     axes[0].legend(loc="lower left", fontsize=8.5, ncol=1)
     axes[-1].set_xlabel("Epoch (gradient step; 20 per task)")
-    fig.suptitle("Blocked vs QEWC vs Interleaved — fixed 20 epochs/task\n"
+    fig.suptitle("Blocked vs QEWC (blocked / interleaved) vs Interleaved — fixed 20 epochs/task\n"
                  f"MNIST -> Fashion-MNIST -> SPT/ATF, seeds {seeds} (test accuracy)",
                  fontsize=12)
     fig.tight_layout()

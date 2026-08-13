@@ -319,21 +319,34 @@ Result (mean final test accuracy over 3 seeds, mean +/- sample SD):
   aim to approach *without* revisiting earlier tasks -- interleaving assumes all tasks stay
   available, which the continual setting forbids.
 
-Three-way comparison (blocked vs QEWC vs interleaved), earlier-task (T1,T2) mean final acc,
-all with identical params (4 qubits, 20 layers/160 weights, Adam lr=0.02, 20 epochs/task,
-n_train=800, seeds 42/43/44 -- verified equal across the E005 and E011 summaries; E005 baseline
-== E011 blocked to 4 dp):
-- blocked      0.627 +/- 0.103   (lower reference: naive schedule, forgets)
-- QEWC (E005)  0.826 +/- 0.045   (continual method: fixes forgetting WITHOUT revisiting tasks)
-- interleaved  0.849 +/- 0.051   (upper bound: revisits every task each round)
-QEWC recovers ~90% of the blocked->interleaved gap while respecting the continual constraint
-(no earlier-task data at train time), which interleaving violates.
+Four-way comparison (schedule x consolidation), earlier-task (T1,T2) mean final acc, all with
+identical params (4 qubits, 20 layers/160 weights, Adam lr=0.02, 20 epochs/task, n_train=800,
+seeds 42/43/44 -- verified equal across the E005 and E011 summaries; E005 baseline == E011
+blocked to 4 dp):
+- blocked (no consol.)   0.627 +/- 0.103   (lower reference: naive schedule, forgets)
+- QEWC blocked (E005)    0.826 +/- 0.045   (continual method: fixes forgetting WITHOUT revisiting)
+- QEWC interleaved       0.719 +/- 0.008   (online QEWC on top of interleaving -- see below)
+- interleaved            0.849 +/- 0.051   (upper bound: revisits every task each round)
+
+qewc_interleaved = the interleaved step order PLUS online QEWC: a single running QFI-weighted
+anchor, re-anchored to the current weights after every full T1->T2->T3 round with the diagonal
+quantum Fisher (E005's QFI, estimated over a pooled subsample of all tasks, qfi_samples=16)
+accumulated across rounds (Schwarz et al. online EWC). lambda_qewc=0.8, same 60-step budget.
+
+Finding: adding consolidation on top of interleaving HURTS (0.719 < 0.849 interleaved), because
+an interleaved stream has no forgetting left to prevent -- the penalty only trades away
+plasticity for stability that is not needed. The loss is concentrated on T1 (mean final
+0.748 interleaved -> 0.515 qewc_interleaved), the task most penalized for drifting from its
+early, still-poor anchor; T3 stays ~1.0. It does collapse the seed variance (+/-0.008 vs
++/-0.051), i.e. it stabilises training at the cost of the ceiling. Takeaway for the slides:
+QEWC's value is specifically in the *blocked* (continual) regime; when replay/interleaving is
+available it is at best redundant and here mildly harmful.
 
 Files: experiments/e011_interleaved.py, scripts/e011_run_multiseed.py,
 scripts/e011_plot_curve.py, scripts/e011_plot_combined.py, tests/test_e011.py,
 results/e011_seed{42,43,44}.json + results/e011_summary.json. Reuses src/e005_softmax.py,
-src/continual_data.py, src/phase_data.py from the E005 PR (no consolidation code needed).
-Figures: `figures/e011_interleaved.png` (blocked vs interleaved) and
-`figures/e011_combined.png` (blocked vs QEWC vs interleaved on one plot; needs
-results/e005_summary.json from scripts/e005_run_multiseed.py). Both are three panels (per
-task), mean +/- 1 sample-SD bands over seeds.
+src/e005_consolidation.py (QFI), src/qnn_pennylane.py, src/continual_data.py, src/phase_data.py
+from the E005 PR. Figures: `figures/e011_interleaved.png` (blocked vs interleaved) and
+`figures/e011_combined.png` (blocked vs QEWC-blocked vs QEWC-interleaved vs interleaved on one
+plot; needs results/e005_summary.json from scripts/e005_run_multiseed.py). Both are three panels
+(per task), mean +/- 1 sample-SD bands over seeds.

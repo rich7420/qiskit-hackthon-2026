@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "experiment": "e011_interleaved_multiseed",
-  "created_at_utc": "2026-08-13T05:15:02.605071+00:00",
-  "source_code_sha256": "f0972134a4d88414fe6765f524319dc52029c6e34c3a964d4f1c989c247d0857",
+  "created_at_utc": "2026-08-13T06:29:45.252423+00:00",
+  "source_code_sha256": "c020325a7a077eabf92aa35b86a15ffca659b1c5c93bc112eadc1f81be30a34c",
   "seeds": [
     42,
     43,
@@ -21,7 +21,9 @@
     "n_weights": 160,
     "readout": "two Pauli-Z on qubits 0,1 -> softmax (Eq. 7)",
     "loss": "binary cross-entropy",
-    "consolidation": "none (schedule study only)",
+    "consolidation": "none for blocked/interleaved; online QEWC (running diagonal QFI, re-anchored each round) for qewc_interleaved",
+    "lambda_qewc": 0.8,
+    "qfi_samples": 16,
     "optimizer": "Adam",
     "learning_rate": 0.02,
     "epochs_per_task": 20,
@@ -32,7 +34,8 @@
     ],
     "schedules": [
       "blocked",
-      "interleaved"
+      "interleaved",
+      "qewc_interleaved"
     ],
     "n_train_per_task": 800,
     "n_test_per_task": 200,
@@ -2116,6 +2119,1045 @@
           }
         }
       }
+    ],
+    "qewc_interleaved": [
+      {
+        "epoch": 0,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.398333,
+            "sample_std": 0.015275
+          },
+          "task2": {
+            "mean": 0.755,
+            "sample_std": 0.025981
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 1,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.435,
+            "sample_std": 0.02
+          },
+          "task2": {
+            "mean": 0.803333,
+            "sample_std": 0.054848
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 2,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.431667,
+            "sample_std": 0.048563
+          },
+          "task2": {
+            "mean": 0.875,
+            "sample_std": 0.037749
+          },
+          "task3": {
+            "mean": 0.5,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 3,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.443333,
+            "sample_std": 0.067144
+          },
+          "task2": {
+            "mean": 0.885,
+            "sample_std": 0.034641
+          },
+          "task3": {
+            "mean": 0.526667,
+            "sample_std": 0.030551
+          }
+        }
+      },
+      {
+        "epoch": 4,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.461667,
+            "sample_std": 0.085196
+          },
+          "task2": {
+            "mean": 0.891667,
+            "sample_std": 0.045369
+          },
+          "task3": {
+            "mean": 0.561667,
+            "sample_std": 0.032532
+          }
+        }
+      },
+      {
+        "epoch": 5,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.471667,
+            "sample_std": 0.070059
+          },
+          "task2": {
+            "mean": 0.908333,
+            "sample_std": 0.035473
+          },
+          "task3": {
+            "mean": 0.573333,
+            "sample_std": 0.064291
+          }
+        }
+      },
+      {
+        "epoch": 6,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.488333,
+            "sample_std": 0.084014
+          },
+          "task2": {
+            "mean": 0.916667,
+            "sample_std": 0.040415
+          },
+          "task3": {
+            "mean": 0.606667,
+            "sample_std": 0.092781
+          }
+        }
+      },
+      {
+        "epoch": 7,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.498333,
+            "sample_std": 0.084014
+          },
+          "task2": {
+            "mean": 0.916667,
+            "sample_std": 0.036171
+          },
+          "task3": {
+            "mean": 0.653333,
+            "sample_std": 0.102754
+          }
+        }
+      },
+      {
+        "epoch": 8,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.505,
+            "sample_std": 0.076974
+          },
+          "task2": {
+            "mean": 0.92,
+            "sample_std": 0.030414
+          },
+          "task3": {
+            "mean": 0.653333,
+            "sample_std": 0.145717
+          }
+        }
+      },
+      {
+        "epoch": 9,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.52,
+            "sample_std": 0.068739
+          },
+          "task2": {
+            "mean": 0.923333,
+            "sample_std": 0.028868
+          },
+          "task3": {
+            "mean": 0.691667,
+            "sample_std": 0.179188
+          }
+        }
+      },
+      {
+        "epoch": 10,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.511667,
+            "sample_std": 0.053463
+          },
+          "task2": {
+            "mean": 0.92,
+            "sample_std": 0.027839
+          },
+          "task3": {
+            "mean": 0.731667,
+            "sample_std": 0.208706
+          }
+        }
+      },
+      {
+        "epoch": 11,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.508333,
+            "sample_std": 0.055076
+          },
+          "task2": {
+            "mean": 0.92,
+            "sample_std": 0.022913
+          },
+          "task3": {
+            "mean": 0.77,
+            "sample_std": 0.241402
+          }
+        }
+      },
+      {
+        "epoch": 12,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.508333,
+            "sample_std": 0.055752
+          },
+          "task2": {
+            "mean": 0.918333,
+            "sample_std": 0.020817
+          },
+          "task3": {
+            "mean": 0.81,
+            "sample_std": 0.269629
+          }
+        }
+      },
+      {
+        "epoch": 13,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.531667,
+            "sample_std": 0.040723
+          },
+          "task2": {
+            "mean": 0.916667,
+            "sample_std": 0.023629
+          },
+          "task3": {
+            "mean": 0.858333,
+            "sample_std": 0.245374
+          }
+        }
+      },
+      {
+        "epoch": 14,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.53,
+            "sample_std": 0.039686
+          },
+          "task2": {
+            "mean": 0.92,
+            "sample_std": 0.018028
+          },
+          "task3": {
+            "mean": 0.858333,
+            "sample_std": 0.245374
+          }
+        }
+      },
+      {
+        "epoch": 15,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.521667,
+            "sample_std": 0.038188
+          },
+          "task2": {
+            "mean": 0.92,
+            "sample_std": 0.021794
+          },
+          "task3": {
+            "mean": 0.858333,
+            "sample_std": 0.245374
+          }
+        }
+      },
+      {
+        "epoch": 16,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.54,
+            "sample_std": 0.047697
+          },
+          "task2": {
+            "mean": 0.923333,
+            "sample_std": 0.020817
+          },
+          "task3": {
+            "mean": 0.858333,
+            "sample_std": 0.245374
+          }
+        }
+      },
+      {
+        "epoch": 17,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.54,
+            "sample_std": 0.047697
+          },
+          "task2": {
+            "mean": 0.923333,
+            "sample_std": 0.025658
+          },
+          "task3": {
+            "mean": 0.868333,
+            "sample_std": 0.228053
+          }
+        }
+      },
+      {
+        "epoch": 18,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.535,
+            "sample_std": 0.045826
+          },
+          "task2": {
+            "mean": 0.925,
+            "sample_std": 0.026458
+          },
+          "task3": {
+            "mean": 0.886667,
+            "sample_std": 0.196299
+          }
+        }
+      },
+      {
+        "epoch": 19,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.546667,
+            "sample_std": 0.043684
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.020817
+          },
+          "task3": {
+            "mean": 0.903333,
+            "sample_std": 0.167432
+          }
+        }
+      },
+      {
+        "epoch": 20,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.538333,
+            "sample_std": 0.042525
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.024664
+          },
+          "task3": {
+            "mean": 0.915,
+            "sample_std": 0.147224
+          }
+        }
+      },
+      {
+        "epoch": 21,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.53,
+            "sample_std": 0.027839
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.028868
+          },
+          "task3": {
+            "mean": 0.911667,
+            "sample_std": 0.152998
+          }
+        }
+      },
+      {
+        "epoch": 22,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.54,
+            "sample_std": 0.018028
+          },
+          "task2": {
+            "mean": 0.93,
+            "sample_std": 0.025981
+          },
+          "task3": {
+            "mean": 0.911667,
+            "sample_std": 0.152998
+          }
+        }
+      },
+      {
+        "epoch": 23,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.538333,
+            "sample_std": 0.014434
+          },
+          "task2": {
+            "mean": 0.936667,
+            "sample_std": 0.027538
+          },
+          "task3": {
+            "mean": 0.925,
+            "sample_std": 0.129904
+          }
+        }
+      },
+      {
+        "epoch": 24,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.538333,
+            "sample_std": 0.005774
+          },
+          "task2": {
+            "mean": 0.933333,
+            "sample_std": 0.033292
+          },
+          "task3": {
+            "mean": 0.94,
+            "sample_std": 0.103923
+          }
+        }
+      },
+      {
+        "epoch": 25,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.541667,
+            "sample_std": 0.005774
+          },
+          "task2": {
+            "mean": 0.935,
+            "sample_std": 0.025981
+          },
+          "task3": {
+            "mean": 0.946667,
+            "sample_std": 0.092376
+          }
+        }
+      },
+      {
+        "epoch": 26,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.54,
+            "sample_std": 0.0
+          },
+          "task2": {
+            "mean": 0.933333,
+            "sample_std": 0.028868
+          },
+          "task3": {
+            "mean": 0.953333,
+            "sample_std": 0.080829
+          }
+        }
+      },
+      {
+        "epoch": 27,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.54,
+            "sample_std": 0.0
+          },
+          "task2": {
+            "mean": 0.936667,
+            "sample_std": 0.027538
+          },
+          "task3": {
+            "mean": 0.946667,
+            "sample_std": 0.092376
+          }
+        }
+      },
+      {
+        "epoch": 28,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.538333,
+            "sample_std": 0.007638
+          },
+          "task2": {
+            "mean": 0.935,
+            "sample_std": 0.030414
+          },
+          "task3": {
+            "mean": 0.946667,
+            "sample_std": 0.092376
+          }
+        }
+      },
+      {
+        "epoch": 29,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.54,
+            "sample_std": 0.005
+          },
+          "task2": {
+            "mean": 0.938333,
+            "sample_std": 0.024664
+          },
+          "task3": {
+            "mean": 0.955,
+            "sample_std": 0.077942
+          }
+        }
+      },
+      {
+        "epoch": 30,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.531667,
+            "sample_std": 0.007638
+          },
+          "task2": {
+            "mean": 0.933333,
+            "sample_std": 0.025658
+          },
+          "task3": {
+            "mean": 0.966667,
+            "sample_std": 0.057735
+          }
+        }
+      },
+      {
+        "epoch": 31,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.541667,
+            "sample_std": 0.015275
+          },
+          "task2": {
+            "mean": 0.931667,
+            "sample_std": 0.028431
+          },
+          "task3": {
+            "mean": 0.998333,
+            "sample_std": 0.002887
+          }
+        }
+      },
+      {
+        "epoch": 32,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.543333,
+            "sample_std": 0.012583
+          },
+          "task2": {
+            "mean": 0.933333,
+            "sample_std": 0.025658
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 33,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.533333,
+            "sample_std": 0.010408
+          },
+          "task2": {
+            "mean": 0.935,
+            "sample_std": 0.022913
+          },
+          "task3": {
+            "mean": 0.986667,
+            "sample_std": 0.023094
+          }
+        }
+      },
+      {
+        "epoch": 34,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.546667,
+            "sample_std": 0.01893
+          },
+          "task2": {
+            "mean": 0.931667,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 0.973333,
+            "sample_std": 0.046188
+          }
+        }
+      },
+      {
+        "epoch": 35,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.545,
+            "sample_std": 0.021794
+          },
+          "task2": {
+            "mean": 0.935,
+            "sample_std": 0.022913
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 36,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.538333,
+            "sample_std": 0.020817
+          },
+          "task2": {
+            "mean": 0.93,
+            "sample_std": 0.027839
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 37,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.541667,
+            "sample_std": 0.01893
+          },
+          "task2": {
+            "mean": 0.931667,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 38,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.541667,
+            "sample_std": 0.015275
+          },
+          "task2": {
+            "mean": 0.933333,
+            "sample_std": 0.022546
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 39,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.538333,
+            "sample_std": 0.020817
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.027538
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 40,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.538333,
+            "sample_std": 0.020817
+          },
+          "task2": {
+            "mean": 0.933333,
+            "sample_std": 0.020207
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 41,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.54,
+            "sample_std": 0.015
+          },
+          "task2": {
+            "mean": 0.933333,
+            "sample_std": 0.020207
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 42,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.535,
+            "sample_std": 0.013229
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.027538
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 43,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.538333,
+            "sample_std": 0.020817
+          },
+          "task2": {
+            "mean": 0.926667,
+            "sample_std": 0.027538
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 44,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.541667,
+            "sample_std": 0.015275
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 45,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.535,
+            "sample_std": 0.013229
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 46,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.535,
+            "sample_std": 0.02
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 47,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.538333,
+            "sample_std": 0.015275
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 48,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.533333,
+            "sample_std": 0.020207
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 49,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.536667,
+            "sample_std": 0.017559
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 50,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.538333,
+            "sample_std": 0.015275
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 51,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.533333,
+            "sample_std": 0.01893
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 52,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.531667,
+            "sample_std": 0.020817
+          },
+          "task2": {
+            "mean": 0.93,
+            "sample_std": 0.027839
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 53,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.535,
+            "sample_std": 0.018028
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 54,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.526667,
+            "sample_std": 0.022546
+          },
+          "task2": {
+            "mean": 0.926667,
+            "sample_std": 0.027538
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 55,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.525,
+            "sample_std": 0.027839
+          },
+          "task2": {
+            "mean": 0.926667,
+            "sample_std": 0.025658
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 56,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.526667,
+            "sample_std": 0.025658
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 57,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.523333,
+            "sample_std": 0.025166
+          },
+          "task2": {
+            "mean": 0.926667,
+            "sample_std": 0.027538
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 58,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.521667,
+            "sample_std": 0.030551
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.028431
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 59,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.523333,
+            "sample_std": 0.030139
+          },
+          "task2": {
+            "mean": 0.928333,
+            "sample_std": 0.025166
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      },
+      {
+        "epoch": 60,
+        "test_accuracy": {
+          "task1": {
+            "mean": 0.515,
+            "sample_std": 0.030414
+          },
+          "task2": {
+            "mean": 0.923333,
+            "sample_std": 0.030139
+          },
+          "task3": {
+            "mean": 1.0,
+            "sample_std": 0.0
+          }
+        }
+      }
     ]
   },
   "aggregate_metrics": {
@@ -2188,6 +3230,41 @@
           "sample_std": 0.0
         }
       }
+    },
+    "qewc_interleaved": {
+      "task1": {
+        "name": "MNIST 0/1",
+        "test_final": {
+          "mean": 0.515,
+          "sample_std": 0.030414
+        },
+        "forgetting": {
+          "mean": 0.066667,
+          "sample_std": 0.049329
+        }
+      },
+      "task2": {
+        "name": "Fashion-MNIST 0/1",
+        "test_final": {
+          "mean": 0.923333,
+          "sample_std": 0.030139
+        },
+        "forgetting": {
+          "mean": 0.02,
+          "sample_std": 0.015
+        }
+      },
+      "task3": {
+        "name": "SPT/ATF phases",
+        "test_final": {
+          "mean": 1.0,
+          "sample_std": 0.0
+        },
+        "forgetting": {
+          "mean": 0.0,
+          "sample_std": 0.0
+        }
+      }
     }
   },
   "mean_earlier_task_final": {
@@ -2198,6 +3275,10 @@
     "interleaved": {
       "mean": 0.849167,
       "sample_std": 0.050518
+    },
+    "qewc_interleaved": {
+      "mean": 0.719167,
+      "sample_std": 0.008036
     }
   },
   "mean_all_task_final": {
@@ -2208,6 +3289,10 @@
     "interleaved": {
       "mean": 0.899433,
       "sample_std": 0.03366
+    },
+    "qewc_interleaved": {
+      "mean": 0.8128,
+      "sample_std": 0.005351
     }
   }
 }

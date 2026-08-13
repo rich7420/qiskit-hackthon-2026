@@ -8,8 +8,9 @@ tests pin that invariant plus the forgetting metric.
 from collections import Counter
 
 import numpy as np
+from pennylane import numpy as pnp
 
-from experiments.e011_interleaved import _metrics_for, _step_order
+from experiments.e011_interleaved import _metrics_for, _online_penalty, _step_order
 
 
 def test_schedules_share_the_same_per_task_budget():
@@ -50,6 +51,26 @@ def test_metrics_forgetting_is_best_minus_final():
     # mean earlier = mean(final T1, final T2); mean all includes T3.
     assert np.isclose(m["mean_earlier_task_final"], np.mean([0.6, 0.9]), atol=1e-4)
     assert np.isclose(m["mean_all_task_final"], np.mean([0.6, 0.9, 0.5]), atol=1e-4)
+
+
+def test_online_penalty_zero_before_first_consolidation():
+    # Before any round has consolidated (anchor is None) the penalty must vanish, and stay
+    # differentiable (a plain 0.0 would break the autograd cost). Fisher=None is unused then.
+    w = pnp.array(np.ones(4), requires_grad=True)
+    val = float(_online_penalty(w, None, None, lam=0.8))
+    assert val == 0.0
+
+
+def test_online_penalty_matches_quadratic_form():
+    # (lam/2) * sum_i F_i (w_i - anchor_i)^2 with F=[1,0,2,0], anchor=0, w=[1,1,1,1], lam=0.8
+    # = 0.4 * (1*1 + 0 + 2*1 + 0) = 0.4 * 3 = 1.2
+    w = pnp.array(np.ones(4), requires_grad=True)
+    anchor = pnp.array(np.zeros(4), requires_grad=False)
+    fisher = pnp.array(np.array([1.0, 0.0, 2.0, 0.0]), requires_grad=False)
+    val = float(_online_penalty(w, anchor, fisher, lam=0.8))
+    assert np.isclose(val, 1.2, atol=1e-9)
+    # lam=0 also disables the penalty regardless of drift.
+    assert float(_online_penalty(w, anchor, fisher, lam=0.0)) == 0.0
 
 
 def test_unknown_schedule_rejected():

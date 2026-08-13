@@ -335,3 +335,48 @@ Figures (5 methods, e005 style, mean +/- SD bands, 5 seeds):
 - `figures/e009_forgetting.png` — per-task test NMSE / forgetting (via scripts/e009_plot.py)
 - `figures/e009_training.png` — per-task train NMSE / fit (via scripts/e009_plot_train.py)
 - `figures/e009_compare.png` — retention vs plasticity, lower-left best (via scripts/e009_plot_compare.py)
+
+## E016 — Quantum Generative Replay ported to the e005 classification benchmark
+
+Goal: QGR (e009/PR #13) is the best quantum-native continual-learning method on time-series
+forecasting. Does the idea transfer to the e005 classification sequence (MNIST 0/1 ->
+Fashion-MNIST 0/1 -> SPT/ATF), pitted directly against EWC and QEWC on identical learner / data /
+schedule? Full details in `E016_QGR_CLASSIFICATION_FINDINGS.md`.
+
+Framework:         pennylane 0.45.1 (default.qubit, backprop, exact / no shots)
+Command:           `for s in 42 43 44 45 46; do python experiments/e016_qgr_classification.py --seed $s; done`
+                   `python scripts/e016_aggregate.py --seeds 42 43 44 45 46`
+
+Setup:
+- data / learner / schedule = identical to E005 (16-D amplitude-encoded PCA features, softmax
+  2-Z + BCE classifier, 4 qubits, 20 RY/RZ+CNOT layers, Adam(0.02), 20 epochs/task, 800/200)
+- QGR has no temporal axis to roll out under classification, so "generation" is realized two ways:
+  - `qgr_seed`: keep 16 real seed vectors/class + a frozen classifier snapshot; synthesize by
+    convex-mixing seeds + noise (renormalized to valid amplitude states), pseudo-label with the
+    frozen snapshot (mirrors forecasting-QGR's few-seed + frozen-model generation)
+  - `qgr_inversion`: fully data-free — gradient-ascend a random amplitude vector toward the frozen
+    classifier's per-class confidence -> class prototype; circuit params are the only memory
+- baselines = baseline / EWC (classical Fisher) / QEWC (quantum Fisher) / replay (48 raw/task);
+  only new code = a replay-BCE term in the cost + the two generators. metric = test accuracy
+  (higher better); retention = mean earlier-task (T1,T2) final acc, plasticity = T3 final acc.
+
+Result (5 seeds 42-46, mean +/- sd; accuracy, higher better):
+- Baseline:      retention 0.590 +/- 0.090, plasticity 1.000, avg 0.727
+- EWC:           retention 0.704 +/- 0.085, plasticity 1.000, avg 0.802
+- QEWC:          retention 0.773 +/- 0.102, plasticity 1.000, avg 0.849
+- QGR-seed:      retention 0.802 +/- 0.037, plasticity 1.000, avg 0.868  (tightest no-data variance)
+- QGR-inversion: retention 0.802 +/- 0.076, plasticity 1.000, avg 0.868
+- replay:        retention 0.805 +/- 0.030, plasticity 1.000, avg 0.870  (raw-data upper bound)
+
+Finding: both QGR variants beat QEWC and EWC on mean retention (0.802 vs 0.773 vs 0.704) and match
+raw-data replay (0.805) without a full buffer, reproducing the time-series verdict QGR > QEWC on
+the retention axis. QGR-seed is the most reliable no-data method (SD 0.037, ~3x tighter than QEWC's
+0.102). Honest caveats: plasticity SATURATES (every method reaches T3 = 1.000 in every seed, since
+SPT/ATF is perfectly separable for this ansatz) -> unlike forecasting, classification has no
+plasticity trade-off and retention is the only discriminating axis; and with 5 seeds the SDs of
+replay / QGR-seed / QGR-inversion / QEWC overlap, so this is a consistent mean ordering with lower
+variance, not a separated result.
+
+Figures:
+- `figures/e016_qgr_compare_multiseed.png` — 5-seed retention ranking, mean +/- SD (scripts/e016_aggregate.py)
+- `figures/e016_qgr_compare.png` — seed-42 retention ranking + per-task final acc (scripts/e016_qgr_compare.py)

@@ -122,24 +122,29 @@ learning curves.
 ## Task-agnostic evaluation — the cost of removing the task id
 
 OI-QCL is Task-IL: the head is chosen by a given task id. To quantify that assumption we hide
-the id and infer it by **max-confidence routing** — run every frozen head on the pooled test
-set, pick the most confident, predict with it (`experiments/e014_task_inference.py`,
-`figures/e014_task_inference.png`). Mean over seeds 42/43/44:
+the id and infer it two ways (`experiments/e014_task_inference.py`,
+`figures/e014_task_inference.png`), mean over seeds 42/43/44:
 
-| method | Task-IL acc (id given) | task-agnostic acc | task-inference acc (TIA) |
+1. **max-confidence routing** — run every frozen head, pick the most confident, predict with it.
+2. **learned linear router** — a logistic task classifier over `p_θ(x)`, trained on the pooled
+   TRAIN sets with task labels (task id known at train, hidden at test), then routes each test
+   sample to the predicted task's head.
+
+| method | Task-IL acc (id given) | max-conf acc (TIA) | **router acc (TIA)** |
 |---|---:|---:|---:|
-| frozen (A) | 0.964 | 0.834 | 0.676 |
-| free (B) | 0.801 | 0.690 | 0.562 |
-| anchor (C) | 0.962 | 0.846 | 0.687 |
+| frozen (A) | 0.964 | 0.834 (0.68) | **0.907 (0.90)** |
+| free (B) | 0.801 | 0.690 (0.56) | 0.789 (0.95) |
+| anchor (C) | 0.962 | 0.846 (0.69) | **0.909 (0.90)** |
 
-Removing the id costs ~0.12 accuracy; TIA ≈ 0.68 (chance 0.33). The routing confusion matrix
-shows why: **T3 (SPT, a quantum-native distribution) routes perfectly (1.00), but its
-over-confident head grabs ~35–42% of MNIST/Fashion** (max-confidence measures distance to a
-head's own boundary, not task membership, so it is fooled by out-of-distribution
-over-confidence). Takeaways: (i) when task distributions differ enough, `p_θ(x)` already
-carries the task identity; (ii) similar tasks need a better router (a dedicated task classifier
-over `p_θ(x)`, or temperature/OOD-calibrated confidence) — untested here. This is the honest
-boundary of the Task-IL result.
+**Max-confidence is a bad router** (TIA ≈ 0.68; its confusion matrix shows the over-confident
+SPT head grabbing 35–42% of MNIST/Fashion — max-confidence measures distance to a head's own
+boundary, not task membership). **A dedicated linear router over `p_θ(x)` nearly closes the
+gap**: task-agnostic accuracy 0.91 vs Task-IL 0.96 for A/C (−0.05), routing accuracy 0.90 with
+a near-diagonal confusion matrix (T1 0.82 / T2 0.89 / T3 1.00). So the task identity **is
+decodable from the quantum measurement distribution** — the Task-IL assumption is a convenience,
+not a hard requirement, and a lightweight classical router removes most of it. (Variant B caps
+at 0.79 because its heads are already degraded by representation drift, not by routing — its
+router TIA is the best at 0.95.)
 
 ## Claim boundaries
 

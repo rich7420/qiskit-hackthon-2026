@@ -35,6 +35,8 @@ import numpy as np
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
+from sklearn.linear_model import LogisticRegression  # noqa: E402
+
 from src.continual_data import load_two_tasks  # noqa: E402
 from src.e014_oiqcl import (  # noqa: E402
     _labels_to_classes,
@@ -96,17 +98,37 @@ def _evaluate(probs_qnode, weights, heads, tasks):
     t_hat = conf.argmax(axis=0)                 # inferred task = most confident head
     routed_pred = preds[t_hat, np.arange(len(P))]
 
+    # Alternative router: a dedicated linear task classifier over p_theta, trained on the
+    # pooled TRAIN sets with task labels (task id is known at train time, hidden at test).
+    P_tr_pool = np.concatenate([probs_features(probs_qnode, weights, t.X_train) for t in tasks])
+    tr_task = np.concatenate([np.full(len(t.X_train), j) for j, t in enumerate(tasks)])
+    router = LogisticRegression(max_iter=2000, C=1.0)
+    router.fit(P_tr_pool, tr_task)
+    t_hat_r = router.predict(P)
+    routed_pred_r = preds[t_hat_r, np.arange(len(P))]
+
     known = float(np.mean([
         heads[j].accuracy(probs_features(probs_qnode, weights, tasks[j].X_test), tasks[j].y_test)
         for j in range(T)]))
+
+    def _confusion(t_hat_arr):
+        return [[int(np.sum((true_task == a) & (t_hat_arr == b))) for b in range(T)]
+                for a in range(T)]
+
     return {
         "known_task_accuracy": round(known, 4),
+        # max-confidence routing
         "task_inference_accuracy": round(float(np.mean(t_hat == true_task)), 4),
         "task_agnostic_accuracy": round(float(np.mean(routed_pred == true_cls)), 4),
         "per_task_task_inference": {
             TASK_KEYS[j]: round(float(np.mean(t_hat[true_task == j] == j)), 4) for j in range(T)},
-        "task_confusion": [[int(np.sum((true_task == a) & (t_hat == b))) for b in range(T)]
-                           for a in range(T)],
+        "task_confusion": _confusion(t_hat),
+        # learned linear router
+        "router_task_inference_accuracy": round(float(np.mean(t_hat_r == true_task)), 4),
+        "router_task_agnostic_accuracy": round(float(np.mean(routed_pred_r == true_cls)), 4),
+        "router_per_task_task_inference": {
+            TASK_KEYS[j]: round(float(np.mean(t_hat_r[true_task == j] == j)), 4) for j in range(T)},
+        "router_confusion": _confusion(t_hat_r),
     }
 
 
@@ -126,8 +148,10 @@ def run(*, layers=12, lr=0.05, epochs=20, alpha=5.0, n_train=800, n_test=200,
         if verbose:
             r = methods[m]
             print(f"    known(Task-IL)={r['known_task_accuracy']:.3f}  "
-                  f"TIA={r['task_inference_accuracy']:.3f}  "
-                  f"agnostic={r['task_agnostic_accuracy']:.3f}", flush=True)
+                  f"| max-conf: TIA={r['task_inference_accuracy']:.3f} "
+                  f"acc={r['task_agnostic_accuracy']:.3f}  "
+                  f"| router: TIA={r['router_task_inference_accuracy']:.3f} "
+                  f"acc={r['router_task_agnostic_accuracy']:.3f}", flush=True)
     return {
         "schema_version": SCHEMA_VERSION, "experiment": "e014_task_inference",
         "created_at_utc": datetime.now(timezone.utc).isoformat(),

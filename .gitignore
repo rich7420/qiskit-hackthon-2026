@@ -65,3 +65,5 @@ figures/**/*.pdf
 
 # LaTeX drawer diagnostic generated when a local TeX installation is incomplete
 latex_error.log
+# CocoIndex Code (ccc)
+/.cocoindex_code/

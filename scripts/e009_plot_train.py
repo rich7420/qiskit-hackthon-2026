@@ -20,11 +20,11 @@ ROOT = Path(__file__).resolve().parents[1]
 RESULT = ROOT / "results" / "e009_multiseed.json"
 OUT = ROOT / "figures" / "e009_training.png"
 
+# Replay (classical, model-agnostic) omitted to focus on the quantum-model regularizers.
 STYLE = {"naive": ("naive (no CL)", "0.45", "--"),
          "l2": ("L2 anchor", "#CCBB44", "-."),
          "ewc": ("EWC (classical Fisher)", "#4477AA", "-."),
-         "qewc": ("QEWC (quantum Fisher)", "#228833", "-."),
-         "replay": ("replay", "#EE6677", "-")}
+         "qewc": ("QEWC (quantum Fisher)", "#228833", "-")}
 
 
 def main() -> None:

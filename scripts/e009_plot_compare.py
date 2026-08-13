@@ -20,9 +20,9 @@ ROOT = Path(__file__).resolve().parents[1]
 RESULT = ROOT / "results" / "e009_multiseed.json"
 OUT = ROOT / "figures" / "e009_compare.png"
 
+# Replay (classical, model-agnostic) omitted to focus on the quantum-model regularizers.
 STYLE = {"naive": ("naive (no CL)", "0.55"), "l2": ("L2 anchor", "#CCBB44"),
-         "ewc": ("EWC (classical Fisher)", "#4477AA"), "qewc": ("QEWC (quantum Fisher)", "#228833"),
-         "replay": ("replay", "#EE6677")}
+         "ewc": ("EWC (classical Fisher)", "#4477AA"), "qewc": ("QEWC (quantum Fisher)", "#228833")}
 
 
 def main() -> None:
@@ -34,7 +34,8 @@ def main() -> None:
     final = {m: data["mean_curves"][m][-1]["nmse"] for m in methods}
 
     x = np.arange(len(tasks))
-    w = 0.16
+    w = 0.19
+    offset0 = (len(methods) - 1) / 2.0
     plt.rcParams.update({"font.size": 12, "axes.linewidth": 1.2})
     fig, ax = plt.subplots(figsize=(9.5, 5.2))
 
@@ -42,7 +43,7 @@ def main() -> None:
         means = [final[m][t]["mean"] for t in tasks]
         sds = [final[m][t]["sd"] for t in tasks]
         label, color = STYLE[m]
-        ax.bar(x + (j - 2) * w, means, w, yerr=sds, capsize=3, color=color,
+        ax.bar(x + (j - offset0) * w, means, w, yerr=sds, capsize=3, color=color,
                edgecolor="k", linewidth=0.5, label=label,
                error_kw={"elinewidth": 1, "alpha": 0.7})
 

@@ -20,12 +20,12 @@ ROOT = Path(__file__).resolve().parents[1]
 RESULT = ROOT / "results" / "e009_multiseed.json"
 OUT = ROOT / "figures" / "e009_forgetting.png"
 
-# method -> (label, color, linestyle) — naive gray dashed, replay red solid
+# method -> (label, color, linestyle). Replay is a classical, model-agnostic method and is
+# omitted here to focus on the quantum-model regularizers (QEWC = quantum Fisher).
 STYLE = {"naive": ("naive (no CL)", "0.45", "--"),
          "l2": ("L2 anchor", "#CCBB44", "-."),
          "ewc": ("EWC (classical Fisher)", "#4477AA", "-."),
-         "qewc": ("QEWC (quantum Fisher)", "#228833", "-."),
-         "replay": ("replay", "#EE6677", "-")}
+         "qewc": ("QEWC (quantum Fisher)", "#228833", "-")}
 
 
 def main() -> None:

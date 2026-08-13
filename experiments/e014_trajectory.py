@@ -42,10 +42,9 @@ from src.e014_oiqcl import (  # noqa: E402
     _head_logits,
     _probs_batched,
     _softmax_ce,
-    fit_linear_head,
+    head_accuracy_theta,
     init_head_weights,
     make_probs_qnode,
-    probs_features,
 )
 from src.phase_data import N_QUBITS, load_spt_atf  # noqa: E402
 
@@ -98,63 +97,59 @@ def _shared_history(method, tasks, *, layers, lr, epochs, lam_qewc, qfi_samples,
 
 
 def _isolated_history(method, tasks, *, layers, lr, epochs, alpha, seed):
+    """Every curve is a genuine gradient learning curve on a common accuracy axis.
+
+    Each task's readout is a learnable diagonal-observable head (W, b) trained by Adam --
+    NOT a per-epoch converged classical fit -- so its within-phase curve rises from chance
+    like the shared-readout baselines instead of jumping instantly high.  Faithful to
+    min_{theta, W_t} L_t (mentor sec 29): Task 1 trains theta + W_1 jointly; later tasks
+    add a fresh W_t while frozen (A) / free (B) / soft-anchored (C) drive theta; every old
+    head is frozen at its boundary and re-evaluated on the current backbone (retention).
+    """
     probs_qnode, _ = make_probs_qnode(n_qubits=N_QUBITS, n_layers=layers)
     weight_shape = (layers, N_QUBITS, 2)
     weights = pnp.array(0.01 * np.random.default_rng(seed).standard_normal(weight_shape),
                         requires_grad=True)
-    frozen_heads: dict[int, Any] = {}
+    frozen_heads: dict[int, tuple] = {}  # task -> (W, b) numpy, frozen at its boundary
     history: list[dict[str, Any]] = []
 
-    def snap(epoch, phase, active_head):
+    def snap(epoch, phase, live_head):
         acc: dict[str, Any] = {}
         for j, key in enumerate(TASK_KEYS):
-            if j in frozen_heads:  # completed task, retention on current backbone
-                P = probs_features(probs_qnode, weights, tasks[j].X_test)
-                acc[key] = round(frozen_heads[j].accuracy(P, tasks[j].y_test), 4)
-            elif j == phase and active_head is not None:  # active task, live head
-                P = probs_features(probs_qnode, weights, tasks[j].X_test)
-                acc[key] = round(active_head.accuracy(P, tasks[j].y_test), 4)
-            else:  # unseen future task
+            head = frozen_heads.get(j) or (live_head if j == phase else None)
+            if head is None:  # unseen future task
                 acc[key] = None
+            else:
+                W, b = head
+                acc[key] = round(
+                    head_accuracy_theta(probs_qnode, weights, W, b,
+                                        tasks[j].X_test, tasks[j].y_test), 4)
         history.append({"epoch": epoch, "phase": phase, "test_accuracy": acc})
 
     snap(0, 0, None)
     for phase, task in enumerate(tasks):
-        Xtr_np = task.X_train
-        Xtr = pnp.array(Xtr_np, requires_grad=False)
+        Xtr = pnp.array(task.X_train, requires_grad=False)
         ytr = np.asarray(task.y_train)
+        # A freezes theta after Task 1; B/C keep training it (C anchors softly).
         train_theta = (phase == 0) or (method != "frozen_head")
         use_alpha = alpha if (method == "anchor_head" and phase > 0) else 0.0
         anchor = np.asarray(weights) if (method == "anchor_head" and phase > 0) else None
+        weights = pnp.array(np.asarray(weights), requires_grad=bool(train_theta))
+        W_live, b_live = init_head_weights(2 ** N_QUBITS, seed=seed + phase)
         optimizer = qml.AdamOptimizer(lr)
 
-        if phase == 0:  # backbone from Task 1 via softmax/BCE
-            clf_qnode, _ = make_softmax_qnode(n_qubits=N_QUBITS, n_layers=layers)
-
-            def cost(W, Xtr=Xtr, ytr_pm=pnp.array(task.y_train, requires_grad=False)):
-                return bce_loss(clf_qnode, W, Xtr, ytr_pm)
-        else:  # advance theta (free/anchor) on the probs-head joint objective
-            W_live, b_live = init_head_weights(2 ** N_QUBITS, seed=seed + phase)
-
-            def cost(weights, W, b, Xtr=Xtr, ytr=ytr, use_alpha=use_alpha, anchor=anchor):
-                logits = _head_logits(_probs_batched(probs_qnode, weights, Xtr), W, b)
-                loss = _softmax_ce(logits, ytr)
-                if use_alpha > 0.0 and anchor is not None:
-                    loss = loss + use_alpha * pnp.sum((weights - anchor) ** 2)
-                return loss
+        def cost(weights, W, b, Xtr=Xtr, ytr=ytr, use_alpha=use_alpha, anchor=anchor):
+            logits = _head_logits(_probs_batched(probs_qnode, weights, Xtr), W, b)
+            loss = _softmax_ce(logits, ytr)
+            if use_alpha > 0.0 and anchor is not None:
+                loss = loss + use_alpha * pnp.sum((weights - anchor) ** 2)
+            return loss
 
         for _ in range(epochs):
-            if phase == 0:
-                weights = optimizer.step(cost, weights)
-            elif train_theta:
-                weights, W_live, b_live = optimizer.step(cost, weights, W_live, b_live)
-            # active-task head: converged logistic regression on the current backbone
-            active = fit_linear_head(probs_features(probs_qnode, weights, Xtr_np),
-                                     task.y_train, task.name, seed=seed)
-            snap(history[-1]["epoch"] + 1, phase, active)
-        # freeze this task's head at the end of its phase
-        frozen_heads[phase] = fit_linear_head(probs_features(probs_qnode, weights, Xtr_np),
-                                              task.y_train, task.name, seed=seed)
+            weights, W_live, b_live = optimizer.step(cost, weights, W_live, b_live)
+            live = (np.asarray(W_live), np.asarray(b_live))
+            snap(history[-1]["epoch"] + 1, phase, live)
+        frozen_heads[phase] = (np.asarray(W_live), np.asarray(b_live))  # freeze at boundary
     return history
 
 

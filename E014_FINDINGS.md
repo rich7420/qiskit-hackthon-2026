@@ -99,9 +99,25 @@ pytest tests/test_e014_oiqcl.py -q
 
 **Trajectory figure** (`figures/e014_trajectory.png`, e009/e013 three-panel style): per-task
 test accuracy across the sequential run with boundaries at epochs 20/40 and 3-seed bands.
-Reads visually as the retention story — after a task is learned, the OI-QCL frozen (A) and
-anchor (C) curves stay flat-high on T1 while Sequential/QEWC/free (B) decay. Isolated-method
-curves for T2/T3 begin at their own boundaries (the task's head is created and frozen there).
+Every curve is a genuine *gradient* learning curve on a common accuracy axis — each OI-QCL
+head (W, b) is trained by Adam epoch-by-epoch (not a per-epoch converged classical fit), so
+its within-phase curve rises from chance like the shared-readout baselines rather than jumping
+instantly high. Checkpoints (mean over seeds), T1 @ep1 / @20 / @60 and T2 @40 / @60:
+
+| method | T1@1 | T1@20 | T1@60 | T2@40 | T2@60 |
+|---|---:|---:|---:|---:|---:|
+| sequential | 0.43 | 0.89 | 0.48 | 0.94 | 0.59 |
+| qewc | 0.43 | 0.89 | 0.87 | 0.74 | 0.59 |
+| frozen (A) | 0.54 | 0.97 | 0.97 | 0.92 | 0.92 |
+| free (B) | 0.54 | 0.97 | 0.51 | 0.95 | 0.82 |
+| anchor (C) | 0.54 | 0.97 | 0.96 | 0.92 | 0.92 |
+
+Reads as: all methods rise from chance; OI-QCL learns T1 higher (0.97 vs 0.89 — fuller readout);
+after later tasks, A/C retain both T1 and T2 while sequential forgets both, QEWC retains T1 but
+never fit T2 well (0.74→0.59, plasticity loss), and free (B) drifts. The gradient-trained head
+plateaus slightly below the converged-`LogisticRegression` heads used in the ACC/BWT table above;
+both are valid — the table reports the method's converged readout, the figure reports comparable
+learning curves.
 
 ## Claim boundaries
 

@@ -109,3 +109,30 @@ def init_weights(circ_shape, head_shape, seed: int = 42):
     circ = pnp.array(0.1 * rng.standard_normal(circ_shape), requires_grad=True)
     head = pnp.array(0.1 * rng.standard_normal(head_shape), requires_grad=True)
     return circ, head
+
+
+def rollout(qnode, circ_w, head_w, seed_window, n_generate: int):
+    """Autoregressively generate a synthetic series from a seed window.
+
+    The frozen quantum forecaster predicts the next value, appends it, slides the window, and
+    repeats — so the model *generates* a sequence in its own learned dynamics. This is the
+    generator used by Quantum Generative Replay: the old task's memory lives in the quantum
+    circuit (its params), not in stored raw data.
+    """
+    seq_len = len(np.asarray(seed_window))
+    seq = list(np.asarray(seed_window, dtype=float))
+    for _ in range(n_generate):
+        window = np.asarray(seq[-seq_len:])[None, :]
+        seq.append(float(np.asarray(predict(qnode, circ_w, head_w, window))[0]))
+    return np.asarray(seq)
+
+
+def window_series(series, seq_len: int):
+    """Slice a 1-D series into (X, y) next-step pairs (numpy)."""
+    s = np.asarray(series, dtype=float)
+    n = len(s) - seq_len - 1
+    if n <= 0:
+        return np.empty((0, seq_len)), np.empty((0,))
+    xs = np.stack([s[i:i + seq_len] for i in range(n)])
+    ys = np.asarray([s[i + seq_len] for i in range(n)])
+    return xs, ys

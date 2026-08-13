@@ -335,3 +335,37 @@ Figures (5 methods, e005 style, mean +/- SD bands, 5 seeds):
 - `figures/e009_forgetting.png` — per-task test NMSE / forgetting (via scripts/e009_plot.py)
 - `figures/e009_training.png` — per-task train NMSE / fit (via scripts/e009_plot_train.py)
 - `figures/e009_compare.png` — retention vs plasticity, lower-left best (via scripts/e009_plot_compare.py)
+
+## e015 — OI-QCL (measurement-side CL) on forecasting (Task-IL) — see E015_FINDINGS.md
+
+Ports OI-QCL (e014) from Task-IL classification to one-step forecasting on the e009 series
+(narma_5 -> damped_shm -> bessel_j2). Shared recurrent data-reuploading backbone theta; each task
+gets a linear (Ridge) head over qml.probs() = a per-task diagonal observable <H^(t)> = w^(t).p_theta(x).
+Old heads frozen -> measurement-side forgetting is a structural zero; only backbone drift can hurt.
+
+Result (seeds 42/43/44, test NMSE, lower better) retention / plasticity / forgetting / avg_final:
+- sequential (naive): 0.273 / 0.032 / +0.195 / 0.193
+- QEWC:               0.157 / 0.156 / -0.006 / 0.157
+- Frozen theta (A):   0.092 / 0.030 / +0.000 / 0.071
+- Free theta (B):     2.866 / 0.018 / +2.823 / 1.917
+- Anchor theta (C):   0.087 / 0.033 / -0.004 / 0.069
+
+Finding: OI-QCL A/C beat QEWC on retention AND plasticity (QEWC stalls new tasks, same as
+classification); free-vs-anchor (B vs C) decomposes forgetting into representation drift (B blows
+up) vs measurement overwrite (structurally 0). Cross-domain confirmation of e014.
+
+Task-agnostic router (`e015_router.py`, task id hidden at test): learned LogisticRegression router
+over p_theta reaches only ~0.47 TIA (3-task chance 0.33) -- the series are too similar in p_theta and
+forecasting's time-ordered split adds train->test shift -- yet A/C task-agnostic NMSE stays near the
+oracle (C: 0.069 -> 0.085) because the per-task heads are largely interchangeable under strong
+positive transfer. B (drifted backbone) is the exception. -> Task-IL is a convenience here, not a
+hard requirement, provided the backbone does not drift.
+
+Honest scope: mechanism claim only (isolation beats theta-protection within the quantum model
+class), NOT quantum advantage -- classical AR/ridge fits these series at ~0 NMSE and probs discard
+phase (same caveat as e014's matched classical control).
+
+Entrypoints: experiments/e015_oiqcl_forecast_compare.py, experiments/e015_router.py,
+experiments/e015_trajectory.py. Figures (scripts/e015_plot_compare.py, e015_router_aggregate.py,
+e015_plot_trajectory.py): figures/e015_oiqcl_forecast_compare.png, figures/e015_router.png,
+figures/e015_trajectory.png.

@@ -65,3 +65,17 @@ figures/**/*.pdf
 
 # LaTeX drawer diagnostic generated when a local TeX installation is incomplete
 latex_error.log
+
+# e015 OI-QCL forecasting (measurement-side CL) — keep key results + figures
+!results/e015_oiqcl_forecast_seed42.json
+!results/e015_oiqcl_forecast_seed43.json
+!results/e015_oiqcl_forecast_seed44.json
+!results/e015_router_seed42.json
+!results/e015_router_seed43.json
+!results/e015_router_seed44.json
+!results/e015_trajectory_seed42.json
+!results/e015_trajectory_seed43.json
+!results/e015_trajectory_seed44.json
+!figures/e015_oiqcl_forecast_compare.png
+!figures/e015_router.png
+!figures/e015_trajectory.png

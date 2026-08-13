@@ -1,0 +1,21 @@
+{
+  "figure": "e014_trajectory.png",
+  "created_at_utc": "2026-08-13T07:57:47.706240+00:00",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "methods": [
+    "sequential",
+    "qewc",
+    "frozen_head",
+    "free_head",
+    "anchor_head"
+  ],
+  "inputs": {
+    "e014_trajectory_seed42.json": "205dd436132592f65500612c6a163eed8ff3947055efd27a00924aad33f440e1",
+    "e014_trajectory_seed43.json": "cfd58c5c9ec8ab3907ccff0655bf074d6491dd9799114bfcbd82419a26b46ebd",
+    "e014_trajectory_seed44.json": "b651a9c2e6911aef4b609b7e28a3f52d4e7c539ff91509291e1160858650c083"
+  }
+}

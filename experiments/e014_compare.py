@@ -80,10 +80,10 @@ def _acc_matrix_stats(R: list[list[float | None]]) -> dict[str, Any]:
 
 
 def _run_shared_readout(method: str, tasks, *, layers, lr, epochs, lam_qewc,
-                        qfi_samples, seed, verbose) -> dict[str, Any]:
+                        qfi_samples, seed, verbose, n_qubits=N_QUBITS) -> dict[str, Any]:
     """sequential / qewc: one shared softmax readout, theta continued across tasks."""
-    clf_qnode, weight_shape = make_softmax_qnode(n_qubits=N_QUBITS, n_layers=layers)
-    qfi_qnode, _ = make_softmax_qnode(n_qubits=N_QUBITS, n_layers=layers)  # state-equivalent
+    clf_qnode, weight_shape = make_softmax_qnode(n_qubits=n_qubits, n_layers=layers)
+    qfi_qnode, _ = make_softmax_qnode(n_qubits=n_qubits, n_layers=layers)  # state-equivalent
     reg = EWC(lam_qewc if method == "qewc" else 0.0)
     weights = pnp.array(0.01 * np.random.default_rng(seed).standard_normal(weight_shape),
                         requires_grad=True)
@@ -112,7 +112,8 @@ def _run_shared_readout(method: str, tasks, *, layers, lr, epochs, lam_qewc,
             **_acc_matrix_stats([[v for v in row] for row in R])}
 
 
-def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, verbose) -> dict[str, Any]:
+def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, verbose,
+                       n_qubits=N_QUBITS) -> dict[str, Any]:
     """frozen_head / free_head / anchor_head: shared backbone + one isolated head per task.
 
     theta is advanced by a quantum gradient step (Variants B/C) or frozen (A); each task's
@@ -121,7 +122,7 @@ def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, v
     fit at task j on theta_j is kept fixed and re-evaluated on the *current* theta, so any
     later backbone drift surfaces as representation forgetting in R.
     """
-    probs_qnode, _ = make_probs_qnode(n_qubits=N_QUBITS, n_layers=layers)
+    probs_qnode, _ = make_probs_qnode(n_qubits=n_qubits, n_layers=layers)
     heads: list = []  # frozen sklearn LinearHead per completed task (fit at theta_j)
     R: list[list[float | None]] = [[None] * len(tasks) for _ in tasks]
     weights = None
@@ -129,7 +130,7 @@ def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, v
     for phase, task in enumerate(tasks):
         if phase == 0:
             # Solid shared representation from Task 1 (softmax/BCE backbone).
-            weights, _, _ = train_backbone(task, n_qubits=N_QUBITS, n_layers=layers,
+            weights, _, _ = train_backbone(task, n_qubits=n_qubits, n_layers=layers,
                                            lr=lr, epochs=epochs, seed=seed)
         elif method != "frozen_head":
             # Variant B: free theta; Variant C: soft-L2 anchor to previous theta.

@@ -1,0 +1,2794 @@
+{
+  "schema_version": 1,
+  "experiment": "e014_trajectory",
+  "created_at_utc": "2026-08-13T07:56:02.794426+00:00",
+  "source_code_sha256": "28adfd7ec85a7e0a99a03b0e2dc61ce7c74d846c6c3ab9db63111ec22cd5ca42",
+  "environment": {
+    "python": "3.13.15",
+    "packages": {
+      "pennylane": "0.45.1",
+      "numpy": "2.5.2",
+      "scikit-learn": "1.9.0"
+    }
+  },
+  "training": {
+    "epochs_per_task": 20,
+    "layers": 12,
+    "n_qubits": 4,
+    "learning_rate": 0.05,
+    "alpha_l2_anchor": 5.0,
+    "lambda_qewc": 0.8,
+    "qfi_samples": 64,
+    "n_train": 800,
+    "n_test": 200,
+    "seed": 43
+  },
+  "tasks": [
+    "MNIST 0/1",
+    "Fashion-MNIST 0/1",
+    "SPT/ATF phases"
+  ],
+  "task_keys": [
+    "task1",
+    "task2",
+    "task3"
+  ],
+  "histories": {
+    "sequential": [
+      {
+        "epoch": 0,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.395,
+          "task2": 0.745,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 1,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.47,
+          "task2": 0.875,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 2,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.58,
+          "task2": 0.94,
+          "task3": 0.56
+        }
+      },
+      {
+        "epoch": 3,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.655,
+          "task2": 0.945,
+          "task3": 0.735
+        }
+      },
+      {
+        "epoch": 4,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.7,
+          "task2": 0.88,
+          "task3": 0.855
+        }
+      },
+      {
+        "epoch": 5,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.73,
+          "task2": 0.78,
+          "task3": 0.885
+        }
+      },
+      {
+        "epoch": 6,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.735,
+          "task2": 0.67,
+          "task3": 0.83
+        }
+      },
+      {
+        "epoch": 7,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.725,
+          "task2": 0.54,
+          "task3": 0.685
+        }
+      },
+      {
+        "epoch": 8,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.74,
+          "task2": 0.39,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 9,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.755,
+          "task2": 0.39,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 10,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.765,
+          "task2": 0.405,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 11,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.785,
+          "task2": 0.425,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 12,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.825,
+          "task2": 0.4,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 13,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.835,
+          "task2": 0.355,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 14,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.845,
+          "task2": 0.25,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 15,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.855,
+          "task2": 0.185,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 16,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.855,
+          "task2": 0.2,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 17,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.85,
+          "task2": 0.2,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 18,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.86,
+          "task2": 0.19,
+          "task3": 0.53
+        }
+      },
+      {
+        "epoch": 19,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.87,
+          "task2": 0.17,
+          "task3": 0.785
+        }
+      },
+      {
+        "epoch": 20,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.88,
+          "task2": 0.145,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 21,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.89,
+          "task2": 0.37,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 22,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.925,
+          "task2": 0.635,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 23,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.92,
+          "task2": 0.89,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 24,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.875,
+          "task2": 0.935,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 25,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.795,
+          "task2": 0.935,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 26,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.755,
+          "task2": 0.94,
+          "task3": 0.355
+        }
+      },
+      {
+        "epoch": 27,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.705,
+          "task2": 0.955,
+          "task3": 0.0
+        }
+      },
+      {
+        "epoch": 28,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.625,
+          "task2": 0.945,
+          "task3": 0.0
+        }
+      },
+      {
+        "epoch": 29,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.565,
+          "task2": 0.94,
+          "task3": 0.0
+        }
+      },
+      {
+        "epoch": 30,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.52,
+          "task2": 0.93,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 31,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.5,
+          "task2": 0.93,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 32,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.495,
+          "task2": 0.93,
+          "task3": 0.545
+        }
+      },
+      {
+        "epoch": 33,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.505,
+          "task2": 0.94,
+          "task3": 0.515
+        }
+      },
+      {
+        "epoch": 34,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.525,
+          "task2": 0.94,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 35,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.505,
+          "task2": 0.94,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 36,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.5,
+          "task2": 0.94,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 37,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.51,
+          "task2": 0.94,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 38,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.495,
+          "task2": 0.94,
+          "task3": 0.0
+        }
+      },
+      {
+        "epoch": 39,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.495,
+          "task2": 0.94,
+          "task3": 0.0
+        }
+      },
+      {
+        "epoch": 40,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.5,
+          "task2": 0.935,
+          "task3": 0.0
+        }
+      },
+      {
+        "epoch": 41,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.49,
+          "task2": 0.935,
+          "task3": 0.125
+        }
+      },
+      {
+        "epoch": 42,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.48,
+          "task2": 0.92,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 43,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.48,
+          "task2": 0.92,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 44,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.45,
+          "task2": 0.91,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 45,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.43,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 46,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.425,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 47,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.425,
+          "task2": 0.905,
+          "task3": 0.965
+        }
+      },
+      {
+        "epoch": 48,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.45,
+          "task2": 0.9,
+          "task3": 0.99
+        }
+      },
+      {
+        "epoch": 49,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.445,
+          "task2": 0.885,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 50,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.465,
+          "task2": 0.885,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 51,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.445,
+          "task2": 0.88,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 52,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.455,
+          "task2": 0.885,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 53,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.465,
+          "task2": 0.865,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 54,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.49,
+          "task2": 0.805,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 55,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.505,
+          "task2": 0.745,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 56,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.49,
+          "task2": 0.66,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 57,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.48,
+          "task2": 0.655,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 58,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.465,
+          "task2": 0.64,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 59,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.46,
+          "task2": 0.64,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 60,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.46,
+          "task2": 0.65,
+          "task3": 1.0
+        }
+      }
+    ],
+    "qewc": [
+      {
+        "epoch": 0,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.395,
+          "task2": 0.745,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 1,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.47,
+          "task2": 0.875,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 2,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.58,
+          "task2": 0.94,
+          "task3": 0.56
+        }
+      },
+      {
+        "epoch": 3,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.655,
+          "task2": 0.945,
+          "task3": 0.735
+        }
+      },
+      {
+        "epoch": 4,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.7,
+          "task2": 0.88,
+          "task3": 0.855
+        }
+      },
+      {
+        "epoch": 5,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.73,
+          "task2": 0.78,
+          "task3": 0.885
+        }
+      },
+      {
+        "epoch": 6,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.735,
+          "task2": 0.67,
+          "task3": 0.83
+        }
+      },
+      {
+        "epoch": 7,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.725,
+          "task2": 0.54,
+          "task3": 0.685
+        }
+      },
+      {
+        "epoch": 8,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.74,
+          "task2": 0.39,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 9,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.755,
+          "task2": 0.39,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 10,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.765,
+          "task2": 0.405,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 11,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.785,
+          "task2": 0.425,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 12,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.825,
+          "task2": 0.4,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 13,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.835,
+          "task2": 0.355,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 14,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.845,
+          "task2": 0.25,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 15,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.855,
+          "task2": 0.185,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 16,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.855,
+          "task2": 0.2,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 17,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.85,
+          "task2": 0.2,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 18,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.86,
+          "task2": 0.19,
+          "task3": 0.53
+        }
+      },
+      {
+        "epoch": 19,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.87,
+          "task2": 0.17,
+          "task3": 0.785
+        }
+      },
+      {
+        "epoch": 20,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.88,
+          "task2": 0.145,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 21,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.89,
+          "task2": 0.37,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 22,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.925,
+          "task2": 0.615,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 23,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.925,
+          "task2": 0.815,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 24,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.915,
+          "task2": 0.915,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 25,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.905,
+          "task2": 0.945,
+          "task3": 0.285
+        }
+      },
+      {
+        "epoch": 26,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.905,
+          "task2": 0.94,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 27,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.885,
+          "task2": 0.9,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 28,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.875,
+          "task2": 0.845,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 29,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.855,
+          "task2": 0.805,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 30,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.87,
+          "task2": 0.8,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 31,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.88,
+          "task2": 0.825,
+          "task3": 0.625
+        }
+      },
+      {
+        "epoch": 32,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.895,
+          "task2": 0.85,
+          "task3": 0.36
+        }
+      },
+      {
+        "epoch": 33,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.89,
+          "task2": 0.86,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 34,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.89,
+          "task2": 0.86,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 35,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.885,
+          "task2": 0.855,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 36,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.88,
+          "task2": 0.845,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 37,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.885,
+          "task2": 0.815,
+          "task3": 0.5
+        }
+      },
+      {
+        "epoch": 38,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.885,
+          "task2": 0.79,
+          "task3": 0.34
+        }
+      },
+      {
+        "epoch": 39,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.875,
+          "task2": 0.77,
+          "task3": 0.22
+        }
+      },
+      {
+        "epoch": 40,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.885,
+          "task2": 0.775,
+          "task3": 0.13
+        }
+      },
+      {
+        "epoch": 41,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.87,
+          "task2": 0.675,
+          "task3": 0.905
+        }
+      },
+      {
+        "epoch": 42,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.845,
+          "task2": 0.545,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 43,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.84,
+          "task2": 0.495,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 44,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.815,
+          "task2": 0.485,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 45,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.795,
+          "task2": 0.47,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 46,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.79,
+          "task2": 0.445,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 47,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.77,
+          "task2": 0.45,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 48,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.765,
+          "task2": 0.47,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 49,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.77,
+          "task2": 0.485,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 50,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.77,
+          "task2": 0.5,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 51,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.765,
+          "task2": 0.51,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 52,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.765,
+          "task2": 0.52,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 53,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.765,
+          "task2": 0.51,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 54,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.78,
+          "task2": 0.515,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 55,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.78,
+          "task2": 0.515,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 56,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.765,
+          "task2": 0.515,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 57,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.765,
+          "task2": 0.515,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 58,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.765,
+          "task2": 0.51,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 59,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.765,
+          "task2": 0.505,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 60,
+        "phase": 3,
+        "test_accuracy": {
+          "task1": 0.77,
+          "task2": 0.5,
+          "task3": 1.0
+        }
+      }
+    ],
+    "frozen_head": [
+      {
+        "epoch": 0,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": null,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 1,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.895,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 2,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.87,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 3,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.81,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 4,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.84,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 5,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.91,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 6,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.905,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 7,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.935,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 8,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.92,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 9,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.9,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 10,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.905,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 11,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.92,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 12,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.92,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 13,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.94,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 14,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.945,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 15,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.945,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 16,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.95,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 17,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 18,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 19,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 20,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 21,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 22,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 23,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 24,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 25,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 26,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 27,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 28,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 29,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 30,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 31,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 32,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 33,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 34,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 35,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 36,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 37,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 38,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 39,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 40,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 41,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 42,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 43,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 44,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 45,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 46,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 47,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 48,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 49,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 50,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 51,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 52,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 53,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 54,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 55,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 56,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 57,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 58,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 59,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 60,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      }
+    ],
+    "free_head": [
+      {
+        "epoch": 0,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": null,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 1,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.895,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 2,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.87,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 3,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.81,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 4,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.84,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 5,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.91,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 6,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.905,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 7,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.935,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 8,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.92,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 9,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.9,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 10,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.905,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 11,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.92,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 12,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.92,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 13,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.94,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 14,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.945,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 15,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.945,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 16,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.95,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 17,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 18,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 19,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 20,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 21,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.955,
+          "task2": 0.895,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 22,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.94,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 23,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.945,
+          "task2": 0.925,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 24,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.92,
+          "task2": 0.925,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 25,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.875,
+          "task2": 0.92,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 26,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.86,
+          "task2": 0.92,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 27,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.795,
+          "task2": 0.93,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 28,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.775,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 29,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.765,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 30,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.76,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 31,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.73,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 32,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.71,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 33,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.7,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 34,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.655,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 35,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.6,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 36,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.595,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 37,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.59,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 38,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.585,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 39,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.575,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 40,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.57,
+          "task2": 0.935,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 41,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.55,
+          "task2": 0.935,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 42,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.56,
+          "task2": 0.93,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 43,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.615,
+          "task2": 0.925,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 44,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.655,
+          "task2": 0.925,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 45,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.66,
+          "task2": 0.925,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 46,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.655,
+          "task2": 0.925,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 47,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.645,
+          "task2": 0.93,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 48,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.65,
+          "task2": 0.925,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 49,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.645,
+          "task2": 0.925,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 50,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.64,
+          "task2": 0.935,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 51,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.625,
+          "task2": 0.925,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 52,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.605,
+          "task2": 0.93,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 53,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.595,
+          "task2": 0.93,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 54,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.595,
+          "task2": 0.93,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 55,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.595,
+          "task2": 0.93,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 56,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.585,
+          "task2": 0.925,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 57,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.565,
+          "task2": 0.925,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 58,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.555,
+          "task2": 0.925,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 59,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.55,
+          "task2": 0.925,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 60,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.535,
+          "task2": 0.93,
+          "task3": 1.0
+        }
+      }
+    ],
+    "anchor_head": [
+      {
+        "epoch": 0,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": null,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 1,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.895,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 2,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.87,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 3,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.81,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 4,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.84,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 5,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.91,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 6,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.905,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 7,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.935,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 8,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.92,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 9,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.9,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 10,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.905,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 11,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.92,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 12,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.92,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 13,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.94,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 14,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.945,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 15,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.945,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 16,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.95,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 17,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 18,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 19,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 20,
+        "phase": 0,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": null,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 21,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.955,
+          "task2": 0.895,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 22,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.9,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 23,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.97,
+          "task2": 0.91,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 24,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.97,
+          "task2": 0.9,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 25,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.97,
+          "task2": 0.91,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 26,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.915,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 27,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 28,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 29,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.895,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 30,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.895,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 31,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.9,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 32,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 33,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.915,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 34,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.92,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 35,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.915,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 36,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.915,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 37,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.915,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 38,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.91,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 39,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 40,
+        "phase": 1,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.905,
+          "task3": null
+        }
+      },
+      {
+        "epoch": 41,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.91,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 42,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 43,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.97,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 44,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.95,
+          "task2": 0.9,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 45,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.95,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 46,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.97,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 47,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 48,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.915,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 49,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.955,
+          "task2": 0.915,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 50,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.955,
+          "task2": 0.915,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 51,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.915,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 52,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.9,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 53,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 54,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.91,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 55,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.97,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 56,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.97,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 57,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 58,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.965,
+          "task2": 0.905,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 59,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.9,
+          "task3": 1.0
+        }
+      },
+      {
+        "epoch": 60,
+        "phase": 2,
+        "test_accuracy": {
+          "task1": 0.96,
+          "task2": 0.91,
+          "task3": 1.0
+        }
+      }
+    ]
+  },
+  "elapsed_sec": 96.1
+}

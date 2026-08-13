@@ -92,8 +92,16 @@ and C as the method that generalizes to that harder regime.
 python experiments/e014_probe.py --seed 42            # GO/NO-GO gate
 for s in 42 43 44; do python experiments/e014_compare.py --seed $s; done
 python scripts/e014_aggregate_plot.py                  # table + figures/e014_compare.png
+for s in 42 43 44; do python experiments/e014_trajectory.py --seed $s; done
+python scripts/plot_e014_trajectory.py                 # figures/e014_trajectory.png
 pytest tests/test_e014_oiqcl.py -q
 ```
+
+**Trajectory figure** (`figures/e014_trajectory.png`, e009/e013 three-panel style): per-task
+test accuracy across the sequential run with boundaries at epochs 20/40 and 3-seed bands.
+Reads visually as the retention story — after a task is learned, the OI-QCL frozen (A) and
+anchor (C) curves stay flat-high on T1 while Sequential/QEWC/free (B) decay. Isolated-method
+curves for T2/T3 begin at their own boundaries (the task's head is created and frozen there).
 
 ## Claim boundaries
 

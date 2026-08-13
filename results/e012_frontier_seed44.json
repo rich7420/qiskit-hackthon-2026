@@ -1,0 +1,1274 @@
+{
+  "experiment": "e012_lambda_frontier",
+  "created_at_utc": "2026-08-13T04:05:51.967030+00:00",
+  "source_code_sha256": "b3901b55689d64b71b283f72d432468056e0ded9c0842bee2fbe83d3ca44b962",
+  "axis": "C: stability-plasticity frontier, raw-vs-normalized lambda invariance",
+  "model": {
+    "n_qubits": 6,
+    "layers": 10,
+    "n_parameters": 120
+  },
+  "config": {
+    "seed": 44,
+    "epochs_per_task": 40,
+    "learning_rate": 0.02,
+    "fisher_samples": 32,
+    "lambdas": [
+      0.0,
+      0.025,
+      0.05,
+      0.1,
+      0.2,
+      0.4,
+      0.8,
+      1.6,
+      3.2
+    ],
+    "n_train": 400,
+    "n_test": 200,
+    "test_used_for_selection": false
+  },
+  "raw_fisher_mass": {
+    "output_cfi": 0.29850236006268316,
+    "zz_cfi": 2.276249649069886,
+    "uniform_xyz": 2.47599286537279,
+    "mof_ewc": 2.6446298433916597,
+    "readout_qewc": 12.290633874807751,
+    "qewc": 112.55545029340556
+  },
+  "mof_allocation": {
+    "ZZ": 0.0,
+    "XX": 0.9999999999999932,
+    "YY": 6.722705665413201e-15
+  },
+  "runtime_sec": {
+    "phase1": 16.81,
+    "fisher": 201.28
+  },
+  "frontier": {
+    "naive": [
+      {
+        "lambda": 0.0,
+        "raw_lambda": 0.0,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.735,
+            "task1_forgetting": 0.15,
+            "backward_transfer": -0.15,
+            "task2_final_adaptation": 0.95,
+            "average_final_accuracy": 0.8425
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.73,
+            "task1_forgetting": 0.14,
+            "backward_transfer": -0.14,
+            "task2_final_adaptation": 0.91,
+            "average_final_accuracy": 0.82
+          }
+        }
+      }
+    ],
+    "output_cfi": [
+      {
+        "lambda": 0.0,
+        "raw_lambda": 0.0,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.735,
+            "task1_forgetting": 0.15,
+            "backward_transfer": -0.15,
+            "task2_final_adaptation": 0.95,
+            "average_final_accuracy": 0.8425
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.73,
+            "task1_forgetting": 0.14,
+            "backward_transfer": -0.14,
+            "task2_final_adaptation": 0.91,
+            "average_final_accuracy": 0.82
+          }
+        }
+      },
+      {
+        "lambda": 0.025,
+        "raw_lambda": 10.050171795526252,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.86,
+            "task1_forgetting": 0.025,
+            "backward_transfer": -0.025,
+            "task2_final_adaptation": 0.955,
+            "average_final_accuracy": 0.9075
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.85,
+            "task1_forgetting": 0.02,
+            "backward_transfer": -0.02,
+            "task2_final_adaptation": 0.93,
+            "average_final_accuracy": 0.89
+          }
+        }
+      },
+      {
+        "lambda": 0.05,
+        "raw_lambda": 20.100343591052503,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8775,
+            "task1_forgetting": 0.0075,
+            "backward_transfer": -0.0075,
+            "task2_final_adaptation": 0.955,
+            "average_final_accuracy": 0.9163
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.88,
+            "task1_forgetting": -0.01,
+            "backward_transfer": 0.01,
+            "task2_final_adaptation": 0.93,
+            "average_final_accuracy": 0.905
+          }
+        }
+      },
+      {
+        "lambda": 0.1,
+        "raw_lambda": 40.20068718210501,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8675,
+            "task1_forgetting": 0.0175,
+            "backward_transfer": -0.0175,
+            "task2_final_adaptation": 0.96,
+            "average_final_accuracy": 0.9138
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.89,
+            "task1_forgetting": -0.02,
+            "backward_transfer": 0.02,
+            "task2_final_adaptation": 0.925,
+            "average_final_accuracy": 0.9075
+          }
+        }
+      },
+      {
+        "lambda": 0.2,
+        "raw_lambda": 80.40137436421001,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.865,
+            "task1_forgetting": 0.02,
+            "backward_transfer": -0.02,
+            "task2_final_adaptation": 0.955,
+            "average_final_accuracy": 0.91
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.875,
+            "task1_forgetting": -0.005,
+            "backward_transfer": 0.005,
+            "task2_final_adaptation": 0.925,
+            "average_final_accuracy": 0.9
+          }
+        }
+      },
+      {
+        "lambda": 0.4,
+        "raw_lambda": 160.80274872842003,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8775,
+            "task1_forgetting": 0.0075,
+            "backward_transfer": -0.0075,
+            "task2_final_adaptation": 0.9375,
+            "average_final_accuracy": 0.9075
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.88,
+            "task1_forgetting": -0.01,
+            "backward_transfer": 0.01,
+            "task2_final_adaptation": 0.915,
+            "average_final_accuracy": 0.8975
+          }
+        }
+      },
+      {
+        "lambda": 0.8,
+        "raw_lambda": 321.60549745684006,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8975,
+            "task1_forgetting": -0.0125,
+            "backward_transfer": 0.0125,
+            "task2_final_adaptation": 0.91,
+            "average_final_accuracy": 0.9038
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.87,
+            "task1_forgetting": 0.0,
+            "backward_transfer": 0.0,
+            "task2_final_adaptation": 0.89,
+            "average_final_accuracy": 0.88
+          }
+        }
+      },
+      {
+        "lambda": 1.6,
+        "raw_lambda": 643.2109949136801,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.89,
+            "task1_forgetting": -0.005,
+            "backward_transfer": 0.005,
+            "task2_final_adaptation": 0.815,
+            "average_final_accuracy": 0.8525
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.875,
+            "task1_forgetting": -0.005,
+            "backward_transfer": 0.005,
+            "task2_final_adaptation": 0.83,
+            "average_final_accuracy": 0.8525
+          }
+        }
+      },
+      {
+        "lambda": 3.2,
+        "raw_lambda": 1286.4219898273602,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8875,
+            "task1_forgetting": -0.0025,
+            "backward_transfer": 0.0025,
+            "task2_final_adaptation": 0.7225,
+            "average_final_accuracy": 0.805
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.87,
+            "task1_forgetting": 0.0,
+            "backward_transfer": 0.0,
+            "task2_final_adaptation": 0.715,
+            "average_final_accuracy": 0.7925
+          }
+        }
+      }
+    ],
+    "zz_cfi": [
+      {
+        "lambda": 0.0,
+        "raw_lambda": 0.0,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.735,
+            "task1_forgetting": 0.15,
+            "backward_transfer": -0.15,
+            "task2_final_adaptation": 0.95,
+            "average_final_accuracy": 0.8425
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.73,
+            "task1_forgetting": 0.14,
+            "backward_transfer": -0.14,
+            "task2_final_adaptation": 0.91,
+            "average_final_accuracy": 0.82
+          }
+        }
+      },
+      {
+        "lambda": 0.025,
+        "raw_lambda": 1.3179573695819573,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8625,
+            "task1_forgetting": 0.0225,
+            "backward_transfer": -0.0225,
+            "task2_final_adaptation": 0.95,
+            "average_final_accuracy": 0.9062
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.86,
+            "task1_forgetting": 0.01,
+            "backward_transfer": -0.01,
+            "task2_final_adaptation": 0.925,
+            "average_final_accuracy": 0.8925
+          }
+        }
+      },
+      {
+        "lambda": 0.05,
+        "raw_lambda": 2.6359147391639146,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8875,
+            "task1_forgetting": -0.0025,
+            "backward_transfer": 0.0025,
+            "task2_final_adaptation": 0.9525,
+            "average_final_accuracy": 0.92
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.875,
+            "task1_forgetting": -0.005,
+            "backward_transfer": 0.005,
+            "task2_final_adaptation": 0.93,
+            "average_final_accuracy": 0.9025
+          }
+        }
+      },
+      {
+        "lambda": 0.1,
+        "raw_lambda": 5.271829478327829,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.875,
+            "task1_forgetting": 0.01,
+            "backward_transfer": -0.01,
+            "task2_final_adaptation": 0.9575,
+            "average_final_accuracy": 0.9163
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.905,
+            "task1_forgetting": -0.035,
+            "backward_transfer": 0.035,
+            "task2_final_adaptation": 0.925,
+            "average_final_accuracy": 0.915
+          }
+        }
+      },
+      {
+        "lambda": 0.2,
+        "raw_lambda": 10.543658956655658,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8875,
+            "task1_forgetting": -0.0025,
+            "backward_transfer": 0.0025,
+            "task2_final_adaptation": 0.955,
+            "average_final_accuracy": 0.9212
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.91,
+            "task1_forgetting": -0.04,
+            "backward_transfer": 0.04,
+            "task2_final_adaptation": 0.92,
+            "average_final_accuracy": 0.915
+          }
+        }
+      },
+      {
+        "lambda": 0.4,
+        "raw_lambda": 21.087317913311317,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8925,
+            "task1_forgetting": -0.0075,
+            "backward_transfer": 0.0075,
+            "task2_final_adaptation": 0.935,
+            "average_final_accuracy": 0.9138
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.895,
+            "task1_forgetting": -0.025,
+            "backward_transfer": 0.025,
+            "task2_final_adaptation": 0.915,
+            "average_final_accuracy": 0.905
+          }
+        }
+      },
+      {
+        "lambda": 0.8,
+        "raw_lambda": 42.174635826622634,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.9025,
+            "task1_forgetting": -0.0175,
+            "backward_transfer": 0.0175,
+            "task2_final_adaptation": 0.895,
+            "average_final_accuracy": 0.8987
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.885,
+            "task1_forgetting": -0.015,
+            "backward_transfer": 0.015,
+            "task2_final_adaptation": 0.865,
+            "average_final_accuracy": 0.875
+          }
+        }
+      },
+      {
+        "lambda": 1.6,
+        "raw_lambda": 84.34927165324527,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8925,
+            "task1_forgetting": -0.0075,
+            "backward_transfer": 0.0075,
+            "task2_final_adaptation": 0.805,
+            "average_final_accuracy": 0.8488
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.88,
+            "task1_forgetting": -0.01,
+            "backward_transfer": 0.01,
+            "task2_final_adaptation": 0.815,
+            "average_final_accuracy": 0.8475
+          }
+        }
+      },
+      {
+        "lambda": 3.2,
+        "raw_lambda": 168.69854330649054,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8875,
+            "task1_forgetting": -0.0025,
+            "backward_transfer": 0.0025,
+            "task2_final_adaptation": 0.705,
+            "average_final_accuracy": 0.7962
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.87,
+            "task1_forgetting": 0.0,
+            "backward_transfer": 0.0,
+            "task2_final_adaptation": 0.71,
+            "average_final_accuracy": 0.79
+          }
+        }
+      }
+    ],
+    "uniform_xyz": [
+      {
+        "lambda": 0.0,
+        "raw_lambda": 0.0,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.735,
+            "task1_forgetting": 0.15,
+            "backward_transfer": -0.15,
+            "task2_final_adaptation": 0.95,
+            "average_final_accuracy": 0.8425
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.73,
+            "task1_forgetting": 0.14,
+            "backward_transfer": -0.14,
+            "task2_final_adaptation": 0.91,
+            "average_final_accuracy": 0.82
+          }
+        }
+      },
+      {
+        "lambda": 0.025,
+        "raw_lambda": 1.2116351553171032,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8225,
+            "task1_forgetting": 0.0625,
+            "backward_transfer": -0.0625,
+            "task2_final_adaptation": 0.95,
+            "average_final_accuracy": 0.8862
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.815,
+            "task1_forgetting": 0.055,
+            "backward_transfer": -0.055,
+            "task2_final_adaptation": 0.915,
+            "average_final_accuracy": 0.865
+          }
+        }
+      },
+      {
+        "lambda": 0.05,
+        "raw_lambda": 2.4232703106342064,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8575,
+            "task1_forgetting": 0.0275,
+            "backward_transfer": -0.0275,
+            "task2_final_adaptation": 0.9525,
+            "average_final_accuracy": 0.905
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.87,
+            "task1_forgetting": 0.0,
+            "backward_transfer": 0.0,
+            "task2_final_adaptation": 0.92,
+            "average_final_accuracy": 0.895
+          }
+        }
+      },
+      {
+        "lambda": 0.1,
+        "raw_lambda": 4.846540621268413,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.9025,
+            "task1_forgetting": -0.0175,
+            "backward_transfer": 0.0175,
+            "task2_final_adaptation": 0.945,
+            "average_final_accuracy": 0.9237
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.91,
+            "task1_forgetting": -0.04,
+            "backward_transfer": 0.04,
+            "task2_final_adaptation": 0.915,
+            "average_final_accuracy": 0.9125
+          }
+        }
+      },
+      {
+        "lambda": 0.2,
+        "raw_lambda": 9.693081242536826,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.9125,
+            "task1_forgetting": -0.0275,
+            "backward_transfer": 0.0275,
+            "task2_final_adaptation": 0.945,
+            "average_final_accuracy": 0.9287
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.92,
+            "task1_forgetting": -0.05,
+            "backward_transfer": 0.05,
+            "task2_final_adaptation": 0.925,
+            "average_final_accuracy": 0.9225
+          }
+        }
+      },
+      {
+        "lambda": 0.4,
+        "raw_lambda": 19.38616248507365,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.9175,
+            "task1_forgetting": -0.0325,
+            "backward_transfer": 0.0325,
+            "task2_final_adaptation": 0.9325,
+            "average_final_accuracy": 0.925
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.935,
+            "task1_forgetting": -0.065,
+            "backward_transfer": 0.065,
+            "task2_final_adaptation": 0.905,
+            "average_final_accuracy": 0.92
+          }
+        }
+      },
+      {
+        "lambda": 0.8,
+        "raw_lambda": 38.7723249701473,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.91,
+            "task1_forgetting": -0.025,
+            "backward_transfer": 0.025,
+            "task2_final_adaptation": 0.9025,
+            "average_final_accuracy": 0.9062
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.91,
+            "task1_forgetting": -0.04,
+            "backward_transfer": 0.04,
+            "task2_final_adaptation": 0.875,
+            "average_final_accuracy": 0.8925
+          }
+        }
+      },
+      {
+        "lambda": 1.6,
+        "raw_lambda": 77.5446499402946,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8975,
+            "task1_forgetting": -0.0125,
+            "backward_transfer": 0.0125,
+            "task2_final_adaptation": 0.8,
+            "average_final_accuracy": 0.8488
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.88,
+            "task1_forgetting": -0.01,
+            "backward_transfer": 0.01,
+            "task2_final_adaptation": 0.795,
+            "average_final_accuracy": 0.8375
+          }
+        }
+      },
+      {
+        "lambda": 3.2,
+        "raw_lambda": 155.0892998805892,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8925,
+            "task1_forgetting": -0.0075,
+            "backward_transfer": 0.0075,
+            "task2_final_adaptation": 0.7,
+            "average_final_accuracy": 0.7962
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.875,
+            "task1_forgetting": -0.005,
+            "backward_transfer": 0.005,
+            "task2_final_adaptation": 0.71,
+            "average_final_accuracy": 0.7925
+          }
+        }
+      }
+    ],
+    "mof_ewc": [
+      {
+        "lambda": 0.0,
+        "raw_lambda": 0.0,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.735,
+            "task1_forgetting": 0.15,
+            "backward_transfer": -0.15,
+            "task2_final_adaptation": 0.95,
+            "average_final_accuracy": 0.8425
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.73,
+            "task1_forgetting": 0.14,
+            "backward_transfer": -0.14,
+            "task2_final_adaptation": 0.91,
+            "average_final_accuracy": 0.82
+          }
+        }
+      },
+      {
+        "lambda": 0.025,
+        "raw_lambda": 1.1343742518433462,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.7975,
+            "task1_forgetting": 0.0875,
+            "backward_transfer": -0.0875,
+            "task2_final_adaptation": 0.9475,
+            "average_final_accuracy": 0.8725
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.81,
+            "task1_forgetting": 0.06,
+            "backward_transfer": -0.06,
+            "task2_final_adaptation": 0.915,
+            "average_final_accuracy": 0.8625
+          }
+        }
+      },
+      {
+        "lambda": 0.05,
+        "raw_lambda": 2.2687485036866923,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.835,
+            "task1_forgetting": 0.05,
+            "backward_transfer": -0.05,
+            "task2_final_adaptation": 0.9525,
+            "average_final_accuracy": 0.8938
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.87,
+            "task1_forgetting": 0.0,
+            "backward_transfer": 0.0,
+            "task2_final_adaptation": 0.915,
+            "average_final_accuracy": 0.8925
+          }
+        }
+      },
+      {
+        "lambda": 0.1,
+        "raw_lambda": 4.537497007373385,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.87,
+            "task1_forgetting": 0.015,
+            "backward_transfer": -0.015,
+            "task2_final_adaptation": 0.94,
+            "average_final_accuracy": 0.905
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.9,
+            "task1_forgetting": -0.03,
+            "backward_transfer": 0.03,
+            "task2_final_adaptation": 0.915,
+            "average_final_accuracy": 0.9075
+          }
+        }
+      },
+      {
+        "lambda": 0.2,
+        "raw_lambda": 9.07499401474677,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.9175,
+            "task1_forgetting": -0.0325,
+            "backward_transfer": 0.0325,
+            "task2_final_adaptation": 0.9375,
+            "average_final_accuracy": 0.9275
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.925,
+            "task1_forgetting": -0.055,
+            "backward_transfer": 0.055,
+            "task2_final_adaptation": 0.925,
+            "average_final_accuracy": 0.925
+          }
+        }
+      },
+      {
+        "lambda": 0.4,
+        "raw_lambda": 18.14998802949354,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.9225,
+            "task1_forgetting": -0.0375,
+            "backward_transfer": 0.0375,
+            "task2_final_adaptation": 0.93,
+            "average_final_accuracy": 0.9263
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.94,
+            "task1_forgetting": -0.07,
+            "backward_transfer": 0.07,
+            "task2_final_adaptation": 0.9,
+            "average_final_accuracy": 0.92
+          }
+        }
+      },
+      {
+        "lambda": 0.8,
+        "raw_lambda": 36.29997605898708,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.9175,
+            "task1_forgetting": -0.0325,
+            "backward_transfer": 0.0325,
+            "task2_final_adaptation": 0.9125,
+            "average_final_accuracy": 0.915
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.91,
+            "task1_forgetting": -0.04,
+            "backward_transfer": 0.04,
+            "task2_final_adaptation": 0.885,
+            "average_final_accuracy": 0.8975
+          }
+        }
+      },
+      {
+        "lambda": 1.6,
+        "raw_lambda": 72.59995211797415,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.905,
+            "task1_forgetting": -0.02,
+            "backward_transfer": 0.02,
+            "task2_final_adaptation": 0.8075,
+            "average_final_accuracy": 0.8562
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.89,
+            "task1_forgetting": -0.02,
+            "backward_transfer": 0.02,
+            "task2_final_adaptation": 0.81,
+            "average_final_accuracy": 0.85
+          }
+        }
+      },
+      {
+        "lambda": 3.2,
+        "raw_lambda": 145.1999042359483,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8925,
+            "task1_forgetting": -0.0075,
+            "backward_transfer": 0.0075,
+            "task2_final_adaptation": 0.7175,
+            "average_final_accuracy": 0.805
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.875,
+            "task1_forgetting": -0.005,
+            "backward_transfer": 0.005,
+            "task2_final_adaptation": 0.715,
+            "average_final_accuracy": 0.795
+          }
+        }
+      }
+    ],
+    "readout_qewc": [
+      {
+        "lambda": 0.0,
+        "raw_lambda": 0.0,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.735,
+            "task1_forgetting": 0.15,
+            "backward_transfer": -0.15,
+            "task2_final_adaptation": 0.95,
+            "average_final_accuracy": 0.8425
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.73,
+            "task1_forgetting": 0.14,
+            "backward_transfer": -0.14,
+            "task2_final_adaptation": 0.91,
+            "average_final_accuracy": 0.82
+          }
+        }
+      },
+      {
+        "lambda": 0.025,
+        "raw_lambda": 0.24408830582360225,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.82,
+            "task1_forgetting": 0.065,
+            "backward_transfer": -0.065,
+            "task2_final_adaptation": 0.9475,
+            "average_final_accuracy": 0.8838
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.82,
+            "task1_forgetting": 0.05,
+            "backward_transfer": -0.05,
+            "task2_final_adaptation": 0.915,
+            "average_final_accuracy": 0.8675
+          }
+        }
+      },
+      {
+        "lambda": 0.05,
+        "raw_lambda": 0.4881766116472045,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.85,
+            "task1_forgetting": 0.035,
+            "backward_transfer": -0.035,
+            "task2_final_adaptation": 0.9475,
+            "average_final_accuracy": 0.8987
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.87,
+            "task1_forgetting": 0.0,
+            "backward_transfer": 0.0,
+            "task2_final_adaptation": 0.92,
+            "average_final_accuracy": 0.895
+          }
+        }
+      },
+      {
+        "lambda": 0.1,
+        "raw_lambda": 0.976353223294409,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.89,
+            "task1_forgetting": -0.005,
+            "backward_transfer": 0.005,
+            "task2_final_adaptation": 0.9425,
+            "average_final_accuracy": 0.9163
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.915,
+            "task1_forgetting": -0.045,
+            "backward_transfer": 0.045,
+            "task2_final_adaptation": 0.92,
+            "average_final_accuracy": 0.9175
+          }
+        }
+      },
+      {
+        "lambda": 0.2,
+        "raw_lambda": 1.952706446588818,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.925,
+            "task1_forgetting": -0.04,
+            "backward_transfer": 0.04,
+            "task2_final_adaptation": 0.9425,
+            "average_final_accuracy": 0.9338
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.925,
+            "task1_forgetting": -0.055,
+            "backward_transfer": 0.055,
+            "task2_final_adaptation": 0.925,
+            "average_final_accuracy": 0.925
+          }
+        }
+      },
+      {
+        "lambda": 0.4,
+        "raw_lambda": 3.905412893177636,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.925,
+            "task1_forgetting": -0.04,
+            "backward_transfer": 0.04,
+            "task2_final_adaptation": 0.9275,
+            "average_final_accuracy": 0.9263
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.94,
+            "task1_forgetting": -0.07,
+            "backward_transfer": 0.07,
+            "task2_final_adaptation": 0.91,
+            "average_final_accuracy": 0.925
+          }
+        }
+      },
+      {
+        "lambda": 0.8,
+        "raw_lambda": 7.810825786355272,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.91,
+            "task1_forgetting": -0.025,
+            "backward_transfer": 0.025,
+            "task2_final_adaptation": 0.905,
+            "average_final_accuracy": 0.9075
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.91,
+            "task1_forgetting": -0.04,
+            "backward_transfer": 0.04,
+            "task2_final_adaptation": 0.88,
+            "average_final_accuracy": 0.895
+          }
+        }
+      },
+      {
+        "lambda": 1.6,
+        "raw_lambda": 15.621651572710544,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.9025,
+            "task1_forgetting": -0.0175,
+            "backward_transfer": 0.0175,
+            "task2_final_adaptation": 0.8075,
+            "average_final_accuracy": 0.855
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.88,
+            "task1_forgetting": -0.01,
+            "backward_transfer": 0.01,
+            "task2_final_adaptation": 0.81,
+            "average_final_accuracy": 0.845
+          }
+        }
+      },
+      {
+        "lambda": 3.2,
+        "raw_lambda": 31.243303145421088,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8925,
+            "task1_forgetting": -0.0075,
+            "backward_transfer": 0.0075,
+            "task2_final_adaptation": 0.7025,
+            "average_final_accuracy": 0.7975
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.875,
+            "task1_forgetting": -0.005,
+            "backward_transfer": 0.005,
+            "task2_final_adaptation": 0.71,
+            "average_final_accuracy": 0.7925
+          }
+        }
+      }
+    ],
+    "qewc": [
+      {
+        "lambda": 0.0,
+        "raw_lambda": 0.0,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.735,
+            "task1_forgetting": 0.15,
+            "backward_transfer": -0.15,
+            "task2_final_adaptation": 0.95,
+            "average_final_accuracy": 0.8425
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.73,
+            "task1_forgetting": 0.14,
+            "backward_transfer": -0.14,
+            "task2_final_adaptation": 0.91,
+            "average_final_accuracy": 0.82
+          }
+        }
+      },
+      {
+        "lambda": 0.025,
+        "raw_lambda": 0.026653529368677452,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.815,
+            "task1_forgetting": 0.07,
+            "backward_transfer": -0.07,
+            "task2_final_adaptation": 0.9475,
+            "average_final_accuracy": 0.8812
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.81,
+            "task1_forgetting": 0.06,
+            "backward_transfer": -0.06,
+            "task2_final_adaptation": 0.915,
+            "average_final_accuracy": 0.8625
+          }
+        }
+      },
+      {
+        "lambda": 0.05,
+        "raw_lambda": 0.053307058737354904,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.8425,
+            "task1_forgetting": 0.0425,
+            "backward_transfer": -0.0425,
+            "task2_final_adaptation": 0.9475,
+            "average_final_accuracy": 0.895
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.855,
+            "task1_forgetting": 0.015,
+            "backward_transfer": -0.015,
+            "task2_final_adaptation": 0.915,
+            "average_final_accuracy": 0.885
+          }
+        }
+      },
+      {
+        "lambda": 0.1,
+        "raw_lambda": 0.10661411747470981,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.87,
+            "task1_forgetting": 0.015,
+            "backward_transfer": -0.015,
+            "task2_final_adaptation": 0.94,
+            "average_final_accuracy": 0.905
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.89,
+            "task1_forgetting": -0.02,
+            "backward_transfer": 0.02,
+            "task2_final_adaptation": 0.92,
+            "average_final_accuracy": 0.905
+          }
+        }
+      },
+      {
+        "lambda": 0.2,
+        "raw_lambda": 0.21322823494941961,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.92,
+            "task1_forgetting": -0.035,
+            "backward_transfer": 0.035,
+            "task2_final_adaptation": 0.94,
+            "average_final_accuracy": 0.93
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.935,
+            "task1_forgetting": -0.065,
+            "backward_transfer": 0.065,
+            "task2_final_adaptation": 0.92,
+            "average_final_accuracy": 0.9275
+          }
+        }
+      },
+      {
+        "lambda": 0.4,
+        "raw_lambda": 0.42645646989883923,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.935,
+            "task1_forgetting": -0.05,
+            "backward_transfer": 0.05,
+            "task2_final_adaptation": 0.9325,
+            "average_final_accuracy": 0.9338
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.935,
+            "task1_forgetting": -0.065,
+            "backward_transfer": 0.065,
+            "task2_final_adaptation": 0.9,
+            "average_final_accuracy": 0.9175
+          }
+        }
+      },
+      {
+        "lambda": 0.8,
+        "raw_lambda": 0.8529129397976785,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.9275,
+            "task1_forgetting": -0.0425,
+            "backward_transfer": 0.0425,
+            "task2_final_adaptation": 0.925,
+            "average_final_accuracy": 0.9263
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.905,
+            "task1_forgetting": -0.035,
+            "backward_transfer": 0.035,
+            "task2_final_adaptation": 0.895,
+            "average_final_accuracy": 0.9
+          }
+        }
+      },
+      {
+        "lambda": 1.6,
+        "raw_lambda": 1.705825879595357,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.9075,
+            "task1_forgetting": -0.0225,
+            "backward_transfer": 0.0225,
+            "task2_final_adaptation": 0.8175,
+            "average_final_accuracy": 0.8625
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.895,
+            "task1_forgetting": -0.025,
+            "backward_transfer": 0.025,
+            "task2_final_adaptation": 0.82,
+            "average_final_accuracy": 0.8575
+          }
+        }
+      },
+      {
+        "lambda": 3.2,
+        "raw_lambda": 3.411651759190714,
+        "metrics": {
+          "train": {
+            "task1_at_boundary": 0.885,
+            "task1_final_retention": 0.895,
+            "task1_forgetting": -0.01,
+            "backward_transfer": 0.01,
+            "task2_final_adaptation": 0.735,
+            "average_final_accuracy": 0.815
+          },
+          "test": {
+            "task1_at_boundary": 0.87,
+            "task1_final_retention": 0.88,
+            "task1_forgetting": -0.01,
+            "backward_transfer": 0.01,
+            "task2_final_adaptation": 0.72,
+            "average_final_accuracy": 0.8
+          }
+        }
+      }
+    ]
+  }
+}

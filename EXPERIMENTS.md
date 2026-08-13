@@ -421,3 +421,62 @@ Cross-experiment overview:
 - The common forgetting panel uses phase-end minus final held-out score for every block. For
   E006 this is recomputed per seed from the committed raw test-balanced-accuracy histories; it
   is intentionally not the E006 summary's max-boundary forgetting headline.
+
+---
+
+## E012 — reconciling E008 with 2607.16030: the QEWC<EWC result is a lambda artifact
+
+Goal: E008 ranked all consolidation methods at one shared strength (mean-one Fisher, lambda=0.1)
+and reported QEWC (full-QFI) slightly below EWC (output-CFI), which appears to contradict the
+QFI advantage in arXiv:2607.16030. E012 (axis C) tests whether that ordering survives once each
+method is placed on its own stability-plasticity frontier rather than a single lambda point.
+
+Framework:         pennylane 0.45.1 (default.qubit, backprop training; exact probabilities)
+Run command:       `python experiments/e012_lambda_frontier.py --seed {42,43,44}`
+Analysis command:  `python scripts/analyze_e012_frontier.py {train,test}`
+Plot command:      `python scripts/plot_e012_frontier.py`
+
+Method:
+- reuses the exact E008 harness (6 qubits, 10 layers, MNIST 0/1 -> Fashion-MNIST 0/1, identical
+  Task-1 trajectory, Adam state, anchors, and estimators) and sweeps a shared effective lambda
+  in {0, 0.025, 0.05, 0.1, 0.2, 0.4, 0.8, 1.6, 3.2} on the mean-one Fisher of all six methods
+- key identity: sweeping shared lambda on mean-one Fisher equals sweeping a per-method lambda on
+  raw Fisher (lambda_raw = lambda_shared / mean(F_raw)). The frontier is therefore invariant to
+  the normalize-vs-raw and shared-vs-separate-lambda protocol choice; only the operating point
+  moves. E005's separate lambdas (30 vs 0.8) and E008's shared lambda are two points on the same
+  curves. lambda=0.1 reproduces the E008 single-point numbers exactly (sanity check)
+- frontier metric = max Task-1 retention subject to a Task-2 plasticity floor; selection uses
+  train metrics only, test recorded for diagnosis
+
+Result (three seeds 42/43/44; train frontier selection unless noted):
+- max retention at adaptation >= 0.92: QEWC 0.897 +/- 0.043, Readout-QFI 0.895 +/- 0.042,
+  Uniform 0.881, EWC 0.876 +/- 0.013, Joint-ZZ 0.876, MOF-EWC 0.872
+- best mean-final accuracy over the lambda grid: Readout-QFI 0.913, QEWC 0.912, Uniform 0.910,
+  EWC 0.909, Joint-ZZ 0.908, MOF-EWC 0.900 (test agrees: Readout-QFI 0.912 > EWC 0.905)
+- operating points: EWC's knee is at lambda ~0.1-0.4, QEWC/Readout-QFI at ~0.2-0.4, so E008's
+  shared lambda=0.1 sits at EWC's knee but under-regularizes QEWC
+
+Finding: E008's QEWC < EWC ordering does not survive frontier analysis; it is an artifact of
+ranking every method at one shared lambda. On the matched-plasticity frontier the quantum-Fisher
+methods (QEWC and readout-subsystem QFI) reach the highest retention and EWC drops to mid-pack,
+consistent with the QFI advantage in 2607.16030. Four independent frontier metrics (train/test x
+retention-at-plasticity/best-average) agree on the ordering, though three seeds with 0.04-0.06
+sample SD make the individual gaps statistically inseparable — the claim is the consistent
+ordering, not any single gap. Two E008 conclusions survive unchanged: readout-subsystem QFI
+matches or beats full-state QFI, and MOF-EWC (geometry-coverage-optimized allocation) is last on
+every metric, so "maximal state-geometry coverage != task-memory protection" still holds. At the
+extreme-plasticity end (adaptation >= 0.94) the ordering reshuffles (Joint-ZZ leads), so the QFI
+advantage is concentrated at the moderate-plasticity knee.
+
+Claim boundaries:
+- exact-statevector, two-task, three-seed engineering result; no finite-shot, noise, or hardware
+  claim; sample SD is run-to-run spread, not a confidence interval
+- axis C only (lambda protocol). Axes for system size / readout fraction and a weight-sharing
+  paper anchor are not yet run, so this does not yet quantify how the frontier gap scales with
+  how much of the state the classifier reads
+
+Artifacts:
+- `results/e012_frontier_seed{42,43,44}.json` — per-lambda train/test retention and adaptation
+  for all six methods, raw Fisher masses, MOF allocation, source hash, and runtime
+- `figures/e012_frontier.png` — retention-vs-adaptation frontiers (seed mean), with E008's
+  lambda=0.1 operating point marked to show why the single-point ranking misorders the methods

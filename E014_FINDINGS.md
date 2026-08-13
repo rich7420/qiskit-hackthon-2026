@@ -119,6 +119,28 @@ plateaus slightly below the converged-`LogisticRegression` heads used in the ACC
 both are valid — the table reports the method's converged readout, the figure reports comparable
 learning curves.
 
+## Task-agnostic evaluation — the cost of removing the task id
+
+OI-QCL is Task-IL: the head is chosen by a given task id. To quantify that assumption we hide
+the id and infer it by **max-confidence routing** — run every frozen head on the pooled test
+set, pick the most confident, predict with it (`experiments/e014_task_inference.py`,
+`figures/e014_task_inference.png`). Mean over seeds 42/43/44:
+
+| method | Task-IL acc (id given) | task-agnostic acc | task-inference acc (TIA) |
+|---|---:|---:|---:|
+| frozen (A) | 0.964 | 0.834 | 0.676 |
+| free (B) | 0.801 | 0.690 | 0.562 |
+| anchor (C) | 0.962 | 0.846 | 0.687 |
+
+Removing the id costs ~0.12 accuracy; TIA ≈ 0.68 (chance 0.33). The routing confusion matrix
+shows why: **T3 (SPT, a quantum-native distribution) routes perfectly (1.00), but its
+over-confident head grabs ~35–42% of MNIST/Fashion** (max-confidence measures distance to a
+head's own boundary, not task membership, so it is fooled by out-of-distribution
+over-confidence). Takeaways: (i) when task distributions differ enough, `p_θ(x)` already
+carries the task identity; (ii) similar tasks need a better router (a dedicated task classifier
+over `p_θ(x)`, or temperature/OOD-calibrated confidence) — untested here. This is the honest
+boundary of the Task-IL result.
+
 ## Claim boundaries
 
 Simulator only (`default.qubit`), 4 qubits, exact probabilities (no finite-shot/hardware

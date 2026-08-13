@@ -1,0 +1,16 @@
+{
+  "figure": "e014_noise_compare.png",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "inputs": [
+    "results/e014_cmp_red_noiseless_seed42.json",
+    "results/e014_cmp_red_noiseless_seed43.json",
+    "results/e014_cmp_red_noiseless_seed44.json",
+    "results/e014_cmp_red_noisy_seed42.json",
+    "results/e014_cmp_red_noisy_seed43.json",
+    "results/e014_cmp_red_noisy_seed44.json"
+  ]
+}

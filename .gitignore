@@ -152,3 +152,5 @@ latex_error.log
 !results/e014_cmp_red_noisy_seed42.json
 !results/e014_cmp_red_noisy_seed43.json
 !results/e014_cmp_red_noisy_seed44.json
+!figures/e014_noise_compare.png
+!results/e014_noise_compare_figure_provenance.json

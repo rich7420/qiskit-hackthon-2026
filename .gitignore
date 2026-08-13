@@ -62,6 +62,16 @@ figures/**/*.pdf
 !figures/e004_continual_seed43.png
 !figures/e004_continual_seed44.png
 !figures/e004_continual_mean.png
+!results/e008_measqcl_seed42.json
+!results/e008_measqcl_seed43.json
+!results/e008_measqcl_seed44.json
+!results/e008_measqcl_summary.json
+!results/e008_train_only_tuning.json
+!results/e004_e008_comparison.json
+!figures/e008_measqcl_curves.png
+!figures/e008_measqcl_stability_plasticity.png
+!figures/e008_measqcl_measurement_geometry.png
+!figures/e004_e008_comparison.png
 
 # LaTeX drawer diagnostic generated when a local TeX installation is incomplete
 latex_error.log

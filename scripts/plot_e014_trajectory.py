@@ -68,13 +68,19 @@ def main() -> None:
     fig, axes = plt.subplots(3, 1, figsize=(9.5, 10.5), sharex=True)
 
     for ti, (ax, key, title) in enumerate(zip(axes, TASK_KEYS, TASK_TITLES), start=1):
+        # A task is undefined before it is first trained: draw each panel only from the
+        # epoch its own task begins (T1: 0, T2: 20, T3: 40) so no method shows a
+        # meaningless pre-task (chance-level) curve.
+        start = (ti - 1) * epochs_per_task
+        drawn = ep_ref >= start
         for method, (label, color, ls) in METHODS.items():
             stack = np.vstack([_series(runs[s], method, key)[1] for s in SEEDS])
             mean = np.nanmean(stack, axis=0)
             sd = np.nanstd(stack, axis=0, ddof=1) if len(SEEDS) > 1 else np.zeros_like(mean)
-            ax.plot(ep_ref, mean, color=color, linestyle=ls, linewidth=2.0, label=label)
-            ax.fill_between(ep_ref, np.clip(mean - sd, 0, 1), np.clip(mean + sd, 0, 1),
-                            color=color, alpha=0.13)
+            ax.plot(ep_ref[drawn], mean[drawn], color=color, linestyle=ls,
+                    linewidth=2.0, label=label)
+            ax.fill_between(ep_ref[drawn], np.clip(mean[drawn] - sd[drawn], 0, 1),
+                            np.clip(mean[drawn] + sd[drawn], 0, 1), color=color, alpha=0.13)
         for b in boundaries:
             ax.axvline(b, color="0.5", linestyle=":", linewidth=1.0)
         ax.set_title(title, loc="left", fontweight="bold")

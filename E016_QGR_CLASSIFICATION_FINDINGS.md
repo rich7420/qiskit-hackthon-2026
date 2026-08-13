@@ -16,39 +16,42 @@ Classification maps a static 16-D amplitude vector → label, so "generation" is
   vector toward the frozen classifier's confidence for that class → class prototype. No raw sample
   is ever stored; the circuit params are the only memory (closest to the QGR headline).
 
-## Result (seed 42, 20 layers, 20 epochs/task, 800 train / 200 test per task; **higher acc = better**)
+## Result (5 seeds 42–46, mean ± sample SD; 20 layers, 20 epochs/task, 800 train / 200 test; **higher acc = better**)
 
-| method | retention (T1,T2) | plasticity (T3) | forgetting↓ | avg | raw data? |
-|---|---|---|---|---|---|
-| Baseline (naive) | 0.512 | 1.000 | +0.405 | 0.675 | no |
-| EWC (classical Fisher) | 0.740 | 1.000 | +0.163 | 0.827 | no |
-| QEWC (quantum Fisher) | 0.787 | 1.000 | +0.095 | 0.858 | no |
-| **QGR-seed** (quantum gen.) | **0.807** | 1.000 | +0.120 | **0.872** | **no** (16 seeds/cls + snapshot) |
-| QGR-inversion (data-free) | 0.743 | 1.000 | +0.172 | 0.828 | **no** (params only) |
-| replay (raw buffer) | 0.825 | 1.000 | +0.095 | 0.883 | yes (48/task) |
+| method | retention (T1,T2) | plasticity (T3) | avg | raw data? |
+|---|---|---|---|---|
+| Baseline (naive) | 0.590 ± 0.090 | 1.000 | 0.727 ± 0.060 | no |
+| EWC (classical Fisher) | 0.704 ± 0.085 | 1.000 | 0.802 ± 0.057 | no |
+| QEWC (quantum Fisher) | 0.773 ± 0.102 | 1.000 | 0.849 ± 0.068 | no |
+| **QGR-seed** (quantum gen.) | **0.802 ± 0.037** | 1.000 | **0.868 ± 0.025** | **no** (16 seeds/cls + snapshot) |
+| QGR-inversion (data-free) | 0.802 ± 0.076 | 1.000 | 0.868 ± 0.051 | **no** (params only) |
+| replay (raw buffer) | 0.805 ± 0.030 | 1.000 | 0.870 ± 0.020 | yes (48/task) |
 
-`figures/e016_qgr_compare.png`, `results/e016_qgr_classification_seed42.json`.
+`figures/e016_qgr_compare_multiseed.png` (5-seed), `figures/e016_qgr_compare.png` (seed 42),
+`results/e016_qgr_classification_summary.json`, `results/e016_qgr_classification_seed{42..46}.json`.
 
 ## Findings
 
 1. **Plasticity saturates.** Every method reaches **1.000** on T3 (SPT/ATF is perfectly separable
-   for this ansatz), so — unlike the forecasting benchmark — classification cannot show a
-   plasticity trade-off. **Retention on the two earlier tasks is the only discriminating axis.**
-2. **QGR-seed is the best quantum-native method**: retention **0.807 > QEWC 0.787 > EWC 0.740**,
-   and it nearly matches raw-data **replay (0.825)** while storing only 16 seed vectors/class + a
-   frozen snapshot — no full raw buffer. This reproduces the time-series verdict (**QGR > QEWC**).
-3. **Data-free QGR-inversion only ties EWC** (0.743 vs 0.740) and sits **below QEWC**. Pure model
-   inversion recovers old decision boundaries well enough to beat naive fine-tuning by +0.23, but
-   the synthetic prototypes are less informative than QEWC's quantum-Fisher anchoring here.
-4. **Honest caveats.** Single seed (42) only. The generative advantage is entirely a *retention*
-   effect because T3 saturates; the clean two-axis (retention **and** plasticity) win that QGR has
-   on forecasting does not reproduce on this classification sequence. Multi-seed (42/43/44) would
-   be needed for error bars before any headline claim.
+   for this ansatz) in every seed, so — unlike the forecasting benchmark — classification cannot
+   show a plasticity trade-off. **Retention on the two earlier tasks is the only discriminating axis.**
+2. **Both QGR variants beat QEWC and EWC on mean retention**: QGR-seed / QGR-inversion **0.802 >
+   QEWC 0.773 > EWC 0.704**, and both essentially match raw-data **replay (0.805)** without a full
+   raw buffer. This reproduces the time-series verdict (**QGR > QEWC**) on the retention axis.
+3. **QGR-seed is the most reliable no-data method**: its SD (±0.037) is ~3× tighter than QEWC
+   (±0.102) and nearly as tight as raw replay (±0.030). Data-free QGR-inversion reaches the same
+   mean but is noisy (±0.076) — model inversion sometimes recovers old boundaries excellently
+   (seeds 43/44/45 ≈ 0.82–0.88) and sometimes weakly (seed 42 = 0.74).
+4. **Honest caveats.** With 5 seeds the SDs of replay / QGR-seed / QGR-inversion / QEWC **overlap**,
+   so "QGR beats QEWC" here is a **consistent mean ordering with lower variance**, not a separated
+   result. The advantage is entirely a *retention* effect because T3 saturates; the clean two-axis
+   (retention **and** plasticity) win QGR has on forecasting does not reproduce on classification.
 
 ## How to reproduce
 
 ```bash
 export DYLD_LIBRARY_PATH="/opt/homebrew/opt/expat/lib:$DYLD_LIBRARY_PATH"   # macOS/Homebrew only
-python experiments/e016_qgr_classification.py --seed 42
-python scripts/e016_qgr_compare.py
+for s in 42 43 44 45 46; do python experiments/e016_qgr_classification.py --seed $s; done
+python scripts/e016_aggregate.py --seeds 42 43 44 45 46   # 5-seed summary + figure
+python scripts/e016_qgr_compare.py                        # single-seed (42) two-panel figure
 ```

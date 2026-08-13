@@ -1,10 +1,14 @@
 """Fast tests for e009 quantum time-series forecasting continual learning."""
 
 import numpy as np
+import pennylane as qml
+import pytest
 from pennylane import numpy as pnp
 
 from src.e009_data import TASK_NAMES, load_forecast_task, load_task_sequence
-from src.e009_qtsf import init_weights, make_forecaster, nmse, predict
+from src.e009_qtsf import (
+    init_weights, make_forecaster, make_state_forecaster, nmse, predict,
+)
 
 
 def test_data_shapes_and_range():
@@ -50,3 +54,49 @@ def test_empirical_fisher_nonneg():
     F = empirical_fisher(qnode, cw, hw, X)
     assert F.shape == (int(np.prod(cs)) + int(np.prod(hs)),)
     assert np.all(F >= 0.0)   # Fisher diagonal is non-negative
+
+
+# --- gate-count ablation: lock the ansatz variants' real circuit cost (qml.specs) ---
+
+def _resources(n_layers, seq_len=8, **ansatz):
+    qnode, cs, hs = make_forecaster(n_qubits=4, n_layers=n_layers, seq_len=seq_len, **ansatz)
+    r = qml.specs(qnode)(np.zeros((1, seq_len)), np.zeros(cs)).resources
+    return r, int(np.prod(cs)) + int(np.prod(hs))
+
+
+@pytest.mark.parametrize("n_layers,entangler,encoding,gates,cnot,params", [
+    (2, "ring",  "ry_rz", 256, 64, 21),   # baseline = the original model
+    (2, "chain", "ry_rz", 240, 48, 21),   # drop the CNOT wrap-around
+    (2, "ring",  "ry",    224, 64, 21),   # single-axis encoding drops 32 encode-RZ
+    (1, "ring",  "ry_rz", 160, 32, 13),   # one variational layer
+    (1, "chain", "ry",    120, 24, 13),   # aggressive: -62% CNOT vs baseline
+    (1, "none",  "ry",     96,  0, 13),   # no-entanglement floor
+])
+def test_ansatz_gate_counts(n_layers, entangler, encoding, gates, cnot, params):
+    r, n_params = _resources(n_layers, entangler=entangler, encoding=encoding)
+    assert r.num_gates == gates
+    assert r.gate_sizes.get(2, 0) == cnot   # two-qubit gate count
+    assert n_params == params
+
+
+def test_default_ansatz_reproduces_original_model():
+    # defaults MUST stay the 256-gate / 64-CNOT ring + two-axis model so prior results hold
+    r_default, _ = _resources(2)
+    assert r_default.num_gates == 256 and r_default.gate_sizes.get(2, 0) == 64
+
+
+def test_state_forecaster_entangling_matches_forecaster():
+    # the QFI state circuit must use the SAME ansatz (same CNOT count) as the trained forecaster
+    for kw in (dict(entangler="ring", encoding="ry_rz"), dict(entangler="chain", encoding="ry")):
+        qf, cs, _ = make_forecaster(n_qubits=4, n_layers=2, seq_len=8, **kw)
+        sf = make_state_forecaster(4, 2, 8, **kw)
+        rf = qml.specs(qf)(np.zeros((1, 8)), np.zeros(cs)).resources
+        rs = qml.specs(sf)(np.zeros(8), np.zeros(cs)).resources
+        assert rf.gate_sizes.get(2, 0) == rs.gate_sizes.get(2, 0)
+
+
+def test_single_axis_encoding_only_removes_rz():
+    r2, _ = _resources(2, entangler="ring", encoding="ry_rz")
+    r1, _ = _resources(2, entangler="ring", encoding="ry")
+    assert r2.gate_types["RZ"] - r1.gate_types["RZ"] == 32   # 4 qubits x 8 steps of encode-RZ
+    assert r2.gate_types["RY"] == r1.gate_types["RY"]        # RY encoding untouched

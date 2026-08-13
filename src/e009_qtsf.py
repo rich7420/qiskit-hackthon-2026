@@ -17,54 +17,72 @@ import pennylane as qml
 from pennylane import numpy as pnp
 
 
+# --- ansatz building blocks (shared by the forecaster and its QFI state circuit) ---
+# entangler: "ring" (n_qubits CNOTs, wrap-around) | "chain" (n_qubits-1, no wrap) | "none"
+# encoding : "ry_rz" (both axes re-upload the datum) | "ry" (single-axis, half the encode gates)
+_ENTANGLERS = ("ring", "chain", "none")
+_ENCODINGS = ("ry_rz", "ry")
+
+
+def _entangle(n_qubits: int, entangler: str) -> None:
+    n_links = {"ring": n_qubits, "chain": max(n_qubits - 1, 0), "none": 0}[entangler]
+    for q in range(n_links):
+        qml.CNOT(wires=[q, (q + 1) % n_qubits])
+
+
+def _reupload(window, circ_w, n_qubits: int, n_layers: int, seq_len: int,
+              entangler: str, encoding: str) -> None:
+    """Recurrent data re-uploading: at each of `seq_len` steps encode the datum then apply the
+    shared variational block; the statevector persists across steps (weight-shared in time).
+
+    `window[..., step]` indexes the step-th datum for both a batch (n, L) and a single (L,)."""
+    for step in range(seq_len):
+        v = window[..., step]
+        for q in range(n_qubits):
+            qml.RY(((q + 1) / n_qubits) * v, wires=q)
+            if encoding == "ry_rz":
+                qml.RZ(((n_qubits - q) / n_qubits) * v, wires=q)
+        for layer in range(n_layers):
+            for q in range(n_qubits):
+                qml.RY(circ_w[layer, q, 0], wires=q)
+                qml.RZ(circ_w[layer, q, 1], wires=q)
+            _entangle(n_qubits, entangler)
+
+
 def make_forecaster(n_qubits: int = 4, n_layers: int = 2, seq_len: int = 8,
-                    diff_method: str = "backprop"):
+                    diff_method: str = "backprop", entangler: str = "ring",
+                    encoding: str = "ry_rz"):
     """Return (qnode, circ_shape, head_shape).
 
     qnode(window, circ_w) re-uploads a length-`seq_len` window through one shared block and
-    returns the `n_qubits` Pauli-Z expectations.
+    returns the `n_qubits` Pauli-Z expectations. `entangler`/`encoding` select the ansatz variant
+    for the gate-count ablation; the defaults reproduce the original ring / two-axis model.
     """
+    assert entangler in _ENTANGLERS and encoding in _ENCODINGS
     dev = qml.device("default.qubit", wires=n_qubits)
 
     @qml.qnode(dev, diff_method=diff_method)
     def qnode(window, circ_w):
-        for step in range(seq_len):
-            v = window[..., step]
-            for q in range(n_qubits):
-                qml.RY(((q + 1) / n_qubits) * v, wires=q)
-                qml.RZ(((n_qubits - q) / n_qubits) * v, wires=q)
-            for layer in range(n_layers):
-                for q in range(n_qubits):
-                    qml.RY(circ_w[layer, q, 0], wires=q)
-                    qml.RZ(circ_w[layer, q, 1], wires=q)
-                for q in range(n_qubits):
-                    qml.CNOT(wires=[q, (q + 1) % n_qubits])
+        _reupload(window, circ_w, n_qubits, n_layers, seq_len, entangler, encoding)
         return [qml.expval(qml.PauliZ(q)) for q in range(n_qubits)]
 
     return qnode, (n_layers, n_qubits, 2), (n_qubits + 1,)
 
 
-def make_state_forecaster(n_qubits: int = 4, n_layers: int = 2, seq_len: int = 8):
+def make_state_forecaster(n_qubits: int = 4, n_layers: int = 2, seq_len: int = 8,
+                          entangler: str = "ring", encoding: str = "ry_rz"):
     """Same recurrent re-uploading state-prep as make_forecaster, single-Z readout.
 
     Used only for the Quantum Fisher Information (metric tensor) of the quantum weights — the
-    QFI is a property of the prepared state, independent of the classical readout head.
+    QFI is a property of the prepared state, independent of the classical readout head. Takes the
+    same `entangler`/`encoding` so the QFI matches whichever ansatz variant is being trained.
     """
+    assert entangler in _ENTANGLERS and encoding in _ENCODINGS
     dev = qml.device("default.qubit", wires=n_qubits)
 
     @qml.qnode(dev)
     def state_qnode(window, circ_w):
-        for step in range(seq_len):
-            v = window[step]
-            for q in range(n_qubits):
-                qml.RY(((q + 1) / n_qubits) * v, wires=q)
-                qml.RZ(((n_qubits - q) / n_qubits) * v, wires=q)
-            for layer in range(n_layers):
-                for q in range(n_qubits):
-                    qml.RY(circ_w[layer, q, 0], wires=q)
-                    qml.RZ(circ_w[layer, q, 1], wires=q)
-                for q in range(n_qubits):
-                    qml.CNOT(wires=[q, (q + 1) % n_qubits])
+        _reupload(window, circ_w, n_qubits, n_layers, seq_len, entangler, encoding)
         return qml.expval(qml.PauliZ(0))
 
     return state_qnode

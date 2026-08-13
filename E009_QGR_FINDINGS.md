@@ -25,11 +25,14 @@ while training a later task:
 | L2 anchor | 0.211 ± 0.107 | 0.355 | 0.259 | no |
 | EWC (classical Fisher) | 0.165 ± 0.064 | 0.346 | 0.226 | no |
 | QEWC (quantum Fisher) | 0.150 ± 0.071 | 0.165 | 0.155 | no |
-| **QGR (quantum generative)** | 0.132 ± 0.135 | 0.069 ± 0.025 | 0.111 | **no (generates)** |
+| **QGR (quantum generative, gen_len=48)** | 0.122 ± 0.042 | 0.093 ± 0.086 | 0.113 | **no (generates)** |
 | replay | **0.058 ± 0.026** | 0.061 | **0.059** | yes (24/task) |
 
+(Default is gen_len=48, the low-variance operating point — see "Reducing QGR variance" below.
+At gen_len=16 QGR is 0.132 ± 0.135 / 0.069, i.e. better plasticity but much higher retention SD.)
+
 ## Findings
-1. **QGR matches replay on plasticity** (0.069 vs 0.061) and far exceeds every regularizer
+1. **QGR nearly matches replay on plasticity** (0.093 vs 0.061) and far exceeds every regularizer
    (QEWC 0.165, EWC/L2 ~0.35) — it does not sacrifice new-task learning.
 2. **QGR beats every regularizer on retention** (0.132 < QEWC 0.150 < EWC 0.165 < L2 0.211 <
    Baseline 0.262), and is the **best quantum-native method** (beats QEWC), 2nd overall behind

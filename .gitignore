@@ -139,3 +139,6 @@ latex_error.log
 !results/e014_compare_cluster_seed42.json
 !results/e014_compare_cluster_seed43.json
 !results/e014_compare_cluster_seed44.json
+!results/e014_compare_cluster_m2_seed42.json
+!results/e014_compare_cluster_m2_seed43.json
+!results/e014_compare_cluster_m2_seed44.json

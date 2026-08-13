@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "experiment": "e014_task_inference",
+  "created_at_utc": "2026-08-13T09:31:27.519264+00:00",
+  "source_code_sha256": "396744a9fca80b22cdc2a91bcb4c4d6c1cd9fd1a7f53ab45421ed910d760739a",
+  "environment": {
+    "python": "3.13.15",
+    "packages": {
+      "pennylane": "0.45.1",
+      "numpy": "2.5.2",
+      "scikit-learn": "1.9.0"
+    }
+  },
+  "config": {
+    "routing": "max-confidence head selection (task id hidden at test)",
+    "tasks": [
+      "MNIST 0/1",
+      "Fashion-MNIST 0/1",
+      "SPT/ATF phases"
+    ],
+    "n_qubits": 4,
+    "layers": 12,
+    "epochs_per_task": 20,
+    "lr": 0.05,
+    "alpha_l2_anchor": 5.0,
+    "n_train": 800,
+    "n_test": 200,
+    "seed": 44
+  },
+  "methods": {
+    "frozen_head": {
+      "known_task_accuracy": 0.975,
+      "task_inference_accuracy": 0.6967,
+      "task_agnostic_accuracy": 0.875,
+      "per_task_task_inference": {
+        "task1": 0.695,
+        "task2": 0.395,
+        "task3": 1.0
+      },
+      "task_confusion": [
+        [
+          139,
+          13,
+          48
+        ],
+        [
+          45,
+          79,
+          76
+        ],
+        [
+          0,
+          0,
+          200
+        ]
+      ],
+      "router_task_inference_accuracy": 0.8717,
+      "router_task_agnostic_accuracy": 0.9167,
+      "router_per_task_task_inference": {
+        "task1": 0.75,
+        "task2": 0.865,
+        "task3": 1.0
+      },
+      "router_confusion": [
+        [
+          150,
+          29,
+          21
+        ],
+        [
+          23,
+          173,
+          4
+        ],
+        [
+          0,
+          0,
+          200
+        ]
+      ]
+    },
+    "free_head": {
+      "known_task_accuracy": 0.79,
+      "task_inference_accuracy": 0.6533,
+      "task_agnostic_accuracy": 0.7633,
+      "per_task_task_inference": {
+        "task1": 0.45,
+        "task2": 0.51,
+        "task3": 1.0
+      },
+      "task_confusion": [
+        [
+          90,
+          19,
+          91
+        ],
+        [
+          14,
+          102,
+          84
+        ],
+        [
+          0,
+          0,
+          200
+        ]
+      ],
+      "router_task_inference_accuracy": 0.955,
+      "router_task_agnostic_accuracy": 0.7733,
+      "router_per_task_task_inference": {
+        "task1": 0.93,
+        "task2": 0.935,
+        "task3": 1.0
+      },
+      "router_confusion": [
+        [
+          186,
+          13,
+          1
+        ],
+        [
+          13,
+          187,
+          0
+        ],
+        [
+          0,
+          0,
+          200
+        ]
+      ]
+    },
+    "anchor_head": {
+      "known_task_accuracy": 0.97,
+      "task_inference_accuracy": 0.7117,
+      "task_agnostic_accuracy": 0.895,
+      "per_task_task_inference": {
+        "task1": 0.685,
+        "task2": 0.45,
+        "task3": 1.0
+      },
+      "task_confusion": [
+        [
+          137,
+          15,
+          48
+        ],
+        [
+          24,
+          90,
+          86
+        ],
+        [
+          0,
+          0,
+          200
+        ]
+      ],
+      "router_task_inference_accuracy": 0.8767,
+      "router_task_agnostic_accuracy": 0.9233,
+      "router_per_task_task_inference": {
+        "task1": 0.77,
+        "task2": 0.86,
+        "task3": 1.0
+      },
+      "router_confusion": [
+        [
+          154,
+          30,
+          16
+        ],
+        [
+          24,
+          172,
+          4
+        ],
+        [
+          0,
+          0,
+          200
+        ]
+      ]
+    }
+  },
+  "elapsed_sec": 13.0
+}

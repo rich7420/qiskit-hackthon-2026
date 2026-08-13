@@ -1,0 +1,16 @@
+{
+  "figure": "e014_fair_compare.png",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "inputs": [
+    "results/e014_compare_seed42.json",
+    "results/e014_compare_seed43.json",
+    "results/e014_compare_seed44.json",
+    "results/e014_task_inference_seed42.json",
+    "results/e014_task_inference_seed43.json",
+    "results/e014_task_inference_seed44.json"
+  ]
+}

@@ -155,6 +155,27 @@ Average test accuracy: Sequential 0.69, EWC 0.82, QEWC 0.82, **OI-QCL+router (A/
 ceiling 0.96). OI-QCL still wins by ~0.09 under the harder, oracle-free setting — the ~0.14 ACC
 advantage over θ-protection is not an artifact of the task oracle.
 
+## Gate-count ablation — the circuit can be stripped without losing accuracy
+
+`experiments/e014_depth_ablation.py` (`figures/e014_depth_ablation.png`): OI-QCL's advantage is in
+the readout, not circuit depth, so ACC is nearly flat in the ansatz depth L (3-seed mean):
+
+| L | depth | 2-qubit gates | θ params | frozen (A) ACC | anchor (C) ACC |
+|--:|--:|--:|--:|--:|--:|
+| 1 | 6 | 3 | 8 | 0.924 | 0.927 |
+| 2 | 10 | 6 | 16 | 0.933 | 0.933 |
+| 4 | 18 | 12 | 32 | 0.956 | 0.953 |
+| 8 | 34 | 24 | 64 | 0.968 | 0.968 |
+| 12 | 50 | 36 | 96 | 0.964 | 0.962 |
+
+**L=4 (12 CNOTs, depth 18 — 3× fewer 2-qubit gates than L=12) matches the full model**, and even
+**L=1 (3 CNOTs, θ=8) already beats QEWC (0.82) by ~0.10**. To simplify further, the biggest single
+saving is swapping AmplitudeEmbedding (fixed O(2ⁿ) state-prep) for angle encoding (O(n), depth 1).
+Note the *readout* is where the exponential parameter count lives: each per-task head is
+C·2ⁿ+C = 34 params (17 for a binary logistic collapse), independent of L — after stripping the
+circuit, the head (34/task) outsizes the backbone θ (8 at L=1). Shrinking that needs fewer readout
+qubits (marginal probs 2^m) or sparse/structured λ.
+
 ## Matched classical control — no quantum advantage on this benchmark (important, honest)
 
 `experiments/e014_classical_baseline.py`: the same per-task linear head capacity, but on the **raw

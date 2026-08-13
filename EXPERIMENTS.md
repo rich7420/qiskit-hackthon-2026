@@ -687,10 +687,31 @@ so frozen (A) is near-optimal and C's edge over A is marginal here; C's advantag
 appears when later tasks require representation adaptation (the PARTIAL-GO regime). We report A
 as the structural reference and C as the method that generalizes to that harder case.
 
-**Artifacts.** `src/e014_oiqcl.py`, `experiments/e014_probe.py`, `experiments/e014_compare.py`,
-`scripts/e014_aggregate_plot.py`, `tests/test_e014_oiqcl.py` (incl. the ⟨H_diag⟩ = λ·p
-identity), `results/e014_probe_seed42.json`, `results/e014_compare_seed{42,43,44}.json`,
-`figures/e014_compare.png`. See `E014_FINDINGS.md`.
+**Trajectory (`experiments/e014_trajectory.py`, `figures/e014_trajectory.png`).** Per-epoch
+test accuracy on all three tasks, gradient-trained heads (like-for-like learning curves vs the
+baselines), panels drawn only from each task's own boundary. T1 @20/@60: A 0.97/0.97,
+C 0.97/0.96, QEWC 0.89/0.87, sequential 0.89/0.48; QEWC's T2 stalls (0.74→0.59, plasticity loss).
+
+**Task-agnostic (`experiments/e014_task_inference.py`, `figures/e014_task_inference.png`).**
+Hide the task id at test and infer it. Task-IL / max-confidence / learned-linear-router accuracy
+(mean, 3 seeds): A 0.964 / 0.834 / **0.907**; C 0.962 / 0.846 / **0.909**; B 0.801 / 0.690 / 0.789.
+Max-confidence is a poor router (routes by boundary distance, not task membership: the SPT head
+grabs 35–42% of MNIST/Fashion); a dedicated logistic router over p_θ(x) nearly closes the gap
+(routing acc 0.90, confusion T1 .82/T2 .89/T3 1.0). The task identity is decodable from the
+quantum measurement distribution — Task-IL is a convenience, not a hard requirement.
+
+**Cost (unchanged vs baselines on the quantum side).** n=4, L=12: backbone θ = 96 params,
+36 CNOTs, depth ≈ 60 — identical for all methods (OI-QCL only swaps the classical readout). Each
+task adds one linear head (C·2ⁿ + C = 34 params); total head memory O(T·C·2ⁿ) = 102 at T=3.
+
+**Artifacts.** `src/e014_oiqcl.py`; experiments `e014_probe.py`, `e014_compare.py`,
+`e014_trajectory.py`, `e014_task_inference.py`; scripts `e014_aggregate_plot.py`,
+`plot_e014_trajectory.py`, `plot_e014_task_inference.py`, `plot_e014_circuit.py`;
+`tests/test_e014_oiqcl.py` (incl. the ⟨H_diag⟩ = λ·p identity); results
+`e014_probe_seed42.json`, `e014_compare_seed{42,43,44}.json`,
+`e014_trajectory_seed{42,43,44}.json`, `e014_task_inference_seed{42,43,44}.json`; figures
+`e014_compare.png`, `e014_trajectory.png`, `e014_task_inference.png`, `e014_circuit.png`. Theory:
+`E014_THEORY.md`; findings: `E014_FINDINGS.md`.
 
 **Claim boundaries.** Simulator only (`default.qubit`), 4 qubits, exact probabilities (no
 finite-shot/hardware readout). Task-IL only. Head memory is O(T·C·2ⁿ) — exponential in qubits

@@ -25,7 +25,8 @@ STYLE = {
     "ewc": ("EWC (classical Fisher)", "#4477AA", "o"),
     "qewc": ("QEWC (quantum Fisher)", "#228833", "s"),
     "replay": ("replay (stores raw data)", "#EE6677", "D"),
-    "qgr": ("QGR (quantum generative)", "#AA3377", "*"),
+    "qgr": ("QGR (quantum generative)", "#CC3311", "*"),
+    "qgr_qewc": ("QGR + QEWC (hybrid)", "#AA3377", "P"),
 }
 
 

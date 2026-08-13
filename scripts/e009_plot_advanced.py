@@ -21,12 +21,13 @@ ROOT = Path(__file__).resolve().parents[1]
 RESULT = ROOT / "results" / "e009_multiseed.json"
 OUT = ROOT / "figures" / "e009_advanced_compare.png"
 
-# Baseline dashed-gray reference; EWC blue, QEWC green, QGR red (emphasized)
+# Baseline dashed-gray reference; EWC blue, QEWC green, QGR red, hybrid purple
 STYLE = {
     "naive": ("Baseline (naive seq.)", "0.5", "--", 1.6),
     "ewc": ("EWC (classical Fisher)", "#4477AA", "-.", 2.0),
     "qewc": ("QEWC (quantum Fisher)", "#228833", "-.", 2.0),
     "qgr": ("QGR (quantum generative replay)", "#CC3311", "-", 2.4),
+    "qgr_qewc": ("QGR + QEWC (hybrid)", "#AA3377", "-", 2.2),
 }
 
 

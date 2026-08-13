@@ -81,3 +81,22 @@ python scripts/e009_qgr_compare.py
 - Reduce QGR retention variance: more/better seeds, longer rollout, or a dedicated quantum
   generator (QCBM) instead of the forecaster-as-generator.
 - Fully data-free QGR: seed the rollout from noise / a learned prior instead of real seeds.
+
+## Hybrid QGR + QEWC — does not help (informative negative result)
+We tried combining the two quantum protections: QGR's function-space generative rehearsal + QEWC's
+parameter-space quantum-Fisher anchoring. Sweeping the QEWC strength (lam, 3-5 seeds):
+
+| method | retention | plasticity |
+|---|---|---|
+| QGR alone (5 seeds) | **0.122** | **0.093** |
+| QGR+QEWC lam=0.3 | 0.144 | 0.102 |
+| QGR+QEWC lam=1.0 | 0.174 | 0.130 |
+| QGR+QEWC lam=3.0 | 0.181 | 0.172 |
+| QGR+QEWC lam=5.0 | 0.135 | 0.236 |
+
+**Adding any amount of QEWC to QGR hurts** (monotonically worse as lam grows; even the weakest lam
+is below QGR alone). Interpretation: QGR already protects old tasks in *function space* (rehearsing
+generated data directly reduces old-task error), while QEWC adds a *parameter-space* anchor to
+theta*. The anchor conflicts with the rehearsal — it prevents theta from reaching the position that
+best serves both the new task and the generated-old-task rehearsal. **Function-space rehearsal (QGR)
+dominates parameter-space anchoring (QEWC); combining them does not help.**

@@ -1,6 +1,6 @@
 {
   "experiment": "e014_noise_compare",
-  "created_at_utc": "2026-08-13T13:16:07.629524+00:00",
+  "created_at_utc": "2026-08-13T13:21:42.205380+00:00",
   "source_code_sha256": "6e5f446c59e1e8736be8f855d1b52a97bddf4bf871060931a7079f994dafc7b1",
   "environment": {
     "python": "3.13.15",
@@ -20,7 +20,7 @@
     "layers": 12,
     "epochs_task1": 20,
     "n_qubits": 4,
-    "n_train": 400,
+    "n_train": 800,
     "n_test": 200,
     "seeds": [
       42,
@@ -33,26 +33,26 @@
   "summary": {
     "full": {
       "noiseless": [
-        0.9578,
-        0.0077
+        0.9639,
+        0.0102
       ],
       "noisy": [
-        0.955,
-        0.0115
+        0.9583,
+        0.0088
       ],
-      "drop": 0.0028
+      "drop": 0.0056
     },
     "m2": {
       "noiseless": [
-        0.8894,
-        0.0356
+        0.9428,
+        0.0155
       ],
       "noisy": [
-        0.8878,
-        0.0382
+        0.9333,
+        0.0208
       ],
-      "drop": 0.0016
+      "drop": 0.0095
     }
   },
-  "elapsed_sec": 136.6
+  "elapsed_sec": 102.2
 }

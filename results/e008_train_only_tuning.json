@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "experiment": "e008_train_only_configuration_selection",
+  "created_at_utc": "2026-08-12T19:04:20.842121+00:00",
+  "source_code_sha256": "85d3642f35c7f0b1fe1ef1f2f9e227c868263b1a817a6b2514067ff80b65f328",
+  "data_sha256": "6af663e6cfaf7f1d4afc923089f08924c06a7f3af7c698839d754f3a9c383404",
+  "seed": 42,
+  "test_evaluations": 0,
+  "selection_data": "training metrics only",
+  "capacity_scan": {
+    "epochs": 40,
+    "results": [
+      {
+        "layers": 2,
+        "learning_rate": 0.02,
+        "n_parameters": 24,
+        "task1_final_train_accuracy": 0.595,
+        "runtime_sec": 2.5784,
+        "test_evaluations": 0
+      },
+      {
+        "layers": 3,
+        "learning_rate": 0.02,
+        "n_parameters": 36,
+        "task1_final_train_accuracy": 0.58,
+        "runtime_sec": 3.6583,
+        "test_evaluations": 0
+      },
+      {
+        "layers": 3,
+        "learning_rate": 0.05,
+        "n_parameters": 36,
+        "task1_final_train_accuracy": 0.6725,
+        "runtime_sec": 3.7249,
+        "test_evaluations": 0
+      },
+      {
+        "layers": 6,
+        "learning_rate": 0.02,
+        "n_parameters": 72,
+        "task1_final_train_accuracy": 0.825,
+        "runtime_sec": 7.3389,
+        "test_evaluations": 0
+      },
+      {
+        "layers": 10,
+        "learning_rate": 0.02,
+        "n_parameters": 120,
+        "task1_final_train_accuracy": 0.8825,
+        "runtime_sec": 12.7723,
+        "test_evaluations": 0
+      },
+      {
+        "layers": 12,
+        "learning_rate": 0.02,
+        "n_parameters": 144,
+        "task1_final_train_accuracy": 0.8925,
+        "runtime_sec": 14.5919,
+        "test_evaluations": 0
+      }
+    ],
+    "selected": {
+      "layers": 10,
+      "learning_rate": 0.02
+    },
+    "selection_rule": "smallest tested model reaching at least 0.88 Task-1 train accuracy; 12 layers had only a marginal gain at higher parameter cost"
+  },
+  "lambda_scan": {
+    "importance_estimator": "normalized output CFI",
+    "fisher_anchor_indices": [
+      229,
+      201,
+      300,
+      240,
+      7,
+      136,
+      178,
+      326,
+      340,
+      101,
+      268,
+      357,
+      323,
+      216,
+      358,
+      115,
+      332,
+      215,
+      245,
+      287,
+      282,
+      121,
+      252,
+      347,
+      105,
+      135,
+      235,
+      224,
+      213,
+      26,
+      321,
+      336
+    ],
+    "results": [
+      {
+        "ewc_lambda": 0.003,
+        "task1_boundary": 0.8825,
+        "task1_retention": 0.5975,
+        "task2_adaptation": 0.9375,
+        "task1_forgetting": 0.285,
+        "average_final_accuracy": 0.7675,
+        "runtime_sec": 11.9973,
+        "test_evaluations": 0
+      },
+      {
+        "ewc_lambda": 0.01,
+        "task1_boundary": 0.8825,
+        "task1_retention": 0.7325,
+        "task2_adaptation": 0.9425,
+        "task1_forgetting": 0.15,
+        "average_final_accuracy": 0.8375,
+        "runtime_sec": 12.1838,
+        "test_evaluations": 0
+      },
+      {
+        "ewc_lambda": 0.03,
+        "task1_boundary": 0.8825,
+        "task1_retention": 0.8125,
+        "task2_adaptation": 0.935,
+        "task1_forgetting": 0.07,
+        "average_final_accuracy": 0.8738,
+        "runtime_sec": 11.9211,
+        "test_evaluations": 0
+      },
+      {
+        "ewc_lambda": 0.1,
+        "task1_boundary": 0.8825,
+        "task1_retention": 0.8875,
+        "task2_adaptation": 0.94,
+        "task1_forgetting": -0.005,
+        "average_final_accuracy": 0.9137,
+        "runtime_sec": 11.9832,
+        "test_evaluations": 0
+      },
+      {
+        "ewc_lambda": 0.3,
+        "task1_boundary": 0.8825,
+        "task1_retention": 0.8825,
+        "task2_adaptation": 0.91,
+        "task1_forgetting": 0.0,
+        "average_final_accuracy": 0.8962,
+        "runtime_sec": 12.3633,
+        "test_evaluations": 0
+      }
+    ],
+    "selected": 0.1,
+    "selection_rule": "highest average final Task-1/Task-2 training accuracy"
+  },
+  "initial_weights_sha256": "26d1b71dd4eb205353bac24640673511264e37b11598aef9c3ad52ca837888e3",
+  "claim_boundaries": {
+    "test_used_for_selection": false,
+    "mof_used_for_selection": false,
+    "retrospective_test_tuning": false
+  }
+}

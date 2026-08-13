@@ -292,3 +292,132 @@ results/e005_seed{42,43,44}.json + results/e005_summary.json.
 Figure: `figures/e005_ewc_qewc.png` (via `scripts/e005_plot_curve.py`) — three panels (per task)
 comparing Baseline / EWC / QEWC with mean +/- 1 sample-SD bands, in the style of
 `figures/e004_continual_mean.png`.
+
+---
+
+## E008 — MeasQCL: what should a quantum continual learner measure to remember?
+
+Goal: test whether task-boundary measurements in complementary Pauli bases provide a better
+EWC importance signal than the classifier's fixed readout. This first implementation is a
+three-seed, exact-statevector engineering experiment. It does not yet estimate Fisher
+information from finite shots or run on hardware.
+
+Source hash:       b3901b55689d64b71b283f72d432468056e0ded9c0842bee2fbe83d3ca44b962
+Data split hashes: seed 42 `6af663e6cfaf7f1d4afc923089f08924c06a7f3af7c698839d754f3a9c383404`
+                   seed 43 `5d320685b06bceda86b35cea74089e9263edcd92ca24caef90be7a06d3b9a3b2`
+                   seed 44 `971544ab3b43725e903660786c9afc2ccfb730279c22646ee35b9383a5d4af9f`
+Framework:         pennylane 0.45.1 (`default.qubit`, backprop training; exact probabilities)
+Run command:       `python scripts/run_e008_multiseed.py --seeds 42 43 44`
+Plot command:      `python scripts/plot_e008_measqcl.py`
+Tuning command:    `python scripts/tune_e008_train_only.py`
+
+Configuration:
+- task order = MNIST 0/1 then Fashion-MNIST 0/1; 400 train / 200 fixed test samples
+  per task; one PCA-64 representation fit only on MNIST training data and held fixed
+- classifier = six-qubit amplitude encoding, 10 independent RY/RZ + CNOT-chain layers
+  (120 parameters), two Pauli-Z scores with softmax/BCE, Adam(lr=0.02), 40 epochs/task
+- comparison = naive, empirical output-CFI EWC, joint-ZZ CFI EWC, uniform XX/YY/ZZ,
+  measurement-optimized Fisher EWC (MOF-EWC), readout-subsystem QFI, and full-state QFI
+- every method receives the identical Task-1 weights, Adam state, Task-2 examples, epoch
+  budget, and `lambda=0.1`; every non-naive Fisher diagonal is normalized to mean one
+- capacity and the shared lambda were selected on seed-42 training metrics only. The lambda
+  sweep used the established output-CFI baseline, not MOF-EWC; test data were not evaluated
+  during selection
+
+Measurement and physics definition:
+- prediction remains the original two-Z softmax measurement. Extra bases are used only at
+  the Task-1 boundary and therefore do not change deployment inference cost
+- each setting measures the joint outcomes of the two readout qubits. For a randomized
+  measurement whose setting label is retained, the accessible Fisher is
+  `F_acc(q) = sum_m q_m F_m`; `q_m` is also the asymptotic fraction of a fixed shot budget
+- MOF-EWC chooses `q` by maximizing the task-agnostic diagonal coverage objective
+  `sum_i log(epsilon + [F_acc(q)]_i)`. This discourages allocating everything to one already
+  sensitive direction; it does not use Task-2 outcomes or optimize retention directly
+- the exact reduced-state SLD QFI of the two readout qubits is included because it is the
+  physically relevant measurement-independent upper bound for POVMs restricted to that
+  subsystem. The checked hierarchy is `F_basis <= F_readout-QFI <= F_full-QFI` on every
+  diagonal. The full QFI is a state-geometric reference, not a claim that one measurement
+  can attain its multiparameter bound
+- `ZZ/XX/YY` is deliberately a small, hardware-simple candidate set, not an
+  informationally complete measurement family. Mixed Pauli products such as XZ and YX are
+  left for the nine-basis extension
+
+Final held-out test result (mean +/- sample standard deviation across seeds 42/43/44):
+
+| Method | MNIST retention | Fashion adaptation | Forgetting | Mean final accuracy |
+|---|---:|---:|---:|---:|
+| Naive | 0.625 +/- 0.110 | 0.950 +/- 0.035 | 0.250 +/- 0.124 | 0.788 +/- 0.040 |
+| Output CFI | 0.852 +/- 0.035 | 0.958 +/- 0.029 | 0.023 +/- 0.038 | 0.905 +/- 0.007 |
+| Joint ZZ CFI | **0.865 +/- 0.040** | 0.952 +/- 0.023 | **0.010 +/- 0.039** | **0.908 +/- 0.012** |
+| Uniform XYZ | 0.850 +/- 0.053 | 0.947 +/- 0.028 | 0.025 +/- 0.063 | 0.898 +/- 0.013 |
+| MOF-EWC | 0.842 +/- 0.051 | 0.937 +/- 0.019 | 0.033 +/- 0.058 | 0.889 +/- 0.016 |
+| Readout QFI | 0.862 +/- 0.046 | 0.945 +/- 0.022 | 0.013 +/- 0.053 | 0.903 +/- 0.012 |
+| Full QFI | 0.840 +/- 0.044 | 0.943 +/- 0.021 | 0.035 +/- 0.053 | 0.892 +/- 0.013 |
+
+Measurement diagnostic (mean +/- sample SD):
+- MOF allocation = `q_ZZ=0.000`, `q_XX=0.922 +/- 0.078`,
+  `q_YY=0.078 +/- 0.078`; these are exact-information allocations, with a 1,024-shot integer
+  plan recorded only as a resource illustration
+- cosine similarity to full QFI = 0.747 +/- 0.028 (ZZ), 0.909 +/- 0.008 (uniform),
+  0.910 +/- 0.002 (MOF)
+- readout-QFI trace coverage proxy = 0.186 +/- 0.010 (ZZ), 0.201 +/- 0.004 (uniform),
+  0.212 +/- 0.003 (MOF)
+- cosine similarity to the classifier output CFI moves in the other direction:
+  0.887 +/- 0.026 (ZZ), 0.800 +/- 0.017 (uniform), 0.686 +/- 0.047 (MOF)
+
+Finding: complementary measurements do reveal parameter sensitivity hidden from the fixed
+readout. MOF-EWC obtains the highest accessible trace proxy and highest mean alignment
+to full-state QFI, yet it does not improve retention on this task pair. Joint ZZ is the best
+mean performer and readout-QFI is close behind. The physically useful conclusion is narrower
+and more interesting than "more Fisher is better": state sensitivity and task-memory
+relevance are different objectives. A measurement can cover quantum-state geometry while
+protecting directions that do not control the old classifier, creating redundant protection
+and reducing plasticity. A next optimizer should therefore balance accessible coverage with
+old-task output or gradient alignment, evaluated on a validation protocol rather than tuned
+against the held-out test set.
+
+The descriptive correlations in the summary support only this diagnostic, not population
+inference: the nine seed-method points are dependent and three seeds are too few for a
+statistical claim. Exact boundary estimation is also expensive in the unoptimized reference
+code: mean wall time is about 33 s for ZZ and 100 s for all three bases, versus 0.57 s for
+autodifferentiated output CFI. These timings identify clear acceleration targets: vectorized
+parameter shifts, shared shifted-state evaluations across bases, parallel anchors, and a
+finite-shot estimator that measures only the allocated settings.
+
+Claim boundaries:
+- no finite-shot, noise, Aer, IBM hardware, quantum-advantage, or QFI-attainability claim
+- no assertion that trace coverage is the fraction of globally attainable QFI
+- results cover one two-task transition, three seeds, and a three-setting measurement family
+- sample SD describes run-to-run spread; it is not a confidence interval
+
+Artifacts:
+- `results/e008_measqcl_seed{42,43,44}.json` — complete paired histories, weights, Adam-state
+  hash, exact Fisher profiles, measurement allocations, information-hierarchy checks,
+  resource counts, package versions, source/data hashes, and runtime
+- `results/e008_measqcl_summary.json` — three-seed means/sample SDs and paired geometry-memory
+  diagnostics
+- `results/e008_train_only_tuning.json` — capacity and output-CFI lambda scans with zero test
+  evaluations, selection rules, candidates, hashes, and train metrics
+- `figures/e008_measqcl_curves.png` — Task-2 learning and Task-1 retention only; the common
+  Task-1 phase is intentionally omitted
+- `figures/e008_measqcl_stability_plasticity.png` — paired seed points and the final frontier
+- `figures/e008_measqcl_measurement_geometry.png` — Fisher heatmap, optimized basis allocation,
+  and geometry diagnostics
+
+Primary references:
+- Hsu et al., QEWC / measurement-dependent CFI and state-geometric QFI:
+  https://arxiv.org/html/2607.16030v1
+- EWC-DR / importance-estimation and redundant-protection motivation:
+  https://arxiv.org/html/2603.18596v1
+
+Cross-experiment overview:
+- `results/e004_e008_comparison.json` and `figures/e004_e008_comparison.png` place the
+  E004–E008 stability, plasticity, and forgetting summaries in one scope-aware figure.
+- Values must be compared within each experiment block. E006 uses balanced accuracy and a
+  different temporal benchmark; E008 has two tasks; the other blocks have three. E007's
+  selected operating points are exploratory because frontier selection and adaptive budget
+  calibration used test accuracy. E005 is marked unauthenticated because its local historical
+  artifacts were not committed and their source hash does not match the final PR source.
+- The common forgetting panel uses phase-end minus final held-out score for every block. For
+  E006 this is recomputed per seed from the committed raw test-balanced-accuracy histories; it
+  is intentionally not the E006 summary's max-boundary forgetting headline.

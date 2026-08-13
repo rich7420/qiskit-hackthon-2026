@@ -136,3 +136,6 @@ latex_error.log
 
 !results/e014_hard_task_screen.json
 !results/e014_real_dataset_screen.json
+!results/e014_compare_cluster_seed42.json
+!results/e014_compare_cluster_seed43.json
+!results/e014_compare_cluster_seed44.json

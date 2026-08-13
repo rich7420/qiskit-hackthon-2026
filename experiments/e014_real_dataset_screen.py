@@ -84,6 +84,7 @@ def _states(gen, lo, hi, n, rng):
 TASKS = {
     "cluster_deep": (_cluster_ground_state, (0.0, 0.5), (2.5, 3.0)),
     "cluster_near": (_cluster_ground_state, (0.7, 0.95), (1.05, 1.3)),
+    "cluster_full": (_cluster_ground_state, (0.0, 0.95), (1.05, 3.0)),  # full diagram, both sides of h_c~1
     "tfim_deep": (_tfim_ground_state, (0.1, 0.5), (1.6, 2.4)),
     "tfim_near": (_tfim_ground_state, (0.8, 0.95), (1.05, 1.2)),
 }

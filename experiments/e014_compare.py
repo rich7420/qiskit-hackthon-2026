@@ -47,7 +47,7 @@ from src.e014_oiqcl import (  # noqa: E402
     train_backbone,
     train_task_isolated_head,
 )
-from src.phase_data import N_QUBITS, load_spt_atf  # noqa: E402
+from src.phase_data import N_QUBITS, load_cluster_full, load_spt_atf  # noqa: E402
 
 RESULTS = ROOT / "results"
 SCHEMA_VERSION = 1
@@ -163,9 +163,10 @@ def _run_isolated_head(method: str, tasks, *, layers, lr, epochs, alpha, seed, v
 
 def run_experiment(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8, lam_ewc=30.0,
                    qfi_samples=64, n_train=800, n_test=200, seed=42, readout_qubits=None,
-                   verbose=True) -> dict[str, Any]:
+                   t3="spt", verbose=True) -> dict[str, Any]:
     task1, task2 = load_two_tasks(n_features=2**N_QUBITS, n_train=n_train, n_test=n_test, seed=seed)
-    task3 = load_spt_atf(n_train=n_train, n_test=n_test, n_qubits=N_QUBITS, seed=seed)
+    _t3_loader = {"spt": load_spt_atf, "cluster_full": load_cluster_full}[t3]
+    task3 = _t3_loader(n_train=n_train, n_test=n_test, n_qubits=N_QUBITS, seed=seed)
     tasks = [task1, task2, task3]
     if verbose:
         print(f"E014 compare seed={seed}: {[t.name for t in tasks]} (Task-IL)", flush=True)
@@ -191,6 +192,7 @@ def run_experiment(*, layers=12, lr=0.05, epochs=20, alpha=5.0, lam_qewc=0.8, la
                         "packages": {p: version(p) for p in ("pennylane", "numpy", "scipy", "scikit-learn")}},
         "config": {
             "setting": "Task-Incremental Learning (task id known at test)",
+            "t3_source": t3,
             "tasks": [t.name for t in tasks], "task_keys": list(TASK_KEYS),
             "n_qubits": N_QUBITS, "layers": layers,
             "optimizer": "Adam", "learning_rate": lr, "epochs_per_task": epochs,
@@ -238,6 +240,8 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=42)
     ap.add_argument("--readout-qubits", type=int, default=None,
                     help="isolated-head readout width m (default: all n qubits, full 2^n probs)")
+    ap.add_argument("--t3", choices=["spt", "cluster_full"], default="spt",
+                    help="T3 task: deep SPT/ATF (default) or complete cluster-Ising")
     ap.add_argument("--output", type=Path)
     args = ap.parse_args()
 
@@ -245,7 +249,7 @@ def main() -> None:
         layers=args.layers, lr=args.lr, epochs=args.epochs, alpha=args.alpha,
         lam_qewc=args.lam_qewc, lam_ewc=args.lam_ewc, qfi_samples=args.qfi_samples,
         n_train=args.n_train, n_test=args.n_test, seed=args.seed,
-        readout_qubits=args.readout_qubits,
+        readout_qubits=args.readout_qubits, t3=args.t3,
     )
     path = write_result(result, args.output)
     print("\nACC / BWT by method:")

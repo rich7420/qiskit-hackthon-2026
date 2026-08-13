@@ -217,6 +217,38 @@ measurement (A/C ≈ 0.96) beats θ-protection (QEWC/EWC ≈ 0.82) and eliminate
 quantum representation is *necessary* would require a task where a matched classical head fails —
 not the case here; that is the honest limit and a clear direction for a harder (quantum-data) benchmark.
 
+## Noise robustness (depolarizing + measurement)
+
+Noisy path (`src/e014_noise.py`, `default.mixed`), config {bit:0, phase:0, **depol:0.01, meas:0.02**}
+— depolarizing on every qubit after each layer + a bit-flip readout error on the measured qubits.
+Kept separate from the noiseless simulator path.
+
+**Readout robustness** (`experiments/e014_noise_compare.py`, `figures/e014_noise.png`; frozen-A,
+full config, noiseless training → noisy readout, 3 seeds): full readout 0.964 → **0.958** (−0.006),
+m=2 readout 0.943 → **0.933** (−0.009). The per-task head refits on the *observed* noisy
+probabilities, absorbing the systematic noise shift — so the measurement side is nearly immune at
+this noise level. (m=2 is not more robust at full config; the earlier claim was an undertrained artifact.)
+
+**All 6 methods under noise** (`experiments/e014_compare.py --noise`, `figures/e014_noise_compare.png`;
+train **and** evaluate under noise, 3 seeds). `default.mixed` training is ~250× slower than pure state,
+so this runs at a reduced config (6 layers / 12 epochs / n_train=250); noisy vs noiseless share that
+config, so the drop is a fair comparison.
+
+| method | noiseless | noisy | drop |
+|---|---:|---:|---:|
+| Sequential | 0.749 | 0.746 | 0.003 |
+| EWC | 0.778 | 0.770 | 0.007 |
+| QEWC | 0.715 | 0.617 | **0.098** |
+| **Frozen θ (A)** | 0.930 | **0.916** | 0.014 |
+| Free θ (B) | 0.847 | 0.837 | 0.010 |
+| **Anchor θ (C)** | 0.930 | **0.916** | 0.015 |
+
+**OI-QCL A/C are the most noise-robust** (drop ~0.015, BWT stays ~0). **QEWC degrades most (−0.10)** —
+its regularizer is the *quantum Fisher information*, a pure-state property, so under noise the actual
+state deviates and θ is mis-anchored (its noisy accuracy also has large seed variance). Consequently
+**OI-QCL's lead over QEWC widens under noise** (0.92 vs 0.62, vs 0.93 vs 0.72 noiseless) — a point in
+favor of putting task memory in the measurement rather than in a noise-fragile geometric regularizer.
+
 ## Claim boundaries
 
 Simulator only (`default.qubit`), 4 qubits, exact probabilities (no finite-shot/hardware

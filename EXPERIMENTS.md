@@ -713,19 +713,28 @@ this benchmark; the tasks (incl. SPT phases) are linearly separable from the raw
 measurement `|amplitude|²` even discards phase. OI-QCL's result is a *mechanism* claim (measurement-
 side isolation beats θ-protection **within the quantum model class**), not classification advantage.
 
+**Noise robustness (`src/e014_noise.py`, `default.mixed`; depol 0.01 + meas 0.02).** Readout
+robustness (`e014_noise_compare.py`, frozen-A, full config): full 0.964→0.958, m=2 0.943→0.933
+(the head refits on observed noisy probs). All 6 methods trained+evaluated under noise
+(`e014_compare.py --noise`, reduced config, 3 seeds; `figures/e014_noise_compare.png`): OI-QCL
+A/C drop only ~0.015 (0.930→0.916, BWT~0) while **QEWC drops 0.10 (0.715→0.617)** — its QFI
+regularizer is a pure-state property, mis-anchored under noise — so OI-QCL's lead over QEWC
+*widens* with noise. (`default.mixed` is ~250× slower, hence the reduced config; noisy/noiseless
+share it for a fair drop.)
+
 **Cost (unchanged vs baselines on the quantum side).** n=4, L=12: backbone θ = 96 params,
 36 CNOTs, depth ≈ 60 — identical for all methods (OI-QCL only swaps the classical readout). Each
 task adds one linear head (C·2ⁿ + C = 34 params); total head memory O(T·C·2ⁿ) = 102 at T=3.
 
 **Artifacts.** `src/e014_oiqcl.py`; experiments `e014_probe.py`, `e014_compare.py`,
-`e014_trajectory.py`, `e014_task_inference.py`, `e014_classical_baseline.py`; scripts `e014_aggregate_plot.py`,
+`e014_trajectory.py`, `e014_task_inference.py`, `e014_classical_baseline.py`, `e014_noise_compare.py`; scripts `e014_aggregate_plot.py`,
 `plot_e014_trajectory.py`, `plot_e014_task_inference.py`, `plot_e014_fair_compare.py`,
 `plot_e014_circuit.py`;
 `tests/test_e014_oiqcl.py` (incl. the ⟨H_diag⟩ = λ·p identity); results
 `e014_probe_seed42.json`, `e014_compare_seed{42,43,44}.json`,
 `e014_trajectory_seed{42,43,44}.json`, `e014_task_inference_seed{42,43,44}.json`; figures
 `e014_compare.png`, `e014_trajectory.png`, `e014_task_inference.png`, `e014_fair_compare.png`,
-`e014_circuit.png`. Theory:
+`e014_circuit.png`, `e014_noise.png`, `e014_noise_compare.png`. Theory:
 `E014_THEORY.md`; findings: `E014_FINDINGS.md`.
 
 **Claim boundaries.** Simulator only (`default.qubit`), 4 qubits, exact probabilities (no

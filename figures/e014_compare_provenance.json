@@ -1,0 +1,45 @@
+{
+  "figure": "e014_compare.png",
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "source_results": [
+    "results/e014_compare_seed42.json",
+    "results/e014_compare_seed43.json",
+    "results/e014_compare_seed44.json"
+  ],
+  "summary": {
+    "sequential": {
+      "ACC_mean": 0.6899666666666667,
+      "ACC_sd": 0.04645786621588784,
+      "BWT_mean": -0.3833333333333333,
+      "BWT_sd": 0.08315397364728477
+    },
+    "qewc": {
+      "ACC_mean": 0.8194666666666667,
+      "ACC_sd": 0.06250170664336561,
+      "BWT_mean": -0.08750000000000001,
+      "BWT_sd": 0.09575359001102779
+    },
+    "frozen_head": {
+      "ACC_mean": 0.9639000000000001,
+      "ACC_sd": 0.010179882121124985,
+      "BWT_mean": 0.0,
+      "BWT_sd": 0.0
+    },
+    "free_head": {
+      "ACC_mean": 0.8011333333333334,
+      "ACC_sd": 0.017831526388207293,
+      "BWT_mean": -0.2575,
+      "BWT_sd": 0.03783186487605389
+    },
+    "anchor_head": {
+      "ACC_mean": 0.9616666666666666,
+      "ACC_sd": 0.007261083482052317,
+      "BWT_mean": -0.004166666666666667,
+      "BWT_sd": 0.006291528696058958
+    }
+  }
+}

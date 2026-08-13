@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "experiment": "e014_probe",
+  "created_at_utc": "2026-08-13T07:21:47.680263+00:00",
+  "source_code_sha256": "a9ace4f6c5a8cea2d8577516bcfc4df80334bacf4d26ef279ba99f03bd14052e",
+  "environment": {
+    "python": "3.13.15",
+    "packages": {
+      "pennylane": "0.45.1",
+      "numpy": "2.5.2",
+      "scipy": "1.18.0",
+      "scikit-learn": "1.9.0"
+    }
+  },
+  "config": {
+    "method": "frozen theta_1* + independent per-task linear head over probs (Variant A probe)",
+    "tasks": [
+      "MNIST 0/1",
+      "Fashion-MNIST 0/1",
+      "SPT/ATF phases"
+    ],
+    "n_qubits": 4,
+    "layers": 20,
+    "n_weights": 160,
+    "backbone_readout": "two Pauli-Z softmax + BCE (trained on Task1 only)",
+    "probe_head": "logistic regression over full 2^n computational-basis probs",
+    "marginal_readout": "logistic regression over 2-wire (qubits 0,1) marginal probs",
+    "optimizer": "Adam",
+    "learning_rate": 0.02,
+    "epochs_task1": 20,
+    "n_train_per_task": 800,
+    "n_test_per_task": 200,
+    "seed": 42
+  },
+  "per_task": {
+    "task1": {
+      "name": "MNIST 0/1",
+      "probe_train_acc": 0.9738,
+      "probe_test_acc": 0.97,
+      "marginal_readout_test_acc": 0.945,
+      "head_only_gain": 0.025
+    },
+    "task2": {
+      "name": "Fashion-MNIST 0/1",
+      "probe_train_acc": 0.9,
+      "probe_test_acc": 0.915,
+      "marginal_readout_test_acc": 0.845,
+      "head_only_gain": 0.07
+    },
+    "task3": {
+      "name": "SPT/ATF phases",
+      "probe_train_acc": 1.0,
+      "probe_test_acc": 1.0,
+      "marginal_readout_test_acc": 1.0,
+      "head_only_gain": 0.0
+    }
+  },
+  "later_task_mean_probe_acc": 0.9575,
+  "verdict": "GO",
+  "verdict_thresholds": {
+    "GO": ">=0.80",
+    "PARTIAL_GO": ">=0.65",
+    "NO_GO": "<0.65"
+  },
+  "elapsed_sec": 4.3
+}

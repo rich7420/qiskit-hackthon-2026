@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "experiment": "e014_compare",
+  "created_at_utc": "2026-08-13T07:31:37.611192+00:00",
+  "source_code_sha256": "4e78fdb2d6815fa828e0a26749560d53cde9bf573acfa0045a2d45f11ec7a66b",
+  "environment": {
+    "python": "3.13.15",
+    "packages": {
+      "pennylane": "0.45.1",
+      "numpy": "2.5.2",
+      "scipy": "1.18.0",
+      "scikit-learn": "1.9.0"
+    }
+  },
+  "config": {
+    "setting": "Task-Incremental Learning (task id known at test)",
+    "tasks": [
+      "MNIST 0/1",
+      "Fashion-MNIST 0/1",
+      "SPT/ATF phases"
+    ],
+    "task_keys": [
+      "task1",
+      "task2",
+      "task3"
+    ],
+    "n_qubits": 4,
+    "layers": 12,
+    "optimizer": "Adam",
+    "learning_rate": 0.05,
+    "epochs_per_task": 20,
+    "alpha_l2_anchor": 5.0,
+    "lambda_qewc": 0.8,
+    "qfi_samples": 64,
+    "isolated_head": "logistic-style linear head over 2^n probs (diagonal observable per class)",
+    "n_train_per_task": 800,
+    "n_test_per_task": 200,
+    "seed": 44,
+    "method_notes": {
+      "sequential": "shared softmax readout, no isolation (CF baseline)",
+      "qewc": "shared readout + QFI-weighted EWC anchor (e005)",
+      "frozen_head": "Variant A: theta frozen after T1 + isolated heads",
+      "free_head": "Variant B: theta free + isolated heads (rep-drift probe)",
+      "anchor_head": "Variant C: soft-L2 theta + isolated heads (MAIN)"
+    }
+  },
+  "methods": {
+    "sequential": {
+      "R": [
+        [
+          0.875,
+          0.3,
+          0.0
+        ],
+        [
+          0.4,
+          0.95,
+          1.0
+        ],
+        [
+          0.39,
+          0.795,
+          1.0
+        ]
+      ],
+      "ACC": 0.7283,
+      "BWT": -0.32,
+      "final_row": [
+        0.39,
+        0.795,
+        1.0
+      ]
+    },
+    "qewc": {
+      "R": [
+        [
+          0.875,
+          0.3,
+          0.0
+        ],
+        [
+          0.9,
+          0.9,
+          0.5
+        ],
+        [
+          0.895,
+          0.75,
+          1.0
+        ]
+      ],
+      "ACC": 0.8817,
+      "BWT": -0.065,
+      "final_row": [
+        0.895,
+        0.75,
+        1.0
+      ]
+    },
+    "frozen_head": {
+      "R": [
+        [
+          0.995,
+          null,
+          null
+        ],
+        [
+          0.995,
+          0.93,
+          null
+        ],
+        [
+          0.995,
+          0.93,
+          1.0
+        ]
+      ],
+      "ACC": 0.975,
+      "BWT": 0.0,
+      "final_row": [
+        0.995,
+        0.93,
+        1.0
+      ]
+    },
+    "free_head": {
+      "R": [
+        [
+          0.995,
+          null,
+          null
+        ],
+        [
+          0.615,
+          0.95,
+          null
+        ],
+        [
+          0.425,
+          0.945,
+          1.0
+        ]
+      ],
+      "ACC": 0.79,
+      "BWT": -0.2875,
+      "final_row": [
+        0.425,
+        0.945,
+        1.0
+      ]
+    },
+    "anchor_head": {
+      "R": [
+        [
+          0.995,
+          null,
+          null
+        ],
+        [
+          0.995,
+          0.935,
+          null
+        ],
+        [
+          0.99,
+          0.92,
+          1.0
+        ]
+      ],
+      "ACC": 0.97,
+      "BWT": -0.01,
+      "final_row": [
+        0.99,
+        0.92,
+        1.0
+      ]
+    }
+  },
+  "elapsed_sec": 87.2
+}

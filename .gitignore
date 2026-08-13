@@ -68,6 +68,7 @@ figures/**/*.pdf
 !results/e011_summary.json
 !figures/e011_interleaved.png
 !figures/e011_combined.png
+!figures/e011_training.png
 
 # LaTeX drawer diagnostic generated when a local TeX installation is incomplete
 latex_error.log

@@ -346,7 +346,12 @@ Files: experiments/e011_interleaved.py, scripts/e011_run_multiseed.py,
 scripts/e011_plot_curve.py, scripts/e011_plot_combined.py, tests/test_e011.py,
 results/e011_seed{42,43,44}.json + results/e011_summary.json. Reuses src/e005_softmax.py,
 src/e005_consolidation.py (QFI), src/qnn_pennylane.py, src/continual_data.py, src/phase_data.py
-from the E005 PR. Figures: `figures/e011_interleaved.png` (blocked vs interleaved) and
-`figures/e011_combined.png` (blocked vs QEWC-blocked vs QEWC-interleaved vs interleaved on one
-plot; needs results/e005_summary.json from scripts/e005_run_multiseed.py). Both are three panels
-(per task), mean +/- 1 sample-SD bands over seeds.
+from the E005 PR. Figures (all three panels per task, mean +/- 1 sample-SD bands over seeds):
+`figures/e011_interleaved.png` (blocked vs interleaved); `figures/e011_combined.png` (all four
+arms overlaid); `figures/e011_training.png` (E009-style training curves, four arms, with a green
+span marking each task's block in the blocked/sequential schedule). The combined/training figures
+need results/e005_summary.json from scripts/e005_run_multiseed.py for the QEWC-blocked curve.
+
+Caveat for the slides: only blocked vs interleaved differ *purely* in the order of the 60
+gradient steps (same init, data, learner, per-task budget). qewc_interleaved additionally adds
+the online QEWC penalty on top of the interleaved order -- it is not an order-only change.

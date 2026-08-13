@@ -31,11 +31,13 @@ def _entangle(n_qubits: int, entangler: str) -> None:
 
 
 def _reupload(window, circ_w, n_qubits: int, n_layers: int, seq_len: int,
-              entangler: str, encoding: str) -> None:
+              entangler: str, encoding: str, noise: dict | None = None) -> None:
     """Recurrent data re-uploading: at each of `seq_len` steps encode the datum then apply the
     shared variational block; the statevector persists across steps (weight-shared in time).
 
-    `window[..., step]` indexes the step-th datum for both a batch (n, L) and a single (L,)."""
+    `window[..., step]` indexes the step-th datum for both a batch (n, L) and a single (L,).
+    If `noise` is given, a bit-flip (X) and phase-flip (Z) channel is applied to every qubit
+    after each re-upload step so gate error accumulates with circuit depth (needs default.mixed)."""
     for step in range(seq_len):
         v = window[..., step]
         for q in range(n_qubits):
@@ -47,23 +49,38 @@ def _reupload(window, circ_w, n_qubits: int, n_layers: int, seq_len: int,
                 qml.RY(circ_w[layer, q, 0], wires=q)
                 qml.RZ(circ_w[layer, q, 1], wires=q)
             _entangle(n_qubits, entangler)
+        if noise:
+            for q in range(n_qubits):
+                if noise.get("bit"):
+                    qml.BitFlip(noise["bit"], wires=q)
+                if noise.get("phase"):
+                    qml.PhaseFlip(noise["phase"], wires=q)
+                if noise.get("depol"):
+                    qml.DepolarizingChannel(noise["depol"], wires=q)
 
 
 def make_forecaster(n_qubits: int = 4, n_layers: int = 2, seq_len: int = 8,
                     diff_method: str = "backprop", entangler: str = "ring",
-                    encoding: str = "ry_rz"):
+                    encoding: str = "ry_rz", noise: dict | None = None):
     """Return (qnode, circ_shape, head_shape).
 
     qnode(window, circ_w) re-uploads a length-`seq_len` window through one shared block and
     returns the `n_qubits` Pauli-Z expectations. `entangler`/`encoding` select the ansatz variant
     for the gate-count ablation; the defaults reproduce the original ring / two-axis model.
+
+    `noise` = {"bit": p, "phase": p, "meas": p} switches to the density-matrix simulator
+    (default.mixed) and injects bit-flip + phase-flip gate error (per step, via _reupload) plus a
+    bit-flip readout/measurement error right before the Pauli-Z expectations. backprop still works.
     """
     assert entangler in _ENTANGLERS and encoding in _ENCODINGS
-    dev = qml.device("default.qubit", wires=n_qubits)
+    dev = qml.device("default.mixed" if noise else "default.qubit", wires=n_qubits)
 
     @qml.qnode(dev, diff_method=diff_method)
     def qnode(window, circ_w):
-        _reupload(window, circ_w, n_qubits, n_layers, seq_len, entangler, encoding)
+        _reupload(window, circ_w, n_qubits, n_layers, seq_len, entangler, encoding, noise)
+        if noise and noise.get("meas"):
+            for q in range(n_qubits):
+                qml.BitFlip(noise["meas"], wires=q)   # readout / measurement error
         return [qml.expval(qml.PauliZ(q)) for q in range(n_qubits)]
 
     return qnode, (n_layers, n_qubits, 2), (n_qubits + 1,)
@@ -127,3 +144,28 @@ def init_weights(circ_shape, head_shape, seed: int = 42):
     circ = pnp.array(0.1 * rng.standard_normal(circ_shape), requires_grad=True)
     head = pnp.array(0.1 * rng.standard_normal(head_shape), requires_grad=True)
     return circ, head
+
+
+def rollout(qnode, circ_w, head_w, seed_window, n_generate: int):
+    """Autoregressively generate a synthetic series from a seed window (Quantum Generative Replay).
+
+    The frozen forecaster predicts the next value, appends it, slides the window, and repeats — the
+    old task's memory lives in the quantum circuit's params, not stored raw data. Under noise the
+    `qnode` is the noisy forecaster, so the generator itself is noisy (that is the point of the study)."""
+    seq_len = len(np.asarray(seed_window))
+    seq = list(np.asarray(seed_window, dtype=float))
+    for _ in range(n_generate):
+        window = np.asarray(seq[-seq_len:])[None, :]
+        seq.append(float(np.asarray(predict(qnode, circ_w, head_w, window))[0]))
+    return np.asarray(seq)
+
+
+def window_series(series, seq_len: int):
+    """Slice a 1-D series into (X, y) next-step pairs (numpy)."""
+    s = np.asarray(series, dtype=float)
+    n = len(s) - seq_len - 1
+    if n <= 0:
+        return np.empty((0, seq_len)), np.empty((0,))
+    xs = np.stack([s[i:i + seq_len] for i in range(n)])
+    ys = np.asarray([s[i + seq_len] for i in range(n)])
+    return xs, ys

@@ -100,3 +100,28 @@ def test_single_axis_encoding_only_removes_rz():
     r1, _ = _resources(2, entangler="ring", encoding="ry")
     assert r2.gate_types["RZ"] - r1.gate_types["RZ"] == 32   # 4 qubits x 8 steps of encode-RZ
     assert r2.gate_types["RY"] == r1.gate_types["RY"]        # RY encoding untouched
+
+
+# --- noise model + QGR rollout (e009-noise branch) ---
+
+def test_noisy_forecaster_predicts_finite():
+    # noise switches to default.mixed; predictions must stay finite and inside the tanh range
+    qnode, cs, hs = make_forecaster(n_qubits=4, n_layers=1, seq_len=6,
+                                    noise={"depol": 0.02, "meas": 0.03})
+    cw, hw = init_weights(cs, hs, seed=0)
+    X = np.random.default_rng(0).uniform(-1, 1, (3, 6))
+    pred = np.asarray(predict(qnode, cw, hw, X))
+    assert pred.shape == (3,)
+    assert np.all(np.isfinite(pred)) and np.all(np.abs(pred) <= 1.0)
+
+
+def test_rollout_generates_sequence():
+    from src.e009_qtsf import rollout, window_series
+
+    qnode, cs, hs = make_forecaster(n_qubits=4, n_layers=1, seq_len=6)
+    cw, hw = init_weights(cs, hs, seed=0)
+    seed_window = np.random.default_rng(0).uniform(-1, 1, 6)
+    seq = rollout(qnode, cw, hw, seed_window, n_generate=10)
+    assert len(seq) == 6 + 10 and np.all(np.isfinite(seq))   # seed + generated, all finite
+    Xg, yg = window_series(seq, 6)
+    assert Xg.shape[1] == 6 and len(Xg) == len(yg)

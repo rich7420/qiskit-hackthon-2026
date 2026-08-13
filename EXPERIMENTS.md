@@ -722,19 +722,27 @@ regularizer is a pure-state property, mis-anchored under noise — so OI-QCL's l
 *widens* with noise. (`default.mixed` is ~250× slower, hence the reduced config; noisy/noiseless
 share it for a fair drop.)
 
+**Real IBM hardware (`experiments/e014_hardware_eval.py`, ibm_marrakesh, 3 tasks, 24 test/task,
+4096 shots, 1 seed).** Train on simulator, learn each task's readout from QPU measurements (OI-QCL:
+per-task classical head on QPU probs, old heads frozen — no on-device quantum retraining). QPU
+averages: **OI-QCL 0.931 (≈ sim, no hardware loss) vs QEWC 0.583** (T1→0.375, below chance: forgets
+the old task and its pure-state QFI mis-anchors under real noise). The lead over θ-protection widens
+on hardware to +0.35 (vs +0.14 sim). Per-task numbers noisy at n_test=24/1 seed; the average is the
+signal; IBM job ids in the result JSONs. Figures `e014_hardware.png`, `e014_hardware_compare.png`.
+
 **Cost (unchanged vs baselines on the quantum side).** n=4, L=12: backbone θ = 96 params,
 36 CNOTs, depth ≈ 60 — identical for all methods (OI-QCL only swaps the classical readout). Each
 task adds one linear head (C·2ⁿ + C = 34 params); total head memory O(T·C·2ⁿ) = 102 at T=3.
 
 **Artifacts.** `src/e014_oiqcl.py`; experiments `e014_probe.py`, `e014_compare.py`,
-`e014_trajectory.py`, `e014_task_inference.py`, `e014_classical_baseline.py`, `e014_noise_compare.py`; scripts `e014_aggregate_plot.py`,
+`e014_trajectory.py`, `e014_task_inference.py`, `e014_classical_baseline.py`, `e014_noise_compare.py`, `e014_hardware_eval.py`; scripts `e014_aggregate_plot.py`,
 `plot_e014_trajectory.py`, `plot_e014_task_inference.py`, `plot_e014_fair_compare.py`,
 `plot_e014_circuit.py`;
 `tests/test_e014_oiqcl.py` (incl. the ⟨H_diag⟩ = λ·p identity); results
 `e014_probe_seed42.json`, `e014_compare_seed{42,43,44}.json`,
 `e014_trajectory_seed{42,43,44}.json`, `e014_task_inference_seed{42,43,44}.json`; figures
 `e014_compare.png`, `e014_trajectory.png`, `e014_task_inference.png`, `e014_fair_compare.png`,
-`e014_circuit.png`, `e014_noise.png`, `e014_noise_compare.png`. Theory:
+`e014_circuit.png`, `e014_noise.png`, `e014_noise_compare.png`, `e014_hardware.png`, `e014_hardware_compare.png`. Theory:
 `E014_THEORY.md`; findings: `E014_FINDINGS.md`.
 
 **Claim boundaries.** Simulator only (`default.qubit`), 4 qubits, exact probabilities (no

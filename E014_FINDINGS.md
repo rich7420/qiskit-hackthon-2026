@@ -249,6 +249,36 @@ state deviates and θ is mis-anchored (its noisy accuracy also has large seed va
 **OI-QCL's lead over QEWC widens under noise** (0.92 vs 0.62, vs 0.93 vs 0.72 noiseless) — a point in
 favor of putting task memory in the measurement rather than in a noise-fragile geometric regularizer.
 
+## Continual learning on real IBM hardware (ibm_marrakesh)
+
+`experiments/e014_hardware_eval.py` (separate hardware path). Train the backbone on the
+noiseless simulator, rebuild the ansatz in Qiskit (StatePreparation + RY/RZ + CNOT ladder),
+then **learn each task's readout from QPU measurements** — for OI-QCL the per-task classical
+head is fit on QPU-sampled probs (old heads frozen); no quantum gradients on device. This is
+the NISQ-feasible form of continual learning OI-QCL enables: adding a task needs only sampling
++ a classical head fit, never on-device quantum retraining. Both methods run on `ibm_marrakesh`
+(156-qubit Heron), 3 tasks, 24 test/task, 4096 shots, 1 seed (`figures/e014_hardware.png`,
+`figures/e014_hardware_compare.png`).
+
+| task | OI-QCL sim | OI-QCL QPU | QEWC sim | QEWC QPU |
+|---|---:|---:|---:|---:|
+| T1 MNIST (old) | 0.875 | **0.875** | 0.625 | **0.375** |
+| T2 Fashion | 0.833 | **0.917** | 0.292 | **0.625** |
+| T3 SPT/ATF | 1.000 | **1.000** | 1.000 | **0.750** |
+| **average** | | **0.931** | | **0.583** |
+
+**OI-QCL's accuracy does not degrade on real hardware** (QPU 0.931 ≈ sim); the measurement-side
+readout is robust to real gate + readout noise. **QEWC collapses on hardware** (0.583; T1 to
+0.375, below chance): it has already forgotten the old task, and its QFI regularizer — a
+pure-state property — is mis-anchored under real noise. So the OI-QCL lead over θ-protection
+**widens on real hardware to +0.35** (vs +0.14 noiseless), matching the simulator noise study.
+
+Honest caveats: n_test=24/task and a single seed make the *per-task* numbers noisy (e.g. QEWC
+Fashion sim 0.29 but QPU 0.62 is small-sample variance; OI-QCL QPU ≥ sim likewise reflects
+sampling, not a hardware improvement) — the *average* is the reliable signal. Full IBM job ids
+are stored in the result JSONs. Not done on hardware: multi-seed (QPU cost/queue), gradient
+training of the backbone (infeasible), error mitigation / shots sweep (roadmap).
+
 ## Claim boundaries
 
 Simulator only (`default.qubit`), 4 qubits, exact probabilities (no finite-shot/hardware

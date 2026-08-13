@@ -154,3 +154,7 @@ latex_error.log
 !results/e014_cmp_red_noisy_seed44.json
 !figures/e014_noise_compare.png
 !results/e014_noise_compare_figure_provenance.json
+!experiments/e014_hardware_eval.py
+!results/e014_hardware_aer_alltasks.json
+!results/e014_hardware_figure_provenance.json
+!figures/e014_hardware.png

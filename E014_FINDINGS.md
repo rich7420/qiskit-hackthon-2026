@@ -155,11 +155,35 @@ Average test accuracy: Sequential 0.69, EWC 0.82, QEWC 0.82, **OI-QCL+router (A/
 ceiling 0.96). OI-QCL still wins by ~0.09 under the harder, oracle-free setting — the ~0.14 ACC
 advantage over θ-protection is not an artifact of the task oracle.
 
+## Matched classical control — no quantum advantage on this benchmark (important, honest)
+
+`experiments/e014_classical_baseline.py`: the same per-task linear head capacity, but on the **raw
+2ⁿ amplitude input `x̃`** (the vector fed to AmplitudeEmbedding) with **no quantum circuit at all**.
+Mean over seeds:
+
+| model | Task-IL ACC | task-agnostic (router) |
+|---|---:|---:|
+| **Classical multi-head (raw input, no circuit)** | **0.983** | **0.972** |
+| OI-QCL frozen (A) / anchor (C) | 0.964 / 0.962 | 0.907 / 0.909 |
+| QEWC | 0.819 | — |
+
+**The classical multi-head beats OI-QCL** (per-task: T1 0.998 / T2 0.952 / T3 SPT 1.00). On this
+benchmark the quantum circuit + measurement adds nothing — `probs = |amplitude|²` even discards
+sign/phase, and these tasks (incl. the "quantum-native" SPT phases) are already linearly separable
+from the raw amplitudes. **So OI-QCL's contribution is NOT a classification/quantum advantage.** It
+is a *mechanism* result: **within the quantum model class**, moving continual memory to the
+measurement (A/C ≈ 0.96) beats θ-protection (QEWC/EWC ≈ 0.82) and eliminates forgetting. Showing the
+quantum representation is *necessary* would require a task where a matched classical head fails —
+not the case here; that is the honest limit and a clear direction for a harder (quantum-data) benchmark.
+
 ## Claim boundaries
 
 Simulator only (`default.qubit`), 4 qubits, exact probabilities (no finite-shot/hardware
 readout). Task-IL only (task id known at test) — not class-incremental or task-agnostic.
 The isolated head is a linear map over 2ⁿ probabilities: memory scales O(T·C·2ⁿ), which is
 exponential in qubits (DANO reduces generic 4ⁿ Hermitians to 2ⁿ diagonal but stays
-exponential) — fine at n=4, needs structured/local observables at scale. No quantum-advantage
-claim; the contribution is *where* continual memory should live in a quantum model.
+exponential) — fine at n=4, needs structured/local observables at scale. **No quantum-advantage
+claim — a matched classical multi-head on the raw input actually wins here** (see above); the
+contribution is *where* continual memory should live in a quantum model (measurement-side
+isolation beats θ-protection within the quantum model class), not that the quantum model beats
+classical ML on these tasks.

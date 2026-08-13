@@ -706,12 +706,19 @@ id (baselines use one shared head, OI-QCL uses the learned router): Sequential 0
 QEWC 0.82, **OI-QCL+router (A/C) 0.91** (Task-IL ceiling 0.96). The ~0.14 ACC advantage over
 θ-protection is not an artifact of the task oracle — OI-QCL still wins by ~0.09 oracle-free.
 
+**Matched classical control (`experiments/e014_classical_baseline.py`) — honest, important.**
+Same per-task linear head on the RAW 2ⁿ amplitude input (no quantum circuit): Task-IL ACC 0.983,
+task-agnostic 0.972 — it **beats** OI-QCL (0.964/0.907). So there is **no quantum advantage** on
+this benchmark; the tasks (incl. SPT phases) are linearly separable from the raw amplitudes and the
+measurement `|amplitude|²` even discards phase. OI-QCL's result is a *mechanism* claim (measurement-
+side isolation beats θ-protection **within the quantum model class**), not classification advantage.
+
 **Cost (unchanged vs baselines on the quantum side).** n=4, L=12: backbone θ = 96 params,
 36 CNOTs, depth ≈ 60 — identical for all methods (OI-QCL only swaps the classical readout). Each
 task adds one linear head (C·2ⁿ + C = 34 params); total head memory O(T·C·2ⁿ) = 102 at T=3.
 
 **Artifacts.** `src/e014_oiqcl.py`; experiments `e014_probe.py`, `e014_compare.py`,
-`e014_trajectory.py`, `e014_task_inference.py`; scripts `e014_aggregate_plot.py`,
+`e014_trajectory.py`, `e014_task_inference.py`, `e014_classical_baseline.py`; scripts `e014_aggregate_plot.py`,
 `plot_e014_trajectory.py`, `plot_e014_task_inference.py`, `plot_e014_fair_compare.py`,
 `plot_e014_circuit.py`;
 `tests/test_e014_oiqcl.py` (incl. the ⟨H_diag⟩ = λ·p identity); results

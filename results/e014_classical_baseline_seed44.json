@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "experiment": "e014_classical_baseline",
+  "created_at_utc": "2026-08-13T11:02:56.246554+00:00",
+  "source_code_sha256": "87950991d5b8c947a9030cf7434db6786a5121edeab8f715fcb31225b314b24d",
+  "environment": {
+    "python": "3.13.15",
+    "packages": {
+      "numpy": "2.5.2",
+      "scikit-learn": "1.9.0"
+    }
+  },
+  "config": {
+    "model": "per-task logistic head on raw 2^n amplitude input (NO quantum circuit)",
+    "matched_to": "OI-QCL head over quantum probs p_theta(x) (same dim, same head)",
+    "tasks": [
+      "MNIST 0/1",
+      "Fashion-MNIST 0/1",
+      "SPT/ATF phases"
+    ],
+    "n_qubits": 4,
+    "n_train": 800,
+    "n_test": 200,
+    "seed": 44
+  },
+  "per_task": {
+    "task1": {
+      "name": "MNIST 0/1",
+      "taskIL_acc": 1.0
+    },
+    "task2": {
+      "name": "Fashion-MNIST 0/1",
+      "taskIL_acc": 0.96
+    },
+    "task3": {
+      "name": "SPT/ATF phases",
+      "taskIL_acc": 1.0
+    }
+  },
+  "taskIL_ACC": 0.9867,
+  "task_agnostic_accuracy": 0.98,
+  "router_task_inference_accuracy": 0.9817,
+  "elapsed_sec": 0.01
+}

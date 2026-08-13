@@ -1,0 +1,50 @@
+{
+  "experiment": "e014_real_dataset_screen",
+  "created_at_utc": "2026-08-13T11:57:31.795498+00:00",
+  "source_code_sha256": "f19194f1702893646afa79820f5696dd83e1bef44e0ec230c4d7c892ea98e933",
+  "environment": {
+    "python": "3.13.15",
+    "packages": {
+      "pennylane": "0.45.1",
+      "numpy": "2.5.2",
+      "scikit-learn": "1.9.0"
+    }
+  },
+  "config": {
+    "n_train": 400,
+    "n_test": 200,
+    "layers": 4,
+    "epochs": 25,
+    "seed": 42,
+    "n_qubits": 4,
+    "local_observables": "<Z_i>,<X_i>,<Z_iZ_{i+1}>",
+    "note": "classical_full sees the whole state; classical_local is the literature protocol"
+  },
+  "tasks": {
+    "cluster_deep": {
+      "classical_full": 1.0,
+      "classical_local": 0.78,
+      "quantum_L4": 1.0,
+      "classical_local_loses": false
+    },
+    "cluster_near": {
+      "classical_full": 1.0,
+      "classical_local": 0.57,
+      "quantum_L4": 1.0,
+      "classical_local_loses": true
+    },
+    "tfim_deep": {
+      "classical_full": 1.0,
+      "classical_local": 1.0,
+      "quantum_L4": 1.0,
+      "classical_local_loses": false
+    },
+    "tfim_near": {
+      "classical_full": 1.0,
+      "classical_local": 1.0,
+      "quantum_L4": 0.97,
+      "classical_local_loses": false
+    }
+  },
+  "elapsed_sec": 2.9
+}

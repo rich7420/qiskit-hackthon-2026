@@ -311,21 +311,27 @@ Setup:
 - model = recurrent data-reuploading quantum forecaster (src/e009_qtsf.py): 4 qubits, 2 shared
   RY/RZ+CNOT blocks re-applied per step (state persists), Z readouts -> linear+tanh head, 21
   weights, Adam(0.05), 40 epochs/task
-- metric = test NMSE (lower better); methods = naive / L2 / EWC (empirical Fisher) / replay
+- metric = test NMSE (lower better); methods = naive / L2 / EWC (classical Fisher) / QEWC
+  (quantum Fisher) / replay. Fisher importances normalized to unit mean so lam is comparable and
+  only structure differs; QEWC = QFI on the 16 quantum weights + classical Fisher on the 5 head.
 
 Result (5 seeds, mean +/- sd; NMSE, lower better):
 - naive:  retention 0.262 +/- 0.135, plasticity 0.032, avg 0.185  (best plasticity, worst forgetting)
 - L2:     retention 0.211 +/- 0.107, plasticity 0.355, avg 0.259
-- EWC:    retention 0.180 +/- 0.042, plasticity 0.223, avg 0.194
+- EWC:    retention 0.165 +/- 0.064, plasticity 0.346, avg 0.226
+- QEWC:   retention 0.150 +/- 0.071, plasticity 0.165, avg 0.155  (best regularizer trade-off)
 - replay: retention 0.058 +/- 0.026, plasticity 0.061, avg 0.059  (best overall, tightest variance)
 
 Finding: catastrophic forgetting is clear (naive: narma_5 NMSE ~0.03 -> ~0.27 after bessel).
-Replay decisively balances retention and adaptation; EWC > L2 > naive on retention. Notably EWC
-clearly beats L2 here (empirical Fisher is informative), the opposite of the classification study
-where isotropic QFI made QEWC ~ L2 — so Fisher usefulness is benchmark-dependent, not universal.
-Classical ridge AR forecasts each series at NMSE ~ 0, so no quantum-advantage claim; the study is
-about forgetting and its mitigation.
+Replay is the overall winner. Among regularizers, QEWC > EWC > L2 on the stability-plasticity
+trade-off (QEWC best retention 0.150 AND much better plasticity 0.165 than EWC/L2 ~0.35). This
+CONTRADICTS the classification study (e005/e007) where the QFI was isotropic and QEWC ~ L2: on
+quantum temporal forecasting the quantum Fisher genuinely helps -> whether quantum geometry helps
+is task-dependent, not universal. Caveat: single lam operating point, mechanism not yet pinned
+down (QFI eff-rank ~15.6/16 at init). Classical ridge AR forecasts each series at NMSE ~ 0, so no
+quantum-advantage claim; the study is about forgetting and its mitigation.
 
-Figures:
-- `figures/e009_forgetting.png` — per-task test NMSE over the sequential run (via scripts/e009_plot.py)
+Figures (5 methods, e005 style, mean +/- SD bands, 5 seeds):
+- `figures/e009_forgetting.png` — per-task test NMSE / forgetting (via scripts/e009_plot.py)
+- `figures/e009_training.png` — per-task train NMSE / fit (via scripts/e009_plot_train.py)
 - `figures/e009_compare.png` — retention vs plasticity, lower-left best (via scripts/e009_plot_compare.py)

@@ -1,11 +1,11 @@
-"""Plot e009 continual forecasting in the style of figures/e005_ewc_qewc.png.
+"""Plot e009 continual forecasting TRAINING curves (per-task train NMSE over epochs).
 
-One panel per task (rows), each showing that task's test NMSE (lower=better) across the whole
-sequential run for naive/l2/ewc/replay, with a mean line and +/-1 sample-SD band across seeds
-and task-switch lines. Reads results/e009_multiseed.json.
+Training-set counterpart of scripts/e009_plot.py (which shows test NMSE / forgetting). One panel
+per task, method curves with mean +/- SD band across seeds, in the style of e005_ewc_qewc.png.
+Reads results/e009_multiseed.json.
 
 Run:
-    python scripts/e009_plot.py
+    python scripts/e009_plot_train.py
 """
 
 from __future__ import annotations
@@ -18,9 +18,8 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 RESULT = ROOT / "results" / "e009_multiseed.json"
-OUT = ROOT / "figures" / "e009_forgetting.png"
+OUT = ROOT / "figures" / "e009_training.png"
 
-# method -> (label, color, linestyle) — naive gray dashed, replay red solid
 STYLE = {"naive": ("naive (no CL)", "0.45", "--"),
          "l2": ("L2 anchor", "#CCBB44", "-."),
          "ewc": ("EWC (classical Fisher)", "#4477AA", "-."),
@@ -44,24 +43,23 @@ def main() -> None:
         for m, (label, color, ls) in STYLE.items():
             rows = curves[m]
             ep = np.array([r["epoch"] for r in rows])
-            mean = np.array([r["nmse"][task]["mean"] for r in rows])
-            sd = np.array([r["nmse"][task]["sd"] for r in rows])
+            mean = np.array([r["train_nmse"][task]["mean"] for r in rows])
+            sd = np.array([r["train_nmse"][task]["sd"] for r in rows])
             ax.plot(ep, mean, ls, color=color, lw=2.0, label=label)
             ax.fill_between(ep, np.clip(mean - sd, 0, None), mean + sd, color=color, alpha=0.18)
         for b in boundaries:
             ax.axvline(b, color="0.35", ls="--", lw=1.0)
-        # shade the phase in which this task is actively trained
         ax.axvspan((i - 1) * epochs_per_task, i * epochs_per_task, color="green", alpha=0.05)
         ax.set_xlim(0, total_epochs)
         ax.set_ylim(0, 1.05)
-        ax.set_ylabel(f"T{i}\ntest NMSE")
+        ax.set_ylabel(f"T{i}\ntrain NMSE")
         ax.set_title(f"Task {i}: {task}", loc="left", fontsize=10, fontweight="bold")
         ax.grid(alpha=0.2)
 
     axes[0].legend(loc="upper right", fontsize=9, ncol=2)
     axes[-1].set_xlabel("Epoch (sequential training; shaded = task being trained)")
-    fig.suptitle(f"E009: catastrophic forgetting in quantum forecasting — "
-                 f"naive vs L2 vs EWC vs replay (seeds {seeds}, test NMSE)", fontsize=11.5)
+    fig.suptitle(f"E009: training-set NMSE (fit/plasticity) — naive vs L2 vs EWC vs QEWC vs "
+                 f"replay (seeds {seeds})", fontsize=11)
     fig.tight_layout()
     OUT.parent.mkdir(exist_ok=True)
     fig.savefig(OUT, dpi=200, bbox_inches="tight")

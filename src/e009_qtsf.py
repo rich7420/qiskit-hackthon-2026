@@ -44,6 +44,49 @@ def make_forecaster(n_qubits: int = 4, n_layers: int = 2, seq_len: int = 8,
     return qnode, (n_layers, n_qubits, 2), (n_qubits + 1,)
 
 
+def make_state_forecaster(n_qubits: int = 4, n_layers: int = 2, seq_len: int = 8):
+    """Same recurrent re-uploading state-prep as make_forecaster, single-Z readout.
+
+    Used only for the Quantum Fisher Information (metric tensor) of the quantum weights — the
+    QFI is a property of the prepared state, independent of the classical readout head.
+    """
+    dev = qml.device("default.qubit", wires=n_qubits)
+
+    @qml.qnode(dev)
+    def state_qnode(window, circ_w):
+        for step in range(seq_len):
+            v = window[step]
+            for q in range(n_qubits):
+                qml.RY(((q + 1) / n_qubits) * v, wires=q)
+                qml.RZ(((n_qubits - q) / n_qubits) * v, wires=q)
+            for layer in range(n_layers):
+                for q in range(n_qubits):
+                    qml.RY(circ_w[layer, q, 0], wires=q)
+                    qml.RZ(circ_w[layer, q, 1], wires=q)
+                for q in range(n_qubits):
+                    qml.CNOT(wires=[q, (q + 1) % n_qubits])
+        return qml.expval(qml.PauliZ(0))
+
+    return state_qnode
+
+
+def temporal_qfi_diag(state_qnode, circ_w, windows, n_samples: int = 16, seed: int = 0):
+    """Diagonal QFI of the quantum weights, averaged over a subsample of input windows.
+
+    Returns a flat vector of length circ_w.size (quantum weights only; the classical head has
+    no quantum Fisher). QFI = 4 * diag(Fubini-Study metric).
+    """
+    p = int(np.asarray(circ_w).size)
+    metric = qml.metric_tensor(state_qnode, approx="diag")
+    rng = np.random.default_rng(seed)
+    idx = rng.choice(len(windows), size=min(n_samples, len(windows)), replace=False)
+    acc = np.zeros(p)
+    for i in idx:
+        g = np.asarray(metric(pnp.array(windows[i], requires_grad=False), circ_w)).reshape(p, p)
+        acc += 4.0 * np.diag(g)
+    return acc / len(idx)
+
+
 def predict(qnode, circ_w, head_w, X):
     """Scalar one-step forecasts for a batch X (n, seq_len): tanh(head . <Z> + b)."""
     readouts = pnp.stack(qnode(pnp.array(X, requires_grad=False), circ_w), axis=-1)

@@ -52,15 +52,19 @@ def main() -> None:
                 "sd": round(float(a.std(ddof=1)), 4) if len(a) > 1 else 0.0}
     summary = {m: {f: ms(raw[m][f]) for f in FIELDS} for m in METHODS}
 
-    # Mean per-task NMSE curve across seeds (aligned by epoch).
+    # Per-task NMSE curve across seeds (mean + sample SD, aligned by epoch) for band plots.
     mean_curves = {}
     for m in METHODS:
         hs = curves[m]
         epochs = [row["epoch"] for row in hs[0]]
+        def stat(i, t, key):
+            vals = [h[i][key][t] for h in hs]
+            return {"mean": round(float(np.mean(vals)), 5),
+                    "sd": round(float(np.std(vals, ddof=1)), 5) if len(hs) > 1 else 0.0}
         mean_curves[m] = [
             {"epoch": epochs[i], "phase": hs[0][i]["phase"],
-             "nmse": {t: round(float(np.mean([h[i]["nmse"][t] for h in hs])), 5)
-                      for t in args.tasks}}
+             "nmse": {t: stat(i, t, "nmse") for t in args.tasks},
+             "train_nmse": {t: stat(i, t, "train_nmse") for t in args.tasks}}
             for i in range(len(epochs))]
 
     out = {"experiment": "e009_continual_forecasting_multiseed", "tasks": args.tasks,

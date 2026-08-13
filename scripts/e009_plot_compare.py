@@ -20,7 +20,8 @@ RESULT = ROOT / "results" / "e009_multiseed.json"
 OUT = ROOT / "figures" / "e009_compare.png"
 
 STYLE = {"naive": ("naive (no CL)", "0.45"), "l2": ("L2 anchor", "#CCBB44"),
-         "ewc": ("EWC (Fisher)", "#4477AA"), "replay": ("replay", "#EE6677")}
+         "ewc": ("EWC (classical Fisher)", "#4477AA"), "qewc": ("QEWC (quantum Fisher)", "#228833"),
+         "replay": ("replay", "#EE6677")}
 
 
 def main() -> None:

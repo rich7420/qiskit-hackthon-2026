@@ -17,15 +17,21 @@ to balance retention and adaptation.* Regression counterpart to the classificati
 - **Metric:** test **NMSE** (MSE / var, NARMA-standard; lower is better). Retention = mean
   earlier-task NMSE at run end; plasticity = final-task NMSE; forgetting = NMSE increase on an
   earlier task from its phase end to the run end.
-- **Methods:** naive (no CL), L2 anchor, EWC (empirical MSE/Gauss-Newton Fisher), replay
-  (balanced buffer of 24 earlier-task samples mixed into the loss). Adam(0.05), 40 epochs/task.
+- **Methods:** naive (no CL), L2 anchor, EWC (empirical MSE/Gauss-Newton **classical** Fisher),
+  QEWC (**quantum** Fisher / QFI on the temporal circuit), replay (balanced buffer of 24
+  earlier-task samples). Adam(0.05), 40 epochs/task. **Fairness:** all Fisher importances are
+  normalized to unit mean, so lam is comparable and only the *structure* (relative per-parameter
+  weighting) differs between L2/EWC/QEWC. QEWC uses QFI on the 16 quantum weights and the same
+  classical Fisher on the 5 classical head weights, isolating the quantum-vs-classical Fisher
+  question on the qubits.
 
 ## Results (5 seeds, mean ± sample SD; lower NMSE better)
 | method | retention (old NMSE) | plasticity (new NMSE) | avg final NMSE |
 |---|---|---|---|
 | naive | 0.262 ± 0.135 | **0.032 ± 0.013** | 0.185 |
 | L2 anchor | 0.211 ± 0.107 | 0.355 ± 0.244 | 0.259 |
-| EWC (Fisher) | 0.180 ± 0.042 | 0.223 ± 0.113 | 0.194 |
+| EWC (classical Fisher) | 0.165 ± 0.064 | 0.346 ± 0.188 | 0.226 |
+| QEWC (quantum Fisher) | 0.150 ± 0.071 | 0.165 ± 0.034 | 0.155 |
 | **replay** | **0.058 ± 0.026** | 0.061 ± 0.043 | **0.059** |
 
 Classical reference: a ridge AR model forecasts each series at NMSE ≈ 0 individually (these are
@@ -37,21 +43,24 @@ is about **forgetting and its mitigation** in a quantum temporal model.
    plasticity (0.032) but the worst earlier-task retention (0.262) — e.g. narma_5 NMSE rises from
    ~0.03 to ~0.27 once bessel_j2 training begins.
 2. **Replay decisively balances both** — best retention (0.058), near-best plasticity (0.061),
-   best average (0.059), and the tightest variance. It essentially removes forgetting while still
-   learning the new task. Robust across all 5 seeds.
-3. **EWC > L2 > naive on retention**, and — notably — **EWC clearly beats L2** here (0.180 vs
-   0.211 retention, 0.223 vs 0.355 plasticity). The empirical Fisher weighting carries real,
-   useful structure on this regression task.
-4. **Contrast with the classification study.** In e005/e007 (MNIST/Fashion/SPT) the global QFI
-   was isotropic, so QEWC ≈ L2 and Fisher directionality was inert. Here on quantum forecasting
-   the (empirical) Fisher is informative — EWC ≫ L2. So "Fisher structure doesn't help" was
-   benchmark-specific, not universal; the geometry of the task decides whether it helps.
+   best average (0.059), tightest variance. It essentially removes forgetting while still learning
+   the new task. Robust across all 5 seeds. Replay is the overall winner.
+3. **Among the regularizers, QEWC > EWC > L2** on the stability–plasticity trade-off. With a
+   matched anchoring budget (unit-mean Fisher), QEWC has the best retention (0.150) AND much better
+   plasticity (0.165) than EWC (0.346) or L2 (0.355). Robust across seeds (plasticity SD 0.034).
+4. **The quantum Fisher genuinely helps here — contradicting the classification study.** In
+   e005/e007 (MNIST/Fashion/SPT) the QFI was isotropic and QEWC ≈ L2 (quantum geometry inert).
+   On quantum *temporal forecasting* the quantum Fisher gives the best regularizer trade-off:
+   **whether quantum geometry helps is task-dependent, not universal.** Caveat: mechanism not yet
+   pinned down — the QFI eff-rank was ~15.6/16 at random init, but its structure at the trained
+   theta* evidently matters; a frontier sweep + anisotropy analysis would firm up "QEWC > EWC > L2".
 
-## Figures
-- `figures/e009_forgetting.png` — per-task test NMSE over the sequential run (naive spikes on old
-  tasks; replay stays flat), 3 panels, mean of 5 seeds.
+## Figures (5 methods, e005 style, mean ± SD bands over 5 seeds)
+- `figures/e009_forgetting.png` — per-task **test** NMSE over the sequential run (naive spikes on
+  old tasks; replay stays flat).
+- `figures/e009_training.png` — per-task **train** NMSE (fit / plasticity), training-set curve.
 - `figures/e009_compare.png` — retention vs plasticity scatter (both NMSE, lower-left = best) with
-  error bars; replay sits in the ideal corner.
+  error bars; replay sits in the ideal corner, QEWC is the best regularizer.
 
 ## Files
 - `src/e009_data.py` (torch-free provided-dataset loader), `src/e009_qtsf.py` (quantum forecaster)

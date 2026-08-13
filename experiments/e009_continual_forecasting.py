@@ -36,10 +36,12 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from src.e009_data import load_task_sequence  # noqa: E402
-from src.e009_qtsf import init_weights, make_forecaster, nmse, predict  # noqa: E402
+from src.e009_qtsf import (  # noqa: E402
+    init_weights, make_forecaster, make_state_forecaster, nmse, predict, temporal_qfi_diag,
+)
 
 RESULTS = ROOT / "results"
-METHODS = ("naive", "l2", "ewc", "replay")
+METHODS = ("naive", "l2", "ewc", "qewc", "replay")
 
 
 def _flat(circ_w, head_w):
@@ -57,8 +59,10 @@ def empirical_fisher(qnode, circ_w, head_w, X):
 
 
 def train_method(method, tasks, *, n_layers, seq_len, lr, epochs, lam, buffer_size,
-                 seed, verbose=False):
+                 seed, qfi_samples=16, verbose=False):
     qnode, cs, hs = make_forecaster(n_qubits=4, n_layers=n_layers, seq_len=seq_len)
+    state_qnode = make_state_forecaster(4, n_layers, seq_len) if method == "qewc" else None
+    n_circ = int(np.prod(cs))
     cw, hw = init_weights(cs, hs, seed=seed)
     opt = qml.AdamOptimizer(lr)
     anchors = []          # (theta_star_flat, fisher_flat) for l2/ewc
@@ -68,7 +72,9 @@ def train_method(method, tasks, *, n_layers, seq_len, lr, epochs, lam, buffer_si
 
     def snap(epoch, phase):
         history.append({"epoch": epoch, "phase": phase,
-                        "nmse": {t.name: nmse(qnode, cw, hw, t.X_test, t.y_test) for t in tasks}})
+                        "nmse": {t.name: nmse(qnode, cw, hw, t.X_test, t.y_test) for t in tasks},
+                        "train_nmse": {t.name: nmse(qnode, cw, hw, t.X_train, t.y_train)
+                                       for t in tasks}})
 
     snap(0, 0)
     for phase, task in enumerate(tasks, start=1):
@@ -79,7 +85,7 @@ def train_method(method, tasks, *, n_layers, seq_len, lr, epochs, lam, buffer_si
 
         def cost(c, h, Xtr=Xtr, ytr=ytr, Rx=Rx, Ry=Ry):
             loss = pnp.mean((predict(qnode, c, h, Xtr) - ytr) ** 2)
-            if method in ("l2", "ewc") and anchors:
+            if method in ("l2", "ewc", "qewc") and anchors:
                 theta = _flat(c, h)
                 for ts, F in anchors:
                     loss = loss + 0.5 * lam * pnp.sum(F * (theta - ts) ** 2)
@@ -97,10 +103,23 @@ def train_method(method, tasks, *, n_layers, seq_len, lr, epochs, lam, buffer_si
 
         if phase < len(tasks):   # consolidate / fill buffer for protecting this task
             theta_star = np.asarray(_flat(cw, hw))
+            # Fisher importances are normalized to unit mean so lam is comparable across
+            # methods and only the STRUCTURE (relative per-parameter weighting) differs.
+            def _norm(F):
+                F = np.asarray(F, float)
+                return F / (F.mean() + 1e-12)
+
             if method == "l2":
                 anchors.append((theta_star, np.ones(theta_star.size)))
             elif method == "ewc":
-                anchors.append((theta_star, empirical_fisher(qnode, cw, hw, task.X_train)))
+                anchors.append((theta_star, _norm(empirical_fisher(qnode, cw, hw, task.X_train))))
+            elif method == "qewc":
+                # QFI on the quantum weights; classical empirical Fisher on the classical head
+                # (QFI is undefined there) -> isolates quantum-vs-classical Fisher on the qubits.
+                qfi = temporal_qfi_diag(state_qnode, cw, task.X_train, n_samples=qfi_samples,
+                                        seed=seed)
+                head_f = empirical_fisher(qnode, cw, hw, task.X_train)[n_circ:]
+                anchors.append((theta_star, _norm(np.concatenate([qfi, head_f]))))
             elif method == "replay":
                 idx = rng.choice(len(task.X_train), size=min(buffer_size, len(task.X_train)),
                                  replace=False)

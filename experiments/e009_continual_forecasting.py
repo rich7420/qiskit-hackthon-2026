@@ -46,7 +46,7 @@ RESULTS = ROOT / "results"
 # snapshot of the quantum forecaster (memory = quantum circuit params, not stored raw data).
 METHODS = ("naive", "l2", "ewc", "qewc", "replay", "qgr")
 QGR_N_SEEDS = 3      # short real seed windows kept per task to start the rollout
-QGR_GEN_LEN = 16     # synthetic points generated per seed
+QGR_GEN_LEN = 48     # synthetic points generated per seed (48 minimizes retention variance)
 
 
 def _flat(circ_w, head_w):
@@ -64,7 +64,8 @@ def empirical_fisher(qnode, circ_w, head_w, X):
 
 
 def train_method(method, tasks, *, n_layers, seq_len, lr, epochs, lam, buffer_size,
-                 seed, qfi_samples=16, verbose=False):
+                 seed, qfi_samples=16, gen_len=QGR_GEN_LEN, n_gen_seeds=QGR_N_SEEDS,
+                 verbose=False):
     qnode, cs, hs = make_forecaster(n_qubits=4, n_layers=n_layers, seq_len=seq_len)
     state_qnode = make_state_forecaster(4, n_layers, seq_len) if method == "qewc" else None
     n_circ = int(np.prod(cs))
@@ -92,7 +93,7 @@ def train_method(method, tasks, *, n_layers, seq_len, lr, epochs, lam, buffer_si
             gx, gy = [], []
             for cw_s, hw_s, seeds in generators:
                 for s in seeds:
-                    Xg, yg = window_series(rollout(qnode, cw_s, hw_s, s, QGR_GEN_LEN), seq_len)
+                    Xg, yg = window_series(rollout(qnode, cw_s, hw_s, s, gen_len), seq_len)
                     if len(Xg):
                         gx.append(Xg)
                         gy.append(yg)
@@ -147,7 +148,7 @@ def train_method(method, tasks, *, n_layers, seq_len, lr, epochs, lam, buffer_si
             elif method == "qgr":
                 # Freeze a copy of the quantum forecaster as this task's generator, plus a few
                 # short real seed windows to start the autoregressive rollout.
-                idx = rng.choice(len(task.X_train), size=QGR_N_SEEDS, replace=False)
+                idx = rng.choice(len(task.X_train), size=n_gen_seeds, replace=False)
                 generators.append((np.asarray(cw).copy(), np.asarray(hw).copy(),
                                    [task.X_train[i] for i in idx]))
 

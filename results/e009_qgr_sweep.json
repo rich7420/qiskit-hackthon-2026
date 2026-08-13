@@ -1,0 +1,50 @@
+{
+  "experiment": "e009_qgr_genlen_sweep",
+  "tasks": [
+    "narma_5",
+    "damped_shm",
+    "bessel_j2"
+  ],
+  "seeds": [
+    42,
+    43,
+    44,
+    45,
+    46
+  ],
+  "n_gen_seeds": 3,
+  "rows": [
+    {
+      "gen_len": 16,
+      "retention_mean": 0.1319,
+      "retention_sd": 0.1349,
+      "plasticity_mean": 0.0685,
+      "plasticity_sd": 0.025,
+      "avg_mean": 0.1107
+    },
+    {
+      "gen_len": 32,
+      "retention_mean": 0.1354,
+      "retention_sd": 0.0808,
+      "plasticity_mean": 0.0704,
+      "plasticity_sd": 0.0628,
+      "avg_mean": 0.1137
+    },
+    {
+      "gen_len": 48,
+      "retention_mean": 0.1219,
+      "retention_sd": 0.0416,
+      "plasticity_mean": 0.0935,
+      "plasticity_sd": 0.0857,
+      "avg_mean": 0.1125
+    },
+    {
+      "gen_len": 64,
+      "retention_mean": 0.1219,
+      "retention_sd": 0.0538,
+      "plasticity_mean": 0.0898,
+      "plasticity_sd": 0.0755,
+      "avg_mean": 0.1112
+    }
+  ]
+}

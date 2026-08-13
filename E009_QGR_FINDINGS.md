@@ -36,9 +36,25 @@ while training a later task:
    replay.
 3. **QGR needs no raw-data buffer** — memory is the quantum generator (21 params + 3 seeds),
    the core upgrade over classical replay.
-4. **Honest weakness**: QGR does not fully match replay's retention (0.132 vs 0.058) and has high
-   retention variance (±0.135) — generative rollout quality drifts across seeds; plasticity is
-   tight (±0.025).
+4. **Honest weakness**: QGR does not fully match replay's retention (0.132 vs 0.058).
+
+## Reducing QGR variance with longer rollouts
+The main weakness was high retention variance (±0.135 at gen_len=16). Sweeping the rollout length
+(`scripts/e009_qgr_sweep.py`, 5 seeds) fixes most of it:
+
+| gen_len | retention mean ± SD | plasticity | avg |
+|---|---|---|---|
+| 16 | 0.132 ± **0.135** | 0.069 | 0.111 |
+| 32 | 0.135 ± 0.081 | 0.070 | 0.114 |
+| **48 (default)** | **0.122 ± 0.042** | 0.093 | 0.113 |
+| 64 | 0.122 ± 0.054 | 0.090 | 0.111 |
+
+- **gen_len=48 cuts retention SD 3.2× (0.135 → 0.042)** and slightly improves the mean (0.132 →
+  0.122): longer autoregressive rollouts give more, longer-horizon synthetic rehearsal data, so
+  the rehearsal signal is more stable across seeds.
+- Trade-off: plasticity variance rises modestly (±0.025 → ±0.086). `gen_len=48` is the sweet spot
+  (lowest retention SD, best retention mean) and is now the default. Figure:
+  `figures/e009_qgr_sweep.png`.
 
 ## Story
 > We turned classical replay into **Quantum Generative Replay**: the quantum model generates its

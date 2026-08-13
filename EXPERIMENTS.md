@@ -666,6 +666,7 @@ BWT = mean_{j<T}(R[T][j]−R[j][j]).
 | Method | Shared θ | Head | ACC | BWT |
 |---|---|---|---:|---:|
 | Sequential (naive) | update | shared | 0.690 +/- 0.046 | -0.383 +/- 0.083 |
+| EWC (classical Fisher) | soft-anchor | shared | 0.818 +/- 0.030 | -0.190 +/- 0.048 |
 | QEWC | soft-anchor | shared | 0.819 +/- 0.063 | -0.088 +/- 0.096 |
 | **Frozen θ + heads (A)** | frozen | isolated | **0.964 +/- 0.010** | +0.000 +/- 0.000 |
 | Free θ + heads (B) | update | isolated | 0.801 +/- 0.018 | -0.258 +/- 0.038 |
@@ -700,17 +701,24 @@ grabs 35–42% of MNIST/Fashion); a dedicated logistic router over p_θ(x) nearl
 (routing acc 0.90, confusion T1 .82/T2 .89/T3 1.0). The task identity is decodable from the
 quantum measurement distribution — Task-IL is a convenience, not a hard requirement.
 
+**Fair no-oracle comparison (`figures/e014_fair_compare.png`).** With no method given the task
+id (baselines use one shared head, OI-QCL uses the learned router): Sequential 0.69, EWC 0.82,
+QEWC 0.82, **OI-QCL+router (A/C) 0.91** (Task-IL ceiling 0.96). The ~0.14 ACC advantage over
+θ-protection is not an artifact of the task oracle — OI-QCL still wins by ~0.09 oracle-free.
+
 **Cost (unchanged vs baselines on the quantum side).** n=4, L=12: backbone θ = 96 params,
 36 CNOTs, depth ≈ 60 — identical for all methods (OI-QCL only swaps the classical readout). Each
 task adds one linear head (C·2ⁿ + C = 34 params); total head memory O(T·C·2ⁿ) = 102 at T=3.
 
 **Artifacts.** `src/e014_oiqcl.py`; experiments `e014_probe.py`, `e014_compare.py`,
 `e014_trajectory.py`, `e014_task_inference.py`; scripts `e014_aggregate_plot.py`,
-`plot_e014_trajectory.py`, `plot_e014_task_inference.py`, `plot_e014_circuit.py`;
+`plot_e014_trajectory.py`, `plot_e014_task_inference.py`, `plot_e014_fair_compare.py`,
+`plot_e014_circuit.py`;
 `tests/test_e014_oiqcl.py` (incl. the ⟨H_diag⟩ = λ·p identity); results
 `e014_probe_seed42.json`, `e014_compare_seed{42,43,44}.json`,
 `e014_trajectory_seed{42,43,44}.json`, `e014_task_inference_seed{42,43,44}.json`; figures
-`e014_compare.png`, `e014_trajectory.png`, `e014_task_inference.png`, `e014_circuit.png`. Theory:
+`e014_compare.png`, `e014_trajectory.png`, `e014_task_inference.png`, `e014_fair_compare.png`,
+`e014_circuit.png`. Theory:
 `E014_THEORY.md`; findings: `E014_FINDINGS.md`.
 
 **Claim boundaries.** Simulator only (`default.qubit`), 4 qubits, exact probabilities (no

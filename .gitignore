@@ -143,3 +143,6 @@ latex_error.log
 !results/e014_compare_cluster_m2_seed43.json
 !results/e014_compare_cluster_m2_seed44.json
 !results/e014_classical_local_t3.json
+!results/e014_noise_compare.json
+!results/e014_noise_figure_provenance.json
+!figures/e014_noise.png

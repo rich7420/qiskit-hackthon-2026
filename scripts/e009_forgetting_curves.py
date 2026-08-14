@@ -78,6 +78,7 @@ def plot(data, output):
     fig, axes = plt.subplots(len(tasks), 1, figsize=(7.6, 2.7 * len(tasks)), sharex=True)
 
     for i, (ax, task) in enumerate(zip(axes, tasks), start=1):
+        start = max((i - 1) * ept, 1)   # draw each task only from its own training onset
         for m, (label, color, ls, lw) in STYLE.items():
             row = data["rows"].get(m)
             if not row:
@@ -85,8 +86,9 @@ def plot(data, output):
             ep = np.array(row["epochs"])
             r2 = 1.0 - np.array(row["nmse"][task]["mean"])   # accuracy view: R^2 = 1 - NMSE
             sd = np.array(row["nmse"][task]["sd"])
-            ax.plot(ep, r2, ls, color=color, lw=lw, label=label)
-            ax.fill_between(ep, np.clip(r2 - sd, 0, 1.03), np.clip(r2 + sd, 0, 1.03),
+            k = ep >= start
+            ax.plot(ep[k], r2[k], ls, color=color, lw=lw, label=label)
+            ax.fill_between(ep[k], np.clip(r2[k] - sd[k], 0, 1.03), np.clip(r2[k] + sd[k], 0, 1.03),
                             color=color, alpha=0.13)
         for b in range(ept, total, ept):
             ax.axvline(b, color="0.35", ls="--", lw=1.0)

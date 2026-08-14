@@ -73,6 +73,8 @@ simplified 17**) on the same backend. R² = 1 − NMSE, mean over 3 seeds:
   natural next steps.
 
 ## Figures
+- `figures/e009_qgr_flow.png` — QGR mechanism schematic (freeze -> rollout -> rehearse); the rollout
+  panel is a *real* autoregressive rollout of the deployed `qgr:42` model (13 params, no stored data).
 - `figures/e009_qpu_compare.png` — 3-panel per-task R² (sim-noiseless / sim-noisy / QPU) for QEWC & QGR.
 - `figures/e009_qpu_arch_compare.png` — deep vs shallow on hardware (simplified d17 vs baseline d157).
 - `figures/e009_forgetting_curves.png` — sim forgetting curves (R² view), QGR on the simplified arch (as deployed).
@@ -84,6 +86,7 @@ simplified 17**) on the same backend. R² = 1 − NMSE, mean over 3 seeds:
 - `scripts/e009_qpu_compare_plot.py` — 3-panel sim-vs-QPU figure
 - `scripts/e009_qpu_arch_compare_plot.py` — deep-vs-shallow hardware figure
 - `scripts/e009_forgetting_curves.py` — 4-method sim forgetting curves (`--qgr-arch aggressive|baseline`)
+- `scripts/e009_qgr_flow.py` — QGR mechanism figure (loads a trained model, does a real rollout)
 - `results/e009_qpu_{models,hardware}.json` (simplified), `results/e009_qpu_{models,hardware}_baseline.json` (deep)
 
 ## Reproduce

@@ -30,7 +30,7 @@ def draw_authentic(n_layers: int = 2) -> None:
     qnode, shape = make_probs_qnode(n_qubits=4, n_layers=n_layers)
     x = np.random.default_rng(0).standard_normal(16)
     w = 0.5 * np.random.default_rng(1).standard_normal(shape)
-    fig, ax = qml.draw_mpl(qnode, decimals=2, style="pennylane")(
+    fig, ax = qml.draw_mpl(qnode, decimals=None, style="pennylane")(
         pnp.array(x, requires_grad=False), pnp.array(w))
     ax.set_title(f"MPI VQC (n=4, L={n_layers} shown; L=12 used) — probs readout",
                  fontsize=11)

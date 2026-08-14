@@ -1,4 +1,4 @@
-"""One-slide mechanism figure: theta-protection vs MPI. Minimal text, very large fonts."""
+"""One-slide MPI flow figure (ours only, positive framing). Minimal text, very large fonts."""
 
 from __future__ import annotations
 
@@ -16,49 +16,42 @@ FIG = ROOT / "figures"
 
 def _box(ax, x, y, w, h, text, fc, ec, fs, tc="#111"):
     ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0.02,rounding_size=0.08",
-                                fc=fc, ec=ec, lw=2.6, zorder=3))
+                                fc=fc, ec=ec, lw=2.8, zorder=3))
     ax.text(x + w / 2, y + h / 2, text, ha="center", va="center", fontsize=fs, zorder=4,
             weight="bold", color=tc)
 
 
-def _arrow(ax, xy1, xy2, color, lw=3.0):
-    ax.add_patch(FancyArrowPatch(xy1, xy2, arrowstyle="-|>", mutation_scale=26, color=color,
+def _arrow(ax, xy1, xy2, color, lw=3.2):
+    ax.add_patch(FancyArrowPatch(xy1, xy2, arrowstyle="-|>", mutation_scale=28, color=color,
                                  lw=lw, zorder=2))
 
 
-def _left(ax):
-    ax.set_title("θ-protection  (EWC / QEWC)", fontsize=21, weight="bold", color="#b02a1f", pad=14)
-    _box(ax, 0.3, 4.2, 2.0, 1.6, "x", "#eef2f7", "#333", 20, tc="#333")
-    _box(ax, 3.2, 3.7, 3.0, 2.6, "U(θ)", "#fadbd8", "#b02a1f", 26, tc="#7b1a12")
-    _box(ax, 7.2, 4.2, 2.4, 1.6, "one\nreadout", "#efefef", "#555", 16, tc="#333")
-    _arrow(ax, (2.3, 5.0), (3.2, 5.0), "#b02a1f")
-    _arrow(ax, (6.2, 5.0), (7.2, 5.0), "#b02a1f")
-    ax.text(4.7, 3.2, "rewritten every task", ha="center", fontsize=15, color="#7b1a12")
-    ax.text(5.0, 1.7, "✗  FORGETS", ha="center", fontsize=34, weight="bold", color="#b02a1f")
-
-
-def _right(ax):
-    ax.set_title("MPI  (ours)", fontsize=21, weight="bold", color="#1e7a34", pad=14)
-    _box(ax, 0.3, 4.2, 1.8, 1.6, "x", "#eef2f7", "#333", 20, tc="#333")
-    _box(ax, 2.9, 3.7, 2.9, 2.6, "U(θ)\nshared", "#d5f0d5", "#1e7a34", 21, tc="#12561f")
-    _arrow(ax, (2.1, 5.0), (2.9, 5.0), "#1e7a34")
-    for i, (hy, lab, fc) in enumerate([(6.7, "W₁", "#bfe6b8"), (4.6, "W₂", "#bcd4ef"),
-                                       (2.5, "W₃", "#d3d3ec")]):
-        _arrow(ax, (5.9, 5.0), (6.7, hy + 0.55), "#888", lw=2.2)
-        _box(ax, 6.7, hy, 1.9, 1.1, lab, fc, "#555", 19)
-    ax.text(7.65, 8.3, "one per task", ha="center", fontsize=15, color="#12561f")
-    ax.text(5.0, 1.7, "✓  REMEMBERS", ha="center", fontsize=34, weight="bold", color="#1e7a34")
-
-
 def main() -> None:
-    fig, (axl, axr) = plt.subplots(1, 2, figsize=(15, 6.2))
-    for ax in (axl, axr):
-        ax.set_xlim(0, 10)
-        ax.set_ylim(0.8, 9)
-        ax.axis("off")
-    _left(axl)
-    _right(axr)
-    fig.suptitle("Where does the memory live?  θ  vs  the measurement",
+    fig, ax = plt.subplots(figsize=(14.5, 6.0))
+    ax.set_xlim(0, 14.5)
+    ax.set_ylim(0.5, 8.2)
+    ax.axis("off")
+
+    green, gedge, gtext = "#d5f0d5", "#1e7a34", "#12561f"
+
+    yc = 4.6
+    _box(ax, 0.3, yc - 0.8, 1.7, 1.6, "x", "#eef2f7", "#333", 24, tc="#333")
+    _box(ax, 2.8, yc - 1.3, 3.3, 2.6, "U(θ)\nshared", green, gedge, 25, tc=gtext)
+    _box(ax, 6.9, yc - 1.0, 1.9, 2.0, "probs\np(x)", "#fbe0c8", "#E15759", 19, tc="#8a2b2c")
+    _arrow(ax, (2.0, yc), (2.8, yc), gedge)
+    _arrow(ax, (6.1, yc), (6.9, yc), gedge)
+
+    for hy, lab, fc in [(6.05, "W₁ · task 1", "#bfe6b8"),
+                        (4.05, "W₂ · task 2", "#bcd4ef"),
+                        (2.05, "W₃ · task 3", "#d3d3ec")]:
+        _arrow(ax, (8.9, yc), (9.8, hy + 0.55), "#888", lw=2.4)
+        _box(ax, 9.8, hy, 3.4, 1.1, lab, fc, "#555", 18)
+
+    ax.text(11.5, 7.5, "one observable per task  (frozen)", ha="center", fontsize=16,
+            weight="bold", color=gtext)
+    ax.text(6.6, 0.9, "✓  each task keeps its own way to measure  →  nothing to overwrite",
+            ha="center", fontsize=16.5, weight="bold", color=gtext)
+    fig.suptitle("MPI — one shared quantum circuit, one measurement per task",
                  fontsize=20, weight="bold")
     fig.tight_layout(rect=(0, 0, 1, 0.93))
     FIG.mkdir(exist_ok=True)

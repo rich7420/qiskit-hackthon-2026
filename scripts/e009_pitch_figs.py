@@ -195,9 +195,35 @@ def draw_data(output: Path) -> None:
     print(f"Wrote {output}")
 
 
+def draw_metric(output: Path) -> None:
+    """A clean definition card for the accuracy metric: R^2 = 1 - NMSE."""
+    from matplotlib.patches import FancyBboxPatch
+
+    fig, ax = _canvas(9.8, 4.4)
+    ax.text(0.5, 0.91, "forecast accuracy  ·  higher is better ↑", ha="center", va="center",
+            fontsize=14, color=GREEN, fontweight="bold")
+
+    ax.add_patch(FancyBboxPatch((0.16, 0.50), 0.68, 0.26, boxstyle="round,pad=0.01,rounding_size=0.04",
+                                linewidth=2.0, edgecolor=GREEN, facecolor="#F1F7F1", zorder=2))
+    ax.text(0.5, 0.63, r"$R^2 \;=\; 1 \;-\; \mathrm{NMSE}$", ha="center", va="center",
+            fontsize=44, zorder=3)
+
+    ax.text(0.5, 0.32, r"$\mathrm{NMSE} \;=\; \frac{\mathrm{MSE}}{\mathrm{Var}(y)} "
+            r"\;=\; \frac{\sum_i (\hat{y}_i - y_i)^2}{\sum_i (y_i - \bar{y})^2}$",
+            ha="center", va="center", fontsize=23, color="0.15")
+
+    ax.text(0.5, 0.08, r"$R^2\!=\!1$ perfect   ·   $R^2\!=\!0$ predicts the mean   ·   "
+            r"$R^2\!<\!0$ worse than the mean", ha="center", va="center", fontsize=14, color="0.4")
+
+    FIGURES.mkdir(exist_ok=True)
+    fig.savefig(output, dpi=200)
+    print(f"Wrote {output}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--which", default="all", choices=["arch", "qgr", "data", "both", "all"])
+    ap.add_argument("--which", default="all",
+                    choices=["arch", "qgr", "data", "metric", "both", "all"])
     args = ap.parse_args()
     if args.which in ("arch", "both", "all"):
         draw_arch(FIGURES / "e009_arch.png")
@@ -205,6 +231,8 @@ def main() -> None:
         draw_qgr(FIGURES / "e009_qgr_concept.png")
     if args.which in ("data", "all"):
         draw_data(FIGURES / "e009_datasets.png")
+    if args.which in ("metric", "all"):
+        draw_metric(FIGURES / "e009_r2_metric.png")
 
 
 if __name__ == "__main__":

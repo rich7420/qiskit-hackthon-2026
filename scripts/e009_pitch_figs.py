@@ -14,15 +14,31 @@ Run:
 from __future__ import annotations
 
 import argparse
+import sys
 from pathlib import Path
 
+import numpy as np
+
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 FIGURES = ROOT / "figures"
 
 CREAM, CREAM_E = "#FBEFCF", "#B9974A"
 LBLUE, LBLUE_E = "#D6E3F0", "#5E86BC"
 HEAD, HEAD_E = "#ECE6F4", "#8877AA"
 BLUE, RED, GREEN = "#4477AA", "#CC3311", "#228833"
+
+# (code name, T-label, display name, one-line "what it is", color)
+DATASETS = [
+    ("narma_5", "$T_1$", "NARMA-5", "nonlinear autoregressive · memory-5", GREEN),
+    ("damped_shm", "$T_2$", "Damped SHM", "damped pendulum · 2nd-order ODE", BLUE),
+    ("bessel_j2", "$T_3$", "Bessel $J_2$", "Bessel function, order 2 · decaying", "#CC9933"),
+]
+
+
+def _scaled(series):
+    s = np.asarray(series, float)
+    return 2 * (s - s.min()) / (s.max() - s.min() + 1e-12) - 1
 
 
 def _canvas(w, h):
@@ -127,14 +143,68 @@ def draw_qgr(output: Path) -> None:
     print(f"Wrote {output}")
 
 
+def draw_data(output: Path) -> None:
+    """Introduce the three forecasting tasks — real series, one line each, big type."""
+    import matplotlib.colors as mcolors
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import FancyBboxPatch
+
+    from src.e009_data import _SERIES
+
+    fig = plt.figure(figsize=(13.4, 4.7))
+    cv = fig.add_axes([0, 0, 1, 1])
+    cv.set_xlim(0, 1)
+    cv.set_ylim(0, 1)
+    cv.axis("off")
+    cv.text(0.5, 0.93, "Three forecasting tasks (learned in sequence)", ha="center", va="center",
+            fontsize=24, fontweight="bold")
+
+    xcs = [0.19, 0.51, 0.83]
+    for xc, (code, tlab, name, blurb, col) in zip(xcs, DATASETS):
+        s = _scaled(_SERIES[code]())
+        n = len(s)
+        axs = fig.add_axes([xc - 0.135, 0.315, 0.27, 0.36])
+        axs.plot(s, color=col, lw=1.8)
+        axs.axvspan(int(0.8 * n), n, color=col, alpha=0.09)   # held-out test tail
+        axs.axvline(int(0.8 * n), color="0.6", lw=0.9, ls=":")
+        axs.set_xlim(0, n)
+        axs.set_ylim(-1.18, 1.18)
+        axs.set_xticks([])
+        axs.set_yticks([])
+        for sp in axs.spines.values():
+            sp.set_edgecolor("0.75")
+        # T-badge + big name above
+        cv.add_patch(FancyBboxPatch((xc - 0.135, 0.72), 0.05, 0.075,
+                                    boxstyle="round,pad=0.002,rounding_size=0.01",
+                                    linewidth=0, facecolor=col, zorder=3))
+        cv.text(xc - 0.11, 0.7575, tlab, ha="center", va="center", color="white",
+                fontsize=14, fontweight="bold", zorder=4)
+        cv.text(xc - 0.07, 0.7575, name, ha="left", va="center", color=col,
+                fontsize=19, fontweight="bold")
+        cv.text(xc, 0.245, blurb, ha="center", va="center", fontsize=13.5, color="0.2")
+    # train/test labels on the first panel only
+    cv.text(xcs[0] - 0.055, 0.34, "train", ha="center", va="center", fontsize=10, color="0.45")
+    cv.text(xcs[0] + 0.10, 0.34, "test", ha="center", va="center", fontsize=10, color="0.45")
+
+    cv.text(0.5, 0.075, "each scaled to [-1, 1] · 8-step window -> next-step forecast · "
+            "trained T1 -> T2 -> T3, never revisiting old data",
+            ha="center", va="center", fontsize=13, color="0.35")
+
+    FIGURES.mkdir(exist_ok=True)
+    fig.savefig(output, dpi=200)
+    print(f"Wrote {output}")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--which", default="both", choices=["arch", "qgr", "both"])
+    ap.add_argument("--which", default="all", choices=["arch", "qgr", "data", "both", "all"])
     args = ap.parse_args()
-    if args.which in ("arch", "both"):
+    if args.which in ("arch", "both", "all"):
         draw_arch(FIGURES / "e009_arch.png")
-    if args.which in ("qgr", "both"):
+    if args.which in ("qgr", "both", "all"):
         draw_qgr(FIGURES / "e009_qgr_concept.png")
+    if args.which in ("data", "all"):
+        draw_data(FIGURES / "e009_datasets.png")
 
 
 if __name__ == "__main__":

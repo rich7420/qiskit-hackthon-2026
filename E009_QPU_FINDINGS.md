@@ -73,6 +73,8 @@ simplified 17**) on the same backend. R² = 1 − NMSE, mean over 3 seeds:
   natural next steps.
 
 ## Figures
+- `figures/e009_datasets.png` — big-font intro to the three forecasting tasks (NARMA-5, damped SHM,
+  Bessel J2): real series, held-out test tail shaded, one-line description each.
 - `figures/e009_arch.png` — big-font pitch schematic of the model: |0> -> U(x) encode -> V(theta)
   ansatz (recurrent, state persists) -> <Z> -> tanh head -> next-step forecast.
 - `figures/e009_qgr_concept.png` — big-font pitch schematic of the method: freeze -> rollout ->

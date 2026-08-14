@@ -73,6 +73,10 @@ simplified 17**) on the same backend. R² = 1 − NMSE, mean over 3 seeds:
   natural next steps.
 
 ## Figures
+- `figures/e009_arch.png` — big-font pitch schematic of the model: |0> -> U(x) encode -> V(theta)
+  ansatz (recurrent, state persists) -> <Z> -> tanh head -> next-step forecast.
+- `figures/e009_qgr_concept.png` — big-font pitch schematic of the method: freeze -> rollout ->
+  rehearse, with L = MSE_new + MSE_replay (the low-text slide version of the mechanism).
 - `figures/e009_qgr_flow.png` — QGR mechanism schematic (freeze -> rollout -> rehearse); the rollout
   panel is a *real* autoregressive rollout of the deployed `qgr:42` model (13 params, no stored data).
 - `figures/e009_qpu_compare.png` — 3-panel per-task R² (sim-noiseless / sim-noisy / QPU) for QEWC & QGR.
@@ -87,6 +91,7 @@ simplified 17**) on the same backend. R² = 1 − NMSE, mean over 3 seeds:
 - `scripts/e009_qpu_arch_compare_plot.py` — deep-vs-shallow hardware figure
 - `scripts/e009_forgetting_curves.py` — 4-method sim forgetting curves (`--qgr-arch aggressive|baseline`)
 - `scripts/e009_qgr_flow.py` — QGR mechanism figure (loads a trained model, does a real rollout)
+- `scripts/e009_pitch_figs.py` — two big-font, low-text pitch figures (`--which arch|qgr|both`)
 - `results/e009_qpu_{models,hardware}.json` (simplified), `results/e009_qpu_{models,hardware}_baseline.json` (deep)
 
 ## Reproduce

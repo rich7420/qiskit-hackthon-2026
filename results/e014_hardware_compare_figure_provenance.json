@@ -1,0 +1,6 @@
+{
+  "figure": "e014_hardware_compare.png",
+  "backend": "ibm_marrakesh",
+  "oiqcl": "results/e014_hardware_ibm_marrakesh_alltasks.json",
+  "qewc": "results/e014_hardware_ibm_marrakesh_qewc_alltasks.json"
+}

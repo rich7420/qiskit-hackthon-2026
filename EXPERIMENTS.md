@@ -638,3 +638,114 @@ entangled POVM, a finite-shot/hardware basis-optimization result, evidence of QF
 a statistical-significance claim, or quantum advantage. Continuous axes are calibrated and
 diagnosed on the same 32 train anchors; no held-out test leaks into the optimizer, but this
 first exact study does not measure anchor-level calibration overfitting.
+
+---
+
+## E014 — Measurement-based Parameter Isolation (MPI): measurement-side CL
+
+**Question.** Prior QCL mitigations (EWC/QEWC and our own e005–e013 line) act on the trainable
+circuit θ. We ask the complementary question: keep the circuit as a *shared representation*
+ρ_θ(x) and move task adaptation to the **readout** — one learnable diagonal observable per
+task. The exact identity `⟨H^(t)⟩ = Σ_k λ_k^(t) p_k(x;θ)` makes each task's observable a
+**converged linear head over the computational-basis probabilities** `qml.probs()`; it trains
+classically in seconds with no quantum gradients. (Honest scope: one fixed basis for all tasks
+⇒ the observables mutually commute — a DANO-*inspired* commuting diagonal family, not full
+ANO/DANO expressivity.) Setting: Task-Incremental (task id known at test).
+
+**Step 0 — Feature-Sufficiency probe (GO/NO-GO), `experiments/e014_probe.py`.** Train the
+backbone on Task 1 only, freeze θ₁*, fit an independent linear head per task on frozen probs.
+Seed 42, 20 layers/20 epochs/800 train: probe test acc **T1 0.970 / T2 0.915 / T3 1.000**
+(later-task mean 0.958) → **GO**. Head-only gain of the full 2ⁿ probs over the 2-wire marginal
+readout is +0.025/+0.070/+0.000 — positive but modest and shrinking as the backbone specializes.
+
+**Main result — five-method comparison, `experiments/e014_compare.py`** (Task-IL,
+MNIST→Fashion→SPT/ATF, mean ± sample-SD over seeds 42/43/44, 12 layers/20 epochs/800 train).
+R[i][j] = test acc on task j after training through task i; ACC = mean final row;
+BWT = mean_{j<T}(R[T][j]−R[j][j]).
+
+| Method | Shared θ | Head | ACC | BWT |
+|---|---|---|---:|---:|
+| Sequential (naive) | update | shared | 0.690 +/- 0.046 | -0.383 +/- 0.083 |
+| EWC (classical Fisher) | soft-anchor | shared | 0.818 +/- 0.030 | -0.190 +/- 0.048 |
+| QEWC | soft-anchor | shared | 0.819 +/- 0.063 | -0.088 +/- 0.096 |
+| **Frozen θ + heads (A)** | frozen | isolated | **0.964 +/- 0.010** | +0.000 +/- 0.000 |
+| Free θ + heads (B) | update | isolated | 0.801 +/- 0.018 | -0.258 +/- 0.038 |
+| **Anchor θ + heads (C)** | soft-L2 | isolated | **0.962 +/- 0.007** | -0.004 +/- 0.006 |
+
+The ACC ordering holds in every seed. Both measurement-side methods beat QEWC by ~0.14 ACC
+with near-zero forgetting. QEWC's shortfall is *plasticity* (T2 stalls ~0.59 while it holds T1
+~0.87); isolated heads get T1 ~0.97 and T2 ~0.91 at once — consistent with our earlier finding
+that θ-side protection trades away plasticity.
+
+**Forgetting decomposition.** Isolated heads make measurement-side forgetting structurally
+zero (A: BWT = 0 exactly). All residual forgetting is *representation drift*: free-θ (B) shows
+BWT -0.258 (T1 retention collapses as the backbone chases later tasks); a soft L2 anchor (C)
+suppresses it to -0.004 while keeping θ adaptable. Measurement overwrite vs representation
+drift are thus cleanly separated.
+
+**Caveat.** On this benchmark the probe shows T1's representation already suffices for T2/T3,
+so frozen (A) is near-optimal and C's edge over A is marginal here; C's advantage over A only
+appears when later tasks require representation adaptation (the PARTIAL-GO regime). We report A
+as the structural reference and C as the method that generalizes to that harder case.
+
+**Trajectory (`experiments/e014_trajectory.py`, `figures/e014_trajectory.png`).** Per-epoch
+test accuracy on all three tasks, gradient-trained heads (like-for-like learning curves vs the
+baselines), panels drawn only from each task's own boundary. T1 @20/@60: A 0.97/0.97,
+C 0.97/0.96, QEWC 0.89/0.87, sequential 0.89/0.48; QEWC's T2 stalls (0.74→0.59, plasticity loss).
+
+**Task-agnostic (`experiments/e014_task_inference.py`, `figures/e014_task_inference.png`).**
+Hide the task id at test and infer it. Task-IL / max-confidence / learned-linear-router accuracy
+(mean, 3 seeds): A 0.964 / 0.834 / **0.907**; C 0.962 / 0.846 / **0.909**; B 0.801 / 0.690 / 0.789.
+Max-confidence is a poor router (routes by boundary distance, not task membership: the SPT head
+grabs 35–42% of MNIST/Fashion); a dedicated logistic router over p_θ(x) nearly closes the gap
+(routing acc 0.90, confusion T1 .82/T2 .89/T3 1.0). The task identity is decodable from the
+quantum measurement distribution — Task-IL is a convenience, not a hard requirement.
+
+**Fair no-oracle comparison (`figures/e014_fair_compare.png`).** With no method given the task
+id (baselines use one shared head, MPI uses the learned router): Sequential 0.69, EWC 0.82,
+QEWC 0.82, **MPI+router (A/C) 0.91** (Task-IL ceiling 0.96). The ~0.14 ACC advantage over
+θ-protection is not an artifact of the task oracle — MPI still wins by ~0.09 oracle-free.
+
+**Matched classical control (`experiments/e014_classical_baseline.py`) — honest, important.**
+Same per-task linear head on the RAW 2ⁿ amplitude input (no quantum circuit): Task-IL ACC 0.983,
+task-agnostic 0.972 — it **beats** MPI (0.964/0.907). So there is **no quantum advantage** on
+this benchmark; the tasks (incl. SPT phases) are linearly separable from the raw amplitudes and the
+measurement `|amplitude|²` even discards phase. MPI's result is a *mechanism* claim (measurement-
+side isolation beats θ-protection **within the quantum model class**), not classification advantage.
+
+**Noise robustness (`src/e014_noise.py`, `default.mixed`; depol 0.01 + meas 0.02).** Readout
+robustness (`e014_noise_compare.py`, frozen-A, full config): full 0.964→0.958, m=2 0.943→0.933
+(the head refits on observed noisy probs). All 6 methods trained+evaluated under noise
+(`e014_compare.py --noise`, reduced config, 3 seeds; `figures/e014_noise_compare.png`): MPI
+A/C drop only ~0.015 (0.930→0.916, BWT~0) while **QEWC drops 0.10 (0.715→0.617)** — its QFI
+regularizer is a pure-state property, mis-anchored under noise — so MPI's lead over QEWC
+*widens* with noise. (`default.mixed` is ~250× slower, hence the reduced config; noisy/noiseless
+share it for a fair drop.)
+
+**Real IBM hardware (`experiments/e014_hardware_eval.py`, ibm_marrakesh, 3 tasks, 24 test/task,
+4096 shots, 1 seed).** Train on simulator, learn each task's readout from QPU measurements (MPI:
+per-task classical head on QPU probs, old heads frozen — no on-device quantum retraining). QPU
+averages: **MPI 0.931 (≈ sim, no hardware loss) vs QEWC 0.583** (T1→0.375, below chance: forgets
+the old task and its pure-state QFI mis-anchors under real noise). The lead over θ-protection widens
+on hardware to +0.35 (vs +0.14 sim). Per-task numbers noisy at n_test=24/1 seed; the average is the
+signal; IBM job ids in the result JSONs. Figures `e014_hardware.png`, `e014_hardware_compare.png`.
+
+**Cost (unchanged vs baselines on the quantum side).** n=4, L=12: backbone θ = 96 params,
+36 CNOTs, depth ≈ 60 — identical for all methods (MPI only swaps the classical readout). Each
+task adds one linear head (C·2ⁿ + C = 34 params); total head memory O(T·C·2ⁿ) = 102 at T=3.
+
+**Artifacts.** `src/e014_oiqcl.py`; experiments `e014_probe.py`, `e014_compare.py`,
+`e014_trajectory.py`, `e014_task_inference.py`, `e014_classical_baseline.py`, `e014_noise_compare.py`, `e014_hardware_eval.py`; scripts `e014_aggregate_plot.py`,
+`plot_e014_trajectory.py`, `plot_e014_task_inference.py`, `plot_e014_fair_compare.py`,
+`plot_e014_circuit.py`;
+`tests/test_e014_oiqcl.py` (incl. the ⟨H_diag⟩ = λ·p identity); results
+`e014_probe_seed42.json`, `e014_compare_seed{42,43,44}.json`,
+`e014_trajectory_seed{42,43,44}.json`, `e014_task_inference_seed{42,43,44}.json`; figures
+`e014_compare.png`, `e014_trajectory.png`, `e014_task_inference.png`, `e014_fair_compare.png`,
+`e014_circuit.png`, `e014_noise.png`, `e014_noise_compare.png`, `e014_hardware.png`, `e014_hardware_compare.png`. Theory:
+`E014_THEORY.md`; findings: `E014_FINDINGS.md`.
+
+**Claim boundaries.** Simulator only (`default.qubit`), 4 qubits, exact probabilities (no
+finite-shot/hardware readout). Task-IL only. Head memory is O(T·C·2ⁿ) — exponential in qubits
+(fine at n=4, needs structured/local observables at scale). No quantum-advantage claim; the
+contribution is *where* continual memory should live in a quantum model.

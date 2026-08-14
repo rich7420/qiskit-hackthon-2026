@@ -114,3 +114,42 @@ def load_spt_atf(
     X_train, y_train = _sample_balanced_split(n_train, rng)
     X_test, y_test = _sample_balanced_split(n_test, rng)
     return Task("SPT/ATF phases", X_train, y_train, X_test, y_test)
+
+
+# Complete cluster-Ising phase diagram: both sides of the SPT transition h_c ~ 1, sampled
+# across the WHOLE diagram (incl. near-critical), not just deep in each phase. Near
+# criticality the SPT and trivial phases have overlapping LOCAL observables and differ only
+# in nonlocal string order, so a local-observable classical baseline fails there.
+CLUSTER_SPT_FULL = (0.0, 0.95)
+CLUSTER_TRIVIAL_FULL = (1.05, 3.0)
+
+
+def _sample_balanced_range(count, rng, lo_range, hi_range):
+    if count <= 0 or count % 2:
+        raise ValueError("phase-task train and test sizes must be positive even numbers")
+    per = count // 2
+    params = np.concatenate([rng.uniform(*lo_range, per), rng.uniform(*hi_range, per)])
+    labels = np.concatenate([-np.ones(per, dtype=int), np.ones(per, dtype=int)])
+    order = rng.permutation(count)
+    params, labels = params[order], labels[order]
+    states = np.stack([_ground_state(v) for v in params])
+    return states, labels
+
+
+def load_cluster_full(
+    n_train: int = 800,
+    n_test: int = 200,
+    n_qubits: int = N_QUBITS,
+    seed: int = 42,
+) -> Task:
+    """Complete cluster-Ising phase task: SPT (h<h_c, -1) vs trivial (h>h_c, +1) sampled
+    across the full diagram incl. near-critical. Harder than the deep SPT/ATF cut: a
+    local-observable classical baseline drops to chance near criticality (only nonlocal
+    string order separates the phases there), while the amplitude-embedded circuit succeeds.
+    """
+    if n_qubits != N_QUBITS:
+        raise ValueError(f"the cluster-Ising phase task requires n_qubits={N_QUBITS}")
+    rng = np.random.default_rng(seed)
+    X_train, y_train = _sample_balanced_range(n_train, rng, CLUSTER_SPT_FULL, CLUSTER_TRIVIAL_FULL)
+    X_test, y_test = _sample_balanced_range(n_test, rng, CLUSTER_SPT_FULL, CLUSTER_TRIVIAL_FULL)
+    return Task("cluster-Ising", X_train, y_train, X_test, y_test)

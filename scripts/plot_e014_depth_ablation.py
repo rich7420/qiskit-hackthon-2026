@@ -1,4 +1,4 @@
-"""Plot OI-QCL accuracy vs ansatz depth / gate count — how few gates keep the effect."""
+"""Plot MPI accuracy vs ansatz depth / gate count — how few gates keep the effect."""
 
 from __future__ import annotations
 
@@ -26,8 +26,8 @@ def main() -> None:
     theta = [pd[str(L)]["cost"]["theta_params"] for L in Ls]
 
     fig, ax = plt.subplots(figsize=(9, 5))
-    for m, color, lab in [("frozen_head", "#59A14F", "OI-QCL frozen θ (A)"),
-                          ("anchor_head", "#E15759", "OI-QCL anchor θ (C)")]:
+    for m, color, lab in [("frozen_head", "#59A14F", "MPI frozen θ (A)"),
+                          ("anchor_head", "#E15759", "MPI anchor θ (C)")]:
         mean = np.array([pd[str(L)]["acc"][m]["ACC_mean"] for L in Ls])
         sd = np.array([pd[str(L)]["acc"][m]["ACC_sd"] for L in Ls])
         ax.plot(Ls, mean, "o-", color=color, lw=2, label=lab)
@@ -47,7 +47,7 @@ def main() -> None:
     secax.set_xticklabels([f"{q}cx\n{dp}dp" for q, dp in zip(twoq, depth)], fontsize=8)
     secax.set_xlabel("ansatz 2-qubit gates (cx) / circuit depth (dp)  "
                      "— AmplitudeEmbedding state-prep counted separately", fontsize=8.5)
-    ax.set_title("OI-QCL accuracy is nearly flat in circuit depth — the effect is in the readout\n"
+    ax.set_title("MPI accuracy is nearly flat in circuit depth — the effect is in the readout\n"
                  "L=4 (12 CNOTs, 3× fewer) matches L=12; even L=1 (3 CNOTs) already beats QEWC by ~0.10",
                  fontsize=10.5)
     ax.legend(loc="lower right", fontsize=9)

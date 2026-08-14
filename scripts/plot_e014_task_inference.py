@@ -92,7 +92,7 @@ def main() -> None:
                   "diagonal = correct routing (near-perfect)", fontsize=10.5)
     fig.colorbar(im, ax=axc, fraction=0.046, pad=0.04, label="routing fraction")
 
-    fig.suptitle("OI-QCL under task-agnostic evaluation (task id hidden), seeds 42/43/44",
+    fig.suptitle("MPI under task-agnostic evaluation (task id hidden), seeds 42/43/44",
                  fontsize=12.5, weight="bold")
     fig.tight_layout(rect=(0, 0, 1, 0.95))
     FIG.mkdir(exist_ok=True)

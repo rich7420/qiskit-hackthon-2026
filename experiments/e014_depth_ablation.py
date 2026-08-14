@@ -1,6 +1,6 @@
-"""E014 gate-count ablation: how few gates does OI-QCL actually need?
+"""E014 gate-count ablation: how few gates does MPI actually need?
 
-Because the per-task advantage of OI-QCL comes from the measurement-side readout (a linear
+Because the per-task advantage of MPI comes from the measurement-side readout (a linear
 head over probs), not from a deep circuit, we sweep the ansatz depth L and measure Task-IL
 ACC of the isolated-head variants against the true circuit cost (2-qubit gates + depth from
 qml.specs, which includes the AmplitudeEmbedding decomposition). Expectation: ACC is nearly

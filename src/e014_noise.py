@@ -1,6 +1,6 @@
-"""Noisy (mixed-state) readout for OI-QCL — separate from the noiseless simulator path.
+"""Noisy (mixed-state) readout for MPI — separate from the noiseless simulator path.
 
-A ``default.mixed`` version of the OI-QCL probability readout with a simple gate + readout
+A ``default.mixed`` version of the MPI probability readout with a simple gate + readout
 noise model, matching the config {'bit', 'phase', 'depol', 'meas'}:
   * depol  -- single-qubit DepolarizingChannel on every qubit after each layer (gate noise)
   * bit    -- BitFlip channel after each layer (off by default, = 0)

@@ -2,7 +2,7 @@
 
 Task-IL (our main setting) hands the correct head at test. Here we test the harder
 regime: pool all tasks' test sets, hide the task id, and for each sample pick the head that
-is most confident, then predict with it. This measures how much accuracy OI-QCL loses when
+is most confident, then predict with it. This measures how much accuracy MPI loses when
 the task oracle is taken away.
 
 For a pooled test sample x with frozen per-task heads {W_t} on the final backbone theta:

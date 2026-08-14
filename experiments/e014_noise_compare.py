@@ -1,7 +1,7 @@
-"""E014 noisy readout: how much does gate+readout noise cost OI-QCL?
+"""E014 noisy readout: how much does gate+readout noise cost MPI?
 
 Train the shared backbone noiselessly on Task 1 (Variant A), then read out the per-task
-linear-head OI-QCL classifier under two conditions -- noiseless (default.qubit) and noisy
+linear-head MPI classifier under two conditions -- noiseless (default.qubit) and noisy
 (default.mixed, config {'bit':0,'phase':0,'depol':0.01,'meas':0.02}) -- fitting each task's
 head on the probabilities actually observed. This is the "train on the simulator, deploy
 under noise" comparison, reported for the full 2^n readout and the m=2 local readout (the
@@ -92,7 +92,7 @@ def run(*, layers=12, lr=0.05, epochs=20, n_train=400, n_test=200, readouts=(Non
                         "packages": {p: version(p) for p in ("pennylane", "numpy", "scikit-learn")}},
         "config": {"noise": cfg, "layers": layers, "epochs_task1": epochs, "n_qubits": N_QUBITS,
                    "n_train": n_train, "n_test": n_test, "seeds": list(seeds),
-                   "variant": "OI-QCL frozen theta_1 (A); noiseless training, noisy readout",
+                   "variant": "MPI frozen theta_1 (A); noiseless training, noisy readout",
                    "device": "default.qubit (train/noiseless) + default.mixed (noisy readout)"},
         "summary": summary, "elapsed_sec": round(time.perf_counter() - started, 1),
     }

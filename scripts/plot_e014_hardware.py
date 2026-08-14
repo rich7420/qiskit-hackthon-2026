@@ -1,4 +1,4 @@
-"""Per-task OI-QCL accuracy: noiseless sim vs Aer(shots) vs real QPU (frozen-A, all 3 tasks).
+"""Per-task MPI accuracy: noiseless sim vs Aer(shots) vs real QPU (frozen-A, all 3 tasks).
 
 Reads results/e014_hardware_aer_alltasks.json (sim + Aer) and, if present, any real-backend
 results/e014_hardware_<backend>_alltasks.json to add the QPU bars.
@@ -58,7 +58,7 @@ def main() -> None:
     ax.grid(axis="y", alpha=0.15)
     ax.legend(loc="lower right", fontsize=9)
     sub = "sim vs Aer" if qpu is None else f"sim vs Aer vs {qpu_name}"
-    ax.set_title("OI-QCL on IBM stack — per-task readout, shared frozen backbone (%s)\n"
+    ax.set_title("MPI on IBM stack — per-task readout, shared frozen backbone (%s)\n"
                  "L=%d, readout=%d qubits, n_test=%d, %d shots; measurement-side readout is "
                  "shot-noise robust" % (sub, aer["config"]["layers"],
                  len(aer["config"]["readout_qubits"]), aer["config"]["n_test"], shots), fontsize=10)

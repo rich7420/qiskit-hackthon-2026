@@ -2,7 +2,7 @@
 
 Produces the same history schema as e005 (histories[method] = list of
 {epoch, phase, test_accuracy:{task1,task2,task3}}) so the three-panel per-task curve plot
-(scripts/plot_e014_trajectory.py) can render OI-QCL against the shared-readout baselines in
+(scripts/plot_e014_trajectory.py) can render MPI against the shared-readout baselines in
 the e009/e013 style, with task boundaries and seed bands.
 
 Method families:

@@ -1,11 +1,11 @@
-# E014 — Theory of Observable-Isolated Quantum Continual Learning (OI-QCL)
+# E014 — Theory of Measurement-based Parameter Isolation (MPI)
 
 A self-contained mathematical and physical account of measurement-side continual learning.
 
 **Thesis.** In a variational quantum classifier, task adaptation is conventionally realized by
 moving the unitary $U(\theta)$, which in the Heisenberg picture *drags a single effective
 observable* $H_{\mathrm{eff}}(\theta)=U^\dagger H_0 U$ through observable space. Sequential
-tasks overwrite this one observable — that overwrite *is* catastrophic forgetting. OI-QCL holds
+tasks overwrite this one observable — that overwrite *is* catastrophic forgetting. MPI holds
 the state preparation fixed (or softly anchored) and gives each task its **own** observable.
 Because a task's observable is a diagonal operator, its expectation is a *linear functional of
 the measured probability vector*, i.e. a lightweight classical head. Old heads are frozen, so
@@ -68,7 +68,7 @@ $$
 so all tasks share **one, continually overwritten** effective observable; forgetting is the
 misalignment of $H_{\mathrm{eff}}^{(T)}$ with what an earlier task required.
 
-**OI-QCL** fixes state preparation and attaches a task-specific observable:
+**MPI** fixes state preparation and attaches a task-specific observable:
 
 $$
 \boxed{\;\rho_\theta(x)\ \text{shared},\qquad H^{(1)},\dots,H^{(T)}\ \text{task-specific},\qquad
@@ -241,7 +241,7 @@ F_j^{\text{shared}}=\underbrace{[A(W_j,\theta_j)-A(W_j,\theta_T)]}_{\text{repres
 +\underbrace{[A(W_j,\theta_T)-A(W_T,\theta_T)]}_{\text{measurement overwrite}} .
 $$
 
-OI-QCL removes the second term entirely and controls the first with the anchor (§10). Empirically
+MPI removes the second term entirely and controls the first with the anchor (§10). Empirically
 (3 seeds): free-θ (B) has large $|\mathrm{BWT}|\approx0.26$ (pure representation drift) while
 anchor (C) has $|\mathrm{BWT}|\approx0.004$ and frozen (A) $=0$.
 
@@ -266,7 +266,7 @@ $$
 - $\delta\to0$ ($\alpha\to\infty$): Variant A, $F_j=0$, minimal plasticity.
 - $\delta\to\infty$ ($\alpha=0$): Variant B, maximal plasticity, largest drift.
 - intermediate: Variant C — the useful regime. Our earlier BB-QEWC negative result (hard
-  trust-regions kill plasticity) is exactly the $\delta\to0$ failure; OI-QCL avoids it by moving
+  trust-regions kill plasticity) is exactly the $\delta\to0$ failure; MPI avoids it by moving
   task memory *off* $\theta$ so a small $\delta$ no longer starves new tasks (their capacity lives
   in $W_t$, unconstrained).
 
@@ -304,7 +304,7 @@ F_C(\theta)\ \preceq\ F_Q(\theta)=4\big(\langle\partial_a\psi|\partial_b\psi\ran
 $$
 
 with equality only for a state-dependent optimal measurement. **QEWC regularizes with $F_Q$** (a
-state property, measurement-independent) to protect $\theta$; **OI-QCL instead chooses the
+state property, measurement-independent) to protect $\theta$; **MPI instead chooses the
 readout functional** that realizes $F_C$ and moves memory there. The two act on opposite sides of
 $F_C\preceq F_Q$. We use this only for intuition; the reported diagnostics are linear-probe
 accuracy and head-only gain, *not* a CFI/QFI ratio (which is ill-posed once $\theta$ is frozen and
@@ -351,9 +351,9 @@ bases. A concrete hardware advantage of the commuting-family restriction of §5.
 | EWC / **QEWC** | $\theta$ | $\min L_t+\sum_j\alpha_j (\theta-\theta_j^\*)^\top\!\mathrm{diag}(F_j)(\theta-\theta_j^\*)$; $F=F_C$ (EWC) or $F_Q$ (QEWC) | approximate (soft) |
 | Quantum GEM | $\theta$ | project $\nabla L_t$ to not increase old-task loss | approximate (projection) |
 | e008/e010/e013 | $\theta$ | QEWC-style with a *measurement-derived* Fisher (smarter importance) | approximate (soft) |
-| **OI-QCL (ours)** | **measurement** | isolate $W^{(t)}$; share/soft-anchor $\theta$ | **structural on measurement side (Prop 3)**; residual = representation drift only |
+| **MPI (ours)** | **measurement** | isolate $W^{(t)}$; share/soft-anchor $\theta$ | **structural on measurement side (Prop 3)**; residual = representation drift only |
 
-All prior methods keep one readout and protect the *parameters*; OI-QCL keeps the representation
+All prior methods keep one readout and protect the *parameters*; MPI keeps the representation
 and isolates the *readout*. This is parameter isolation moved from circuit space to measurement
 space, and it composes with a soft $\theta$-anchor (which our QFI-isotropy result shows behaves
 like L2, so we use L2 for the backbone and cite QEWC as the equivalent baseline).

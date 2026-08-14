@@ -7,9 +7,9 @@ Continual sequence MNIST -> Fashion -> cluster-Ising. The classical multi-head c
     device only yields local measurements, and full-state readout costs exponentially many shots).
 
 Near the SPT transition the phases have overlapping local observables and differ only in nonlocal
-string order, so the local classical head fails on T3, dragging its continual average below OI-QCL
+string order, so the local classical head fails on T3, dragging its continual average below MPI
 (which amplitude-embeds the state and lets the circuit reconstruct the nonlocal order). This is the
-"quantum matters" comparison: OI-QCL beats the classical control BECAUSE of the quantum task.
+"quantum matters" comparison: MPI beats the classical control BECAUSE of the quantum task.
 """
 
 from __future__ import annotations
@@ -125,7 +125,7 @@ def main() -> None:
     out.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(f"\nclassical avg (T3 amplitude) = {result['classical_avg_ACC_amplitudeT3']['mean']:.3f}")
     print(f"classical avg (T3 LOCAL)     = {result['classical_avg_ACC_localT3']['mean']:.3f}")
-    print(f"OI-QCL (m2, cluster)         = 0.939 (A) / 0.944 (C)")
+    print(f"MPI (m2, cluster)         = 0.939 (A) / 0.944 (C)")
     print(f"wrote {out.relative_to(ROOT)}")
 
 

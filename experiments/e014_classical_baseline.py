@@ -1,15 +1,15 @@
-"""E014 matched-capacity classical baseline: is OI-QCL "just a classical multi-head"?
+"""E014 matched-capacity classical baseline: is MPI "just a classical multi-head"?
 
-OI-QCL puts a per-task linear head on the QUANTUM probabilities p_theta(x) in R^{2^n}. The
+MPI puts a per-task linear head on the QUANTUM probabilities p_theta(x) in R^{2^n}. The
 matched control is the SAME head capacity on the RAW input instead: a per-task logistic head
 on the amplitude-embedding feature vector x_tilde in R^{2^n} (the same 16-dim vector that
 would be fed to AmplitudeEmbedding), with NO quantum circuit at all. Same dimensionality, same
-linear head, same Task-IL / task-agnostic protocols. If OI-QCL >> this, the quantum feature
+linear head, same Task-IL / task-agnostic protocols. If MPI >> this, the quantum feature
 map p_theta carries extra separable, forgetting-resistant information; if ~=, the circuit adds
 nothing on this benchmark.
 
 Reports (mean over seeds), for the classical multi-head:
-  * per-task Task-IL accuracy + average (task id given)  -> compare vs OI-QCL frozen/anchor ACC
+  * per-task Task-IL accuracy + average (task id given)  -> compare vs MPI frozen/anchor ACC
   * task-agnostic accuracy via a classical linear router over x_tilde (task id inferred)
 No quantum gradients, no circuit: pure sklearn on the raw features.
 """
@@ -93,7 +93,7 @@ def run(*, n_train=800, n_test=200, seed=42, verbose=True) -> dict[str, Any]:
         "environment": {"python": platform.python_version(),
                         "packages": {p: version(p) for p in ("numpy", "scikit-learn")}},
         "config": {"model": "per-task logistic head on raw 2^n amplitude input (NO quantum circuit)",
-                   "matched_to": "OI-QCL head over quantum probs p_theta(x) (same dim, same head)",
+                   "matched_to": "MPI head over quantum probs p_theta(x) (same dim, same head)",
                    "tasks": [t.name for t in tasks], "n_qubits": N_QUBITS,
                    "n_train": n_train, "n_test": n_test, "seed": seed},
         "per_task": per_task,

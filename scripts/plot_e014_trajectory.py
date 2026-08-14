@@ -1,6 +1,6 @@
 """Three-panel per-task test-accuracy curves for E014 (e009/e013 style).
 
-OI-QCL (measurement-side) vs shared-readout baselines across the sequential
+MPI (measurement-side) vs shared-readout baselines across the sequential
 MNIST -> Fashion -> SPT/ATF run, with task boundaries and three-seed mean/SD bands.
 """
 
@@ -30,9 +30,9 @@ METHODS = {
     "sequential": ("Sequential (naive)", "#777777", "--"),
     "ewc": ("EWC (classical Fisher)", "#F28E2B", (0, (4, 1, 1, 1))),
     "qewc": ("QEWC (QFI consolidation, E005)", "#4C78A8", ":"),
-    "frozen_head": ("OI-QCL frozen θ + heads (A)", "#59A14F", "-"),
-    "free_head": ("OI-QCL free θ + heads (B)", "#B07AA1", "-."),
-    "anchor_head": ("OI-QCL anchor θ + heads (C)", "#E15759", "-"),
+    "frozen_head": ("MPI frozen θ + heads (A)", "#59A14F", "-"),
+    "free_head": ("MPI free θ + heads (B)", "#B07AA1", "-."),
+    "anchor_head": ("MPI anchor θ + heads (C)", "#E15759", "-"),
 }
 
 
@@ -93,8 +93,8 @@ def main() -> None:
             ax.legend(loc="lower left", fontsize=8.5, framealpha=0.9)
 
     axes[-1].set_xlabel(f"Epoch (gradient step; {epochs_per_task} per task)")
-    fig.suptitle("OI-QCL (measurement-side) vs θ-protection — MNIST → Fashion → SPT/ATF\n"
-                 f"seeds {list(SEEDS)} (test accuracy; OI-QCL uses task id / Task-IL — "
+    fig.suptitle("MPI (measurement-side) vs θ-protection — MNIST → Fashion → SPT/ATF\n"
+                 f"seeds {list(SEEDS)} (test accuracy; MPI uses task id / Task-IL — "
                  "fair no-oracle comparison: figures/e014_fair_compare.png)", fontsize=11.5)
     fig.tight_layout(rect=(0, 0, 1, 0.97))
 

@@ -1,4 +1,4 @@
-"""OI-QCL vs QEWC on real IBM hardware — per-task + average accuracy (frozen-A vs QFI theta)."""
+"""MPI vs QEWC on real IBM hardware — per-task + average accuracy (frozen-A vs QFI theta)."""
 
 from __future__ import annotations
 
@@ -32,7 +32,7 @@ def main() -> None:
     fig, ax = plt.subplots(figsize=(9.5, 5))
     x = np.arange(len(labels))
     w = 0.38
-    ax.bar(x - w / 2, oi, w, color="#59A14F", label="OI-QCL (measurement-side)")
+    ax.bar(x - w / 2, oi, w, color="#59A14F", label="MPI (measurement-side)")
     ax.bar(x + w / 2, qe, w, color="#4C78A8", label="QEWC (θ-protection)")
     for xi, (a, b) in enumerate(zip(oi, qe)):
         ax.text(xi - w / 2, a + 0.012, f"{a:.2f}", ha="center", fontsize=8.5,
@@ -47,7 +47,7 @@ def main() -> None:
     ax.set_ylim(0.2, 1.05)
     ax.grid(axis="y", alpha=0.15)
     ax.legend(loc="lower left", fontsize=9)
-    ax.set_title(f"Continual learning on real IBM hardware ({backend}) — OI-QCL vs QEWC\n"
+    ax.set_title(f"Continual learning on real IBM hardware ({backend}) — MPI vs QEWC\n"
                  f"avg {oi[-1]:.2f} vs {qe[-1]:.2f} (gap +{oi[-1]-qe[-1]:.2f}); QEWC forgets T1 "
                  "and its QFI mis-anchors under noise\n"
                  f"n_test={n_test}/task, {shots} shots, 1 seed — per-task numbers are noisy; "

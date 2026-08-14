@@ -56,10 +56,10 @@ def main() -> None:
     ax.axvspan(-0.5, 2.5, color="0.96", zorder=0)
     ax.text(1.0, 0.98, "θ-protection", ha="center", va="top", transform=ax.get_xaxis_transform(),
             fontsize=8.5, color="0.4")
-    ax.text(4.0, 0.98, "OI-QCL (measurement-side)", ha="center", va="top",
+    ax.text(4.0, 0.98, "MPI (measurement-side)", ha="center", va="top",
             transform=ax.get_xaxis_transform(), fontsize=8.5, color="0.4")
-    ax.set_title("All methods under noise (depol %.2f, meas %.2f) — OI-QCL is the most robust\n"
-                 "QEWC degrades most (−0.10; its QFI is a pure-state property); OI-QCL A/C drop ~0.01\n"
+    ax.set_title("All methods under noise (depol %.2f, meas %.2f) — MPI is the most robust\n"
+                 "QEWC degrades most (−0.10; its QFI is a pure-state property); MPI A/C drop ~0.01\n"
                  "reduced config (%dL/%dep/n=%d, 3 seeds; default.mixed ~250x slower than pure)"
                  % (cfg["noise"]["depol"], cfg["noise"]["meas"], cfg["layers"],
                     cfg["epochs_per_task"], cfg["n_train_per_task"]), fontsize=10)

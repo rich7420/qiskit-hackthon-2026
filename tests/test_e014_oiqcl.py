@@ -1,4 +1,4 @@
-"""E014 OI-QCL contracts: the diagonal-observable == linear-head-over-probs identity,
+"""E014 MPI contracts: the diagonal-observable == linear-head-over-probs identity,
 frozen-backbone structural zero-forgetting, and the probe verdict logic."""
 
 from __future__ import annotations

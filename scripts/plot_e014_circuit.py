@@ -1,4 +1,4 @@
-"""Draw the OI-QCL circuit: (1) an authentic PennyLane render of the VQC with a probs
+"""Draw the MPI circuit: (1) an authentic PennyLane render of the VQC with a probs
 readout, and (2) a concept schematic showing the shared quantum representation feeding
 per-task classical observable heads selected by the task id.
 """
@@ -32,7 +32,7 @@ def draw_authentic(n_layers: int = 2) -> None:
     w = 0.5 * np.random.default_rng(1).standard_normal(shape)
     fig, ax = qml.draw_mpl(qnode, decimals=2, style="pennylane")(
         pnp.array(x, requires_grad=False), pnp.array(w))
-    ax.set_title(f"OI-QCL VQC (n=4, L={n_layers} shown; L=12 used) — probs readout",
+    ax.set_title(f"MPI VQC (n=4, L={n_layers} shown; L=12 used) — probs readout",
                  fontsize=11)
     out = FIG / "e014_circuit_pennylane.png"
     fig.savefig(out, dpi=150, bbox_inches="tight")
@@ -117,7 +117,7 @@ def draw_schematic() -> None:
             r"$\langle H^{(t)}\rangle=\sum_k \lambda_k^{(t)} p_k(x;\theta)=W^{(t)}p_\theta(x)$   "
             "— a diagonal observable = linear head over probs.",
             ha="center", va="center", fontsize=9.2, color="#333")
-    ax.set_title("OI-QCL — Observable-Isolated Quantum Continual Learning",
+    ax.set_title("MPI — Measurement-based Parameter Isolation",
                  fontsize=13, weight="bold")
 
     out = FIG / "e014_circuit.png"

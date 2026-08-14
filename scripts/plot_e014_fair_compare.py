@@ -1,9 +1,9 @@
 """Fair task-agnostic comparison: no method uses a task oracle at test.
 
-baseline / EWC / QEWC use a single shared readout (never needed a task id); OI-QCL is
+baseline / EWC / QEWC use a single shared readout (never needed a task id); MPI is
 evaluated with the learned linear router over p_θ(x) (task id inferred, not given). This
 puts every method on equal footing. Bars = final average test accuracy, 3-seed mean +/- SD.
-Hollow caps on the OI-QCL bars mark the Task-IL ceiling (task id given) for reference.
+Hollow caps on the MPI bars mark the Task-IL ceiling (task id given) for reference.
 
 Sources: results/e014_compare_seed*.json (ACC of sequential/ewc/qewc, already task-agnostic)
 and results/e014_task_inference_seed*.json (router_task_agnostic_accuracy of A/C).
@@ -41,9 +41,9 @@ def main() -> None:
         ("Sequential\n(naive)", [r["methods"]["sequential"]["ACC"] for r in cmp_runs], "#b0b0b0", None, None),
         ("EWC", [r["methods"]["ewc"]["ACC"] for r in cmp_runs], "#a0a0a0", None, None),
         ("QEWC", [r["methods"]["qewc"]["ACC"] for r in cmp_runs], "#808080", None, None),
-        ("OI-QCL (A)\n+ router", [r["methods"]["frozen_head"]["router_task_agnostic_accuracy"] for r in ti_runs],
+        ("MPI (A)\n+ router", [r["methods"]["frozen_head"]["router_task_agnostic_accuracy"] for r in ti_runs],
          "#59A14F", [r["methods"]["frozen_head"]["known_task_accuracy"] for r in ti_runs], None),
-        ("OI-QCL (C)\n+ router", [r["methods"]["anchor_head"]["router_task_agnostic_accuracy"] for r in ti_runs],
+        ("MPI (C)\n+ router", [r["methods"]["anchor_head"]["router_task_agnostic_accuracy"] for r in ti_runs],
          "#E15759", [r["methods"]["anchor_head"]["known_task_accuracy"] for r in ti_runs], None),
         ("Classical\nmulti-head\n(raw, no circuit)", [r["task_agnostic_accuracy"] for r in cb_runs],
          "#9467bd", [r["taskIL_ACC"] for r in cb_runs], "///"),
@@ -72,12 +72,12 @@ def main() -> None:
     ax.axvspan(4.5, 5.5, color="#f3eefa", zorder=0)
     ax.text(1.0, 1.005, "θ-protection (single head)", ha="center", va="top",
             transform=ax.get_xaxis_transform(), fontsize=8.5, color="0.4")
-    ax.text(3.5, 1.005, "OI-QCL + router (quantum)", ha="center", va="top",
+    ax.text(3.5, 1.005, "MPI + router (quantum)", ha="center", va="top",
             transform=ax.get_xaxis_transform(), fontsize=8.5, color="0.4")
     ax.text(5.0, 1.005, "classical control", ha="center", va="top",
             transform=ax.get_xaxis_transform(), fontsize=8.5, color="#6a4a9a")
     ax.set_title("Fair comparison (no task oracle) + matched classical control\n"
-                 "OI-QCL beats θ-protection; a classical multi-head on the raw input wins —\n"
+                 "MPI beats θ-protection; a classical multi-head on the raw input wins —\n"
                  "no quantum advantage on this classically-easy benchmark",
                  fontsize=10.5)
     ax.grid(axis="y", alpha=0.15)

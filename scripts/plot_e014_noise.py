@@ -1,4 +1,4 @@
-"""Bar figure: OI-QCL noiseless vs noisy readout (depol+meas), full vs m=2 readout."""
+"""Bar figure: MPI noiseless vs noisy readout (depol+meas), full vs m=2 readout."""
 
 from __future__ import annotations
 
@@ -41,7 +41,7 @@ def main() -> None:
     ax.set_ylim(0.5, 1.0)
     ax.grid(axis="y", alpha=0.15)
     ax.legend(loc="lower right", fontsize=9)
-    ax.set_title("OI-QCL is robust to gate + readout noise\n"
+    ax.set_title("MPI is robust to gate + readout noise\n"
                  f"noise = depol {cfg['depol']}, meas {cfg['meas']} "
                  f"(bit {cfg['bit']}, phase {cfg['phase']}); noiseless training, noisy readout",
                  fontsize=10.5)

@@ -1,6 +1,6 @@
 """E014 GO/NO-GO: Feature-Sufficiency probe for measurement-side continual learning.
 
-The cheap gate that decides whether OI-QCL is worth building fully (mentor review, sec 22/32):
+The cheap gate that decides whether MPI is worth building fully (mentor review, sec 22/32):
 
   1. Train the shared VQC on Task 1 only -> theta_1*.
   2. Freeze theta_1*.  Compute frozen probability features p(x; theta_1*) for ALL tasks.
@@ -9,7 +9,7 @@ The cheap gate that decides whether OI-QCL is worth building fully (mentor revie
 
 Interpretation:
   * High T2/T3 probe accuracy  -> the Task-1 representation already separates later tasks,
-    so freezing theta and only swapping the readout can work  -> GO (build full OI-QCL).
+    so freezing theta and only swapping the readout can work  -> GO (build full MPI).
   * T2 ok but T3 poor          -> PARTIAL GO: need soft backbone adaptation (Variant C).
   * T2/T3 both poor            -> NO-GO for a purely frozen backbone.
 

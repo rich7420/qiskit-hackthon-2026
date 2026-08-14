@@ -1,6 +1,6 @@
 """E014 hardware evaluation on an IBM QPU (separate hardware path).
 
-OI-QCL is unusually hardware-friendly: the head is a classical linear map, deployment needs
+MPI is unusually hardware-friendly: the head is a classical linear map, deployment needs
 no quantum gradients (just forward sampling), all task heads share ONE measurement basis
 (computational), and the readout can be a few local qubits on a shallow circuit. So we:
 
@@ -167,7 +167,7 @@ def run(*, task="mnist", layers=4, readout=(0, 1), epochs=20, n_head=150, n_test
                                                              "qiskit-aer", "pennylane")}},
         "config": {"task": t.name, "layers": layers, "readout_qubits": list(readout),
                    "n_qubits": N_QUBITS, "n_head_fit": n_head, "n_test": n_test, "shots": shots,
-                   "seed": seed, "variant": "OI-QCL frozen-A; sim training, QPU readout"},
+                   "seed": seed, "variant": "MPI frozen-A; sim training, QPU readout"},
         "backend": backend_used, "ibm_job_id": job_id,
         "test_accuracy": round(acc, 4), "n_test": int(len(yte)),
         "elapsed_sec": round(time.perf_counter() - started, 1),
@@ -300,7 +300,7 @@ def run_qewc_cl(*, layers=4, epochs=20, lam_qewc=0.8, qfi_samples=32, n_train=25
 
 def run_cl(*, layers=4, readout=(0, 1, 2, 3), epochs=20, n_head=250, n_test=48,
            shots=4096, backend_name="aer", seed=42) -> dict[str, Any]:
-    """Complete OI-QCL frozen-A across all 3 tasks: shared theta trained on T1 (sim), each
+    """Complete MPI frozen-A across all 3 tasks: shared theta trained on T1 (sim), each
     task's head fit + evaluated; report per-task noiseless-sim vs backend accuracy."""
     from sklearn.linear_model import LogisticRegression
 
@@ -370,7 +370,7 @@ def run_cl(*, layers=4, readout=(0, 1, 2, 3), epochs=20, n_head=250, n_test=48,
         "config": {"tasks": [t.name for _, t in tasks], "layers": layers,
                    "readout_qubits": list(readout), "n_qubits": N_QUBITS, "n_head_fit": n_head,
                    "n_test": n_test, "shots": shots, "seed": seed,
-                   "variant": "OI-QCL frozen-A (shared theta from T1); sim training, QPU readout"},
+                   "variant": "MPI frozen-A (shared theta from T1); sim training, QPU readout"},
         "backend": backend_name if backend_name == "aer" else backend.name,
         "ibm_job_ids": jobs, "per_task": per_task,
         "elapsed_sec": round(time.perf_counter() - started, 1),
@@ -381,7 +381,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--all-tasks", action="store_true", help="frozen-A across MNIST/Fashion/SPT")
     ap.add_argument("--method", choices=["oiqcl", "qewc"], default="oiqcl",
-                    help="with --all-tasks: OI-QCL frozen-A (default) or QEWC shared readout")
+                    help="with --all-tasks: MPI frozen-A (default) or QEWC shared readout")
     ap.add_argument("--task", choices=["mnist", "fashion", "spt"], default="mnist")
     ap.add_argument("--backend", default="aer", help="'aer' (dry-run) or an IBM backend name")
     ap.add_argument("--layers", type=int, default=4)

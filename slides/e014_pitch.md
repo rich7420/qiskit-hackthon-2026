@@ -1,6 +1,6 @@
-# OI-QCL — 2-minute pitch (English)
+# MPI — 2-minute pitch (English)
 
-**Observable-Isolated Quantum Continual Learning: where should a quantum model's memory live?**
+**Measurement-based Parameter Isolation: where should a quantum model's memory live?**
 
 ---
 
@@ -11,19 +11,19 @@
 > 🖼️ **`e014_circuit.png`**
 
 **[0:20–0:50] The idea**
-> "Our method, OI-QCL, flips it: **keep the quantum circuit as a shared representation, and give
+> "Our method, MPI, flips it: **keep the quantum circuit as a shared representation, and give
 > every task its own way to measure it** — a learnable observable, which is mathematically just a
 > **classical linear head on the measured probabilities**. Old readouts are frozen, so on the
 > measurement side an old task is *structurally impossible to overwrite*."
 > 🖼️ **`e014_circuit.png`** — point: shared circuit → three per-task heads
 
 **[0:50–1:20] It works (simulator)**
-> "On three tasks — MNIST, Fashion, and a quantum-phase task — **OI-QCL keeps 0.96 with near-zero
+> "On three tasks — MNIST, Fashion, and a quantum-phase task — **MPI keeps 0.96 with near-zero
 > forgetting**. QEWC gets 0.82, because clinging to θ *kills the ability to learn new tasks*."
 > 🖼️ **`e014_trajectory.png`** — point: our lines stay flat after learning, the baselines decay
 
 **[1:20–1:50] The killer: real hardware**
-> "We ran it on IBM's real quantum computer, ibm_marrakesh. **OI-QCL loses no accuracy — 0.93.**
+> "We ran it on IBM's real quantum computer, ibm_marrakesh. **MPI loses no accuracy — 0.93.**
 > QEWC **collapses to 0.58 — the old task below random chance** — because its quantum-Fisher
 > geometry breaks under real noise. On hardware our lead **widens to +0.35**. And adding a new task
 > on the device needs only **measurement plus a classical fit — no quantum retraining at all**."
@@ -40,7 +40,7 @@
 ## Show these 3 figures, in order
 1. **`e014_circuit.png`** — the method (shared circuit + per-task measurement heads)
 2. **`e014_trajectory.png`** — it works (retention vs forgetting)
-3. **`e014_hardware_compare.png`** — the killer (real QPU: OI-QCL 0.93 vs QEWC 0.58)
+3. **`e014_hardware_compare.png`** — the killer (real QPU: MPI 0.93 vs QEWC 0.58)
 
 **Backup (only if asked):** `e014_fair_compare.png` (honest classical control),
 `e014_noise_compare.png` (noise robustness).

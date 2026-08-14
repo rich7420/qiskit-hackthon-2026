@@ -641,7 +641,7 @@ first exact study does not measure anchor-level calibration overfitting.
 
 ---
 
-## E014 — Observable-Isolated Quantum Continual Learning (OI-QCL): measurement-side CL
+## E014 — Measurement-based Parameter Isolation (MPI): measurement-side CL
 
 **Question.** Prior QCL mitigations (EWC/QEWC and our own e005–e013 line) act on the trainable
 circuit θ. We ask the complementary question: keep the circuit as a *shared representation*
@@ -702,36 +702,36 @@ grabs 35–42% of MNIST/Fashion); a dedicated logistic router over p_θ(x) nearl
 quantum measurement distribution — Task-IL is a convenience, not a hard requirement.
 
 **Fair no-oracle comparison (`figures/e014_fair_compare.png`).** With no method given the task
-id (baselines use one shared head, OI-QCL uses the learned router): Sequential 0.69, EWC 0.82,
-QEWC 0.82, **OI-QCL+router (A/C) 0.91** (Task-IL ceiling 0.96). The ~0.14 ACC advantage over
-θ-protection is not an artifact of the task oracle — OI-QCL still wins by ~0.09 oracle-free.
+id (baselines use one shared head, MPI uses the learned router): Sequential 0.69, EWC 0.82,
+QEWC 0.82, **MPI+router (A/C) 0.91** (Task-IL ceiling 0.96). The ~0.14 ACC advantage over
+θ-protection is not an artifact of the task oracle — MPI still wins by ~0.09 oracle-free.
 
 **Matched classical control (`experiments/e014_classical_baseline.py`) — honest, important.**
 Same per-task linear head on the RAW 2ⁿ amplitude input (no quantum circuit): Task-IL ACC 0.983,
-task-agnostic 0.972 — it **beats** OI-QCL (0.964/0.907). So there is **no quantum advantage** on
+task-agnostic 0.972 — it **beats** MPI (0.964/0.907). So there is **no quantum advantage** on
 this benchmark; the tasks (incl. SPT phases) are linearly separable from the raw amplitudes and the
-measurement `|amplitude|²` even discards phase. OI-QCL's result is a *mechanism* claim (measurement-
+measurement `|amplitude|²` even discards phase. MPI's result is a *mechanism* claim (measurement-
 side isolation beats θ-protection **within the quantum model class**), not classification advantage.
 
 **Noise robustness (`src/e014_noise.py`, `default.mixed`; depol 0.01 + meas 0.02).** Readout
 robustness (`e014_noise_compare.py`, frozen-A, full config): full 0.964→0.958, m=2 0.943→0.933
 (the head refits on observed noisy probs). All 6 methods trained+evaluated under noise
-(`e014_compare.py --noise`, reduced config, 3 seeds; `figures/e014_noise_compare.png`): OI-QCL
+(`e014_compare.py --noise`, reduced config, 3 seeds; `figures/e014_noise_compare.png`): MPI
 A/C drop only ~0.015 (0.930→0.916, BWT~0) while **QEWC drops 0.10 (0.715→0.617)** — its QFI
-regularizer is a pure-state property, mis-anchored under noise — so OI-QCL's lead over QEWC
+regularizer is a pure-state property, mis-anchored under noise — so MPI's lead over QEWC
 *widens* with noise. (`default.mixed` is ~250× slower, hence the reduced config; noisy/noiseless
 share it for a fair drop.)
 
 **Real IBM hardware (`experiments/e014_hardware_eval.py`, ibm_marrakesh, 3 tasks, 24 test/task,
-4096 shots, 1 seed).** Train on simulator, learn each task's readout from QPU measurements (OI-QCL:
+4096 shots, 1 seed).** Train on simulator, learn each task's readout from QPU measurements (MPI:
 per-task classical head on QPU probs, old heads frozen — no on-device quantum retraining). QPU
-averages: **OI-QCL 0.931 (≈ sim, no hardware loss) vs QEWC 0.583** (T1→0.375, below chance: forgets
+averages: **MPI 0.931 (≈ sim, no hardware loss) vs QEWC 0.583** (T1→0.375, below chance: forgets
 the old task and its pure-state QFI mis-anchors under real noise). The lead over θ-protection widens
 on hardware to +0.35 (vs +0.14 sim). Per-task numbers noisy at n_test=24/1 seed; the average is the
 signal; IBM job ids in the result JSONs. Figures `e014_hardware.png`, `e014_hardware_compare.png`.
 
 **Cost (unchanged vs baselines on the quantum side).** n=4, L=12: backbone θ = 96 params,
-36 CNOTs, depth ≈ 60 — identical for all methods (OI-QCL only swaps the classical readout). Each
+36 CNOTs, depth ≈ 60 — identical for all methods (MPI only swaps the classical readout). Each
 task adds one linear head (C·2ⁿ + C = 34 params); total head memory O(T·C·2ⁿ) = 102 at T=3.
 
 **Artifacts.** `src/e014_oiqcl.py`; experiments `e014_probe.py`, `e014_compare.py`,

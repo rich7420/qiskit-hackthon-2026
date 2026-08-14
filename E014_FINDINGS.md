@@ -1,4 +1,4 @@
-# E014 — Observable-Isolated Quantum Continual Learning (OI-QCL)
+# E014 — Measurement-based Parameter Isolation (MPI)
 
 **Measurement-side continual learning.** Instead of protecting the circuit parameters θ
 (EWC/QEWC and every θ-centric baseline), keep the variational circuit as a *shared
@@ -65,7 +65,7 @@ The ACC ordering holds in **every** seed.
 | Free θ + heads (B) | update | isolated | 0.801 ± 0.018 | −0.258 ± 0.038 |
 | **Anchor θ + heads (C)** | soft-L2 | isolated | **0.962 ± 0.007** | −0.004 ± 0.006 |
 
-EWC and QEWC land together (~0.82) — both are θ-protection, both trade away plasticity; OI-QCL A/C beat them by ~0.14 ACC.
+EWC and QEWC land together (~0.82) — both are θ-protection, both trade away plasticity; MPI A/C beat them by ~0.14 ACC.
 
 Both measurement-side methods (A, C) beat QEWC by **~0.14 ACC** with near-zero backward
 transfer. QEWC's shortfall is *plasticity*, not retention: it holds T1 (~0.87) but T2 stalls
@@ -102,7 +102,7 @@ pytest tests/test_e014_oiqcl.py -q
 
 **Trajectory figure** (`figures/e014_trajectory.png`, e009/e013 three-panel style): per-task
 test accuracy across the sequential run with boundaries at epochs 20/40 and 3-seed bands.
-Every curve is a genuine *gradient* learning curve on a common accuracy axis — each OI-QCL
+Every curve is a genuine *gradient* learning curve on a common accuracy axis — each MPI
 head (W, b) is trained by Adam epoch-by-epoch (not a per-epoch converged classical fit), so
 its within-phase curve rises from chance like the shared-readout baselines rather than jumping
 instantly high. Checkpoints (mean over seeds), T1 @ep1 / @20 / @60 and T2 @40 / @60:
@@ -115,7 +115,7 @@ instantly high. Checkpoints (mean over seeds), T1 @ep1 / @20 / @60 and T2 @40 / 
 | free (B) | 0.54 | 0.97 | 0.51 | 0.95 | 0.82 |
 | anchor (C) | 0.54 | 0.97 | 0.96 | 0.92 | 0.92 |
 
-Reads as: all methods rise from chance; OI-QCL learns T1 higher (0.97 vs 0.89 — fuller readout);
+Reads as: all methods rise from chance; MPI learns T1 higher (0.97 vs 0.89 — fuller readout);
 after later tasks, A/C retain both T1 and T2 while sequential forgets both, QEWC retains T1 but
 never fit T2 well (0.74→0.59, plasticity loss), and free (B) drifts. The gradient-trained head
 plateaus slightly below the converged-`LogisticRegression` heads used in the ACC/BWT table above;
@@ -124,7 +124,7 @@ learning curves.
 
 ## Task-agnostic evaluation — the cost of removing the task id
 
-OI-QCL is Task-IL: the head is chosen by a given task id. To quantify that assumption we hide
+MPI is Task-IL: the head is chosen by a given task id. To quantify that assumption we hide
 the id and infer it two ways (`experiments/e014_task_inference.py`,
 `figures/e014_task_inference.png`), mean over seeds 42/43/44:
 
@@ -150,14 +150,14 @@ at 0.79 because its heads are already degraded by representation drift, not by r
 router TIA is the best at 0.95.)
 
 **Fair no-oracle comparison** (`figures/e014_fair_compare.png`): with *no* method given the task
-id, baselines use their single shared head (never needed one) and OI-QCL uses the learned router.
-Average test accuracy: Sequential 0.69, EWC 0.82, QEWC 0.82, **OI-QCL+router (A/C) 0.91** (Task-IL
-ceiling 0.96). OI-QCL still wins by ~0.09 under the harder, oracle-free setting — the ~0.14 ACC
+id, baselines use their single shared head (never needed one) and MPI uses the learned router.
+Average test accuracy: Sequential 0.69, EWC 0.82, QEWC 0.82, **MPI+router (A/C) 0.91** (Task-IL
+ceiling 0.96). MPI still wins by ~0.09 under the harder, oracle-free setting — the ~0.14 ACC
 advantage over θ-protection is not an artifact of the task oracle.
 
 ## Gate-count ablation — the circuit can be stripped without losing accuracy
 
-`experiments/e014_depth_ablation.py` (`figures/e014_depth_ablation.png`): OI-QCL's advantage is in
+`experiments/e014_depth_ablation.py` (`figures/e014_depth_ablation.png`): MPI's advantage is in
 the readout, not circuit depth, so ACC is nearly flat in the ansatz depth L (3-seed mean):
 
 | L | depth | 2-qubit gates | θ params | frozen (A) ACC | anchor (C) ACC |
@@ -205,13 +205,13 @@ Mean over seeds:
 | model | Task-IL ACC | task-agnostic (router) |
 |---|---:|---:|
 | **Classical multi-head (raw input, no circuit)** | **0.983** | **0.972** |
-| OI-QCL frozen (A) / anchor (C) | 0.964 / 0.962 | 0.907 / 0.909 |
+| MPI frozen (A) / anchor (C) | 0.964 / 0.962 | 0.907 / 0.909 |
 | QEWC | 0.819 | — |
 
-**The classical multi-head beats OI-QCL** (per-task: T1 0.998 / T2 0.952 / T3 SPT 1.00). On this
+**The classical multi-head beats MPI** (per-task: T1 0.998 / T2 0.952 / T3 SPT 1.00). On this
 benchmark the quantum circuit + measurement adds nothing — `probs = |amplitude|²` even discards
 sign/phase, and these tasks (incl. the "quantum-native" SPT phases) are already linearly separable
-from the raw amplitudes. **So OI-QCL's contribution is NOT a classification/quantum advantage.** It
+from the raw amplitudes. **So MPI's contribution is NOT a classification/quantum advantage.** It
 is a *mechanism* result: **within the quantum model class**, moving continual memory to the
 measurement (A/C ≈ 0.96) beats θ-protection (QEWC/EWC ≈ 0.82) and eliminates forgetting. Showing the
 quantum representation is *necessary* would require a task where a matched classical head fails —
@@ -243,38 +243,38 @@ config, so the drop is a fair comparison.
 | Free θ (B) | 0.847 | 0.837 | 0.010 |
 | **Anchor θ (C)** | 0.930 | **0.916** | 0.015 |
 
-**OI-QCL A/C are the most noise-robust** (drop ~0.015, BWT stays ~0). **QEWC degrades most (−0.10)** —
+**MPI A/C are the most noise-robust** (drop ~0.015, BWT stays ~0). **QEWC degrades most (−0.10)** —
 its regularizer is the *quantum Fisher information*, a pure-state property, so under noise the actual
 state deviates and θ is mis-anchored (its noisy accuracy also has large seed variance). Consequently
-**OI-QCL's lead over QEWC widens under noise** (0.92 vs 0.62, vs 0.93 vs 0.72 noiseless) — a point in
+**MPI's lead over QEWC widens under noise** (0.92 vs 0.62, vs 0.93 vs 0.72 noiseless) — a point in
 favor of putting task memory in the measurement rather than in a noise-fragile geometric regularizer.
 
 ## Continual learning on real IBM hardware (ibm_marrakesh)
 
 `experiments/e014_hardware_eval.py` (separate hardware path). Train the backbone on the
 noiseless simulator, rebuild the ansatz in Qiskit (StatePreparation + RY/RZ + CNOT ladder),
-then **learn each task's readout from QPU measurements** — for OI-QCL the per-task classical
+then **learn each task's readout from QPU measurements** — for MPI the per-task classical
 head is fit on QPU-sampled probs (old heads frozen); no quantum gradients on device. This is
-the NISQ-feasible form of continual learning OI-QCL enables: adding a task needs only sampling
+the NISQ-feasible form of continual learning MPI enables: adding a task needs only sampling
 + a classical head fit, never on-device quantum retraining. Both methods run on `ibm_marrakesh`
 (156-qubit Heron), 3 tasks, 24 test/task, 4096 shots, 1 seed (`figures/e014_hardware.png`,
 `figures/e014_hardware_compare.png`).
 
-| task | OI-QCL sim | OI-QCL QPU | QEWC sim | QEWC QPU |
+| task | MPI sim | MPI QPU | QEWC sim | QEWC QPU |
 |---|---:|---:|---:|---:|
 | T1 MNIST (old) | 0.875 | **0.875** | 0.625 | **0.375** |
 | T2 Fashion | 0.833 | **0.917** | 0.292 | **0.625** |
 | T3 SPT/ATF | 1.000 | **1.000** | 1.000 | **0.750** |
 | **average** | | **0.931** | | **0.583** |
 
-**OI-QCL's accuracy does not degrade on real hardware** (QPU 0.931 ≈ sim); the measurement-side
+**MPI's accuracy does not degrade on real hardware** (QPU 0.931 ≈ sim); the measurement-side
 readout is robust to real gate + readout noise. **QEWC collapses on hardware** (0.583; T1 to
 0.375, below chance): it has already forgotten the old task, and its QFI regularizer — a
-pure-state property — is mis-anchored under real noise. So the OI-QCL lead over θ-protection
+pure-state property — is mis-anchored under real noise. So the MPI lead over θ-protection
 **widens on real hardware to +0.35** (vs +0.14 noiseless), matching the simulator noise study.
 
 Honest caveats: n_test=24/task and a single seed make the *per-task* numbers noisy (e.g. QEWC
-Fashion sim 0.29 but QPU 0.62 is small-sample variance; OI-QCL QPU ≥ sim likewise reflects
+Fashion sim 0.29 but QPU 0.62 is small-sample variance; MPI QPU ≥ sim likewise reflects
 sampling, not a hardware improvement) — the *average* is the reliable signal. Full IBM job ids
 are stored in the result JSONs. Not done on hardware: multi-seed (QPU cost/queue), gradient
 training of the backbone (infeasible), error mitigation / shots sweep (roadmap).

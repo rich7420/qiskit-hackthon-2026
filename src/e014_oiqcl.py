@@ -1,4 +1,4 @@
-"""OI-QCL: Observable-Isolated Quantum Continual Learning (e014).
+"""MPI: Measurement-based Parameter Isolation (e014).
 
 Core idea (measurement-side continual learning): keep a *shared* variational circuit
 rho_theta(x) fixed (or softly anchored) across tasks, and give every task its own

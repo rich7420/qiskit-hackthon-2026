@@ -85,7 +85,7 @@ def main() -> None:
             transform=ax.get_xaxis_transform(), fontsize=9, color="0.4")
     for xi, (a, e) in enumerate(zip(accs, errs)):
         ax.text(xi, a + e + 0.01, f"{a:.2f}", ha="center", va="bottom", fontsize=9)
-    ax.set_title("OI-QCL: measurement-side continual learning beats θ-protection")
+    ax.set_title("MPI: measurement-side continual learning beats θ-protection")
     fig.tight_layout()
 
     FIGURES.mkdir(exist_ok=True)

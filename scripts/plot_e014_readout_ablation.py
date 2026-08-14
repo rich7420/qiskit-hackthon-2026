@@ -1,4 +1,4 @@
-"""Plot OI-QCL accuracy vs readout width — how small the per-task observable can be."""
+"""Plot MPI accuracy vs readout width — how small the per-task observable can be."""
 
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ def main() -> None:
     sd = np.array([pw[str(m)]["ACC_sd"] for m in ms])
 
     fig, ax = plt.subplots(figsize=(8.5, 5))
-    ax.plot(ms, mean, "o-", color="#59A14F", lw=2, label="OI-QCL frozen θ (A)")
+    ax.plot(ms, mean, "o-", color="#59A14F", lw=2, label="MPI frozen θ (A)")
     ax.fill_between(ms, mean - sd, mean + sd, color="#59A14F", alpha=0.15)
     for m, y, p in zip(ms, mean, params):
         ax.annotate(f"{y:.2f}\n{p}p", (m, y), textcoords="offset points", xytext=(0, 8),
